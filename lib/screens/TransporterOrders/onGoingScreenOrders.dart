@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/bookingApiCallsOrders.dart';
 import '/functions/ongoingTrackUtils/getDeviceData.dart';
 import '/functions/ongoingTrackUtils/getPositionByDeviceId.dart';
@@ -53,8 +53,8 @@ class _OngoingScreenOrdersState extends State<OngoingScreenOrders> {
   bool loading = false;
   bool OngoingProgress = false;
 
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
@@ -415,7 +415,7 @@ class _OngoingScreenOrdersState extends State<OngoingScreenOrders> {
 //         height: MediaQuery.of(context).size.height * 0.67,
 //         child: FutureBuilder(
 //           //getTruckData returns list of truck Model
-//           future: bookingApiCallsOrders.getDataByTransporterIdOnGoing(),
+//           future: bookingApiCallsOrders.getDataByShipperIdOnGoing(),
 //           builder: (BuildContext context, AsyncSnapshot snapshot) {
 //             if (snapshot.data == null) {
 //               return OnGoingLoadingWidgets();

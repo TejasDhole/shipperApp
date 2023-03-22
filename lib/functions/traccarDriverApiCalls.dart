@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-TransporterIdController transporterIdController =
-    Get.put(TransporterIdController());
+ShipperIdController shipperIdController =
+    Get.put(ShipperIdController());
 // final String driverApiUrl = FlutterConfig.get('driverApiUrl');
 final String driverApiUrl = dotenv.get('driverApiUrl');
 
-String? traccarUser = transporterIdController.mobileNum.value;
+String? traccarUser = shipperIdController.mobileNum.value;
 // String traccarPass = FlutterConfig.get("traccarPass");
 String traccarPass = dotenv.get('traccarPass');
 

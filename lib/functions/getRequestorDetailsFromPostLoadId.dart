@@ -8,7 +8,7 @@ getLoadPosterDetailsFromPostLoadId(postLoadId) async {
   var jsonData;
   final String transporterApiUrl =
       // FlutterConfig.get("transporterApiUrl").toString();
-         dotenv.get('transporterApiUrl');
+         dotenv.get('shipperApiUrl');
 
   // final String shipperApiUrl = FlutterConfig.get('shipperApiUrl').toString();
   final String shipperApiUrl = dotenv.get('shipperApiUrl');

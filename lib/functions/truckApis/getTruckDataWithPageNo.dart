@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/driverApiCalls.dart';
 import '/models/driverModel.dart';
 import '/models/truckModel.dart';
@@ -10,8 +10,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 getTruckDataWithPageNo(int i) async {
   //TransporterId controller
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   // retrieving TRUCKAPIURL  from env file
   // final String truckApiUrl = FlutterConfig.get('truckApiUrl');
@@ -19,7 +19,7 @@ getTruckDataWithPageNo(int i) async {
 
 
   http.Response response = await http.get(Uri.parse(
-      '$truckApiUrl?transporterId=${transporterIdController.transporterId.value}&pageNo=$i'));
+      '$truckApiUrl?transporterId=${shipperIdController.shipperId.value}&pageNo=$i'));
   var jsonData = json.decode(response.body);
   var truckDataList = [];
   for (var json in jsonData) {
@@ -52,15 +52,15 @@ getTruckDataWithPageNo(int i) async {
 
 getGPSTruckDataWithPageNo(int i) async {
   //TransporterId controller
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   // retrieving TRUCKAPIURL  from env file
   // final String truckApiUrl = FlutterConfig.get('truckApiUrl');
   final String truckApiUrl = dotenv.get('truckApiUrl');
 
   http.Response response = await http.get(Uri.parse(
-      '$truckApiUrl?transporterId=${transporterIdController.transporterId.value}&pageNo=$i'));
+      '$truckApiUrl?transporterId=${shipperIdController.shipperId.value}&pageNo=$i'));
   var jsonData = json.decode(response.body);
   var truckDataList = [];
   for (var json in jsonData) {

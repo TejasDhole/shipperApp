@@ -10,14 +10,14 @@ import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 import '/screens/PostLoadScreens/PostLoadScreenMultiple.dart';
-class postloadnav extends StatefulWidget {
-  const postloadnav({Key? key}) : super(key: key);
+class PostLoadNav extends StatefulWidget {
+  const PostLoadNav({Key? key}) : super(key: key);
 
   @override
-  State<postloadnav> createState() => _postloadnavState();
+  State<PostLoadNav> createState() => _PostLoadNavState();
 }
 
-class _postloadnavState extends State<postloadnav> {
+class _PostLoadNavState extends State<PostLoadNav> {
   PageController pageController = PageController(initialPage: 0);
 
 

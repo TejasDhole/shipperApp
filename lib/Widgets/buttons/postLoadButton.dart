@@ -1,25 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import '../../constants/screens.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/widgets/alertDialog/verifyAccountNotifyAlertDialog.dart';
 import 'package:provider/provider.dart';
 import '/providerClass/providerData.dart';
 import '/constants/spaces.dart';
 import '/screens/PostLoadScreens/postloadnavigation.dart';
-import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 
 // ignore: must_be_immutable
 class PostButtonLoad extends StatelessWidget {
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
+
+  PostButtonLoad({super.key});
 
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    return Container(
+    return SizedBox(
       height: space_8,
       width: space_33,
       child: TextButton(
@@ -35,21 +38,31 @@ class PostButtonLoad extends StatelessWidget {
           providerData.resetPostLoadFilters();
           providerData.resetPostLoadScreenMultiple();
           providerData.updateEditLoad(false, "");
-          transporterIdController.companyApproved.value?
-               Get.to(() => postloadnav())
+          shipperIdController.companyApproved.value
+              ? kIsWeb
+                  // ? Get.offAll(HomeScreenWeb(
+                  //     index: screens.indexOf(postLoadNav),
+                  //     selectedIndex: screens.indexOf(postLoadScreen),
+                  //   ))
+                  ? Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreenWeb(
+                                index: screens.indexOf(postLoadNav),
+                                selectedIndex: screens.indexOf(postLoadScreen),
+                              )))
+                  : Get.to(() => const PostLoadNav())
               : showDialog(
                   context: context,
                   builder: (context) => VerifyAccountNotifyAlertDialog());
         },
-        child: Container(
-          child: Text(
-            'postLoad'.tr,
-            // AppLocalizations.of(context)!.postLoad,
-            style: TextStyle(
-              fontWeight: mediumBoldWeight,
-              color: white,
-              fontSize: size_8,
-            ),
+        child: Text(
+          'postLoad'.tr,
+          // AppLocalizations.of(context)!.postLoad,
+          style: TextStyle(
+            fontWeight: mediumBoldWeight,
+            color: white,
+            fontSize: size_8,
           ),
         ),
       ),

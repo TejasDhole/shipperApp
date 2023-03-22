@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/login_phone_no.dart';
+import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
+import '../../functions/firebaseAuthentication/signIn.dart';
 import '/Web/screens/home_web.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'company_details.dart';
@@ -8,24 +11,23 @@ import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '/../functions/alert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreenWeb extends StatefulWidget {
-  const LoginScreenWeb({Key? key}) : super(key: key);
+class LoginWeb extends StatefulWidget {
+  const LoginWeb({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreenWeb> createState() => _LoginScreenWebState();
+  State<LoginWeb> createState() => _LoginWebState();
 }
 
-class _LoginScreenWebState extends State<LoginScreenWeb> {
+class _LoginWebState extends State<LoginWeb> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController otpController = TextEditingController();
-  late String phoneNumber;
-  late ConfirmationResult confirmationResult;
+  late String email;
+  late String password;
   bool passwordVisible = true;
   bool isChecked = false;
   bool isError = false;
-  bool isVerified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,8 @@ class _LoginScreenWebState extends State<LoginScreenWeb> {
               Form(
                 key: _formKey,
                 child: Container(
-                  width: kIsWeb?35.w:40.w,
-                  height: isError?55.h:50.h,
+                  width: kIsWeb ? 35.w : 40.w,
+                  height: isError ? 65.h : 60.h,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
@@ -47,60 +49,133 @@ class _LoginScreenWebState extends State<LoginScreenWeb> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //TODO : Email text field title
                       Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 5.h),
-                        child: const Text('Phone Number',
+                        padding: EdgeInsets.only(left: 3.w, top: 5.h),
+                        child: const Text(
+                          'Email',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,),
+                            fontFamily: 'Montserrat',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+                      //TODO : Email text field
                       Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 1.h,right: 4.w),
+                        padding:
+                            EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
                         child: TextFormField(
                           decoration: const InputDecoration(
-                            hintText: '98xxxxxx12',
-                            labelText: 'Phone Number',
+                            hintText: 'xyz@gmail.com',
+                            labelText: 'Email Id',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
                             ),
                           ),
-                          validator: (value){
-                            if(value.toString().isEmpty){
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
                               setState(() {
                                 isError = true;
                               });
-                              return "Enter your Phone Number";
+                              return "Enter your email id";
                             }
-                            if(value.toString().length != 10){
+                            if (!value.toString().contains('@')) {
                               setState(() {
                                 isError = true;
                               });
-                              return "Invalid Phone NUmber";
+                              return "Invalid Email Id";
                             }
                             setState(() {
                               isError = false;
                             });
                             return null;
                           },
-                          onSaved: (value){
-                            phoneNumber = value.toString();
+                          onSaved: (value) {
+                            email = value.toString();
                           },
                         ),
                       ),
-                      isVerified?showOTPField():SizedBox(height: 2.h,),
+                      //TODO : Password text field title
                       Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 1.h),
-                        child: TextButton.icon(
-                          onPressed: (){
+                        padding:
+                            EdgeInsets.only(left: kIsWeb ? 3.w : 10, top: 3.h),
+                        child: const Text(
+                          'Password',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      //TODO : Password text field
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
+                        child: TextFormField(
+                          obscureText: passwordVisible,
+                          decoration: InputDecoration(
+                            hintText: 'abc@123',
+                            labelText: 'Password',
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
+                              setState(() {
+                                isError = true;
+                              });
+                              return "Enter password";
+                            }
+                            if (value.toString().length < 6) {
+                              setState(() {
+                                isError = true;
+                              });
+                              return "Password length should be greater/equal to 6 ";
+                            }
                             setState(() {
-                              isChecked=!isChecked;
+                              isError = false;
+                            });
+                            return null;
+                          },
+                          onSaved: (value) {
+                            password = value.toString();
+                          },
+                        ),
+                      ),
+                      //TODO : check box for keep me logged in
+                      Padding(
+                        padding: EdgeInsets.only(left: 3.w, top: 1.h),
+                        child: TextButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              isChecked = !isChecked;
                             });
                           },
-                          icon: isChecked?const Icon(Icons.check_box,)
-                                         :const Icon(Icons.check_box_outline_blank,color: Colors.black,),
-                          label: const Text("Keep me logged in",
+                          icon: isChecked
+                              ? const Icon(
+                                  Icons.check_box,
+                                )
+                              : const Icon(
+                                  Icons.check_box_outline_blank,
+                                  color: Colors.black,
+                                ),
+                          label: const Text(
+                            "Keep me logged in",
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 16,
@@ -110,24 +185,54 @@ class _LoginScreenWebState extends State<LoginScreenWeb> {
                           ),
                         ),
                       ),
-                      isVerified ? buildButton('Sign In', () async{
-                        var temp = await checkOTP(otpController.text.toString());
-                        if(temp.uid!=null && temp.email==null){
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const CompanyDetails()));
-                        }else{
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomeScreenWeb()));
-                        }
-                      }) : buildButton('Send OTP',() async{
-                        if(_formKey.currentState!.validate()){
-                          _formKey.currentState!.save();
-                          await sigIn(phoneNumber);
-                          if(confirmationResult.verificationId.isNotEmpty){
-                            setState(() {
-                              isVerified = true;
-                            });
-                          }
-                        }
-                      }),
+                      //TODO : Sign In button
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            backgroundColor: const Color(0xFF000066),
+                            fixedSize: Size(28.w, 7.h),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              try {
+                                UserCredential firebaseUser =
+                                    await signIn(email, password, context);
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                if(isChecked){
+                                  prefs.setString('uid', firebaseUser.user!.uid);
+                                }
+                                if (firebaseUser.user!.phoneNumber == null) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
+                                } else if (firebaseUser.user!.displayName == null) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
+                                } else if (firebaseUser.user!.emailVerified) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
+                                } else {
+                                  alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
+                                 // firebaseUser.user!.sendEmailVerification();
+                                }
+                              } catch (e) {
+                                log('in sign in button catch--->$e');
+                              }
+                            }
+                          },
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontSize: 4.3.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -137,102 +242,5 @@ class _LoginScreenWebState extends State<LoginScreenWeb> {
         ),
       ),
     );
-  }
-
-  //Elevated Button for both send otp and sign in functionalities
-  buildButton(String text,VoidCallback fun) {
-    return Padding(
-      padding: EdgeInsets.only(left: 3.w,top: 5.h,right: 1.w),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25),),
-          backgroundColor: const Color(0xFF000066),
-          fixedSize: Size(28.w, 7.h),
-        ),
-        onPressed: fun,
-        child: Text(text,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'Montserrat',
-            fontSize: 4.3.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-
-  //OTP field is displayed only when user got otp to his specified number
-  showOTPField(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left:kIsWeb?3.w:10,top: 3.h),
-          child: const Text('OTP',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 3.w,top: 1.h,right: 4.w),
-          child: PinCodeTextField(
-            obscureText: true,
-            obscuringCharacter: '*',
-            animationType: AnimationType.fade,
-            validator: (v){
-              if(v!.length<6){
-                return "Enter Valid OTP";
-              }else{
-                return null;
-              }
-            },
-            pinTheme: PinTheme(
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(5),
-              fieldHeight: kIsWeb?50:40,
-              fieldWidth: kIsWeb?40:30,
-              activeColor: Colors.black,
-              inactiveColor: Colors.black,
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.number,
-            controller: otpController,
-            appContext: context,
-            length: 6,
-            onChanged: (value){},
-          ),
-        ),
-      ],
-    );
-  }
-
-  //Sign In functionality
-  sigIn(String phoneNumber) async{
-    await auth.signInWithPhoneNumber("+91$phoneNumber")
-        .then((value) => {
-          confirmationResult = value,
-          alertDialog('OTP sent','OTP has been sent to +91$phoneNumber',context),
-        })
-        .catchError((error)=>{
-          alertDialog('Error','Try again Later',context)
-        });
-  }
-
-  //User entered otp verification and signing in
-  checkOTP(String otp) async{
-    late UserCredential userCredential;
-    await confirmationResult.confirm(otp)
-        .then((value) => {
-          userCredential = value,
-          log(''),
-        })
-        .catchError((error)=>{
-          if(error.toString().contains('auth credential is invalid'))
-            alertDialog('Error','Invalid OTP',context),
-        });
-    return userCredential.user;
   }
 }

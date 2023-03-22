@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
@@ -12,8 +12,8 @@ Future<String> postAccountVerificationDocuments(
       String? addressProofBack,
       String? panFront,
       String? companyIdProof}) async {
-  TransporterIdController transporterIdController =
-  Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+  Get.put(ShipperIdController());
   try {
     final String documentApiUrl =
     // FlutterConfig.get("documentApiUrl").toString();
@@ -47,7 +47,7 @@ Future<String> postAccountVerificationDocuments(
           "verified": true
         }
       ],
-      "entityId": transporterIdController.transporterId.value
+      "entityId": shipperIdController.shipperId.value
     }: {
       "documents": [
         {
@@ -71,7 +71,7 @@ Future<String> postAccountVerificationDocuments(
           "verified": true
         }
       ],
-      "entityId": transporterIdController.transporterId.value
+      "entityId": shipperIdController.shipperId.value
     };
     String body = json.encode(data);
 

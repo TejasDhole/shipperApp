@@ -18,7 +18,7 @@ class DeliveredScreenOrders extends StatelessWidget {
             .height * 0.67,
         child: FutureBuilder(
           //getTruckData returns list of truck Model
-          future: bookingApiCallsOrders.getDataByTransporterIdDelivered(),
+          future: bookingApiCallsOrders.getDataByShipperIdDelivered(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return CompletedLoadingWidgets();

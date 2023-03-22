@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import '/models/BookingModel.dart';
@@ -9,9 +9,9 @@ import '/providerClass/providerData.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BookingApiCallsOrders {
-  //TransporterIdController will be used as postId in Transporter App
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  //shipperIdController will be used as postId in Transporter App
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   ProviderData providerData = ProviderData();
 
   //BookingApiUrl
@@ -22,12 +22,12 @@ class BookingApiCallsOrders {
   List<BookingModel> modelList = [];
 
   //GET ------------------------------------------------------------------------
-  Future<List<BookingModel>> getDataByTransporterIdOnGoing() async {
+  Future<List<BookingModel>> getDataByShipperIdOnGoing() async {
     modelList = [];
 
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
-          '$bookingApiUrl?transporterId=${transporterIdController.transporterId.value}&completed=false&cancel=false&pageNo=$i'));
+          '$bookingApiUrl?transporterId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
 
       var jsonData = json.decode(response.body);
       if (jsonData.isEmpty) {
@@ -39,7 +39,7 @@ class BookingApiCallsOrders {
         bookingModel.bookingDate =
             json['bookingDate'] != null ? json['bookingDate'] : 'NA';
         bookingModel.loadId = json['loadId'] != null ? json['loadId'] : 'NA';
-        bookingModel.transporterId =
+        bookingModel.shipperId =
             json['transporterId'] != null ? json['transporterId'] : 'NA';
         bookingModel.truckId = json['truckId'] != null ? json['truckId'] : 'NA';
         bookingModel.cancel = json['cancel'] != null ? json['cancel'] : false;
@@ -63,12 +63,12 @@ class BookingApiCallsOrders {
   }
 
   //----------------------------------------------------------------------------
-  Future<List<BookingModel>> getDataByTransporterIdDelivered() async {
+  Future<List<BookingModel>> getDataByShipperIdDelivered() async {
     modelList = [];
     try {
       for (int i = 0;; i++) {
         http.Response response = await http.get(Uri.parse(
-            '$bookingApiUrl?transporterId=${transporterIdController.transporterId.value}&completed=true&cancel=false&pageNo=$i'));
+            '$bookingApiUrl?transporterId=${shipperIdController.shipperId.value}&completed=true&cancel=false&pageNo=$i'));
         var jsonData = json.decode(response.body);
 
         if (jsonData.isEmpty) {
@@ -79,7 +79,7 @@ class BookingApiCallsOrders {
           bookingModel.bookingDate =
               json['bookingDate'] != null ? json['bookingDate'] : 'NA';
           bookingModel.loadId = json['loadId'] != null ? json['loadId'] : 'NA';
-          bookingModel.transporterId =
+          bookingModel.shipperId =
               json['transporterId'] != null ? json['transporterId'] : 'NA';
           bookingModel.truckId =
               json['truckId'] != null ? json['truckId'] : 'NA';

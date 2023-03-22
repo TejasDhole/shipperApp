@@ -1,6 +1,9 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:sizer/sizer.dart';
+import '../responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -22,6 +25,7 @@ import 'priceContainer.dart';
 import 'package:get/get.dart';
 import '/functions/loadApiCalls.dart';
 import '/screens/PostLoadScreens/postloadnavigation.dart';
+
 // ignore: must_be_immutable
 class MyLoadsCard extends StatelessWidget {
   LoadDetailsScreenModel loadDetailsScreenModel;
@@ -62,9 +66,9 @@ class MyLoadsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'postedon'.tr +': ${loadDetailsScreenModel.postLoadDate}',
+                    'postedon'.tr + ': ${loadDetailsScreenModel.postLoadDate}',
                     style: TextStyle(
-                        fontSize: size_6,
+                        fontSize: kIsWeb ? size_8 : size_6,
                         color: veryDarkGrey,
                         fontFamily: 'montserrat'),
                   ),
@@ -86,66 +90,9 @@ class MyLoadsCard extends StatelessWidget {
                               ]),
                 ],
               ),
-              LoadEndPointTemplate(
-                  text: "${loadDetailsScreenModel.loadingPointCity}".tr,
-                  endPointType: 'loading'),
-              loadDetailsScreenModel.loadingPointCity2!= "NA"? LoadEndPointTemplate(
-                  text: "${loadDetailsScreenModel.loadingPointCity2}",
-                  endPointType: 'loading'):Container(),
-              Container(
-                height: space_4 + 2,
-                padding: EdgeInsets.only(left: space_1 - 3),
-                child: CustomPaint(
-                  foregroundPainter: LinePainter(height: space_4 + 2, width: 1),
-                ),
-              ),
-              LoadEndPointTemplate(
-                  text: "${loadDetailsScreenModel.unloadingPointCity}".tr,
-                  endPointType: 'unloading'),
-              loadDetailsScreenModel.unloadingPointCity2!="NA"?LoadEndPointTemplate(
-                  text: "${loadDetailsScreenModel.unloadingPointCity2}".tr,
-                  endPointType: 'unloading'):Container(),
-              SizedBox(
-                height: space_1,
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 8),
-                    child: Image(
-                      image:
-                          AssetImage('assets/images/TruckListEmptyImage.png'),
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                  Text(
-                    '${loadDetailsScreenModel.truckType}'.tr +'|''${loadDetailsScreenModel.noOfTyres} ' +'tyres'.tr,
-                    style: TextStyle(
-                        fontSize: size_6, fontWeight: mediumBoldWeight),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: space_1,
-              ),
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 8),
-                    child: Image(
-                      image: AssetImage('assets/images/EmptyLoad.png'),
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                  Text(
-                    '${loadDetailsScreenModel.productType}'.tr +'| ${loadDetailsScreenModel.weight} ' +'tons'.tr,
-                    style: TextStyle(
-                        fontSize: size_6, fontWeight: mediumBoldWeight),
-                  ),
-                ],
-              ),
+              !Responsive.isMobile(context)
+                  ? webView(context)
+                  : mobileView(),
               SizedBox(
                 height: space_2,
               ),
@@ -223,10 +170,10 @@ class MyLoadsCard extends StatelessWidget {
     switch (item) {
       case MenuItems.itemEdit:
         providerData.updateLoadingPointPostLoad(
-          place: loadDetailsScreenModel.loadingPoint!,
+            place: loadDetailsScreenModel.loadingPoint!,
             city: loadDetailsScreenModel.loadingPointCity!,
             state: loadDetailsScreenModel.loadingPointState!);
-        if(loadDetailsScreenModel.loadingPoint2!="NA"){
+        if (loadDetailsScreenModel.loadingPoint2 != "NA") {
           providerData.updateLoadingPointPostLoad2(
               place: loadDetailsScreenModel.loadingPoint2!,
               city: loadDetailsScreenModel.loadingPointCity2!,
@@ -241,7 +188,7 @@ class MyLoadsCard extends StatelessWidget {
           providerData
               .updateTruckNumber(int.parse(loadDetailsScreenModel.noOfTyres!));
         }
-        if(loadDetailsScreenModel.unloadingPoint2!="NA"){
+        if (loadDetailsScreenModel.unloadingPoint2 != "NA") {
           providerData.updateUnloadingPointPostLoad2(
               place: loadDetailsScreenModel.unloadingPoint2!,
               city: loadDetailsScreenModel.unloadingPointCity2!,
@@ -271,7 +218,7 @@ class MyLoadsCard extends StatelessWidget {
         providerData.updateEditLoad(true, loadDetailsScreenModel.loadId!);
 
         print(providerData.editLoad); // true
-        Get.to(postloadnav());
+        Get.to(PostLoadNav());
         break;
       case MenuItems.itemDisable:
         LoadApiCalls loadApiCalls = LoadApiCalls();
@@ -279,11 +226,175 @@ class MyLoadsCard extends StatelessWidget {
         Timer(Duration(seconds: 1), () {
           navigationIndexController.updateIndex(2);
           // Get.offAll(NavigationScreen());
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NavigationScreen()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  kIsWeb ? const HomeScreenWeb() : NavigationScreen()));
         });
 
         break;
     }
   }
+
+  webView(BuildContext context) {
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: !Responsive.isMobile(context)?CrossAxisAlignment.start:CrossAxisAlignment.center,
+          children: [
+            LoadEndPointTemplate(
+                text: "${loadDetailsScreenModel.loadingPointCity}".tr,
+                endPointType: 'loading'),
+            loadDetailsScreenModel.loadingPointCity2 != "NA"
+                ? LoadEndPointTemplate(
+                text: "${loadDetailsScreenModel.loadingPointCity2}",
+                endPointType: 'loading')
+                : Container(),
+            Container(
+              height: space_4 + 2,
+              padding: EdgeInsets.only(left: space_1 - 3),
+              child: CustomPaint(
+                foregroundPainter: LinePainter(height: space_4 + 2, width: 1),
+              ),
+            ),
+            LoadEndPointTemplate(
+                text: "${loadDetailsScreenModel.unloadingPointCity}".tr,
+                endPointType: 'unloading'),
+            loadDetailsScreenModel.unloadingPointCity2 != "NA"
+                ? LoadEndPointTemplate(
+                text: "${loadDetailsScreenModel.unloadingPointCity2}".tr,
+                endPointType: 'unloading')
+                : Container(),
+          ],
+        ),
+        SizedBox(
+          width: 10.w,
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 8),
+                  child: Image(
+                    image: AssetImage('assets/images/TruckListEmptyImage.png'),
+                    height: 24,
+                    width: 24,
+                  ),
+                ),
+                Text(
+                  '${loadDetailsScreenModel.truckType}'.tr +
+                      '|' '${loadDetailsScreenModel.noOfTyres} ' +
+                      'tyres'.tr,
+                  style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
+                ),
+              ],
+            ) ,
+            SizedBox(
+              height: space_5,
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 8),
+                  child: Image(
+                    image: AssetImage('assets/images/EmptyLoad.png'),
+                    height: 24,
+                    width: 24,
+                  ),
+                ),
+                Text(
+                  '${loadDetailsScreenModel.productType}'.tr +
+                      '| ${loadDetailsScreenModel.weight} ' +
+                      'tons'.tr,
+                  style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  mobileView(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LoadEndPointTemplate(
+            text: "${loadDetailsScreenModel.loadingPointCity}".tr,
+            endPointType: 'loading'),
+        loadDetailsScreenModel.loadingPointCity2 != "NA"
+            ? LoadEndPointTemplate(
+            text:
+            "${loadDetailsScreenModel.loadingPointCity2}",
+            endPointType: 'loading')
+            : Container(),
+        Container(
+          height: space_4 + 2,
+          padding: EdgeInsets.only(left: space_1 - 3),
+          child: CustomPaint(
+            foregroundPainter:
+            LinePainter(height: space_4 + 2, width: 1),
+          ),
+        ),
+        LoadEndPointTemplate(
+            text:
+            "${loadDetailsScreenModel.unloadingPointCity}".tr,
+            endPointType: 'unloading'),
+        loadDetailsScreenModel.unloadingPointCity2 != "NA"
+            ? LoadEndPointTemplate(
+            text:
+            "${loadDetailsScreenModel.unloadingPointCity2}"
+                .tr,
+            endPointType: 'unloading')
+            : Container(),
+        SizedBox(
+          height: space_1,
+        ),
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 8),
+              child: Image(
+                image: AssetImage(
+                    'assets/images/TruckListEmptyImage.png'),
+                height: 24,
+                width: 24,
+              ),
+            ),
+            Text(
+              '${loadDetailsScreenModel.truckType}'.tr +
+                  '|' '${loadDetailsScreenModel.noOfTyres} ' +
+                  'tyres'.tr,
+              style: TextStyle(
+                  fontSize: size_6, fontWeight: mediumBoldWeight),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: space_1,
+        ),
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 8),
+              child: Image(
+                image: AssetImage('assets/images/EmptyLoad.png'),
+                height: 24,
+                width: 24,
+              ),
+            ),
+            Text(
+              '${loadDetailsScreenModel.productType}'.tr +
+                  '| ${loadDetailsScreenModel.weight} ' +
+                  'tons'.tr,
+              style: TextStyle(
+                  fontSize: size_6, fontWeight: mediumBoldWeight),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
 }

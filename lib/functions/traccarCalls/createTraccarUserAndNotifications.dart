@@ -1,10 +1,10 @@
+import '../../screens/isolatedTransporterGetData.dart';
 import '/functions/traccarCalls/createNotificationTraccar.dart';
 import '/functions/traccarCalls/createUserTraccar.dart';
 import '/functions/traccarCalls/linkNotificationAndUserTraccar.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
 
 void createTraccarUserAndNotifications(String? token, String? mobileNum) async {
-  String? traccarId = tidstorage.read("traccarUserId");
+  String? traccarId = sidstorage.read("traccarUserId");
   if (traccarId == null) {
     String? userId = await createUserTraccar(token, mobileNum);
     // if (userId != null) {

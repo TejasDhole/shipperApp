@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shipper_app/Web/screens/login.dart';
 import 'package:shipper_app/main_screen.dart';
 import 'package:shipper_app/screens/SplashScreenToHomePage.dart';
 import 'package:shipper_app/screens/SplashScreenToLogin.dart';
 import 'package:sizer/sizer.dart';
+import 'constants/radius.dart';
 import 'firebase_options.dart';
 import 'providerClass/providerData.dart';
 import 'package:get/get.dart';
@@ -22,6 +24,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:connectivity/connectivity.dart';
 import 'language/localization_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var firebase;
 
@@ -34,8 +37,7 @@ void main() async {
       : Firebase.initializeApp();
   await dotenv.load();
   await GetStorage.init();
-  await GetStorage.init('TransporterIDStorage');
-
+  await GetStorage.init('ShipperIDStorage');
   runApp(const MyApp());
 }
 
@@ -51,24 +53,30 @@ class _MyAppState extends State<MyApp> {
   late Connectivity connectivity;
   late StreamSubscription<ConnectivityResult> subscription;
   bool isDisconnected = false;
-  GetStorage tidstorage = GetStorage('TransporterIDStorage');
-  String? transporterId;
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
+  String? shipperId;
+  late SharedPreferences prefs;
 
   @override
   void initState() {
     super.initState();
     setState(() {});
-    transporterId = tidstorage.read("transporterId");
+    shipperId = sidstorage.read("shipperId");
     //print(firebase);
+    getSharedPrefs();
     if (!kIsWeb) {
       checkConnection();
       connectivityChecker();
     }
   }
 
+  getSharedPrefs() async{
+    prefs = await SharedPreferences.getInstance();
+  }
+
   void checkConnection() {
     configOneSignel();
-    connectivity = new Connectivity();
+    connectivity = Connectivity();
     subscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       _connectionStatus = result.toString();
@@ -88,11 +96,12 @@ class _MyAppState extends State<MyApp> {
               content: NoInternetConnection.noInternetDialogue(),
               onWillPop: () async => false,
               title: "\nNo Internet",
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ));
-        } else
+        } else {
           connectivityChecker();
+        }
       }
     });
   }
@@ -109,7 +118,7 @@ class _MyAppState extends State<MyApp> {
             content: NoInternetConnection.noInternetDialogue(),
             onWillPop: () async => false,
             title: "\nNo Internet",
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ));
       });
@@ -146,8 +155,9 @@ class _MyAppState extends State<MyApp> {
                       theme: ThemeData(fontFamily: "montserrat"),
                       translations: LocalizationService(),
                       locale: LocalizationService().getCurrentLocale(),
-                      fallbackLocale: Locale('en', 'US'),
-                      home: const MainScreen(),
+                      fallbackLocale: const Locale('en', 'US'),
+                      //home: const MainScreen(),
+                      home: prefs.containsKey('uid')?const MainScreen():const LoginWeb(),
                     )
                   : FutureBuilder(
                       future: firebase,
@@ -156,48 +166,48 @@ class _MyAppState extends State<MyApp> {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (FirebaseAuth.instance.currentUser == null) {
                             //User is Logged out or doesn't Exist
-                            if (transporterId != null) {
-                              print("Current transporter is not null");
+                            if (shipperId != null) {
+                              print("Current transporter is not null and user is null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
                                   translations: LocalizationService(),
                                   locale:
                                       LocalizationService().getCurrentLocale(),
-                                  fallbackLocale: Locale('en', 'US'),
-                                  home: SplashScreenToHomePage());
+                                  fallbackLocale: const Locale('en', 'US'),
+                                  home: const SplashScreenToHomePage());
                             } else {
-                              print("Current transporter is null");
+                              print("Current transporter is not null and user is null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
                                   translations: LocalizationService(),
                                   locale:
                                       LocalizationService().getCurrentLocale(),
-                                  fallbackLocale: Locale('en', 'US'),
-                                  home: SplashScreenToLoginScreen());
+                                  fallbackLocale: const Locale('en', 'US'),
+                                  home: const SplashScreenToLoginScreen());
                             }
                           } else {
-                            if (transporterId != null) {
-                              print("Current transporter is not null");
+                            if (shipperId != null) {
+                              print("Current transporter is not null and user is not null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
                                   translations: LocalizationService(),
                                   locale:
                                       LocalizationService().getCurrentLocale(),
-                                  fallbackLocale: Locale('en', 'US'),
-                                  home: SplashScreenToHomePage());
+                                  fallbackLocale: const Locale('en', 'US'),
+                                  home: const SplashScreenToHomePage());
                             } else {
-                              print("Current transporter is null");
+                              print("Current transporter is null and user is not null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
                                   translations: LocalizationService(),
                                   locale:
                                       LocalizationService().getCurrentLocale(),
-                                  fallbackLocale: Locale('en', 'US'),
-                                  home: SplashScreenToLoginScreen());
+                                  fallbackLocale: const Locale('en', 'US'),
+                                  home: const SplashScreenToLoginScreen());
                             }
                           }
                         } else {

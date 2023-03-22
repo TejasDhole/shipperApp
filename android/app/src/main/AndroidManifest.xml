@@ -60,7 +60,7 @@
             android:value="2" />
 
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyCPU872xIfRhjvtdLViTDbj0EnIBuxlcSs"/>
+           android:value="AIzaSyB8rLbXkvmCFAS6jV0bhcBbn5Jh80D8YfA"/>
 
        <service
            android:name="dev.fluttercommunity.plus.androidalarmmanager.AlarmService"

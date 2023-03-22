@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import '/constants/spaces.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
+import '/functions/shipperApis/shipperApiCalls.dart';
 import '/models/biddingModel.dart';
 import '/providerClass/providerData.dart';
 import '/widgets/Header.dart';
@@ -9,7 +9,6 @@ import '/widgets/biddingsCardShipperSide.dart';
 import '/widgets/loadingWidget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:flutter_config/flutter_config.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -39,7 +38,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
   //Scroll Controller for Pagination
   ScrollController scrollController = ScrollController();
 
-  TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+  ShipperApiCalls shipperApiCalls = ShipperApiCalls();
 
   List<BiddingModel> biddingModelList = [];
 
@@ -126,7 +125,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
                           return LoadingWidget();
                         }
                         return FutureBuilder(
-                          future: transporterApiCalls.getDataByTransporterId(
+                          future: shipperApiCalls.getDataByShipperId(
                               biddingModelList[index].transporterId),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
@@ -144,10 +143,10 @@ class _BiddingScreensState extends State<BiddingScreens> {
                               biddingDate: biddingModelList[index].biddingDate,
                               bidId: biddingModelList[index].bidId,
                               transporterPhoneNum:
-                                  snapshot.data.transporterPhoneNum,
+                                  snapshot.data.shipperPhoneNum,
                               transporterLocation:
-                                  snapshot.data.transporterLocation,
-                              transporterName: snapshot.data.transporterName,
+                                  snapshot.data.shipperLocation,
+                              transporterName: snapshot.data.shipperName,
                               shipperApproved:
                                   biddingModelList[index].shipperApproval,
                               transporterApproved:

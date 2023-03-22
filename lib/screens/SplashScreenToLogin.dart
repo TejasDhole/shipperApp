@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
-import '/screens/loginScreen1.dart';
+import 'package:shipper_app/screens/LoginScreens/LoginScreenUsingMail.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
+import '/controller/shipperIdController.dart';
+import '/functions/shipperApis/runShipperApiPost.dart';
 
 
 class SplashScreenToLoginScreen extends StatefulWidget {
@@ -19,21 +19,21 @@ class SplashScreenToLoginScreen extends StatefulWidget {
 
 class _SplashScreenToLoginScreenState
     extends State<SplashScreenToLoginScreen> {
-  TransporterIdController transporterIdController = Get.put(TransporterIdController(), permanent: true);
-  String? transporterId;
+  ShipperIdController shipperIdController = Get.put(ShipperIdController(), permanent: true);
+  String? shipperId;
 
 
   @override
   void initState() {
     super.initState();
     getData();
-    Timer(Duration(seconds: 3), () => Get.off(() => LoginScreen1()));
+    Timer(Duration(seconds: 3), () => Get.off(() => LoginScreenUsingMail()));
   }
 
   getData() async   {
     // print();
     // Fluttertoast.showToast(
-    //   msg: "transporterIdController ${transporterIdController}",
+    //   msg: "shipperIdController ${shipperIdController}",
     //   // toastLength: Toast.LENGTH_SHORT,
     //   gravity: ToastGravity.BOTTOM,
     //   timeInSecForIosWeb: 1,
@@ -41,43 +41,40 @@ class _SplashScreenToLoginScreenState
     //   textColor: Colors.white,
     // );
 
-    bool? transporterApproved;
     bool? companyApproved;
     String? mobileNum;
     bool? accountVerificationInProgress;
-    String? transporterLocation;
+    String? shipperLocation;
     String? name;
     String? companyName;
 
-    if (transporterId != null){
-      print("transporterId is null");
+    if (shipperId != null){
+      print("shipperId is not null");
     }
     else {
       setState(() {
-        transporterId = tidstorage.read("transporterId");
-        transporterApproved = tidstorage.read("transporterApproved");
-        companyApproved = tidstorage.read("companyApproved");
-        mobileNum = tidstorage.read("mobileNum");
-        accountVerificationInProgress = tidstorage.read("accountVerificationInProgress");
-        transporterLocation = tidstorage.read("transporterLocation");
-        name = tidstorage.read("name");
-        companyName = tidstorage.read("companyName");
+        shipperId = sidstorage.read("shipperId");
+        companyApproved = sidstorage.read("companyApproved");
+        mobileNum = sidstorage.read("mobileNum");
+        accountVerificationInProgress = sidstorage.read("accountVerificationInProgress");
+        shipperLocation = sidstorage.read("shipperLocation");
+        name = sidstorage.read("name");
+        companyName = sidstorage.read("companyName");
       });
 
-      if (transporterId == null) {
-        print("Transporter ID is null");
+      if (shipperId == null) {
+        print("shipper ID is null");
       } else {
         print("It is in else");
-        transporterIdController.updateTransporterId(transporterId!);
-        transporterIdController.updateTransporterApproved(transporterApproved!);
-        transporterIdController.updateCompanyApproved(companyApproved!);
-        transporterIdController.updateMobileNum(mobileNum!);
-        transporterIdController
+        shipperIdController.updateShipperId(shipperId!);
+        shipperIdController.updateCompanyApproved(companyApproved!);
+        shipperIdController.updateMobileNum(mobileNum!);
+        shipperIdController
             .updateAccountVerificationInProgress(accountVerificationInProgress!);
-        transporterIdController.updateTransporterLocation(transporterLocation!);
-        transporterIdController.updateName(name!);
-        transporterIdController.updateCompanyName(companyName!);
-        print("transporterID is $transporterId");
+        shipperIdController.updateShipperLocation(shipperLocation!);
+        shipperIdController.updateName(name!);
+        shipperIdController.updateCompanyName(companyName!);
+        print("shipperID is $shipperId");
       }
     }
   }

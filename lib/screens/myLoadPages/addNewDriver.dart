@@ -8,7 +8,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/postDriverTraccarApi.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/screens/myLoadPages/confirmBookingDetails.dart';
@@ -36,8 +36,8 @@ class _AddNewDriverState extends State<AddNewDriver> {
   bool btnActive = false;
   String? transporterId;
   String? mobileno;
-  TransporterIdController transporterIdController = TransporterIdController();
-  GetStorage tidstorage = GetStorage('TransporterIDStorage');
+  ShipperIdController shipperIdController = ShipperIdController();
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
   GlobalKey<FormState> _key = new GlobalKey();
   bool _autovalidate = false;
@@ -287,7 +287,7 @@ class _AddNewDriverState extends State<AddNewDriver> {
                           //       ),
                           //       onPressed: () {
                           //         transporterId =
-                          //             tidstorage.read("transporterId");
+                          //             sidstorage.read("transporterId");
 
                           //         _sendToPreviousScreen();
                           //       },
@@ -298,7 +298,7 @@ class _AddNewDriverState extends State<AddNewDriver> {
                               condition: btnActive,
                               text: "Add".tr,
                               onPressedConditionTrue: () {
-                                tidstorage.read("transporterId");
+                                sidstorage.read("transporterId");
 
                                 _sendToPreviousScreen();
                               }),

@@ -5,7 +5,7 @@ import '/constants/elevation.dart';
 import '/constants/fontSize.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/screens/loadDetailsScreen.dart';
 import '/widgets/linePainter.dart';
@@ -17,7 +17,7 @@ import 'alertDialog/verifyAccountNotifyAlertDialogWithCall.dart';
 
 // ignore: must_be_immutable
 class HomeScreenLoadsCard extends StatelessWidget {
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController sIdController = Get.put(ShipperIdController());
 
   final LoadDetailsScreenModel loadDetailsScreenModel;
 
@@ -38,7 +38,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
 
     return GestureDetector(
         onTap: () => {
-              if (tIdController.transporterApproved.value)
+              if (sIdController.companyApproved.value)
                 {
                   Get.to(
                     () => LoadDetailsScreen(

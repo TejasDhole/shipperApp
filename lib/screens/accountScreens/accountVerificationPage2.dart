@@ -7,9 +7,9 @@ import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/controller/hudController.dart';
 import '/controller/navigationIndexController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/documentApi/postAccountVerificationDocuments.dart';
-import '/functions/trasnporterApis/updateTransporterApi.dart';
+import '/functions/shipperApis/updateShipperApi.dart';
 import '/providerClass/providerData.dart';
 import '/screens/navigationScreen.dart';
 import '/widgets/accountVerification/companyIdInputWidget.dart';
@@ -23,8 +23,8 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AccountVerificationPage2 extends StatelessWidget {
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   HudController hudController = Get.put(HudController());
 
   @override
@@ -103,10 +103,10 @@ class AccountVerificationPage2 extends StatelessWidget {
                                     providerData.companyIdProofPhoto64)
                             .then((uploadstatus) async {
                           if (uploadstatus == "Success") {
-                            final status = await updateTransporterApi(
+                            final status = await updateShipperApi(
                                 accountVerificationInProgress: true,
-                                transporterId: transporterIdController
-                                    .transporterId.value);
+                                transporterId: shipperIdController
+                                    .shipperId.value);
                             if (status == "Success") {
                               hudController.updateHud(false);
                               Get.offAll(NavigationScreen());

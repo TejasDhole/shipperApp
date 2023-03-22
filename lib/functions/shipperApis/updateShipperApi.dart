@@ -2,18 +2,18 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //TODO:all details not fetched
-Future<String> updateTransporterApi(
+Future<String> updateShipperApi(
     {required bool accountVerificationInProgress,
     required String transporterId}) async {
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   final String transporterApiUrl =
       // FlutterConfig.get("transporterApiUrl").toString();
-         dotenv.get('transporterApiUrl');
+         dotenv.get('shipperApiUrl');
 
 
   Map data = {"accountVerificationInProgress": accountVerificationInProgress};
@@ -37,11 +37,10 @@ Future<String> updateTransporterApi(
     String mobileNum = decodedResponse["phoneNo"] != null
         ? decodedResponse["phoneNo"].toString()
         : "";
-    transporterIdController.updateTransporterId(transporterId);
-    transporterIdController.updateTransporterApproved(transporterApproved);
-    transporterIdController.updateCompanyApproved(companyApproved);
-    transporterIdController.updateMobileNum(mobileNum);
-    transporterIdController
+    shipperIdController.updateShipperId(transporterId);
+    shipperIdController.updateCompanyApproved(companyApproved);
+    shipperIdController.updateMobileNum(mobileNum);
+    shipperIdController
         .updateAccountVerificationInProgress(accountVerificationInProgress);
     if (decodedResponse["status"].toString() == "Success") {
       return "Success";

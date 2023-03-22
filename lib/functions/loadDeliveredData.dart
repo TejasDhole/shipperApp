@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
+import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/deliveredCardModel.dart';
 import '/models/driverModel.dart';
@@ -12,15 +12,14 @@ import 'loadApiCalls.dart';
 Future<DeliveredCardModel> loadAllDeliveredData(bookingModel) async {
   final LoadApiCalls loadApiCalls = LoadApiCalls();
 
-  final TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+  final ShipperApiCalls shipperApiCalls = ShipperApiCalls();
 
   final TruckApiCalls truckApiCalls = TruckApiCalls();
 
   DriverModel driverModel = DriverModel();
 
   Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId);
-  TransporterModel transporterModel = await transporterApiCalls
-      .getDataByTransporterId(bookingModel.transporterId);
+  ShipperModel transporterModel = await shipperApiCalls.getDataByShipperId(bookingModel.shipperId);
 
   Map truckData = await truckApiCalls.getDataByTruckId(bookingModel.truckId[0]);
   if(truckData['driverId'] != "NA"){
@@ -41,10 +40,9 @@ Future<DeliveredCardModel> loadAllDeliveredData(bookingModel) async {
   loadALLDataModel.loadingPointCity = loadData['loadingPointCity'];
   loadALLDataModel.unloadingPointCity = loadData['unloadingPointCity'];
   loadALLDataModel.companyName =  transporterModel.companyName;
-  loadALLDataModel.transporterPhoneNum = transporterModel.transporterPhoneNum;
-  loadALLDataModel.transporterLocation = transporterModel.transporterLocation;
-  loadALLDataModel.transporterName = transporterModel.transporterName;
-  loadALLDataModel.transporterApproved = transporterModel.transporterApproved;
+  loadALLDataModel.transporterPhoneNum = transporterModel.shipperPhoneNum;
+  loadALLDataModel.transporterLocation = transporterModel.shipperLocation;
+  loadALLDataModel.transporterName = transporterModel.shipperName;
   loadALLDataModel.companyApproved=transporterModel.companyApproved;
   loadALLDataModel.truckNo =truckData['truckNo'];
   loadALLDataModel.truckType= truckData['truckType'];

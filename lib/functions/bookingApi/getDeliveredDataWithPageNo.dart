@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/loadDeliveredData.dart';
 import '/models/BookingModel.dart';
 import 'package:http/http.dart' as http;
@@ -13,11 +13,11 @@ getDeliveredDataWithPageNo(int i) async {
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
 
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   List<DeliveredCardModel> modelList = [];
   http.Response response = await http.get(Uri.parse(
-      '$bookingApiUrl?postLoadId=${transporterIdController.transporterId.value}&completed=true&cancel=false&pageNo=$i'));
+      '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=true&cancel=false&pageNo=$i'));
 
   var jsonData = json.decode(response.body);
 
@@ -28,7 +28,7 @@ getDeliveredDataWithPageNo(int i) async {
     bookingModel.bookingId = json['bookingId'];
     bookingModel.postLoadId = json['postLoadId'];
     bookingModel.loadId = json['loadId'];
-    bookingModel.transporterId = json['transporterId'];
+    bookingModel.shipperId = json['transporterId'];
     bookingModel.truckId = json['truckId'];
     bookingModel.cancel = json['cancel'];
     bookingModel.completed = json['completed'];

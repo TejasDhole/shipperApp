@@ -77,8 +77,8 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
               truckNo: widget.loadAllDataModel.truckNo,
               loadingPoint: widget.loadAllDataModel.loadingPointCity,
               unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
-              transporterName: widget.loadAllDataModel.transporterName,
-              transporterPhoneNum: widget.loadAllDataModel.transporterPhoneNum,
+              transporterName: widget.loadAllDataModel.shipperName,
+              transporterPhoneNum: widget.loadAllDataModel.shipperPhoneNum,
               driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
               driverName: widget.loadAllDataModel.driverName,
               bookingDate: widget.loadAllDataModel.bookingDate,
@@ -208,7 +208,7 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
                           CallButton(
                             directCall: false,
                             transporterPhoneNum:
-                                widget.loadAllDataModel.transporterPhoneNum,
+                                widget.loadAllDataModel.shipperPhoneNum,
                             driverPhoneNum:
                                 widget.loadAllDataModel.driverPhoneNum,
                             driverName: widget.loadAllDataModel.driverName,

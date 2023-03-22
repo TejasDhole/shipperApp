@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import '/controller/hudController.dart';
 import '/controller/isOtpInvalidController.dart';
 import '/controller/timerController.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
 import '/screens/languageSelectionScreen.dart';
-import '/screens/LoginScreens/loginScreen.dart';
+import '/screens/LoginScreens/loginScreenUsingPhone.dart';
 import '/screens/navigationScreen.dart';
 import '/widgets/loadingWidgets/bottomProgressBarIndicatorWidget.dart';
 
@@ -18,7 +18,7 @@ class AuthService {
 
   Future signOut() async {
     try {
-      Get.to(() => LoginScreen());
+      Get.to(() => LoginScreenUsingPhone());
       return FirebaseAuth.instance.signOut();
     } catch (e) {
       print(e.toString());
@@ -39,8 +39,8 @@ class AuthService {
           hudController.updateHud(true);
           timerController.cancelTimer();
 
-          await runTransporterApiPost(
-              mobileNum: value.user!.phoneNumber!.toString().substring(3, 13));
+          await runShipperApiPost(
+              emailId: value.user!.email!.toString());
 
           Get.offAll(() => NavigationScreen());
         }

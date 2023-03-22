@@ -4,7 +4,7 @@ import '/constants/borderWidth.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/controller/tokenMMIController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/loadApis/runFindLoadApiGet.dart';
 import '/functions/placeAutoFillUtils/autoFillMMI.dart';
 import '/providerClass/providerData.dart';
@@ -28,8 +28,8 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
   TextEditingController controller1 = TextEditingController();
   TextEditingController controller2 = TextEditingController();
   var findLoadApiData;
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   @override
   Widget build(BuildContext context) {
     if(Get.isRegistered<TokenMMIController>()){

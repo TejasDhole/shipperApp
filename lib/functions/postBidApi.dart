@@ -3,7 +3,7 @@
 // import 'package:flutter_config/flutter_config.dart';
 // import 'package:intl/intl.dart';
 //
-// postBidAPi(loadId, rate, transporterIdController, unit) async {
+// postBidAPi(loadId, rate, shipperIdController, unit) async {
 //   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
 //
 //   if (unit == "RadioButtonOptions.PER_TON") {
@@ -13,7 +13,7 @@
 //     unit = "PER_TRUCK";
 //   }
 //   Map data = {
-//     "transporterId": transporterIdController.toString(),
+//     "transporterId": shipperIdController.toString(),
 //     "loadId": loadId.toString(),
 //     "rate": rate.toString(),
 //     "unitValue": unit.toString(),

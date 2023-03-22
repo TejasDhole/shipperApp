@@ -23,7 +23,7 @@ class RepostButton extends StatelessWidget {
               )),
           backgroundColor: MaterialStateProperty.all<Color>(declineButtonRed),
         ),
-        onPressed: () { Get.to(postloadnav()); },
+        onPressed: () { Get.to(PostLoadNav()); },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 0 , horizontal: space_5),
           child:  Text(

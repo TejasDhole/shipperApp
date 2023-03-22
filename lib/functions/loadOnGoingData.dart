@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
+import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/BookingModel.dart';
 import '/models/driverModel.dart';
@@ -11,7 +11,7 @@ import 'loadApiCalls.dart';
 //TODO:later on ,put these variables inside the function
 LoadApiCalls loadApiCalls = LoadApiCalls();
 
-TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+ShipperApiCalls shipperApiCalls = ShipperApiCalls();
 
 TruckApiCalls truckApiCalls = TruckApiCalls();
 
@@ -19,8 +19,7 @@ DriverApiCalls driverApiCalls = DriverApiCalls();
 
 Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
   // Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId!);
-  TransporterModel transporterModel = await transporterApiCalls
-      .getDataByTransporterId(bookingModel.transporterId);
+  ShipperModel shipperModel = await shipperApiCalls.getDataByShipperId(bookingModel.shipperId);
 
   OngoingCardModel loadALLDataModel = OngoingCardModel();
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
@@ -29,12 +28,11 @@ Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
   loadALLDataModel.deviceId = bookingModel.deviceId;
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
   loadALLDataModel.unloadingPointCity = bookingModel.unloadingPointCity;
-  loadALLDataModel.companyName = transporterModel.companyName;
-  loadALLDataModel.transporterPhoneNum = transporterModel.transporterPhoneNum;
-  loadALLDataModel.transporterLocation = transporterModel.transporterLocation;
-  loadALLDataModel.transporterName = transporterModel.transporterName;
-  loadALLDataModel.transporterApproved = transporterModel.transporterApproved;
-  loadALLDataModel.companyApproved = transporterModel.companyApproved;
+  loadALLDataModel.companyName = shipperModel.companyName;
+  loadALLDataModel.shipperPhoneNum = shipperModel.shipperPhoneNum;
+  loadALLDataModel.shipperLocation = shipperModel.shipperLocation;
+  loadALLDataModel.shipperName = shipperModel.shipperName;
+  loadALLDataModel.companyApproved = shipperModel.companyApproved;
   loadALLDataModel.truckNo = bookingModel.truckNo;
   loadALLDataModel.truckType = 'NA';
   loadALLDataModel.imei = 'NA';

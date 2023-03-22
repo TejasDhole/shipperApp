@@ -9,7 +9,7 @@ import '/constants/spaces.dart';
 import '/controller/navigationIndexController.dart';
 import '/controller/postLoadErrorController.dart';
 import '/controller/postLoadVariablesController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/PostLoadApi.dart';
 import '/functions/PutLoadAPI.dart';
 import '/functions/postOneSignalNotification.dart';
@@ -36,13 +36,13 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         Get.put(PostLoadErrorController());
     NavigationIndexController navigationIndexController =
         Get.put(NavigationIndexController());
-    TransporterIdController transporterIdController =
-        Get.put(TransporterIdController());
+    ShipperIdController shipperIdController =
+        Get.put(ShipperIdController());
     ProviderData providerData = Provider.of<ProviderData>(context);
     PostLoadVariablesController postLoadVariables =
         Get.put(PostLoadVariablesController());
     getData() async {
-      // print(transporterIdController.transporterId.value);
+      // print(shipperIdController.transporterId.value);
       String? loadId = '';
       if (loadId == '') {
         showDialog(
@@ -55,7 +55,7 @@ class LoadConfirmationScreenButton extends StatelessWidget {
       if (providerData.editLoad == false) {
         loadId = await postLoadAPi(
             postLoadVariables.bookingDate.value,
-            transporterIdController.transporterId.value,
+            shipperIdController.shipperId.value,
             providerData.loadingPointPostLoad,
             providerData.loadingPointCityPostLoad,
             providerData.loadingPointStatePostLoad,
@@ -116,7 +116,7 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         loadId = await putLoadAPI(
             providerData.transporterLoadId,
             postLoadVariables.bookingDate.value,
-            transporterIdController.transporterId.value,
+            shipperIdController.shipperId.value,
             "${providerData.loadingPointCityPostLoad}, ${providerData.loadingPointStatePostLoad}",
             providerData.loadingPointCityPostLoad,
             providerData.loadingPointStatePostLoad,
@@ -177,7 +177,7 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         // title=="Edit"?Get.to(PostLoadScreenOne()):
         if (title == "Edit") {
           providerData.updateUpperNavigatorIndex2(0);
-          Get.to(() => postloadnav());
+          Get.to(() => PostLoadNav());
         } else {
           providerData.updateUnitValue();
           getData();

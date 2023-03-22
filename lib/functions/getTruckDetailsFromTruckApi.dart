@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'dart:convert';
 import '/models/truckModel.dart';
 import '/providerClass/providerData.dart';
@@ -12,14 +12,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<List> getTruckDetailsFromTruckApi(BuildContext context) async {
   var providerData = Provider.of<ProviderData>(context, listen: false);
   List<TruckModel> truckDetailsList = [];
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
   var jsonData;
   // final String truckApiUrl = FlutterConfig.get('truckApiUrl').toString();
   final String truckApiUrl = dotenv.get('truckApiUrl');
 
   try {
     http.Response response = await http.get(Uri.parse(
-        truckApiUrl + '?transporterId=${tIdController.transporterId}'));
+        truckApiUrl + '?transporterId=${tIdController.shipperId}'));
     jsonData = json.decode(response.body);
 
     for (var json in jsonData) {

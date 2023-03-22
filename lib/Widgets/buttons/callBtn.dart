@@ -4,7 +4,7 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/widgets/ChooseReceiverButton.dart';
 import '/widgets/alertDialog/verifyAccountNotifyAlertDialog.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -36,7 +36,7 @@ class callBtn extends StatelessWidget {
     }
   }
 
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {

@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
 import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
@@ -14,8 +15,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-TransporterIdController transporterIdController =
-    Get.put(TransporterIdController(), permanent: true);
+ShipperIdController shipperIdController =
+    Get.put(ShipperIdController(), permanent: true);
 bool exe = true;
 
 int count = 0;
@@ -30,8 +31,8 @@ isolatedTransporterGetData() {
 
 
 Future<dynamic> apirun2() async {
-  var response = await runTransporterApiPostIsolated(
-      mobileNum: transporterIdController.mobileNum.value);
+  var response = await runShipperApiPostIsolated(
+      emailId: FirebaseAuth.instance.currentUser!.email.toString(),phoneNo: FirebaseAuth.instance.currentUser!.phoneNumber.toString().replaceFirst("+91", ""));
   count = count + 1;
   print(count);
   print("response = ");
@@ -47,10 +48,10 @@ Future<dynamic> apirun2() async {
   return response;
 }
 
-GetStorage tidstorage = GetStorage('TransporterIDStorage');
+GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
-Future<String?> runTransporterApiPostIsolated(
-    {required String mobileNum, String? userLocation}) async {
+Future<String?> runShipperApiPostIsolated(
+    {required String emailId, String? userLocation,String? phoneNo}) async {
   try {
     print("in the try block of api file");
     // var mUser = FirebaseAuth.instance.currentUser;
@@ -60,19 +61,19 @@ Future<String?> runTransporterApiPostIsolated(
     //   firebaseToken = value;
     // });
 
-    TransporterIdController transporterIdController =
-        Get.put(TransporterIdController(), permanent: true);
+    ShipperIdController shipperIdController =
+        Get.put(ShipperIdController(), permanent: true);
 
-    final String transporterApiUrl =
-        // FlutterConfig.get("transporterApiUrl").toString();
-    dotenv.get('transporterApiUrl');
+    final String shipperApiUrl =
+        // FlutterConfig.get("shipperApiUrl").toString();
+    dotenv.get('shipperApiUrl');
 
     Map data = userLocation != null
-        ? {"phoneNo": mobileNum, "transporterLocation": userLocation}
-        : {"phoneNo": mobileNum};
+        ? {"emailId": emailId, "shipperLocation": userLocation}
+        : {"emailId": emailId,"phoneNo": phoneNo };
     String body = json.encode(data);
     print("here is api call started");
-    final response = await http.post(Uri.parse(transporterApiUrl),
+    final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           // HttpHeaders.authorizationHeader: firebaseToken!
@@ -81,75 +82,70 @@ Future<String?> runTransporterApiPostIsolated(
     print(response.body);
     print("here api call stopped");
 
-    if (FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null && !kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {
         if (value != null) {
           log("firebase registration token =========> " + value);
         }
-        createTraccarUserAndNotifications(value, mobileNum);
+        createTraccarUserAndNotifications(value, phoneNo);
       });
     }
 
-    if (response.statusCode == 201 &&
-        FirebaseAuth.instance.currentUser != null) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
-      if (decodedResponse["transporterId"] != null) {
-        String transporterId = decodedResponse["transporterId"];
-        bool transporterApproved =
-            decodedResponse["transporterApproved"].toString() == "true";
+      print("isolated data--->${response.body}");
+      if (decodedResponse["shipperId"] != null) {
+        String shipperId = decodedResponse["shipperId"];
+
+        debugPrint(shipperId);
+        debugPrint("*********************************************************$shipperId");
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
             decodedResponse["accountVerificationInProgress"].toString() ==
                 "true";
-        String transporterLocation =
-            decodedResponse["transporterLocation"] == null
-                ? " "
-                : decodedResponse["transporterLocation"];
-        String name = decodedResponse["transporterName"] == null
-            ? " "
-            : decodedResponse["transporterName"];
-        String companyName = decodedResponse["companyName"] == null
-            ? " "
-            : decodedResponse["companyName"];
-        transporterIdController.updateTransporterId(transporterId);
-        tidstorage
-            .write("transporterId", transporterId)
-            .then((value) => print("Written transporterId"));
-        transporterIdController.updateTransporterApproved(transporterApproved);
-        tidstorage
-            .write("transporterApproved", transporterApproved)
-            .then((value) => print("Written transporterApproved"));
-        transporterIdController.updateCompanyApproved(companyApproved);
-        tidstorage
+        String shipperLocation = decodedResponse["shipperLocation"] ?? " ";
+        String name = decodedResponse["shipperName"] ?? " ";
+        String companyName = decodedResponse["companyName"] ?? " ";
+        String mobileNum = decodedResponse["phoneNo"] ?? " ";
+        shipperIdController.updateShipperId(shipperId);
+        sidstorage
+            .write("shipperId", shipperId)
+            .then((value) => print("Written shipperId"));
+        shipperIdController.updateCompanyApproved(companyApproved);
+        sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
-        transporterIdController.updateMobileNum(mobileNum);
-        tidstorage
+        shipperIdController.updateEmailId(emailId);
+        sidstorage
+            .write("emailId", emailId)
+            .then((value) => print("Written emailId"));
+        shipperIdController.updateMobileNum(mobileNum);
+        sidstorage
             .write("mobileNum", mobileNum)
-            .then((value) => print("Written mobileNum"));
-        transporterIdController
+            .then((value) => print("Written mobile number"));
+        shipperIdController
             .updateAccountVerificationInProgress(accountVerificationInProgress);
-        tidstorage
+        sidstorage
             .write(
-                "accountVerificationInProgress", accountVerificationInProgress)
+            "accountVerificationInProgress", accountVerificationInProgress)
             .then((value) => print("Written accountVerificationInProgress"));
-        transporterIdController.updateTransporterLocation(transporterLocation);
-        tidstorage
-            .write("transporterLocation", transporterLocation)
-            .then((value) => print("Written transporterLocation"));
-        transporterIdController.updateName(name);
-        tidstorage.write("name", name).then((value) => print("Written name"));
-        transporterIdController.updateCompanyName(companyName);
-        tidstorage
+        shipperIdController.updateShipperLocation(shipperLocation);
+        sidstorage
+            .write("shipperLocation", shipperLocation)
+            .then((value) => print("Written shipperLocation"));
+        shipperIdController.updateName(name);
+        sidstorage.write("name", name).then((value) => print("Written name"));
+        shipperIdController.updateCompanyName(companyName);
+        sidstorage
             .write("companyName", companyName)
             .then((value) => print("Written companyName"));
         if (decodedResponse["token"] != null) {
-          transporterIdController
+          shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
-        return transporterId;
-      } else {
+        return shipperId;
+      }  else {
         return null;
       }
     } else {

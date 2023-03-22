@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -10,7 +10,7 @@ class BuyGPSApiCalls {
   final String buyGPSApiUrl = dotenv.get('buyGpsApiUrl');
 
   // transporterId controller
-  TransporterIdController transporterIdController = Get.put(TransporterIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   String? _gpsId;
 
@@ -18,7 +18,7 @@ class BuyGPSApiCalls {
 
     // json map
     Map<String, dynamic> data = {
-      "transporterId": transporterIdController.transporterId.value,
+      "transporterId": shipperIdController.shipperId.value,
       "truckId": truckId,
       "rate": rate,
       "duration": duration,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../functions/shipperApis/shipperApiCalls.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/screens/myLoadPages/trackOngoing/trackScreenOngoing.dart';
 import '/screens/trackScreen.dart';
@@ -38,7 +38,7 @@ class TrackButton extends StatefulWidget {
 
 class _TrackButtonState extends State<TrackButton> {
   String? transporterIDImei;
-  final TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+  final ShipperApiCalls shipperApiCalls = ShipperApiCalls();
   final TruckApiCalls truckApiCalls = TruckApiCalls();
 
   var truckData;

@@ -2,7 +2,7 @@
 // import 'package:get/get.dart';
 // import '/constants/fontSize.dart';
 // import '/constants/spaces.dart';
-// import '/screens/LoginScreens/loginScreen.dart';
+// import '/screens/LoginScreens/loginScreenUsingPhone.dart';
 // import 'package:location_permissions/location_permissions.dart';
 //
 // class LocationDisabledScreen extends StatefulWidget {

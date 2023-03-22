@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
+import '/functions/shipperApis/runShipperApiPost.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<String?> createUserTraccar(String? token, String? mobileNum) async {
@@ -35,7 +35,7 @@ Future<String?> createUserTraccar(String? token, String? mobileNum) async {
   if (response.statusCode == 200) {
     var decodedResponse = json.decode(response.body);
     String id = decodedResponse["id"].toString();
-    tidstorage
+    sidstorage
         .write("traccarUserId", id)
         .then((value) => print("traccarUserId \" $id \" saved in cache"));
     return id;

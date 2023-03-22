@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/controller/truckIdController.dart';
 import '/functions/driverApiCalls.dart';
 import '/models/driverModel.dart';
@@ -15,8 +15,8 @@ class TruckApiCalls {
   final String truckApiUrl = dotenv.get('truckApiUrl');
 
   // transporterId controller
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   //truckId controller ..used to store truckId for latest truck
   TruckIdController truckIdController = TruckIdController();
@@ -35,7 +35,7 @@ class TruckApiCalls {
   Future<List<TruckModel>> getTruckData() async {
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(truckApiUrl +
-          '?transporterId=${transporterIdController.transporterId.value}&pageNo=$i'));
+          '?transporterId=${shipperIdController.shipperId.value}&pageNo=$i'));
       jsonData = json.decode(response.body);
       if (jsonData.isEmpty) {
         break;
@@ -107,7 +107,7 @@ class TruckApiCalls {
   Future<String?> postTruckData({required String truckNo}) async {
     // json map
     Map<String, dynamic> data = {
-      "transporterId": transporterIdController.transporterId.value,
+      "transporterId": shipperIdController.shipperId.value,
       "truckNo": truckNo,
     };
 
@@ -141,7 +141,7 @@ class TruckApiCalls {
       "driverId": driverID == '' ? null : driverID,
       "imei": null,
       "passingWeight": passingWeight == 0 ? null : passingWeight,
-      "transporterId": transporterIdController.transporterId.value,
+      "transporterId": shipperIdController.shipperId.value,
       "truckApproved": false,
       "truckType": truckType == '' ? null : truckType,
       // "truckLength": truckLength == 0 ? null : truckLength,

@@ -5,7 +5,7 @@ import 'package:flutter_background/flutter_background.dart' as fbg;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/PostIMEILatLangData.dart';
 
 late Timer timer;
@@ -16,7 +16,7 @@ String? device_Name;
 double? speed;
 double? heading;
 int alarmId = 1;
-TransporterIdController transporterIdController = Get.put(TransporterIdController());
+ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
 void backgroundTry() async {
   print("Background Try");
@@ -60,7 +60,7 @@ void _getUserAddress() async {
       var timeStamp = DateFormat('yyyyMMdd:HHmmss').format(now);
       postIMEILatLngData(
           lat: (latitude.toString()),
-          trasnporterID: transporterIdController.transporterId.value,
+          trasnporterID: shipperIdController.shipperId.value,
           deviceName: device_Name,
           powerValue: '12',
           lng: (longitude.toString()),

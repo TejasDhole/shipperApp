@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
+import '../../functions/shipperApis/shipperApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/BookingModel.dart';
 import '/models/driverModel.dart';
@@ -11,7 +11,7 @@ import '/models/transporterModel.dart';
 //TODO:later on ,put these variables inside the function
 // LoadApiCalls loadApiCalls = LoadApiCalls();
 
-TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+ShipperApiCalls shipperApiCalls = ShipperApiCalls();
 
 // TruckApiCalls truckApiCalls = TruckApiCalls();
 
@@ -20,11 +20,11 @@ TransporterApiCalls transporterApiCalls = TransporterApiCalls();
 Future<OngoingCardModel?> loadAllOnGoingOrdersData(
     BookingModel bookingModel) async {
   // Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId!);
-  // TransporterModel transporterModel = await transporterApiCalls
-  //     .getDataByTransporterId(bookingModel.transporterId);
+  // TransporterModel transporterModel = await ShipperApiCalls
+  //     .getDataByShipperId(bookingModel.transporterId);
 
-  TransporterModel transporterModel =
-      await transporterApiCalls.getDataByTransporterId(bookingModel.postLoadId);
+  ShipperModel transporterModel =
+      await shipperApiCalls.getDataByShipperId(bookingModel.postLoadId);
 
   OngoingCardModel loadALLDataModel = OngoingCardModel();
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
@@ -34,10 +34,9 @@ Future<OngoingCardModel?> loadAllOnGoingOrdersData(
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
   loadALLDataModel.unloadingPointCity = bookingModel.unloadingPointCity;
   loadALLDataModel.companyName = transporterModel.companyName;
-  loadALLDataModel.transporterPhoneNum = transporterModel.transporterPhoneNum;
-  loadALLDataModel.transporterLocation = transporterModel.transporterLocation;
-  loadALLDataModel.transporterName = transporterModel.transporterName;
-  loadALLDataModel.transporterApproved = transporterModel.transporterApproved;
+  loadALLDataModel.shipperPhoneNum = transporterModel.shipperPhoneNum;
+  loadALLDataModel.shipperLocation = transporterModel.shipperLocation;
+  loadALLDataModel.shipperName = transporterModel.shipperName;
   loadALLDataModel.companyApproved = transporterModel.companyApproved;
   loadALLDataModel.truckNo = bookingModel.truckNo;
   loadALLDataModel.truckType = 'NA';

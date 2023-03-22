@@ -25,7 +25,7 @@ class _AddUserState extends State<AddUser> {
         child: Center(
           child: Column(
             children: [
-              const LiveasyIcon(),
+              SizedBox(height: 10.h,),
               Form(
                 key: _formKey,
                 child: Container(
@@ -54,7 +54,7 @@ class _AddUserState extends State<AddUser> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Company name",
+                            Text("Email Id",
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _AddUserState extends State<AddUser> {
                             SizedBox(height: 1.9.h,),
                             TextFormField(
                               decoration: const InputDecoration(
-                                hintText: 'Enter Company Name',
+                                hintText: 'Enter Mail Id',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
                                 ),
@@ -74,7 +74,7 @@ class _AddUserState extends State<AddUser> {
                                   setState(() {
                                     isError = true;
                                   });
-                                  return "Enter your Company Name";
+                                  return "Enter employee Mail Id";
                                 }
                                 setState(() {
                                   isError = false;
@@ -89,6 +89,7 @@ class _AddUserState extends State<AddUser> {
                         ),
                       ),
                       SizedBox(height: 2.h,),
+                      Center(child: Text('OR',style: TextStyle(fontSize: 4.sp,fontFamily: 'Montserrat'),)),
                       Padding(
                         padding: EdgeInsets.only(left: 3.w,top: 5.h,right: 3.w),
                         child: Column(

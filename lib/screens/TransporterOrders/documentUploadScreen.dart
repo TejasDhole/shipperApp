@@ -4,7 +4,7 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/providerClass/providerData.dart';
 //import '/screens/TransporterOrders/callBtn.dart';
 import '/screens/TransporterOrders/docInputEWBill.dart';
@@ -19,7 +19,6 @@ import '../HelpScreen.dart';
 import 'docInputLr.dart';
 //import 'getDocName.dart';
 //import 'getDocumentApiCall.dart';
-
 import '/functions/documentApi/getDocName.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 import '/functions/documentApi/postDocumentApiCall.dart';
@@ -75,7 +74,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TransporterIdController());
+    Get.put(ShipperIdController());
     var providerData = Provider.of<ProviderData>(context);
 
     //Pod :-

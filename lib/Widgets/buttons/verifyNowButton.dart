@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -18,8 +20,12 @@ class VerifyNowButton extends StatelessWidget {
         Get.put(NavigationIndexController());
     return GestureDetector(
       onTap: () {
-        Get.offAll(NavigationScreen(initScreen: 4));
-        navigationIndexController.updateIndex(4);
+        if(kIsWeb){
+          Get.offAll(const HomeScreenWeb(index:3,selectedIndex: 3,));
+        }else {
+          Get.offAll(NavigationScreen(initScreen: 4));
+          navigationIndexController.updateIndex(4);
+        }
       },
       child: Container(
         height: space_8,

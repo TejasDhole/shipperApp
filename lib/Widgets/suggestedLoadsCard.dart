@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/constants/elevation.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/screens/loadDetailsScreen.dart';
 import 'alertDialog/verifyAccountNotifyAlertDialog.dart';
@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 
 class SuggestedLoadsCard extends StatelessWidget {
   final LoadDetailsScreenModel loadDetailsScreenModel;
-  final TransporterIdController tIdController =
-      Get.put(TransporterIdController());
+  final ShipperIdController tIdController =
+      Get.put(ShipperIdController());
 
   SuggestedLoadsCard({Key? key, required this.loadDetailsScreenModel})
       : super(key: key);
@@ -24,7 +24,7 @@ class SuggestedLoadsCard extends StatelessWidget {
       child: Column(children: [
         GestureDetector(
           onTap: () {
-            if (tIdController.transporterApproved.value) {
+            if (tIdController.companyApproved.value) {
               Get.to(() => LoadDetailsScreen(
                   loadDetailsScreenModel: loadDetailsScreenModel));
             } else {

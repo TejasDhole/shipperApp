@@ -66,7 +66,7 @@ Color unactiveReset = const Color(0xffC4C9D9);
 dynamic greyishWhiteColorM =
 MaterialStateProperty.all<Color>(greyishWhiteColor);
 
-Color darkCharcoal = const Color(0xff333333);
+Color darkCharcoal = const Color(0xFF333333);
 const Color red = Colors.red;
 const Color navy = Color(0xff000066);
 

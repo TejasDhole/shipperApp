@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/models/BookingModel.dart';
 
 class BookingApiCalls {
-  //TransporterIdController will be used as postId in Transporter App
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  //shipperIdController will be used as postId in Transporter App
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   //BookingApiUrl
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
@@ -26,7 +26,7 @@ class BookingApiCalls {
     print('getDataByPostLoadIdOnGoing in');
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
-          '$bookingApiUrl?postLoadId=${transporterIdController.transporterId.value}&completed=false&cancel=false&pageNo=$i'));
+          '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
 
       var jsonData = json.decode(response.body);
 
@@ -42,8 +42,8 @@ class BookingApiCalls {
         print(bookingModel.bookingDate);
         bookingModel.loadId = json['loadId'];
         print(bookingModel.loadId);
-        bookingModel.transporterId = json['transporterId'];
-        print(bookingModel.transporterId);
+        bookingModel.shipperId = json['transporterId'];
+        print(bookingModel.shipperId);
         bookingModel.truckId = json['truckId'];
         print(bookingModel.truckId);
         bookingModel.cancel = json['cancel'];
@@ -65,7 +65,7 @@ class BookingApiCalls {
     modelList = [];
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
-          '$bookingApiUrl?postLoadId=${transporterIdController.transporterId.value}&completed=true&cancel=false&pageNo=$i'));
+          '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=true&cancel=false&pageNo=$i'));
       var jsonData = json.decode(response.body);
 
       if (jsonData.isEmpty) {
@@ -78,7 +78,7 @@ class BookingApiCalls {
         bookingModel.bookingId = json['bookingId'];
         bookingModel.postLoadId = json['postLoadId'];
         bookingModel.loadId = json['loadId'];
-        bookingModel.transporterId = json['transporterId'];
+        bookingModel.shipperId = json['transporterId'];
         bookingModel.truckId = json['truckId'];
         bookingModel.cancel = json['cancel'];
         bookingModel.completed = json['completed'];

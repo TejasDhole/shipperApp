@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 putDocumentApiCall(Map datanew2, String bookingId) async {
-  // TransporterIdController tIdController = Get.put(TransporterIdController());
+  // shipperIdController tIdController = Get.put(shipperIdController());
   // String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
   // String now = DateFormat("dd-MM-yyyy").format(DateTime.now().subtract(Duration(hours: 5, minutes: 30))
   //     .toIso8601String());

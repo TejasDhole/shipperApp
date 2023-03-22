@@ -59,7 +59,7 @@ class _SelectDriverScreenState extends State<SelectDriverScreen> {
     String driverApiUrl = dotenv.get('driverApiUrl');
 
     var jsonData;
-    String? traccarUser = transporterIdController.mobileNum.value;
+    String? traccarUser = shipperIdController.mobileNum.value;
     // String traccarPass = FlutterConfig.get("traccarPass");
     String traccarPass = dotenv.get('traccarPass');
 

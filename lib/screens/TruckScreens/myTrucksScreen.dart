@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/language/localization_service.dart';
@@ -29,8 +29,8 @@ class MyTrucks extends StatefulWidget {
 
 class _MyTrucksState extends State<MyTrucks> {
   //TransporterId controller
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   //Scroll Controller for Pagination
   ScrollController scrollController = ScrollController();

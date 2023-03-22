@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '/controller/SelectedDriverController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/responseModel.dart';
 import '/models/truckModel.dart';
 import 'dart:convert';
@@ -18,8 +18,8 @@ class DriverApiCalls {
 
   late List jsonData;
 
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   SelectedDriverController selectedDriverController =
       Get.put(SelectedDriverController());
 
@@ -33,7 +33,7 @@ class DriverApiCalls {
     driverList = [];
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
-          '$driverApiUrl?transporterId=${transporterIdController.transporterId.value}&pageNo=$i'));
+          '$driverApiUrl?transporterId=${shipperIdController.shipperId.value}&pageNo=$i'));
 
       jsonData = json.decode(response.body);
       if (jsonData.isEmpty) {
@@ -58,7 +58,7 @@ class DriverApiCalls {
 
   Future<List<DriverModel>> getDriverData() async {
     driverList = [];
-    String? traccarUser = transporterIdController.mobileNum.value;
+    String? traccarUser = shipperIdController.mobileNum.value;
     // String traccarPass = FlutterConfig.get("traccarPass");
     String traccarPass = dotenv.get('traccarPass');
 

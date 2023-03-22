@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/bookingApi/getDeliveredDataWithPageNo.dart';
 import '/models/deliveredCardModel.dart';
 import '/widgets/deliveredCard.dart';
@@ -23,8 +23,8 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
   bool loading = false;
   bool DeliveredProgress = false;
 
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');

@@ -25,18 +25,18 @@ class SignUpWithGoogleButton extends StatelessWidget {
           ),
         ),
         child: ElevatedButton(
-          style: ButtonStyle(
-            elevation: MaterialStateProperty.resolveWith((states) => elevation_0),
-            backgroundColor: MaterialStateColor.resolveWith((states) => Colors.black.withOpacity(0.01)),
+          style: ElevatedButton.styleFrom(
+            elevation: elevation_0,
+            backgroundColor: Colors.black.withOpacity(0.01),
           ),
           onPressed: onPressed,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                   height: space_4,
                   width: space_4,
-                  child: Image(
+                  child: const Image(
                     image: AssetImage("assets/icons/google_icon.png"),
                   )
               ),
@@ -44,7 +44,7 @@ class SignUpWithGoogleButton extends StatelessWidget {
                 width: space_3,
               ),
               Text(
-                "Sign up with Google",
+                "Login with Google",
                 style: TextStyle(
                     fontSize: size_9,
                     fontFamily: "Monsterrat",

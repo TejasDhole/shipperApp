@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '/controller/lockUnlockController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-TransporterIdController transporterIdController =
-    Get.put(TransporterIdController());
+ShipperIdController shipperIdController =
+    Get.put(ShipperIdController());
 final lockStorage = GetStorage();
 // String? traccarUser = FlutterConfig.get("traccarUser");
 String? traccarUser = dotenv.get('traccarUser');

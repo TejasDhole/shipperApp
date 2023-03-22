@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../controller/hudController.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
 import '/constants/borderWidth.dart';
@@ -12,15 +13,20 @@ import '/constants/radius.dart';
 import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 
-class PhoneNumbertextField extends StatefulWidget {
-  const PhoneNumbertextField({Key? key}) : super(key: key);
-
+class PhoneNumberTextField extends StatefulWidget {
   @override
-  State<PhoneNumbertextField> createState() => _PhoneNumbertextFieldState();
+  _PhoneNumberTextFieldState createState() => _PhoneNumberTextFieldState();
 }
 
-class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
-  TextEditingController controller = TextEditingController();
+class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
+  HudController hudController = Get.put(HudController());
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    hudController.updateHud(false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +36,14 @@ class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: widgetBackGroundColor,
-              borderRadius: BorderRadius.circular(radius_2),
               border: Border.all(width: borderWidth_20, color: backgroundGrey)),
           child: Row(children: [
             Padding(
               padding: EdgeInsets.only(left: space_1),
-              child: Container(
+              child: SizedBox(
                 width: space_3,
                 height: space_3,
-                child: Image(
+                child: const Image(
                   image: AssetImage("assets/images/indianFlag.png"),
                   fit: BoxFit.cover,
                 ),
@@ -47,7 +51,7 @@ class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
             ),
             Padding(
               padding: EdgeInsets.only(left: space_1, top: space_2),
-              child: Container(
+              child: SizedBox(
                 width: space_5,
                 height: space_5,
                 child: Text(
@@ -60,7 +64,7 @@ class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
               ),
             ),
             Container(
-                padding: EdgeInsets.only(left: 2),
+                padding: const EdgeInsets.only(left: 2),
                 height: space_6,
                 width: space_1,
                 child: CustomPaint(
@@ -69,13 +73,21 @@ class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
             SizedBox(
               width: 200,
               child: TextFormField(
-                onChanged: (controller) {
-
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                onChanged: (_controller) {
+                  if (_controller.length == 10) {
+                    providerData.updateInputControllerLengthCheck(true);
+                    providerData.updateButtonColor(activeButtonColor);
+                  } else {
+                    providerData.updateInputControllerLengthCheck(false);
+                    providerData.updateButtonColor(deactiveButtonColor);
+                  }
+                  providerData.updatePhoneController(_controller);
                 },
-                controller: controller,
+                controller: _controller,
                 inputFormatters: <TextInputFormatter>[
                   LengthLimitingTextInputFormatter(10),
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  FilteringTextInputFormatter.allow(RegExp(r'\d')),
                 ],
                 maxLength: 10,
                 validator: (value) =>
@@ -90,7 +102,7 @@ class _PhoneNumbertextFieldState extends State<PhoneNumbertextField> {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                   filled: true,
-                  fillColor: widgetBackGroundColor,
+                  fillColor: white,
                   hintText: 'EnterPhoneNumber'.tr,
                   // 'Enter Phone Number',
                   hintStyle: TextStyle(color: darkCharcoal, fontSize: size_7),

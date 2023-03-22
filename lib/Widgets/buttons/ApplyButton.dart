@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/providerClass/providerData.dart';
 import 'package:get/get.dart';
 import '/screens/PostLoadScreens/loadConfirmation.dart';
@@ -12,10 +12,10 @@ class ApplyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TransporterIdController());
+    Get.put(ShipperIdController());
 
-    TransporterIdController transporterIdController =
-        Get.put(TransporterIdController());
+    ShipperIdController shipperIdController =
+        Get.put(ShipperIdController());
     ProviderData providerData = Provider.of<ProviderData>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
