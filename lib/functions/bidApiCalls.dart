@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-Future<String?> postBidAPi(loadId, rate, transporterIdController, unit) async {
+Future<String?> postBidAPi(loadId, rate, shipperIdController, unit) async {
   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
   var jsondata;
 
@@ -17,7 +17,7 @@ Future<String?> postBidAPi(loadId, rate, transporterIdController, unit) async {
   }
   try {
     Map data = {
-      "transporterId": transporterIdController.toString(),
+      "transporterId": shipperIdController.toString(),
       "loadId": loadId.toString(),
       "currentBid": rate.toString(),
       "unitValue": unit.toString(),

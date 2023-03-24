@@ -3,18 +3,18 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:intl/intl.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 postBookingApi(loadId, currentBid, unit, truckId, postLoadId, rate) async {
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
   var jsonData;
   try {
     Map data = {
       "loadId": loadId,
-      "transporterId": tIdController.transporterId.toString(),
+      "transporterId": tIdController.shipperId.toString(),
       "truckId": [truckId],
       "postLoadId": postLoadId,
       "bookingDate": now,

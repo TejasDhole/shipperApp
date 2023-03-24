@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 
 // String traccarPass = FlutterConfig.get("traccarPass");
 String traccarPass = dotenv.get('traccarPass');
@@ -14,9 +14,9 @@ String? current_lang;
 String traccarUser = dotenv.get('traccarUser');
 
 //to change authorization from admin to user
-// TransporterIdController transporterIdController =
-// Get.put(TransporterIdController());
-// String traccarUser = transporterIdController.mobileNum.value;
+// shipperIdController shipperIdController =
+// Get.put(shipperIdController());
+// String traccarUser = shipperIdController.mobileNum.value;
 
 class DeviceApiCalls {
   // String traccarApi = FlutterConfig.get("traccarApi");

@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
   final String mobileNum;
   final String userName;
   final String imageUrl;
-  GetStorage tidstorage = GetStorage('TransporterIDStorage');
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
   DrawerWidget(
       {required this.mobileNum, required this.userName, required this.imageUrl});
@@ -37,7 +37,7 @@ class DrawerWidget extends StatelessWidget {
     String image;
     image =
     (imageUrl == "no profile" ? "assets/icons/defaultAccountIcon.png" : imageUrl);
-    name = userName.length > 17 ? userName.substring(0, 15) + "..." : userName;
+    name = userName.length > 17 ? "${userName.substring(0, 15)}..." : userName;
     NavigationIndexController navigationIndexController =
         Get.put(NavigationIndexController());
     return ClipRRect(
@@ -118,7 +118,7 @@ class DrawerWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         selectItem(context, NavigationItem.MyAccount);
-                        navigationIndexController.updateIndex(4);
+                        navigationIndexController.updateIndex(2);
                       },
                       child: drawerMenuItem(
                           context: context,

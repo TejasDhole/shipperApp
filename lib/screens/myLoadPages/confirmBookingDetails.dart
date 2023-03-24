@@ -6,7 +6,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/biddingModel.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/screens/myLoadPages/addNewDriver.dart';
@@ -50,8 +50,8 @@ class ConfirmBookingDetails extends StatefulWidget {
 class _ConfirmBookingDetailsState extends State<ConfirmBookingDetails> {
   String? transporterId;
   String? mobileno;
-  TransporterIdController transporterIdController = TransporterIdController();
-  GetStorage tidstorage = GetStorage('TransporterIDStorage');
+  ShipperIdController shipperIdController = ShipperIdController();
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
   @override
   Widget build(BuildContext context) {

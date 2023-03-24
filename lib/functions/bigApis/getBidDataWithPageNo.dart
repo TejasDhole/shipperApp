@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/loadApiCalls.dart';
 import '/models/LoadModel.dart';
 import '/models/biddingModel.dart';
@@ -11,15 +11,15 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 getBidDataWithPageNo(int i) async {
-  TransporterIdController transporterIdController =
-  Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+  Get.put(ShipperIdController());
   // final String biddingApiUrl = FlutterConfig.get('biddingApiUrl');
   final String biddingApiUrl = dotenv.get('biddingApiUrl');
   final LoadApiCalls loadApiCalls = LoadApiCalls();
   http.Response response = await http.get(Uri.parse(
-      "$biddingApiUrl?transporterId=${transporterIdController.transporterId.value}&pageNo=$i"),
+      "$biddingApiUrl?transporterId=${shipperIdController.shipperId.value}&pageNo=$i"),
   headers: <String, String>{
-    HttpHeaders.authorizationHeader: transporterIdController.jmtToken.value
+    HttpHeaders.authorizationHeader: shipperIdController.jmtToken.value
   });
   var jsonData = json.decode(response.body);
   var biddingModelList = [];

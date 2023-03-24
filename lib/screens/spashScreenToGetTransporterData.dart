@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
-//import '/functions/trasnporterApis/runTransporterApiPost.dart';
+import '/controller/shipperIdController.dart';
+//import '/functions/trasnporterApis/runShipperApiPost.dart';
 import 'package:get/get.dart';
 import '/screens/navigationScreen.dart';
 
@@ -20,9 +20,9 @@ class SplashScreenToGetTransporterData extends StatefulWidget {
 
 class _SplashScreenToGetTransporterDataState
     extends State<SplashScreenToGetTransporterData> {
-  GetStorage tidstorage = GetStorage('TransporterIDStorage');
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController(), permanent: true);
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController(), permanent: true);
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _SplashScreenToGetTransporterDataState
     String? transporterId;
     //= await runTransporterApiPost(mobileNum: widget.mobileNum);
 
-    // String? transporterId = tidstorage.read("transporterId");
+    // String? transporterId = sidstorage.read("transporterId");
     // runTransporterApiPost(mobileNum: widget.mobileNum);
 
     if (transporterId != null) {
@@ -50,29 +50,28 @@ class _SplashScreenToGetTransporterDataState
           () => Get.off(() => NavigationScreen()));
     } else {
       setState(() {
-        transporterId = tidstorage.read("transporterId");
-        transporterApproved = tidstorage.read("transporterApproved");
-        companyApproved = tidstorage.read("companyApproved");
-        mobileNum = tidstorage.read("mobileNum");
+        transporterId = sidstorage.read("transporterId");
+        transporterApproved = sidstorage.read("transporterApproved");
+        companyApproved = sidstorage.read("companyApproved");
+        mobileNum = sidstorage.read("mobileNum");
         accountVerificationInProgress =
-            tidstorage.read("accountVerificationInProgress");
-        transporterLocation = tidstorage.read("transporterLocation");
-        name = tidstorage.read("name");
-        companyName = tidstorage.read("companyName");
+            sidstorage.read("accountVerificationInProgress");
+        transporterLocation = sidstorage.read("transporterLocation");
+        name = sidstorage.read("name");
+        companyName = sidstorage.read("companyName");
       });
       if (transporterId == null) {
         print("Transporter ID is null");
       } else {
         print("It is in else");
-        transporterIdController.updateTransporterId(transporterId!);
-        transporterIdController.updateTransporterApproved(transporterApproved!);
-        transporterIdController.updateCompanyApproved(companyApproved!);
-        transporterIdController.updateMobileNum(mobileNum!);
-        transporterIdController.updateAccountVerificationInProgress(
+        shipperIdController.updateShipperId(transporterId!);
+        shipperIdController.updateCompanyApproved(companyApproved!);
+        shipperIdController.updateMobileNum(mobileNum!);
+        shipperIdController.updateAccountVerificationInProgress(
             accountVerificationInProgress!);
-        transporterIdController.updateTransporterLocation(transporterLocation!);
-        transporterIdController.updateName(name!);
-        transporterIdController.updateCompanyName(companyName!);
+        shipperIdController.updateShipperLocation(transporterLocation!);
+        shipperIdController.updateName(name!);
+        shipperIdController.updateCompanyName(companyName!);
         print("transporterID is $transporterId");
         
         Timer(Duration(milliseconds: 1200), () => Get.off(() => NavigationScreen()));

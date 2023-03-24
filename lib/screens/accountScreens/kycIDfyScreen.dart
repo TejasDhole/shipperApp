@@ -5,10 +5,10 @@ import 'package:shipper_app/Web/screens/home_web.dart';
 import '../../constants/spaces.dart';
 import '../../controller/navigationIndexController.dart';
 import '/functions/kycIdfyApi.dart';
-import '/functions/trasnporterApis/updateTransporterApi.dart';
+import '/functions/shipperApis/updateShipperApi.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 
 class KYCIDfyScreen extends StatefulWidget {
   const KYCIDfyScreen({Key? key}) : super(key: key);
@@ -20,8 +20,8 @@ class KYCIDfyScreen extends StatefulWidget {
 class _KYCIDfyScreenState extends State<KYCIDfyScreen> {
   bool isLoaded = false;
   late String url;
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   NavigationIndexController navigationIndexController =
       Get.put(NavigationIndexController());
 
@@ -66,9 +66,9 @@ class _KYCIDfyScreenState extends State<KYCIDfyScreen> {
           print("in onPageFinished------------------------------------->$url");
           if (url.contains(
               "https://capture.kyc.idfy.com/document-fetcher/digilocker/callback/?code=")) {
-            String status = await updateTransporterApi(
+            String status = await updateShipperApi(
                 accountVerificationInProgress: true,
-                transporterId: transporterIdController.transporterId.value);
+                transporterId: shipperIdController.shipperId.value);
             if (status == "Success") {
               Navigator.pushReplacement(
                   context,

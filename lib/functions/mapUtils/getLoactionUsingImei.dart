@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/BackgroundAndLocation.dart';
 import '/language/localization_service.dart';
 import '/models/deviceModel.dart';
@@ -16,9 +16,10 @@ import 'package:geocoding/geocoding.dart';
 String traccarPass = dotenv.get('traccarPass');
 
 String? current_lang;
-TransporterIdController transporterIdController =
-    Get.put(TransporterIdController());
-String traccarUser = transporterIdController.mobileNum.value;
+ShipperIdController shipperIdController =
+    Get.put(ShipperIdController());
+//String traccarUser = shipperIdController.mobileNum.value;
+String traccarUser = "8688474404";
 
 class MapUtil {
   String gpsApiUrl = dotenv.get("gpsApiUrl");

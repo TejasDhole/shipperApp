@@ -26,7 +26,7 @@ class AddButton extends StatelessWidget {
   var transporterId;
 
   // var truckId;
-  // TransporterIdController tIdController = Get.put(TransporterIdController());
+  // shipperIdController tIdController = Get.put(shipperIdController());
 
   @override
   Widget build(BuildContext context) {

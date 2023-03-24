@@ -1,5 +1,4 @@
 import '/functions/postLoadIdApiCalls.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/BookingModel.dart';
 import '/models/driverModel.dart';
@@ -33,7 +32,7 @@ Future<Map> loadAllDataOrders(BookingModel bookingModel) async {
   if (bookingModel.postLoadId != 'NA') {
     postLoadIdData = bookingModel.postLoadId![0] == "t"
         ? await postLoadIdApiCalls
-            .getDataByTransporterId(bookingModel.postLoadId!)
+            .getDataByShipperId(bookingModel.postLoadId!)
         : await postLoadIdApiCalls.getDataByShipperId(bookingModel.postLoadId!);
   } else {
     postLoadIdData = {

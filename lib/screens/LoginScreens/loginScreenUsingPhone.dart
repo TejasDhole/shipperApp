@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import '../../Widgets/PhoneNumberTextField.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/controller/hudController.dart';
@@ -6,20 +7,20 @@ import '/screens/LoginScreens/otpVerificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/providerClass/providerData.dart';
-
 // import 'package:location_permissions/location_permissions.dart';
 import 'package:provider/provider.dart';
-import '/widgets/phoneNumberTextField.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreenUsingPhone extends StatefulWidget {
+  const LoginScreenUsingPhone({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenUsingPhoneState createState() => _LoginScreenUsingPhoneState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenUsingPhoneState extends State<LoginScreenUsingPhone> {
   HudController hudController = Get.put(HudController());
 
   void initState() {
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: space_34,
                     height: space_8,
                     child: Image(
-                      image: AssetImage("assets/icons/Liveasy.png"),
+                      image: AssetImage("assets/icons/liveasy.png"),
                     ),
                   ),
                 ),
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.only(left: space_9, right: space_9),
                         child: Form(
                           key: _formKey,
-                          child: PhoneNumbertextField(),
+                          child: PhoneNumberTextField(),
                         ),
                       ),
                       Container(
@@ -143,16 +144,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onPressed: providerData.inputControllerLengthCheck
                                   ? () {
-                                      Get.to(() => NewOTPVerificationScreen(
-                                          providerData.phoneController));
+                                Get.to(() => NewOTPVerificationScreen(
+                                    providerData.phoneController));
 
-                                      //null safety error here , needs to be resolved
-                                      // if (_formKey.currentState!.validate()) {
-                                      //   Get.to(() => NewOTPVerificationScreen(
-                                      //       providerData.phoneController));
+                                //null safety error here , needs to be resolved
+                                // if (_formKey.currentState!.validate()) {
+                                //   Get.to(() => NewOTPVerificationScreen(
+                                //       providerData.phoneController));
 
-                                      providerData.clearAll();
-                                    } // if
+                                providerData.clearAll();
+                              } // if
 
                                   : () {}),
                         ),

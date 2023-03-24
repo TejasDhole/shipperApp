@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shipper_app/screens/LoginScreens/CompanyDetailsForm.dart';
+import '../functions/alert_dialog.dart';
 import '/controller/hudController.dart';
 import '/controller/isOtpInvalidController.dart';
 import '/functions/authFunctions.dart';
@@ -7,12 +9,13 @@ import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OTPInputField extends StatefulWidget {
   String _verificationCode = '';
   // String autoVerificationCode = '';
 
-  OTPInputField(this._verificationCode);
+  OTPInputField(this._verificationCode, {super.key});
   @override
   _OTPInputFieldState createState() => _OTPInputFieldState();
 }
@@ -62,14 +65,29 @@ class _OTPInputFieldState extends State<OTPInputField> {
         length: 6,
         enableActiveFill: true,
         keyboardType: TextInputType.phone,
-        onCompleted: (pin) {
+        onCompleted: (pin) async{
           hudController.updateHud(true);
           providerData.updateSmsCode(pin);
           // isOtpInvalidController.updateIsOtpInvalid(false);
-          authService.manualVerification(
-              smsCode: providerData.smsCode,
-              verificationId: widget._verificationCode);
-
+          try {
+            await FirebaseAuth.instance.currentUser!.updatePhoneNumber(
+                PhoneAuthProvider.credential(
+                  verificationId: widget._verificationCode,
+                  smsCode: providerData.smsCode,
+                )
+            );
+            if(FirebaseAuth.instance.currentUser!.phoneNumber!=null){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const CompanyDetailsForm()));
+            }
+          }on FirebaseAuthException catch(e){
+            switch(e.code){
+              case "provider-already-linked":alertDialog("Already Linked", 'The phone number is already linked', context); break;
+              case "invalid-credential":alertDialog("Invalid Credential", 'Invalid Credential', context); break;
+              case "credential-already-in-use":alertDialog("Linked with different email", 'The phone number is already linked with different email', context); break;
+              case "account-exists-with-different-credential":alertDialog("Linked with different email", 'The phone number is already linked with different email', context); break;
+              default: alertDialog("Error", '$e', context);
+            }
+          }
           providerData.updateInputControllerLengthCheck(true);
           providerData.clearAll();
         },

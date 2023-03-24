@@ -1,28 +1,28 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/BookingModel.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 Future<List<BookingModel>> getBookingConfirmFromBookingApi() async {
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   var jsonData;
   List<BookingModel> bookingCard = [];
   // final String bidApiUrl = FlutterConfig.get("biddingApiUrl").toString();
   final String bidApiUrl = dotenv.get('biddingApiUrl');
 
   http.Response response = await http.get(Uri.parse(
-      "$bidApiUrl?transporterId=${transporterIdController.transporterId}"));
+      "$bidApiUrl?transporterId=${shipperIdController.shipperId}"));
   try {
     jsonData = json.decode(response.body);
     for (var json in jsonData) {
       BookingModel bookingModel = BookingModel();
       bookingModel.bookingId = json["bookingId"].toString();
-      bookingModel.transporterId = json["transporterId"].toString();
+      bookingModel.shipperId = json["transporterId"].toString();
       bookingModel.postLoadId = json["postLoadId"].toString();
       bookingModel.rate = json["rate"].toString();
       bookingModel.unitValue = json["unitValue"].toString();

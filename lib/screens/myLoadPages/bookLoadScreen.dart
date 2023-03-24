@@ -5,7 +5,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import '/models/biddingModel.dart';
 import '/models/loadDetailsScreenModel.dart';
@@ -43,7 +43,7 @@ class _BookLoadScreenState extends State<BookLoadScreen> {
   String? selectedDriver;
   String? selectedDriverName;
 
-  TransporterIdController transporterIdController = Get.find();
+  ShipperIdController shipperIdController = Get.find();
 
   late List? driverList = [];
   late List? truckList = [];

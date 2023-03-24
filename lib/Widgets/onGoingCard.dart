@@ -22,7 +22,7 @@ class OngoingCard extends StatefulWidget {
 
   // final GpsDataModel gpsData;
 
-  OngoingCard({
+  const OngoingCard({super.key,
     required this.loadAllDataModel,
   });
 
@@ -32,15 +32,15 @@ class OngoingCard extends StatefulWidget {
 
 class _OngoingCardState extends State<OngoingCard> {
   GpsDataModel? gpsData;
-  var devicelist = [];
+  var deviceList = [];
   var gpsDataList = [];
   var gpsList = [];
 
   DateTime yesterday =
-      DateTime.now().subtract(Duration(days: 1, hours: 5, minutes: 30));
+      DateTime.now().subtract(const Duration(days: 1, hours: 5, minutes: 30));
   String? from;
   String? to;
-  DateTime now = DateTime.now().subtract(Duration(hours: 5, minutes: 30));
+  DateTime now = DateTime.now().subtract(const Duration(hours: 5, minutes: 30));
   String? totalDistance;
 
   @override
@@ -52,17 +52,15 @@ class _OngoingCardState extends State<OngoingCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.loadAllDataModel.driverName == null) {
-      widget.loadAllDataModel.driverName = "NA";
-    }
+    widget.loadAllDataModel.driverName ??= "NA";
     widget.loadAllDataModel.driverName =
         widget.loadAllDataModel.driverName!.length >= 20
-            ? widget.loadAllDataModel.driverName!.substring(0, 18) + '..'
+            ? '${widget.loadAllDataModel.driverName!.substring(0, 18)}..'
             : widget.loadAllDataModel.driverName;
     if (widget.loadAllDataModel.companyName == null) {}
     widget.loadAllDataModel.companyName =
         widget.loadAllDataModel.companyName!.length >= 35
-            ? widget.loadAllDataModel.companyName!.substring(0, 33) + '..'
+            ? '${widget.loadAllDataModel.companyName!.substring(0, 33)}..'
             : widget.loadAllDataModel.companyName;
 
     widget.loadAllDataModel.unitValue =
@@ -82,8 +80,8 @@ class _OngoingCardState extends State<OngoingCard> {
           truckNo: widget.loadAllDataModel.truckNo,
           loadingPoint: widget.loadAllDataModel.loadingPointCity,
           unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
-          transporterName: widget.loadAllDataModel.transporterName,
-          transporterPhoneNum: widget.loadAllDataModel.transporterPhoneNum,
+          transporterName: widget.loadAllDataModel.shipperName,
+          transporterPhoneNum: widget.loadAllDataModel.shipperPhoneNum,
           driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
           driverName: widget.loadAllDataModel.driverName,
           bookingDate: widget.loadAllDataModel.bookingDate,
@@ -118,7 +116,7 @@ class _OngoingCardState extends State<OngoingCard> {
                                   color: veryDarkGrey,
                                 ),
                               ),
-                              Icon(Icons.arrow_forward_ios_sharp),
+                              const Icon(Icons.arrow_forward_ios_sharp),
                             ],
                           ),
                           Column(
@@ -129,7 +127,7 @@ class _OngoingCardState extends State<OngoingCard> {
                                       widget.loadAllDataModel.loadingPointCity,
                                   endPointType: 'loading'),
                               Container(
-                                  padding: EdgeInsets.only(left: 2),
+                                  padding: const EdgeInsets.only(left: 2),
                                   height: space_3,
                                   width: space_12,
                                   child: CustomPaint(
@@ -169,7 +167,7 @@ class _OngoingCardState extends State<OngoingCard> {
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(right: space_1),
-                                  child: Image(
+                                  child: const Image(
                                       height: 16,
                                       width: 23,
                                       color: black,
@@ -206,7 +204,7 @@ class _OngoingCardState extends State<OngoingCard> {
                           CallButton(
                             directCall: false,
                             transporterPhoneNum:
-                                widget.loadAllDataModel.transporterPhoneNum,
+                                widget.loadAllDataModel.shipperPhoneNum,
                             driverPhoneNum:
                                 widget.loadAllDataModel.driverPhoneNum,
                             driverName: widget.loadAllDataModel.driverName,
@@ -230,12 +228,12 @@ class _OngoingCardState extends State<OngoingCard> {
     var gpsDataAll = await getPositionByDeviceId(
         widget.loadAllDataModel.deviceId.toString());
 
-    devicelist.clear();
+    deviceList.clear();
 
     if (devices != null) {
       for (var device in devices) {
         setState(() {
-          devicelist.add(device);
+          deviceList.add(device);
         });
       }
     }

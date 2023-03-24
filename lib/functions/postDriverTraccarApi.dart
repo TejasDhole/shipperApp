@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:intl/intl.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 postDriverTraccarApi(DriverName, DriverPhoneNo, TransporterId) async {
-  // TransporterIdController tIdController = Get.put(TransporterIdController());
+  // shipperIdController tIdController = Get.put(shipperIdController());
 
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));

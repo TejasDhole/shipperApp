@@ -8,7 +8,7 @@ import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/controller/navigationIndexController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/bidApiCalls.dart';
 import '/providerClass/providerData.dart';
 import '/screens/myLoadPages/biddingScreen.dart';
@@ -33,7 +33,7 @@ class BidButtonSendRequest extends StatelessWidget {
     required this.isNegotiating,
   });
 
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class BidButtonSendRequest extends StatelessWidget {
 
       isPost!
           ? bidResponse = await postBidAPi(loadId, providerData.rate1,
-              tIdController.transporterId.value, providerData.unitValue1)
+              tIdController.shipperId.value, providerData.unitValue1)
           : putResponse = await putBidForNegotiate(
               bidId, providerData.rate1, providerData.unitValue1);
 

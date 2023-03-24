@@ -4,7 +4,7 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
-import '/functions/trasnporterApis/transporterApiCalls.dart';
+import '/functions/shipperApis/shipperApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/screens/TransporterOrders/simpleMap.dart';
 import '../trackScreen.dart';
@@ -51,7 +51,7 @@ class navigateToTrackScreen extends StatefulWidget {
 
 class _navigateToTrackScreenState extends State<navigateToTrackScreen> {
   String? transporterIDImei;
-  final TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+  final ShipperApiCalls shipperApiCalls = ShipperApiCalls();
   final TruckApiCalls truckApiCalls = TruckApiCalls();
 
   var truckData;

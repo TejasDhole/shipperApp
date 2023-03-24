@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shipper_app/screens/LoginScreens/CompanyDetailsForm.dart';
 import '/constants/colors.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/controller/hudController.dart';
 import '/controller/isOtpInvalidController.dart';
 import '/controller/timerController.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
+import '/functions/shipperApis/runShipperApiPost.dart';
 import '/providerClass/providerData.dart';
 import 'package:flutter/material.dart';
 import '/widgets/otpInputField.dart';
@@ -18,8 +18,6 @@ import 'package:provider/provider.dart';
 import '/constants/fontWeights.dart';
 import '/constants/fontSize.dart';
 import 'package:visibility_aware_state/visibility_aware_state.dart';
-import '../languageSelectionScreen.dart';
-import '../navigationScreen.dart';
 
 class NewOTPVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -84,7 +82,7 @@ class _NewOTPVerificationScreenState
                       width: space_34,
                       height: space_8,
                       child: Image(
-                        image: AssetImage("assets/icons/Liveasy.png"),
+                        image: AssetImage("assets/icons/liveasy.png"),
                       ),
                     ),
                   ),
@@ -277,11 +275,16 @@ class _NewOTPVerificationScreenState
           print(credential.smsCode);
           hudController.updateHud(true);
           print(credential.smsCode);
-          await FirebaseAuth.instance.signInWithCredential(credential);
+          _verificationCode = credential.verificationId!;
+          await FirebaseAuth.instance.currentUser!.updatePhoneNumber(credential);
 
           timerController.cancelTimer();
-          await runTransporterApiPost(mobileNum: widget.phoneNumber);
-          Get.offAll(() => NavigationScreen());
+          if(FirebaseAuth.instance.currentUser!.emailVerified) {
+            await runShipperApiPost(
+                emailId: FirebaseAuth.instance.currentUser!.email.toString()
+            );
+          }
+          Get.offAll(() => CompanyDetailsForm());
         },
         verificationFailed: (FirebaseAuthException e) {
           print('in verification failed');

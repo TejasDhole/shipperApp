@@ -8,8 +8,9 @@ import '/constants/fontWeights.dart';
 
 class AccountDetailVerificationPending extends StatelessWidget {
   final String mobileNum;
+  final String name;
 
-  AccountDetailVerificationPending({required this.mobileNum});
+  const AccountDetailVerificationPending({super.key, required this.name,required this.mobileNum});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +18,23 @@ class AccountDetailVerificationPending extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Container(
+          width: MediaQuery.of(context).size.width * 0.48,
+          child: Text(
+            name,
+            style: TextStyle(
+                fontWeight: mediumBoldWeight, color: white, fontSize: size_9),
+          ),
+        ),
+        SizedBox(
+          height: space_1,
+        ),
         Row(
           children: [
             Container(
               height: space_3,
               width: space_2,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                     "assets/icons/callIcon.png",

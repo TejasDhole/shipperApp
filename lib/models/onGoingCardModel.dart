@@ -3,9 +3,9 @@ class OngoingCardModel{
   String? loadingPointCity;
   String? unloadingPointCity;
   String? companyName;
-  String? transporterPhoneNum;
-  String? transporterLocation;
-  String? transporterName;
+  String? shipperPhoneNum;
+  String? shipperLocation;
+  String? shipperName;
   bool? transporterApproved;
   bool? companyApproved;
   String? truckNo;
@@ -36,9 +36,9 @@ class OngoingCardModel{
         this.productType,
         this.rate,
         this.transporterApproved,
-        this.transporterLocation,
-        this.transporterName,
-        this.transporterPhoneNum,
+        this.shipperLocation,
+        this.shipperName,
+        this.shipperPhoneNum,
         this.truckNo,
         this.truckType,
         this.unloadingPointCity,

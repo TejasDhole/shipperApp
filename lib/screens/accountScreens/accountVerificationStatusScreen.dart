@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/widgets/accountWidgets/accountDetailVerificationPending.dart';
 import '/widgets/accountWidgets/accountDetailVerified.dart';
 import '/widgets/accountWidgets/waitForReviewCard.dart';
@@ -12,10 +12,11 @@ import '/widgets/headingTextWidget.dart';
 import 'package:get/get.dart';
 
 class AccountVerificationStatusScreen extends StatelessWidget {
+  const AccountVerificationStatusScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    TransporterIdController transporterIdController =
-        Get.put(TransporterIdController());
+    ShipperIdController shipperIdController = Get.put(ShipperIdController());
     return Scaffold(
       backgroundColor: statusBarColor,
       body: SafeArea(
@@ -61,7 +62,7 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                         child: Container(
                           height: space_8,
                           width: space_8,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
                                   "assets/icons/defaultAccountIcon.png"),
@@ -70,17 +71,17 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    transporterIdController.accountVerificationInProgress.value
+                    shipperIdController.accountVerificationInProgress.value
                         ? AccountDetailVerificationPending(
-                            mobileNum: transporterIdController.mobileNum.value,
+                            mobileNum: shipperIdController.mobileNum.value,
+                            name: shipperIdController.name.value,
                           )
                         : AccountDetailVerified(
-                            mobileNum: transporterIdController.mobileNum.value,
-                            name: transporterIdController.name.value,
-                            companyName:
-                                transporterIdController.companyName.value,
-                            address: transporterIdController
-                                .transporterLocation.value,
+                            //AccountDetailVerified(
+                            mobileNum: shipperIdController.mobileNum.value,
+                            name: shipperIdController.name.value,
+                            companyName: shipperIdController.companyName.value,
+                            address: shipperIdController.shipperLocation.value,
                           ),
                   ],
                 ),
@@ -88,15 +89,14 @@ class AccountVerificationStatusScreen extends StatelessWidget {
               SizedBox(
                 height: space_3,
               ),
-              transporterIdController.accountVerificationInProgress.value
+              shipperIdController.accountVerificationInProgress.value
                   ? WaitForReviewCard()
                   : Container(),
-              transporterIdController.accountVerificationInProgress.value
-                  ? SizedBox(
-                      height: space_3,
-                    )
-                  : Container(),
-              BuyGpsLongWidget()
+              // shipperIdController.accountVerificationInProgress.value
+              //     ? SizedBox(
+              //         height: space_3,
+              //       )
+              //     : Container(),
             ],
           ),
         ),

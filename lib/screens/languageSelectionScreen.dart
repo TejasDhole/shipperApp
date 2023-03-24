@@ -7,8 +7,8 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
-import '/functions/trasnporterApis/runTransporterApiPost.dart';
+import '/controller/shipperIdController.dart';
+import '/functions/shipperApis/runShipperApiPost.dart';
 import '/language/localization_service.dart';
 import '/providerClass/providerData.dart';
 import '/screens/navigationScreen.dart';
@@ -16,7 +16,7 @@ import '/widgets/buttons/getStartedButton.dart';
 import '/widgets/loadingWidgets/bottomProgressBarIndicatorWidget.dart';
 import 'package:provider/provider.dart';
 
-import 'LoginScreens/loginScreen.dart';
+import 'LoginScreens/loginScreenUsingPhone.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   LanguageSelectionScreen({Key? key}) : super(key: key);
@@ -28,10 +28,10 @@ class LanguageSelectionScreen extends StatefulWidget {
 
 class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with AutomaticKeepAliveClientMixin<LanguageSelectionScreen>{
   String currentItem = 'English'; //added this
-  String? transporterId;
+  String? shipperId;
   bool _nextScreen = false;
-  TransporterIdController transporterIdController =
-  Get.put(TransporterIdController(), permanent: true);
+  ShipperIdController shipperIdController =
+  Get.put(ShipperIdController(), permanent: true);
   @override
   void initState() {
     super.initState();
@@ -58,37 +58,36 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
         //.substring(3, 13),
     //);
 
-    if (transporterId != null){
+    if (shipperId != null){
       setState(() {
         _nextScreen=true;
       });
     }
     else {
       setState(() {
-        transporterId = tidstorage.read("transporterId");
-        transporterApproved = tidstorage.read("transporterApproved");
-        companyApproved = tidstorage.read("companyApproved");
-        mobileNum = tidstorage.read("mobileNum");
-        accountVerificationInProgress = tidstorage.read("accountVerificationInProgress");
-        transporterLocation = tidstorage.read("transporterLocation");
-        name = tidstorage.read("name");
-        companyName = tidstorage.read("companyName");
+        shipperId = sidstorage.read("shipperId");
+        transporterApproved = sidstorage.read("shipperApproved");
+        companyApproved = sidstorage.read("companyApproved");
+        mobileNum = sidstorage.read("mobileNum");
+        accountVerificationInProgress = sidstorage.read("accountVerificationInProgress");
+        transporterLocation = sidstorage.read("shipperLocation");
+        name = sidstorage.read("name");
+        companyName = sidstorage.read("companyName");
       });
 
-      if (transporterId == null) {
-        print("Transporter ID is null");
+      if (shipperId == null) {
+        print("Shipper ID is null");
       } else {
         print("It is in else");
-        transporterIdController.updateTransporterId(transporterId!);
-        transporterIdController.updateTransporterApproved(transporterApproved!);
-        transporterIdController.updateCompanyApproved(companyApproved!);
-        transporterIdController.updateMobileNum(mobileNum!);
-        transporterIdController
+        shipperIdController.updateShipperId(shipperId!);
+        shipperIdController.updateCompanyApproved(companyApproved!);
+        shipperIdController.updateMobileNum(mobileNum!);
+        shipperIdController
             .updateAccountVerificationInProgress(accountVerificationInProgress!);
-        transporterIdController.updateTransporterLocation(transporterLocation!);
-        transporterIdController.updateName(name!);
-        transporterIdController.updateCompanyName(companyName!);
-        print("transporterID is $transporterId");
+        shipperIdController.updateShipperLocation(transporterLocation!);
+        shipperIdController.updateName(name!);
+        shipperIdController.updateCompanyName(companyName!);
+        print("shipperID is $shipperId");
         setState(() {
         _nextScreen=true;
       });
@@ -242,7 +241,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                       ),
                       _nextScreen?
                       GetStartedButton(onTapNext: this.onTapNext,) : GetStartedButton(onTapNext: (){
-                        Get.off(LoginScreen());
+                        Get.off(LoginScreenUsingPhone());
                       },)
 
                     ],

@@ -4,7 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
 import '/controller/navigationIndexController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/AppVersionCheck.dart';
 import '/functions/loadApis/findLoadByLoadID.dart';
 import '/models/loadDetailsScreenModel.dart';
@@ -37,7 +37,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   late String from;
   late String to;
   DateTime now = DateTime.now().subtract(Duration(hours: 5, minutes: 30));
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController sIdController = Get.put(ShipperIdController());
   NavigationIndexController navigationIndex =
       Get.put(NavigationIndexController(), permanent: true);
   var screens = [
@@ -58,6 +58,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     this.checkUpdate();
 
     isolatedTransporterGetData();
+    print("in navigation screen ${shipperIdController.shipperId.value}");
   }
 
 

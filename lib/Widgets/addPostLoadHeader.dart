@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import '/constants/colors.dart';
@@ -29,15 +30,15 @@ class _AddPostLoadHeaderState extends State<AddPostLoadHeader> {
       children: [
         Row(
           children: [
-            Container(
+            !kIsWeb?Container(
                 margin: EdgeInsets.only(right: space_2),
                 child: GestureDetector(
                   onTap: () {
                     Get.back();
                     providerData.updateUpperNavigatorIndex2(0);
                   },
-                  child: Icon(Icons.arrow_back_ios_rounded),
-                )),
+                  child: const Icon(Icons.arrow_back_ios_rounded),
+                )):const SizedBox(width: 0.5,),
             Text('postLoad'.tr,
                 // AppLocalizations.of(context)!.postLoad,
                 style: TextStyle(
@@ -58,7 +59,7 @@ class _AddPostLoadHeaderState extends State<AddPostLoadHeader> {
                       fontSize: size_10,
                       fontWeight: regularWeight,
                     )))
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }

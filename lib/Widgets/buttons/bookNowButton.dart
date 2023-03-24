@@ -4,7 +4,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/driverApiCalls.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/driverModel.dart';
@@ -34,8 +34,8 @@ class _BookNowButtonState extends State<BookNowButton> {
 
   TruckApiCalls truckApiCalls = TruckApiCalls();
   DriverApiCalls driverApiCalls = DriverApiCalls();
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _BookNowButtonState extends State<BookNowButton> {
             barrierDismissible: false,
             context: context,
             builder: (context) =>
-                transporterIdController.transporterApproved.value
+                shipperIdController.companyApproved.value
                     ? BookLoadScreen(
                         truckModelList: truckDetailsList,
                         driverModelList: driverDetailsList,

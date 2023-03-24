@@ -12,6 +12,8 @@ import '/widgets/HelpCardWidget.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class HelpScreen extends StatefulWidget {
+  const HelpScreen({super.key});
+
   @override
   _HelpScreenState createState() => _HelpScreenState();
 }
@@ -22,16 +24,16 @@ class _HelpScreenState extends State<HelpScreen> {
 
   //add questions here
   List<String> questions = [
-    'How to add truck?',
+ //   'How to add truck?',
     'How to post load?',
     'How to bid?',
-    'How to purchase GPS?',
+ //   'How to purchase GPS?',
     'How to see my orders?',
-    'How to verify my account?',
-    'How to add driver?',
-    'How to change language?',
+ //   'How to verify my account?',
+ //   'How to add driver?',
+ //   'How to change language?',
     'How to find load for my truck?',
-    'Why should I buy GPS?',
+ //   'Why should I buy GPS?',
   ];
 
   @override
@@ -101,7 +103,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: questions.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    return index != 10
+                    return index != questions.length
                         ? Column(children: [
                             // returning the CardWidget passing only title
                             HelpCardWidget(
@@ -229,5 +231,5 @@ class _HelpScreenState extends State<HelpScreen> {
 _sendMail(String askedQuestion) async {
   String url =
       'mailto:liveasy97@gmail.com?subject=Question&body=${askedQuestion}';
-  UrlLauncher.launch(url);
+  UrlLauncher.launchUrl(Uri.parse(url));
 }

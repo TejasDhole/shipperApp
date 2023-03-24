@@ -7,7 +7,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/getDriverDetailsFromDriverApi.dart';
 import '/functions/getTruckDetailsFromTruckApi.dart';
 import '/functions/loadOnGoingData.dart';
@@ -173,10 +173,8 @@ class _AddDriverAlertDialogState extends State<AddDriverAlertDialog> {
                   if (driverNumberController.text.length == 10 &&
                       (driverNumberController.text
                           .startsWith(RegExp(r'[6-9]')))) {
-                    TransporterIdController tIdController =
-                        Get.put(TransporterIdController());
-                    String transporterId = '${tIdController.transporterId}';
-                    // String? driverAdded = driverNameController.text;
+                    ShipperIdController sIdController = Get.put(ShipperIdController());
+                    String shipperId = '${sIdController.shipperId}' ;                // String? driverAdded = driverNameController.text;
                     // if (driverAdded == "") {
                     //   showDialog(
                     //     context: context,
@@ -188,7 +186,7 @@ class _AddDriverAlertDialogState extends State<AddDriverAlertDialog> {
                     var uploadStatus = await postDriverTraccarApi(
                         driverNameController.text,
                         driverNumberController.text,
-                        transporterId);
+                        shipperId);
                     print(uploadStatus);
                     // ResponseModel? response =
                     //     await driverApiCalls.postDriverApi(

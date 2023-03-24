@@ -1,7 +1,7 @@
 class BookingModel {
   String? bookingId;
   String? loadId;
-  String? transporterId;
+  String? shipperId;
   String? postLoadId;
   List? truckId;
   String? loadingPointCity;
@@ -21,7 +21,7 @@ class BookingModel {
   BookingModel(
       {this.bookingId,
       this.loadId,
-      this.transporterId,
+      this.shipperId,
       this.postLoadId,
       this.truckId,
       this.rate,

@@ -4,7 +4,7 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/widgets/ChooseReceiverButton.dart';
 import '/widgets/alertDialog/verifyAccountNotifyAlertDialog.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -33,7 +33,7 @@ class CallButton extends StatelessWidget {
     }
   }
 
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController sIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +51,16 @@ class CallButton extends StatelessWidget {
         ),
         onPressed: directCall == true
             ? () async {
-                if (tIdController.transporterApproved.value) {
-                  _makingPhoneCall();
-                } else {
+          if (sIdController.companyApproved.value) {
+            _makingPhoneCall();
+          } else {
                   showDialog(
                       context: context,
                       builder: (context) => VerifyAccountNotifyAlertDialog());
                 }
               }
             : () async {
-                if (tIdController.transporterApproved.value) {
+                if (sIdController.companyApproved.value){
                   Get.defaultDialog(
                     radius: 10,
                     title: 'Who do you want to call?',

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/driverApiCalls.dart';
 import '/screens/home.dart';
 import '/screens/navigationScreen.dart';
@@ -24,8 +24,8 @@ class MyDrivers extends StatefulWidget {
 
 class _MyDriversState extends State<MyDrivers> {
   DriverApiCalls driverApiCalls = DriverApiCalls();
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   ScrollController scrollController = ScrollController();
 

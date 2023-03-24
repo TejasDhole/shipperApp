@@ -1,6 +1,10 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '/Web/screens/home_web.dart';
+import 'package:shipper_app/Web/screens/login.dart';
+import 'package:shipper_app/functions/alert_dialog.dart';
+import 'package:shipper_app/main_screen.dart';
+import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +19,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String companyName;
-  late String mailId;
+  late String name;
   late String gstNumber;
   late String address;
   bool isError = false;
@@ -100,7 +104,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Email Id",
+                                  Text("Name",
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
@@ -110,7 +114,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                   SizedBox(height: 1.9.h,),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      hintText: 'Enter Your Email',
+                                      hintText: 'Enter Your Name',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(15)),
                                       ),
@@ -120,13 +124,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         setState(() {
                                           isError = true;
                                         });
-                                        return "Enter Email Id";
-                                      }
-                                      if(!value.toString().contains('@')||!value.toString().contains('.')){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Invalid Email";
+                                        return "Enter Your Name";
                                       }
                                       setState(() {
                                         isError = false;
@@ -134,7 +132,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       return null;
                                     },
                                     onSaved: (value){
-                                      mailId = value.toString();
+                                      name = value.toString();
                                     },
                                   ),
                                 ],
@@ -153,7 +151,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("GST Number",
+                                  Text("GST Number (optional)",
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
@@ -169,18 +167,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       ),
                                     ),
                                     validator: (value){
-                                      if(value.toString().isEmpty){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Enter your GST Number";
-                                      }
-                                      if(value.toString().length!=15){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Invalid GST Number";
-                                      }
+                                      // if(value.toString().isEmpty){
+                                      //   setState(() {
+                                      //     isError = true;
+                                      //   });
+                                      //   return "Enter your GST Number";
+                                      // }
+                                      // if(value.toString().length!=15){
+                                      //   setState(() {
+                                      //     isError = true;
+                                      //   });
+                                      //   return "Invalid GST Number";
+                                      // }
                                       setState(() {
                                         isError = false;
                                       });
@@ -199,7 +197,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Address",
+                                  Text("Address (optional)",
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
@@ -215,12 +213,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       ),
                                     ),
                                     validator: (value){
-                                      if(value.toString().isEmpty){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Enter your Company Address";
-                                      }
+                                      // if(value.toString().isEmpty){
+                                      //   setState(() {
+                                      //     isError = true;
+                                      //   });
+                                      //   return "Enter your Company Address";
+                                      // }
                                       setState(() {
                                         isError = false;
                                       });
@@ -244,11 +242,28 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             backgroundColor: const Color(0xFF000066),
                             fixedSize: Size(28.w, 7.h),
                           ),
-                          onPressed: (){
+                          onPressed: ()async{
                             if(_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
-                              firebaseAuth.currentUser!.verifyBeforeUpdateEmail(mailId);
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomeScreenWeb()));
+                              if(firebaseAuth.currentUser!.emailVerified){
+                                firebaseAuth.currentUser!.updateDisplayName(name);
+                                String? id = await runShipperApiPost(
+                                  emailId:firebaseAuth.currentUser!.email.toString(),
+                                  phoneNo: firebaseAuth.currentUser!.phoneNumber.toString().replaceFirst("+91", ""),
+                                  shipperName: name,
+                                  companyName: companyName,
+                                  gst: gstNumber,
+                                  address: address,
+                                );
+                                if(id!=null) {
+                                  log('Shipper id--->$id');
+                                  if(!mounted){ log('In not mounted');return ;}
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                                }
+                              }else{
+                                alertDialog("Verify Email", "Verify your mail id to continue", context);
+                               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
+                              }
                             }
                           },
                           child: Text('Continue',

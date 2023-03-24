@@ -7,7 +7,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/controller/buyGPSboolController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/buyGPSApiCalls.dart';
 import '/functions/truckApis/getTruckDataWithPageNo.dart';
 import '/models/truckModel.dart';
@@ -36,8 +36,8 @@ class BuyGpsScreen extends StatefulWidget {
 class _BuyGpsScreenState extends State<BuyGpsScreen> {
   String? _groupValue;
   String? _durationGroupValue;
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
   TruckModel truckModel = TruckModel();
   ScrollController scrollController = ScrollController();
   String? truckID;

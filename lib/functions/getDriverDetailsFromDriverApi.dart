@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import 'dart:convert';
 import '/models/driverModel.dart';
 import '/providerClass/providerData.dart';
@@ -14,14 +14,14 @@ Future<List> getDriverDetailsFromDriverApi(
     BuildContext context /*, driverIdList*/) async {
   var providerData = Provider.of<ProviderData>(context, listen: false);
   var jsonData;
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
   // final String driverApiUrl = FlutterConfig.get('driverApiUrl').toString();
   final String driverApiUrl = dotenv.get('driverApiUrl');
 
   List<DriverModel> driverDetailsList = [];
   try {
     http.Response response = await http.get(Uri.parse(
-        "$driverApiUrl?transporterId=${tIdController.transporterId}"));
+        "$driverApiUrl?transporterId=${tIdController.shipperId}"));
     jsonData = json.decode(response.body);
     for (var json in jsonData) {
       DriverModel driverModel = DriverModel();

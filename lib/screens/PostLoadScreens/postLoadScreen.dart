@@ -31,6 +31,8 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
     ProviderData providerData = Provider.of<ProviderData>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
+      floatingActionButton: PostButtonLoad(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(space_4, space_4, space_4, space_2),
@@ -85,9 +87,6 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(bottom: 25),
-                      child: PostButtonLoad()),
                   // Positioned.fill(
                   //   top: 550,
                   //   child: Align(

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';
-import 'package:shipper_app/controller/transporterIdController.dart';
+import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/models/loadDetailsScreenModel.dart';
 import 'package:shipper_app/widgets/MyLoadsCard.dart';
 import 'package:shipper_app/widgets/loadingWidgets/bottomProgressBarIndicatorWidget.dart';
@@ -27,8 +27,8 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
 
   ScrollController scrollController = ScrollController();
 
-  TransporterIdController transporterIdController =
-      Get.put(TransporterIdController());
+  ShipperIdController shipperIdController =
+      Get.put(ShipperIdController());
 
   int i = 0;
 
@@ -116,9 +116,10 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
         bottomProgressLoad = true;
       });
     }
-    String url =  'http://booking.dev.truckseasy.com:8080/booking';
+   // String url =  dotenv.get('routeHistoryApiUrl');
+   // String transporterId = 'transporter:81a794cd-08fa-455c-9727-eaf12279410b';
     http.Response response = await http.get(Uri.parse(
-        '$loadApiUrl?postLoadId=${transporterIdController.transporterId.value}&pageNo=$i'));
+        '$loadApiUrl?postLoadId=${shipperIdController.shipperId.value}&pageNo=$i'));
     // '$loadApiUrl?postLoadId=$transporterId&pageNo=$i'));
     //  url));
     var jsonData = json.decode(response.body);

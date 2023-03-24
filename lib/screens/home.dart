@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/spaces.dart';
-import 'package:shipper_app/controller/transporterIdController.dart';
+import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/documentApi/getDocument.dart';
 import 'package:shipper_app/providerClass/drawerProviderClassData.dart';
 import 'package:shipper_app/screens/findLoadScreen.dart';
@@ -16,7 +17,8 @@ import 'package:shipper_app/widgets/referAndEarnWidget.dart';
 import 'package:shipper_app/widgets/searchLoadWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/widgets/buttons/postLoadButton.dart';
-
+import '../Widgets/suggestedLoadWidgetHeader.dart';
+import '../Widgets/suggestedLoadsWidget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -27,9 +29,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TransporterIdController transporterIdController =
-  Get.put(TransporterIdController());
-  var imageLinks ;
+  ShipperIdController shipperIdController = kIsWeb?Get.put(ShipperIdController()):Get.find<ShipperIdController>();
+  var imageLinks;
   bool isSwitched = false;
 
   final switchData = GetStorage();
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     imageUrl();
+    print("shipper id---->${shipperIdController.emailId.value}");
   }
 
   @override
@@ -47,9 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SafeArea(
         child: Scaffold(
           key: _scaffoldKey,
+          floatingActionButton: PostButtonLoad(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           drawer: DrawerWidget(
-            mobileNum: transporterIdController.mobileNum.value,
-            userName: transporterIdController.name.toString(),
+            mobileNum: shipperIdController.mobileNum.value,
+            userName: shipperIdController.name.toString(),
             imageUrl: imageLinks.toString(),
             // imageUrl: response['documentLink'],
             // and pass image url here, if required.
@@ -92,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   padding:
-                  EdgeInsets.fromLTRB(space_4, space_4, space_4, space_5),
+                      EdgeInsets.fromLTRB(space_4, space_4, space_4, space_5),
                   child: SearchLoadWidget(
                     hintText: 'search'.tr,
                     // AppLocalizations.of(context)!.search,
@@ -125,47 +129,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: space_1,
                 ),
-                transporterIdController.transporterApproved.value == false
+                shipperIdController.companyApproved.value == false
                     ? AccountNotVerifiedWidget()
                     : SizedBox(
+                        height: space_2,
+                      ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: space_4),
+                  child: SuggestedLoadWidgetHeader(),
+                ),
+                SizedBox(
                   height: space_2,
                 ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: space_4),
-                //   child: SuggestedLoadWidgetHeader(),
-                // ),
-                // SizedBox(
-                //   height: space_2,
-                // ),
-                // Expanded(
-                //   child: Container(
-                //     padding: EdgeInsets.symmetric(horizontal: space_4),
-                //     child: SuggestedLoadsWidget(),
-                //   ),
-                // ),
-
-                Container(
-                  margin: EdgeInsets.only(
-                    top: space_6,
-                    left: space_7,
-                    right: space_7,
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: space_4),
+                    child: SuggestedLoadsWidget(),
                   ),
-                  child: Image(
-                    image: AssetImage('assets/images/EmptyBox.jpeg'),
-                  ),
-
                 ),
+
+                // Container(
+                //   margin: EdgeInsets.only(
+                //     top: space_6,
+                //     left: space_7,
+                //     right: space_7,
+                //   ),
+                //   child: Image(
+                //     image: AssetImage('assets/images/EmptyBox.jpeg'),
+                //   ),
+                //
+                // ),
                 // Container(
                 //     alignment: Alignment.bottomCenter,
                 //   margin: EdgeInsets.only(bottom: 25),
                 //     child: PostButtonLoad()),
-                Expanded(
-                  // alignment: Alignment.bottomCenter,
-                  child: Container(
-                      alignment: Alignment.bottomCenter,
-                      margin: EdgeInsets.only(bottom: 25),
-                      child: PostButtonLoad()),
-                )
+                // Expanded(
+                //   // alignment: Alignment.bottomCenter,
+                //   child: Container(
+                //       alignment: Alignment.bottomCenter,
+                //       margin: EdgeInsets.only(bottom: 25),
+                //       child: PostButtonLoad()),
+                //)
               ],
             ),
           ),
@@ -174,8 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void>imageUrl() async {
-    imageLinks = await getDocumentWithTransportId(transporterIdController.transporterId.toString());
+  Future<void> imageUrl() async {
+    imageLinks = await getDocumentWithTransportId(
+        shipperIdController.shipperId.toString());
     setState(() {});
   }
 }

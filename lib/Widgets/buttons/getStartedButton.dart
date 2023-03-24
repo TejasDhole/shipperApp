@@ -7,7 +7,7 @@ import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import 'package:get/get.dart';
-import '/screens/LoginScreens/loginScreen.dart';
+import '/screens/LoginScreens/loginScreenUsingPhone.dart';
 import '/screens/navigationScreen.dart';
 import '/widgets/loadingWidgets/bottomProgressBarIndicatorWidget.dart';
 

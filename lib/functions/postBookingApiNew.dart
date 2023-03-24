@@ -3,21 +3,21 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:intl/intl.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 postBookingApiNew(LoadDetailsScreenModel? loadDetailsScreenModel, truckId,
     deviceId, driverName, driverPhoneNo) async {
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
   // String now = DateFormat("dd-MM-yyyy").format(DateTime.now().subtract(Duration(hours: 5, minutes: 30))
   //     .toIso8601String());
   var jsonData;
   try {
     Map datanew = {
-      "transporterId": tIdController.transporterId.toString(),
+      "transporterId": tIdController.shipperId.toString(),
       "loadId": loadDetailsScreenModel!.loadId,
       "postLoadId": loadDetailsScreenModel.postLoadId,
       "loadingPointCity": loadDetailsScreenModel.loadingPointCity,

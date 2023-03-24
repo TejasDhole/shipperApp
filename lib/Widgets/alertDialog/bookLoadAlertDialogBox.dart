@@ -6,7 +6,7 @@ import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/controller/SelectedDriverController.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/functions/loadOnGoingData.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/biddingModel.dart';
@@ -46,7 +46,7 @@ class _BookLoadAlertDialogBoxState extends State<BookLoadAlertDialogBox> {
   String? selectedDriver;
   String? selectedDriverName;
 
-  TransporterIdController transporterIdController = Get.find();
+  ShipperIdController shipperIdController = Get.find();
 
   TruckApiCalls truckApiCalls = TruckApiCalls();
 

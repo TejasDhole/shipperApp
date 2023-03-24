@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
-import '/screens/LoginScreens/loginScreen.dart';
+import '/screens/LoginScreens/loginScreenUsingPhone.dart';
 import 'package:get/get.dart';
 import '/screens/languageSelectionScreen.dart';
 

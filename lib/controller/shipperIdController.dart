@@ -1,16 +1,10 @@
 import 'package:get/get.dart';
 
-class TransporterIdController extends GetxController {
-  RxString transporterId = "".obs;
+class ShipperIdController extends GetxController {
+  RxString shipperId = "".obs;
 
-  void updateTransporterId(String newValue) {
-    transporterId.value = newValue;
-  }
-
-  RxBool transporterApproved = false.obs;
-
-  void updateTransporterApproved(bool newValue) {
-    transporterApproved.value = newValue;
+  void updateShipperId(String newValue) {
+    shipperId.value = newValue;
   }
 
   RxBool companyApproved = false.obs;
@@ -43,10 +37,16 @@ class TransporterIdController extends GetxController {
     mobileNum.value = newValue;
   }
 
-  RxString transporterLocation = "".obs;
+  RxString emailId = "".obs;
 
-  void updateTransporterLocation(String newValue) {
-    transporterLocation.value = newValue;
+  void updateEmailId(String newValue) {
+    emailId.value = newValue;
+  }
+
+  RxString shipperLocation = "".obs;
+
+  void updateShipperLocation(String newValue) {
+    shipperLocation.value = newValue;
   }
 
   RxString jmtToken = "".obs;

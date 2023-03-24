@@ -5,7 +5,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/controller/transporterIdController.dart';
+import '/controller/shipperIdController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/widgets/alertDialog/bidButtonAlertDialog.dart';
 import '/widgets/alertDialog/verifyAccountNotifyAlertDialog.dart';
@@ -21,13 +21,13 @@ class BidButton extends StatefulWidget {
 }
 
 class _BidButtonState extends State<BidButton> {
-  TransporterIdController tIdController = Get.put(TransporterIdController());
+  ShipperIdController tIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (tIdController.transporterApproved.value) {
+        if (tIdController.companyApproved.value) {
           await showDialog(
               context: context,
               builder: (context) => BidButtonAlertDialog(
