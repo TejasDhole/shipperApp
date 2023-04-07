@@ -21,13 +21,13 @@ class BidButton extends StatefulWidget {
 }
 
 class _BidButtonState extends State<BidButton> {
-  ShipperIdController tIdController = Get.put(ShipperIdController());
+  ShipperIdController sIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (tIdController.companyApproved.value) {
+        if (sIdController.companyStatus.value == 'verified') {
           await showDialog(
               context: context,
               builder: (context) => BidButtonAlertDialog(

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/add_user_screen.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
@@ -7,7 +9,6 @@ import '/widgets/accountWidgets/accountDetailVerificationPending.dart';
 import '/widgets/accountWidgets/accountDetailVerified.dart';
 import '/widgets/accountWidgets/waitForReviewCard.dart';
 import '/widgets/buttons/helpButton.dart';
-import '/widgets/buyGpsLongWidget.dart';
 import '/widgets/headingTextWidget.dart';
 import 'package:get/get.dart';
 
@@ -71,7 +72,7 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    shipperIdController.accountVerificationInProgress.value
+                    shipperIdController.companyStatus.value == 'inProgress'
                         ? AccountDetailVerificationPending(
                             mobileNum: shipperIdController.mobileNum.value,
                             name: shipperIdController.name.value,
@@ -80,6 +81,7 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                             //AccountDetailVerified(
                             mobileNum: shipperIdController.mobileNum.value,
                             name: shipperIdController.name.value,
+                            mailId:FirebaseAuth.instance.currentUser!.email.toString(),
                             companyName: shipperIdController.companyName.value,
                             address: shipperIdController.shipperLocation.value,
                           ),
@@ -89,14 +91,30 @@ class AccountVerificationStatusScreen extends StatelessWidget {
               SizedBox(
                 height: space_3,
               ),
-              shipperIdController.accountVerificationInProgress.value
-                  ? WaitForReviewCard()
+              shipperIdController.companyStatus.value == 'inProgress'
+                  ? const WaitForReviewCard()
                   : Container(),
               // shipperIdController.accountVerificationInProgress.value
               //     ? SizedBox(
               //         height: space_3,
               //       )
               //     : Container(),
+              const SizedBox(height: 20,),
+              //TODO: Add user/ employee button in account page
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    backgroundColor: const Color(0xFF000066),
+                  ),
+                  child: const Text('Add User/ Employee'),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddUser()));
+                  },
+                ),
+              ),
             ],
           ),
         ),

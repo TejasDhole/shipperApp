@@ -116,12 +116,8 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
         bottomProgressLoad = true;
       });
     }
-   // String url =  dotenv.get('routeHistoryApiUrl');
-   // String transporterId = 'transporter:81a794cd-08fa-455c-9727-eaf12279410b';
     http.Response response = await http.get(Uri.parse(
         '$loadApiUrl?postLoadId=${shipperIdController.shipperId.value}&pageNo=$i'));
-    // '$loadApiUrl?postLoadId=$transporterId&pageNo=$i'));
-    //  url));
     var jsonData = json.decode(response.body);
     for (var json in jsonData) {
       LoadDetailsScreenModel loadDetailsScreenModel = LoadDetailsScreenModel();

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
@@ -39,17 +37,17 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
     currentItem = LocalizationService().getCurrentLang();  //added this
   }
   Function? onTapNext(){
-    Get.to(bottomProgressBarIndicatorWidget());
+    Get.to(const bottomProgressBarIndicatorWidget());
     Get.off(() => NavigationScreen());
   }
   getData() async {
-    bool? transporterApproved;
     bool? companyApproved;
     String? mobileNum;
     bool? accountVerificationInProgress;
     String? transporterLocation;
     String? name;
     String? companyName;
+    String? companyStatus;
 
     //transporterId = await runTransporterApiPost(
       //mobileNum: FirebaseAuth
@@ -66,13 +64,13 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
     else {
       setState(() {
         shipperId = sidstorage.read("shipperId");
-        transporterApproved = sidstorage.read("shipperApproved");
         companyApproved = sidstorage.read("companyApproved");
         mobileNum = sidstorage.read("mobileNum");
         accountVerificationInProgress = sidstorage.read("accountVerificationInProgress");
         transporterLocation = sidstorage.read("shipperLocation");
         name = sidstorage.read("name");
         companyName = sidstorage.read("companyName");
+        companyStatus = sidstorage.read("companyStatus");
       });
 
       if (shipperId == null) {
@@ -87,6 +85,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
         shipperIdController.updateShipperLocation(transporterLocation!);
         shipperIdController.updateName(name!);
         shipperIdController.updateCompanyName(companyName!);
+        shipperIdController.updateCompanyStatus(companyStatus!);
         print("shipperID is $shipperId");
         setState(() {
         _nextScreen=true;
@@ -112,7 +111,11 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Card(
-              child: Container(
+              color: white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius_5),
+              ),
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height / 1.5,
                 child: Padding(
                   padding:
@@ -121,7 +124,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: space_5, right: space_5),
-                        child: Image(
+                        child: const Image(
                             image: AssetImage("assets/icons/welcomeIcon.png")),
                       ),
                       Text('welcome'.tr,  // changed this
@@ -150,7 +153,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                 // provider.setLocale(Locale('en'));
                                 //change here
                                 setState(() {
-                                  var locale = Locale('en', 'US');
+                                  var locale = const Locale('en', 'US');
                                   Get.updateLocale(locale);
                                   currentItem = 'English';
                                   LocalizationService().changeLocale(currentItem);
@@ -177,7 +180,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                     ),
                                     Container(
                                       child: currentItem == 'English' ? Image( //chenge here
-                                        image: AssetImage("assets/icons/tick.png"),
+                                        image: const AssetImage("assets/icons/tick.png"),
                                         width: space_3,
                                         height: space_3,
                                       ): Container(),
@@ -197,7 +200,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                   // provider.setLocale(Locale('hi'));
                                 //change here
                                 setState(() {
-                                  var locale = Locale('hi', 'IN');
+                                  var locale = const Locale('hi', 'IN');
                                   Get.updateLocale(locale);
                                   currentItem = 'Hindi';
                                   LocalizationService().changeLocale(currentItem);
@@ -225,7 +228,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                     ),
                                 Container(
                                   child: currentItem == 'Hindi' ? Image(   //change here
-                                    image: AssetImage("assets/icons/tick.png"),
+                                    image: const AssetImage("assets/icons/tick.png"),
                                     width: space_3,
                                     height: space_3,
                                   ): Container(),),
@@ -241,16 +244,12 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                       ),
                       _nextScreen?
                       GetStartedButton(onTapNext: this.onTapNext,) : GetStartedButton(onTapNext: (){
-                        Get.off(LoginScreenUsingPhone());
+                        Get.off(const LoginScreenUsingPhone());
                       },)
 
                     ],
                   ),
                 ),
-              ),
-              color: white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(radius_5),
               ),
             )
           ],

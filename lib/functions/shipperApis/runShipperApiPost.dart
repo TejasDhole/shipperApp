@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import '../shipperId_fromCompaniesDatabase.dart';
 import '/controller/shipperIdController.dart';
 import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
 import 'package:flutter/foundation.dart';
@@ -43,16 +44,9 @@ Future<String?> runShipperApiPost({
             "shipperName": shipperName,
             "companyName": companyName,
             "GST": gst,
+            "companyStatus": "notVerified",
             "shipperLocation": address,
           };
-    // Map data = {
-    //   "emailId": emailId,
-    //   "phoneNo": phoneNo,
-    //   "shipperName": shipperName,
-    //   "companyName": companyName,
-    //   "gst": gst,
-    //   "shipperLocation": address,
-    // };
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
@@ -63,7 +57,7 @@ Future<String?> runShipperApiPost({
 
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
 
-    if(!kIsWeb) {
+    if (!kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {
         if (value != null) {
           log("firebase registration token =========> " + value);
@@ -79,7 +73,6 @@ Future<String?> runShipperApiPost({
         String shipperId = decodedResponse["shipperId"];
 
         debugPrint(shipperId);
-        debugPrint("*********************************************************$shipperId");
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
@@ -88,6 +81,7 @@ Future<String?> runShipperApiPost({
         String shipperLocation = decodedResponse["shipperLocation"] ?? " ";
         String name = decodedResponse["shipperName"] ?? " ";
         String companyName = decodedResponse["companyName"] ?? " ";
+        String companyStatus = decodedResponse["companyStatus"] ?? " ";
         String mobileNum = decodedResponse["phoneNo"] ?? " ";
         shipperIdController.updateShipperId(shipperId);
         sidstorage
@@ -97,6 +91,10 @@ Future<String?> runShipperApiPost({
         sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
+        shipperIdController.updateCompanyStatus(companyStatus);
+        sidstorage
+            .write("companyStatus", companyStatus)
+            .then((value) => print("Written companyStatus"));
         shipperIdController.updateEmailId(emailId);
         sidstorage
             .write("emailId", emailId)
@@ -125,6 +123,7 @@ Future<String?> runShipperApiPost({
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
+        getShipperIdFromCompanyDatabase();
         return shipperId;
       } else {
         print("shipperId is null");

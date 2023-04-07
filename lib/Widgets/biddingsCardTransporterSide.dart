@@ -8,7 +8,6 @@ import '/models/biddingModel.dart';
 import '/screens/myLoadPages/biddingDetails.dart';
 import '/widgets/buttons/CancelBidButton.dart';
 import '/widgets/buttons/callButton.dart';
-import '/widgets/buttons/confirmOrderButton.dart';
 import '/widgets/newRowTemplate.dart';
 import 'LoadEndPointTemplate.dart';
 import 'linePainter.dart';
@@ -181,13 +180,13 @@ class BiddingsCardTransporterSide extends StatelessWidget {
                                 active: !(biddingModel.shipperApproval ==
                                         false &&
                                     biddingModel.transporterApproval == false)),
-                            ConfirmOrderButton(
-                              biddingModel: biddingModel,
-                              postLoadId: biddingModel.postLoadId,
-                              shipperApproval: biddingModel.shipperApproval,
-                              transporterApproval:
-                                  biddingModel.transporterApproval,
-                            )
+                            // ConfirmOrderButton(
+                            //   biddingModel: biddingModel,
+                            //   postLoadId: biddingModel.postLoadId,
+                            //   shipperApproval: biddingModel.shipperApproval,
+                            //   transporterApproval:
+                            //       biddingModel.transporterApproval,
+                            // )
                           ],
                         ),
                       )

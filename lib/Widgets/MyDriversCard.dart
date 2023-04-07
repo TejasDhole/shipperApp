@@ -125,7 +125,7 @@ class _MyDriverCardState extends State<MyDriverCard> {
                 item.itemText,
                 style: TextStyle(
                   fontWeight: mediumBoldWeight,
-                  fontFamily: 'montserrat',
+                  
                 ),
               ),
             ],

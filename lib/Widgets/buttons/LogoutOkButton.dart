@@ -11,6 +11,7 @@ import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/constants/colors.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LogoutOkButton extends StatelessWidget {
   const LogoutOkButton({super.key});
@@ -24,6 +25,7 @@ class LogoutOkButton extends StatelessWidget {
         prefs.clear();
         prefs.remove('uid');
         sidstorage.erase();
+        await GoogleSignIn().disconnect();
         FirebaseAuth.instance.signOut().then((value) =>
             sidstorage.erase().then((value) => print('Storage is erased')));
         kIsWeb ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb())) : Get.offAll(LoginScreenUsingMail());
@@ -43,7 +45,7 @@ class LogoutOkButton extends StatelessWidget {
           child: Text(
             "ok".tr,
             style: TextStyle(
-                fontFamily: 'montserrat',
+                
                 color: backgroundColor,
                 fontWeight: mediumBoldWeight,
                 fontSize: 13),

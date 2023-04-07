@@ -19,6 +19,12 @@ class ShipperIdController extends GetxController {
     name.value = newValue;
   }
 
+  RxString companyStatus = "".obs;
+
+  void updateCompanyStatus(String newValue) {
+    companyStatus.value = newValue;
+  }
+
   RxString companyName = "".obs;
 
   void updateCompanyName(String newValue) {

@@ -9,6 +9,8 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 
 class WaitForReviewCard extends StatelessWidget {
+  const WaitForReviewCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -26,11 +28,11 @@ class WaitForReviewCard extends StatelessWidget {
                   Container(
                     height: space_5,
                     width: space_5,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: darkBlueColor,
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         Icons.check,
                         color: white,
@@ -50,7 +52,7 @@ class WaitForReviewCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: liveasyOrange,
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         Icons.more_horiz,
                         color: white,
@@ -63,7 +65,7 @@ class WaitForReviewCard extends StatelessWidget {
                   Container(
                     height: space_5,
                     width: space_5,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: greyBorderColor,
                     ),
@@ -71,7 +73,7 @@ class WaitForReviewCard extends StatelessWidget {
                       child: Container(
                         height: space_4,
                         width: space_4,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: backgroundColor,
                         ),

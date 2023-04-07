@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../screens/isolatedTransporterGetData.dart';
+import 'shipperApis/isolatedShipperGetData.dart';
 import 'dart:math';
 
 final String idfyAccountId = dotenv.get('idfyAccountId');

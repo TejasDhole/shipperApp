@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Web/screens/login.dart';
-import 'package:shipper_app/main_screen.dart';
-import 'package:shipper_app/screens/SplashScreenToHomePage.dart';
-import 'package:shipper_app/screens/SplashScreenToLogin.dart';
+import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/screens/splashScreens/SplashScreenToHomePage.dart';
+import 'package:shipper_app/screens/splashScreens/SplashScreenToLogin.dart';
 import 'package:sizer/sizer.dart';
-import 'constants/radius.dart';
 import 'firebase_options.dart';
 import 'providerClass/providerData.dart';
 import 'package:get/get.dart';
@@ -30,6 +30,8 @@ var firebase;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //TODO: Different Firebase initialization for android app and web app
+  //TODO: Wherever kIsWeb is used, it means we are having separate code for web app and android app
   firebase = kIsWeb
       ? await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
@@ -62,8 +64,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     setState(() {});
     shipperId = sidstorage.read("shipperId");
-    //print(firebase);
     getSharedPrefs();
+    //TODO: Internet connection check and onesignal initialization is only done for android application.
     if (!kIsWeb) {
       checkConnection();
       connectivityChecker();
@@ -75,7 +77,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void checkConnection() {
-    configOneSignel();
+    configOneSignal();
     connectivity = Connectivity();
     subscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
@@ -131,7 +133,7 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  void configOneSignel() {
+  void configOneSignal() {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     String oneSignalAppId = dotenv.get('oneSignalAppId').toString();
     OneSignal.shared.setAppId(oneSignalAppId);
@@ -152,12 +154,13 @@ class _MyAppState extends State<MyApp> {
                   ? GetMaterialApp(
                       debugShowCheckedModeBanner: false,
                       builder: EasyLoading.init(),
-                      theme: ThemeData(fontFamily: "montserrat"),
+                      theme: ThemeData(fontFamily: "Montserrat"),
                       translations: LocalizationService(),
                       locale: LocalizationService().getCurrentLocale(),
                       fallbackLocale: const Locale('en', 'US'),
-                      //home: const MainScreen(),
-                      home: prefs.containsKey('uid')?const MainScreen():const LoginWeb(),
+                //TODO: for home screen in web app we are looking whether used is checked for "Keep me logged in" while logging in.
+                //TODO: so according if user enabled that we are navigating directly to HomeScreen of web, else user is asked for login
+                      home: prefs.containsKey('uid')?const HomeScreenWeb():const LoginWeb(),
                     )
                   : FutureBuilder(
                       future: firebase,
@@ -188,6 +191,7 @@ class _MyAppState extends State<MyApp> {
                                   home: const SplashScreenToLoginScreen());
                             }
                           } else {
+                            getShipperIdFromCompanyDatabase();
                             if (shipperId != null) {
                               print("Current transporter is not null and user is not null");
                               return GetMaterialApp(

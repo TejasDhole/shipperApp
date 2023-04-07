@@ -5,15 +5,8 @@ import 'package:get/get.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import '/controller/navigationIndexController.dart';
 import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
-import '/screens/SuggestedLoadsScreen.dart';
-import '/screens/TruckScreens/AddNewTruck/truckNumberRegistration.dart';
-import '/screens/buyGpsScreen.dart';
 import '/screens/findLoadScreen.dart';
-import '/screens/languageSelectionScreen.dart';
-import '/screens/myDriversScreen.dart';
 import '/screens/navigationScreen.dart';
-import '/widgets/accountVerification/accountPageUtil.dart';
-import 'alertDialog/addDriverAlertDialog.dart';
 
 class HelpCardWidget extends StatefulWidget {
   HelpCardWidget({Key? key, required this.title, required this.index})
@@ -31,7 +24,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
   List<String> answers = [
    // 'To add truck : \n1. Click on my trucks. \n2. Click on add truck button. \n3. Fill the details about your truck. \n4. Confirm the details. \n5. Hurray! your truck is added.',
     'To post load :\n1. Click on my load.\n2. Click on add load button.\n3. Fill the details about your load.\n4. Confirm the details.\n5. Hurray! your load is posted.',
-    'To bid on the loads :\n1. Click on any load of your choice or you may also \tsearch load from search bar.\n2. Click on the bid button.\n3. Bid as per truck or per tonne.\n4. Click ok and your bid will be placed.',
+  //  'To bid on the loads :\n1. Click on any load of your choice or you may also \tsearch load from search bar.\n2. Click on the bid button.\n3. Bid as per truck or per tonne.\n4. Click ok and your bid will be placed.',
   //  'To purchase GPS :\n1. On Home page click on Buy gps.\n1. Select your plan and the truck.\n2. Complete the payment procedure.\n3. Hurray! you purchased gps.',
     'To see my orders :\n1. Click on orders from home page.\n2. On orders page you can see bids, on-going and \tcompleted orders.',
   //  'To verify account :\n1. On home page click on My Account.\n2. Please upload your documents.\n3. Wait for us to verify your details, which may take \tsome while.\n4. Once your details are verified you can start bidding \ton the any load. ',
@@ -43,7 +36,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
   List<String> redirect = [
   //  'Click here to add truck',
     'Click here to post load ',
-    'Click here to bid on loads',
+  //  'Click here to bid on loads',
   //  'Click here to purchase GPS',
     'Click here to see my orders',
   //  'Click here to go to my account',
@@ -56,7 +49,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
   var redirect_links = [
   //  AddNewTruck("redirectlinks"),
     PostLoadScreenOne(),
-    SuggestedLoadScreen(),
+  //  SuggestedLoadScreen(),
   //  BuyGpsScreen(),
     kIsWeb?const HomeScreenWeb():NavigationScreen(),
   //  AccountPageUtil(),
@@ -95,7 +88,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
                           title: Text(
                             widget.title,
                             style: TextStyle(
-                                fontFamily: 'montserrat',
+                                
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14),
                           ),
@@ -116,7 +109,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
                                     children: [
                                       Text(answers[widget.index].tr,
                                           style: TextStyle(
-                                              fontFamily: 'montserrat',
+                                              
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12,
                                               color: Colors.grey),

@@ -21,7 +21,7 @@ class LogoutDialogue extends StatelessWidget {
             style: TextStyle(
                 color: liveasyBlackColor,
                 fontSize: size_9,
-                fontFamily: 'montserrat',
+                
                 fontWeight: regularWeight)),
         actions: <Widget>[
           LogoutOkButton(),

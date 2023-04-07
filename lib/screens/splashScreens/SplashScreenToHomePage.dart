@@ -39,6 +39,7 @@ class _SplashScreenToHomePageState
     String? shipperLocation;
     String? name;
     String? companyName;
+    String? companyStatus;
 
     if (shipperId != null){
       // setState(() {
@@ -54,6 +55,7 @@ class _SplashScreenToHomePageState
         shipperLocation = sidstorage.read("shipperLocation");
         name = sidstorage.read("name");
         companyName = sidstorage.read("companyName");
+        companyStatus = sidstorage.read("companyStatus");
       });
 
       if (shipperId == null) {
@@ -62,6 +64,7 @@ class _SplashScreenToHomePageState
         print("It is in else");
         shipperIdController.updateShipperId(shipperId!);
         shipperIdController.updateCompanyApproved(companyApproved!);
+        shipperIdController.updateCompanyStatus(companyStatus!);
         shipperIdController.updateMobileNum(mobileNum!);
         shipperIdController
             .updateAccountVerificationInProgress(accountVerificationInProgress!);

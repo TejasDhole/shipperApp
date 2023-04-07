@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../screens/HelpScreen.dart';
 import '/constants/borderWidth.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -7,14 +8,16 @@ import 'package:get/get.dart';
 // import '/screens/HelpScreen.dart';
 
 class HelpButtonWidget extends StatelessWidget {
+  const HelpButtonWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => HelpScreen()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HelpScreen()),
+        );
       },
       child: Container(
         height: space_6,
@@ -29,7 +32,7 @@ class HelpButtonWidget extends StatelessWidget {
               Container(
                 height: space_3,
                 width: space_3,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/icons/helpIcon.png"))),
               ),

@@ -9,11 +9,8 @@ import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/controller/navigationIndexController.dart';
 import '/providerClass/drawerProviderClassData.dart';
-import '/screens/buyGpsScreen.dart';
 import '/screens/languageSelectionScreen.dart';
 import '/widgets/alertDialog/LogOutDialogue.dart';
-import '/screens/myDriversScreen.dart';
-import '/widgets/alertDialog/addDriverAlertDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
@@ -100,7 +97,7 @@ class DrawerWidget extends StatelessWidget {
                                         style: TextStyle(
                                           fontWeight: mediumBoldWeight,
                                           fontSize: size_7,
-                                          fontFamily: 'montserrat',
+                                          
                                         ),
                                       ),
                                     ),
@@ -140,34 +137,6 @@ class DrawerWidget extends StatelessWidget {
                           // AppLocalizations.of(context)!.language,
                           image: 'assets/icons/languageIcon.png'),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        selectItem(context, NavigationItem.AddDriver);
-                        Navigator.of(context).pop();
-                        showDialog(
-                            context: context,
-                            builder: (context) => MyDrivers());
-                      },
-                      child: drawerMenuItem(
-                          context: context,
-                          item: NavigationItem.AddDriver,
-                          text: 'mydriver'.tr,
-                          // 'My Drivers',
-                          image: 'assets/icons/driverHandle.png'),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        selectItem(context, NavigationItem.BuyGps);
-                        Navigator.of(context).pop();
-                        Get.to(BuyGpsScreen());
-                      },
-                      child: drawerMenuItem(
-                          context: context,
-                          item: NavigationItem.BuyGps,
-                          text: 'buy_gps'.tr,
-                          // AppLocalizations.of(context)!.buy_gps,
-                          image: 'assets/icons/gps.png'),
-                    ),
                     SizedBox(
                       height: space_2,
                     ),
@@ -187,7 +156,7 @@ class DrawerWidget extends StatelessWidget {
                     //         style: TextStyle(
                     //             color: darkBlueColor,
                     //             fontSize: size_8,
-                    //             fontFamily: 'montserrat',
+                    //             
                     //             fontWeight: regularWeight)),
                     //   ),
                     // ),
@@ -224,7 +193,7 @@ class DrawerWidget extends StatelessWidget {
                     //           child: Text('contact_us'.tr, style: TextStyle(
                     //               color: darkBlueColor,
                     //               fontSize: size_8,
-                    //               fontFamily: 'montserrat',
+                    //               
                     //               fontWeight: regularWeight),textAlign: TextAlign.left,),
                     //         ),),
                     //   ),
@@ -262,7 +231,7 @@ class DrawerWidget extends StatelessWidget {
                             style: TextStyle(
                                 color: black,
                                 fontSize: size_8,
-                                fontFamily: 'montserrat',
+                                
                                 fontWeight: regularWeight)),
                         leading: Container(
                             margin: EdgeInsets.only(left: space_4),
@@ -312,7 +281,7 @@ class DrawerWidget extends StatelessWidget {
             style: TextStyle(
                 color: isSelected ? darkBlueColor : black,
                 fontSize: size_8,
-                fontFamily: 'montserrat',
+                
                 fontWeight: isSelected ? boldWeight : regularWeight)),
       ),
     );

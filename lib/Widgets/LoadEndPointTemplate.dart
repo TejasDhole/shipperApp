@@ -37,7 +37,7 @@ class LoadEndPointTemplate extends StatelessWidget {
                         ? "Loading Point"
                         : "Unloading Point",
                     style: TextStyle(
-                        fontFamily: 'Montserrat',
+                        
                         fontSize: size_6 + 1,
                         color: const Color(0xFF7B7B7B)),
                   )
