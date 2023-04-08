@@ -104,7 +104,7 @@ class AccountVerificationPage2 extends StatelessWidget {
                             .then((uploadstatus) async {
                           if (uploadstatus == "Success") {
                             final status = await updateShipperApi(
-                                accountVerificationInProgress: true,
+                                comapnyStatus: "inProgress",
                                 transporterId: shipperIdController
                                     .shipperId.value);
                             if (status == "Success") {

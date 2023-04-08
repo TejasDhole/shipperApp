@@ -9,7 +9,6 @@ import '/models/loadDetailsScreenModel.dart';
 import '/widgets/additionalDescription_LoadDetails.dart';
 import '/widgets/buttons/backButtonWidget.dart';
 import '/widgets/buttons/bidButton.dart';
-import '/widgets/buttons/bookNowButton.dart';
 import '/widgets/buttons/callButton.dart';
 import '/widgets/loadPosterDetails.dart';
 import '/widgets/headingTextWidget.dart';
@@ -255,10 +254,10 @@ class _LoadDetailsScreenState extends State<LoadDetailsScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    BookNowButton(
-                                      loadDetailsScreenModel:
-                                          widget.loadDetailsScreenModel,
-                                    ),
+                                    // BookNowButton(
+                                    //   loadDetailsScreenModel:
+                                    //       widget.loadDetailsScreenModel,
+                                    // ),
                                     ShareButton(
                                       loadDetails:
                                           widget.loadDetailsScreenModel,

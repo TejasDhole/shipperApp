@@ -15,7 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/trackScreenFunctions.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import '/models/gpsDataModel.dart';
-import '/screens/truckHistoryScreen.dart';
+import '../screens/mapFunctionScreens/truckHistoryScreen.dart';
 import '/widgets/stoppageInfoWindow.dart';
 import 'package:logger/logger.dart';
 import 'package:screenshot/screenshot.dart';

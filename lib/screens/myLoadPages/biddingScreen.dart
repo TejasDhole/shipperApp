@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import '../../functions/transporterApis/transporterApiCalls.dart';
 import '/constants/spaces.dart';
 import '/functions/shipperApis/shipperApiCalls.dart';
 import '/models/biddingModel.dart';
@@ -39,6 +40,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
   ScrollController scrollController = ScrollController();
 
   ShipperApiCalls shipperApiCalls = ShipperApiCalls();
+  TransporterApiCalls transporterApiCalls = TransporterApiCalls();
 
   List<BiddingModel> biddingModelList = [];
 
@@ -125,7 +127,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
                           return LoadingWidget();
                         }
                         return FutureBuilder(
-                          future: shipperApiCalls.getDataByShipperId(
+                          future: transporterApiCalls.getDataByTransporterId(
                               biddingModelList[index].transporterId),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
@@ -143,10 +145,10 @@ class _BiddingScreensState extends State<BiddingScreens> {
                               biddingDate: biddingModelList[index].biddingDate,
                               bidId: biddingModelList[index].bidId,
                               transporterPhoneNum:
-                                  snapshot.data.shipperPhoneNum,
+                                  snapshot.data.transporterPhoneNum,
                               transporterLocation:
-                                  snapshot.data.shipperLocation,
-                              transporterName: snapshot.data.shipperName,
+                                  snapshot.data.transporterLocation,
+                              transporterName: snapshot.data.transporterName,
                               shipperApproved:
                                   biddingModelList[index].shipperApproval,
                               transporterApproved:

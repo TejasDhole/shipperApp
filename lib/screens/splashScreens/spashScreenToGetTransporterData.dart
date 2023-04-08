@@ -31,13 +31,13 @@ class _SplashScreenToGetTransporterDataState
   }
 
   getData() async {
-    bool? transporterApproved;
     bool? companyApproved;
     String? mobileNum;
     bool? accountVerificationInProgress;
     String? transporterLocation;
     String? name;
     String? companyName;
+    String? companyStatus;
 
     String? transporterId;
     //= await runTransporterApiPost(mobileNum: widget.mobileNum);
@@ -46,12 +46,11 @@ class _SplashScreenToGetTransporterDataState
     // runTransporterApiPost(mobileNum: widget.mobileNum);
 
     if (transporterId != null) {
-      Timer(Duration(milliseconds: 1200),
+      Timer(const Duration(milliseconds: 1200),
           () => Get.off(() => NavigationScreen()));
     } else {
       setState(() {
         transporterId = sidstorage.read("transporterId");
-        transporterApproved = sidstorage.read("transporterApproved");
         companyApproved = sidstorage.read("companyApproved");
         mobileNum = sidstorage.read("mobileNum");
         accountVerificationInProgress =
@@ -59,6 +58,7 @@ class _SplashScreenToGetTransporterDataState
         transporterLocation = sidstorage.read("transporterLocation");
         name = sidstorage.read("name");
         companyName = sidstorage.read("companyName");
+        companyStatus = sidstorage.read("companyStatus");
       });
       if (transporterId == null) {
         print("Transporter ID is null");
@@ -72,9 +72,10 @@ class _SplashScreenToGetTransporterDataState
         shipperIdController.updateShipperLocation(transporterLocation!);
         shipperIdController.updateName(name!);
         shipperIdController.updateCompanyName(companyName!);
+        shipperIdController.updateCompanyName(companyStatus!);
         print("transporterID is $transporterId");
         
-        Timer(Duration(milliseconds: 1200), () => Get.off(() => NavigationScreen()));
+        Timer(const Duration(milliseconds: 1200), () => Get.off(() => NavigationScreen()));
       }
       //Timer(Duration(milliseconds: 1), () => Get.off(() => NavigationScreen()));
     }
@@ -86,7 +87,7 @@ class _SplashScreenToGetTransporterDataState
       backgroundColor: statusBarColor,
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -95,7 +96,7 @@ class _SplashScreenToGetTransporterDataState
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(image: AssetImage("assets/images/liveasyTruck.png")),
+              const Image(image: AssetImage("assets/images/liveasyTruck.png")),
               SizedBox(
                 height: space_2,
               ),
@@ -103,7 +104,7 @@ class _SplashScreenToGetTransporterDataState
                 child: Column(
                   children: [
                     Image(
-                      image: AssetImage("assets/images/logoSplashScreen.png"),
+                      image: const AssetImage("assets/images/logoSplashScreen.png"),
                       height: space_12,
                     ),
                     SizedBox(

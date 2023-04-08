@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-// import '/screens/SuggestedLoadsScreen.dart';
 
 class SuggestedLoadWidgetHeader extends StatelessWidget {
   const SuggestedLoadWidgetHeader({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class SuggestedLoadWidgetHeader extends StatelessWidget {
           // AppLocalizations.of(context)!.suggestedLoad,
           style: TextStyle(
               color: liveasyBlackColor,
-              fontFamily: 'montserrat',
+              
               fontWeight: FontWeight.bold,
               fontSize: 16),
         ),
@@ -32,7 +31,7 @@ class SuggestedLoadWidgetHeader extends StatelessWidget {
             // AppLocalizations.of(context)!.seeAll,
             style: TextStyle(
                 color: liveasyGreen,
-                fontFamily: 'montserrat',
+                
                 fontWeight: FontWeight.bold,
                 fontSize: size_8),
           ),

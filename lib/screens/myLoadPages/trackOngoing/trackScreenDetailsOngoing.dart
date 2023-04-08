@@ -9,8 +9,8 @@ import '/controller/dynamicLink.dart';
 import '/functions/ongoingTrackUtils/getTraccarSummaryByDeviceId.dart';
 import '/screens/myLoadPages/trackOngoing/nearbyPlacesScreenOngoing.dart';
 import '/screens/myLoadPages/trackOngoing/truckHistoryScreenOngoing.dart';
-import '/screens/playRouteHistoryScreen.dart';
-import '/screens/truckAnalysisScreen.dart';
+import '../../mapFunctionScreens/playRouteHistoryScreen.dart';
+import '../../mapFunctionScreens/truckAnalysisScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TrackScreenDetailsOngoing extends StatefulWidget {

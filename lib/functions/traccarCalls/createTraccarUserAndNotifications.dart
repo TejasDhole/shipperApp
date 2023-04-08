@@ -1,4 +1,4 @@
-import '../../screens/isolatedTransporterGetData.dart';
+import '../shipperApis/isolatedShipperGetData.dart';
 import '/functions/traccarCalls/createNotificationTraccar.dart';
 import '/functions/traccarCalls/createUserTraccar.dart';
 import '/functions/traccarCalls/linkNotificationAndUserTraccar.dart';

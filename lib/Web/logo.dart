@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:shipper_app/responsive.dart';
 
 
-class ShipperImage extends StatelessWidget {
-  const ShipperImage({Key? key}) : super(key: key);
+class LiveasyLogoImage extends StatelessWidget {
+  const LiveasyLogoImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(Responsive.isDesktop(context)?30:20,Responsive.isDesktop(context)?30:20),
-      painter: TransporterImageDrawing(),
+      size: Size(Responsive.isDesktop(context)?30:15,Responsive.isDesktop(context)?30:15),
+      painter: LiveasyLogoImageDrawing(),
     );
   }
 }
 
-class TransporterImageDrawing extends CustomPainter {
+class LiveasyLogoImageDrawing extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 

@@ -1,4 +1,3 @@
-import 'package:geolocator/geolocator.dart';
 import '../../Widgets/PhoneNumberTextField.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
@@ -7,7 +6,6 @@ import '/screens/LoginScreens/otpVerificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/providerClass/providerData.dart';
-// import 'package:location_permissions/location_permissions.dart';
 import 'package:provider/provider.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
@@ -75,7 +73,7 @@ class _LoginScreenUsingPhoneState extends State<LoginScreenUsingPhone> {
                   child: Container(
                     width: space_34,
                     height: space_8,
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("assets/icons/liveasy.png"),
                     ),
                   ),
@@ -135,13 +133,6 @@ class _LoginScreenUsingPhoneState extends State<LoginScreenUsingPhone> {
                               style: ButtonStyle(
                                 backgroundColor: providerData.buttonColor,
                               ),
-                              child: Text(
-                                'sendOtp'.tr,
-                                // 'Send OTP',
-                                style: TextStyle(
-                                  color: white,
-                                ),
-                              ),
                               onPressed: providerData.inputControllerLengthCheck
                                   ? () {
                                 Get.to(() => NewOTPVerificationScreen(
@@ -155,7 +146,14 @@ class _LoginScreenUsingPhoneState extends State<LoginScreenUsingPhone> {
                                 providerData.clearAll();
                               } // if
 
-                                  : () {}),
+                                  : () {},
+                              child: Text(
+                                'sendOtp'.tr,
+                                // 'Send OTP',
+                                style: const TextStyle(
+                                  color: white,
+                                ),
+                              )),
                         ),
                       )
                     ],

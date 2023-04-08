@@ -21,7 +21,7 @@ class NoInternetConnection {
           'Ooops!',
           style: TextStyle(
             fontWeight: mediumBoldWeight,
-            fontFamily: 'Montserrat',
+            
             fontSize: size_9,
             color: black,
           ),
@@ -33,7 +33,7 @@ class NoInternetConnection {
         Text(
           'Slow or no internet connection.\n Check your network connection and \n try again.',
           style: TextStyle(
-              fontFamily: 'Montserrat',
+              
               fontWeight: normalWeight,
               fontSize: size_6,
               color: grey),

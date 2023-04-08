@@ -7,7 +7,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/functions/trackScreenFunctions.dart';
-import '/screens/playRouteHistoryScreen.dart';
+import '../screens/mapFunctionScreens/playRouteHistoryScreen.dart';
 import 'alertDialog/invalidDateConditionDialog.dart';
 
 class PlayRouteDetailsWidget extends StatefulWidget {

@@ -11,14 +11,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/trackScreenFunctions.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import '/models/gpsDataModel.dart';
-import '/screens/truckLockUnlockScreen.dart';
 import '/widgets/Header.dart';
 import '/widgets/stoppageInfoWindow.dart';
 import '/widgets/trackScreenDetailsWidget.dart';
@@ -26,7 +24,6 @@ import '/widgets/truckInfoWindow.dart';
 import 'package:logger/logger.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:custom_info_window/custom_info_window.dart';
-// import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -1089,129 +1086,30 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           width: MediaQuery.of(context).size.width,
                           height: space_13,
                           color: white,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        space_3, 0, space_3, 0),
-                                    child: Header(
-                                        reset: false,
-                                        // add variable for check status time or device
-                                        text: "${widget.truckNo} ",
-                                        backButton: true),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 45),
-                                    child: Container(
-                                      child: Text(
-                                        "( $totalStatus )",
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    space_3, 0, space_3, 0),
+                                child: Header(
+                                    reset: false,
+                                    // add variable for check status time or device
+                                    text: "${widget.truckNo} ",
+                                    backButton: true),
                               ),
-                              //HelpButtonWidget(),
-                              PopupMenuButton(
-                                  onSelected: (value) => {
-                                        if (value == 1)
-                                          {
-                                            //   print("THE DATA ${widget.truckId}"),
-                                            Get.to(TruckLockUnlock(
-                                              deviceId: widget.deviceId,
-                                              gpsData: newGPSData,
-                                              lockStatus: widget.gpsData.result,
-                                              // position: position,
-                                              TruckNo: widget.truckNo,
-                                              //   driverName: widget.driverName,
-                                              //   driverNum: widget.driverNum,
-                                              gpsDataHistory: gpsDataHistory,
-                                              gpsStoppageHistory:
-                                                  gpsStoppageHistory,
-                                            ))
-                                            // routeHistory:
-                                            //     widget.routeHistory))
-                                            // truckId: widget.truckId))
-                                            //   if (lockState == false)
-                                            //     {
-                                            //       Get.to(() => TruckLockScreen(
-                                            //           deviceId: widget.deviceId,
-                                            //           gpsData: widget.gpsData,
-                                            //           // position: position,
-                                            //           TruckNo: widget.TruckNo,
-                                            //           driverName:
-                                            //               widget.driverName,
-                                            //           driverNum: widget.driverNum,
-                                            //           gpsDataHistory:
-                                            //               widget.gpsDataHistory,
-                                            //           gpsStoppageHistory: widget
-                                            //               .gpsStoppageHistory,
-                                            //           routeHistory:
-                                            //               widget.routeHistory,
-                                            //           truckId: widget.truckId))
-                                            //     }
-                                            //   else
-                                            //     {
-                                            //       Get.to(() => TruckUnlockScreen(
-                                            //           deviceId: widget.deviceId,
-                                            //           gpsData: widget.gpsData,
-                                            //           // position: position,
-                                            //           TruckNo: widget.TruckNo,
-                                            //           driverName:
-                                            //               widget.driverName,
-                                            //           driverNum: widget.driverNum,
-                                            //           gpsDataHistory:
-                                            //               widget.gpsDataHistory,
-                                            //           gpsStoppageHistory: widget
-                                            //               .gpsStoppageHistory,
-                                            //           routeHistory:
-                                            //               widget.routeHistory,
-                                            //           truckId: widget.truckId))
-                                            //     }
-                                          }
-                                      },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(radius_1 + 1))),
-                                  itemBuilder: (context) => [
-                                        PopupMenuItem(
-                                          value: 1,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Image.asset(
-                                                "assets/icons/truckLockIcon.png",
-                                                height: space_2 + 3,
-                                                width: space_2 + 3,
-                                              ),
-                                              SizedBox(
-                                                width: space_1 + 1,
-                                              ),
-                                              Container(
-                                                  //width: 100,
-                                                  child: Text(
-                                                "Truck Lock".tr,
-                                                style: TextStyle(
-                                                    color: liveasyBlackColor),
-                                              )),
-                                            ],
-                                          ),
-                                        ),
-                                        // PopupMenuItem(
-                                        //   child: Text("Second"),
-                                        //   value: 2,
-                                        // )
-                                      ])
+                              Padding(
+                                padding: const EdgeInsets.only(left: 45),
+                                child: Container(
+                                  child: Text(
+                                    "( $totalStatus )",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),

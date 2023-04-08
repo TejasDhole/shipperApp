@@ -54,7 +54,7 @@ class VerificationTypeSelection extends StatelessWidget {
                         child: Text('Verification of Transporter Status',
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'Montserrat',
+                            
                             fontSize: kIsWeb? space_4 :space_3,
                           ),
                         ),
@@ -64,7 +64,7 @@ class VerificationTypeSelection extends StatelessWidget {
                         child: Text('via Aadhaar',
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'Montserrat',
+                            
                             fontSize: kIsWeb? space_4 :space_3,
                           ),
                         ),
@@ -82,7 +82,7 @@ class VerificationTypeSelection extends StatelessWidget {
                           child: Text("Manual verification",
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
+                              
                               fontSize: kIsWeb? space_5 :space_3,
                             ),
                           ),
@@ -93,7 +93,7 @@ class VerificationTypeSelection extends StatelessWidget {
                         child: Text('OR',
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: 'Montserrat',
+                            
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
                             shadows: [
@@ -119,7 +119,7 @@ class VerificationTypeSelection extends StatelessWidget {
                           child: Text("Immediate verification",
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
+                              
                               fontSize: kIsWeb? space_5 :space_3,
                             ),
                           ),

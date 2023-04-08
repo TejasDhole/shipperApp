@@ -67,7 +67,7 @@ class _KYCIDfyScreenState extends State<KYCIDfyScreen> {
           if (url.contains(
               "https://capture.kyc.idfy.com/document-fetcher/digilocker/callback/?code=")) {
             String status = await updateShipperApi(
-                accountVerificationInProgress: true,
+                comapnyStatus: "verified",
                 transporterId: shipperIdController.shipperId.value);
             if (status == "Success") {
               Navigator.pushReplacement(

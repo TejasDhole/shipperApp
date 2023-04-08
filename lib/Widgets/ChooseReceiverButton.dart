@@ -11,12 +11,12 @@ class ChooseReceiverButton extends StatelessWidget {
   // final dynamic function ;
   final String? phoneNum;
 
-  ChooseReceiverButton({required this.label, required this.phoneNum});
+  ChooseReceiverButton({super.key, required this.label, required this.phoneNum});
 
   _makingPhoneCall() async {
     print('in makingPhoneCall');
     String url = 'tel:$phoneNum';
-    UrlLauncher.launch(url);
+    UrlLauncher.launchUrl(Uri.parse(url));
   }
 
   @override
@@ -25,7 +25,7 @@ class ChooseReceiverButton extends StatelessWidget {
     label = label!.length >= 12
         ? label!.substring(0, 10) + '..'
         : label;
-    return Container(
+    return SizedBox(
       width: 163,
       height: 40,
       child: TextButton(
@@ -33,7 +33,7 @@ class ChooseReceiverButton extends StatelessWidget {
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
-              side: BorderSide(color: darkBlueColor),
+              side: const BorderSide(color: darkBlueColor),
             )),
           ),
           child: Row(
@@ -41,7 +41,7 @@ class ChooseReceiverButton extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: space_1),
-                child: Image(
+                child: const Image(
                   height: 16,
                   width: 11,
                   image: AssetImage(

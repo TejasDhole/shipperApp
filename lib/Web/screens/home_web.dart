@@ -1,11 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:share/share.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/functions/shipperApis/isolatedShipperGetData.dart';
 import '../../constants/screens.dart';
 import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/constants/colors.dart';
@@ -35,6 +32,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         _selectedIndex = widget.selectedIndex!;
       });
     }
+    isolatedShipperGetData();
   }
 
 
@@ -85,9 +83,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         icon: Icon(Icons.person_outline_outlined), label: "Account"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.supervised_user_circle_outlined), label: "Add User"),
-    //const BottomNavigationBarItem(icon: Icon(Icons.support_agent_outlined), label: "Help and Support"),
-    //const BottomNavigationBarItem(icon: Icon(Icons.phone_in_talk_outlined), label: "Contact Us"),
-    //const BottomNavigationBarItem(icon: Icon(Icons.logout_outlined), label: "Logout"),
   ];
 
   @override
@@ -121,19 +116,18 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                 MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
           },
           child: SizedBox(
-            width: 9.w,
+            width: Responsive.isMobile(context)?10.w :9.w,
             child: Row(
               children: [
-                const ShipperImage(),
+                const LiveasyLogoImage(),
                 SizedBox(
                   width: 0.5.w,
                 ),
                 Text(
                   'Liveasy',
                   style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
-                      fontSize: Responsive.isDesktop(context) ? 5.sp : 4.5.sp,
+                      fontSize: Responsive.isMobile(context) ? 4.5.sp : 5.sp,
                       color: Colors.white),
                 ),
               ],
@@ -204,12 +198,12 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   extended: Responsive.isDesktop(context) ? true : false,
                   selectedIconTheme: const IconThemeData(color: kLiveasyColor),
                   unselectedLabelTextStyle: TextStyle(
-                      fontFamily: 'Montserrat',
+                      
                       fontWeight: FontWeight.bold,
                       fontSize: 3.6.sp,
                       color: Colors.black),
                   selectedLabelTextStyle: TextStyle(
-                      fontFamily: 'Montserrat',
+                      
                       fontWeight: FontWeight.bold,
                       fontSize: 3.9.sp,
                       color: kLiveasyColor),

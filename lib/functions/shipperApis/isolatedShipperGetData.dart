@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ int count = 0;
 
 late Timer timer;
 
-isolatedTransporterGetData() {
+isolatedShipperGetData() {
   exe = true;
   timer = Timer.periodic(
       Duration(seconds: 15), (Timer t) => exe ? apirun2() : timer.cancel());
@@ -107,6 +108,7 @@ Future<String?> runShipperApiPostIsolated(
         String shipperLocation = decodedResponse["shipperLocation"] ?? " ";
         String name = decodedResponse["shipperName"] ?? " ";
         String companyName = decodedResponse["companyName"] ?? " ";
+        String companyStatus = decodedResponse["companyStatus"] ?? " ";
         String mobileNum = decodedResponse["phoneNo"] ?? " ";
         shipperIdController.updateShipperId(shipperId);
         sidstorage
@@ -116,6 +118,10 @@ Future<String?> runShipperApiPostIsolated(
         sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
+        shipperIdController.updateCompanyStatus(companyStatus);
+        sidstorage
+            .write("companyStatus", companyStatus)
+            .then((value) => print("Written companyStatus"));
         shipperIdController.updateEmailId(emailId);
         sidstorage
             .write("emailId", emailId)
@@ -144,6 +150,7 @@ Future<String?> runShipperApiPostIsolated(
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
+        getShipperIdFromCompanyDatabase();
         return shipperId;
       }  else {
         return null;

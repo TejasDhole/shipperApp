@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//TODO: This responsive screen is used for differentiating screens among desktop, tablet, and mobile. This is only used in web application.
 class Responsive extends StatelessWidget {
   final Widget mobile;
   final Widget tablet;

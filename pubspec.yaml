@@ -41,10 +41,10 @@ dependencies:
 
   shared_preferences: ^2.0.18
   sizer: ^2.0.15
-  firebase_auth: ^4.2.10
-  firebase_core: ^2.7.1
+  firebase_auth:
+  firebase_core:
+  firebase_database:
   pin_code_fields: ^7.4.0
-  firebase_database: ^10.0.15
   flutter_dotenv: ^5.0.2
   http: ^0.13.3
   get: ^4.3.8
@@ -158,10 +158,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
     - family: Montserrat
       fonts:
-        - asset: fonts/Montserrat-VariableFont_wght.ttf
-        - asset: fonts/Montserrat-Italic-VariableFont_wght.ttf
+        - asset: fonts/Montserrat-Regular.ttf
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Regular.ttf

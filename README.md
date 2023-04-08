@@ -2,17 +2,10 @@
 =======
 # shipper_app
 
-A new Flutter project.
+A Cross Platform application developed using "Flutter" (Android and Web).
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1) kIsWeb is used for writing separate code for android and web, whenever single code usage is not possible.
+2) Responsive screen is being used for differentiating among different screen sizes in web application (e.g: Desktop, Tablet, & Mobile).
+3) There is folder named "Web" in lib of the project, it contains only web app required screens.
+4) Remaining all the android and web app required screens are in folder named "screens".

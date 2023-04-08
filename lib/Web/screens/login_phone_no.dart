@@ -58,7 +58,7 @@ class _LoginWebPhoneState extends State<LoginWebPhone> {
                         padding: EdgeInsets.only(left: 3.w,top: 5.h),
                         child: const Text('Phone Number',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              
                               fontSize: 18,
                               fontWeight: FontWeight.bold,),
                         ),
@@ -152,7 +152,7 @@ class _LoginWebPhoneState extends State<LoginWebPhone> {
         child: Text(text,
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Montserrat',
+            
             fontSize: 4.3.sp,
             fontWeight: FontWeight.bold,
           ),
@@ -170,7 +170,7 @@ class _LoginWebPhoneState extends State<LoginWebPhone> {
           padding: EdgeInsets.only(left:kIsWeb?3.w:10,top: 3.h),
           child: const Text('OTP',
             style: TextStyle(
-              fontFamily: 'Montserrat',
+              
               fontSize: 18,
               fontWeight: FontWeight.bold,),
           ),

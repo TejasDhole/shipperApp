@@ -27,7 +27,7 @@ class _SplashScreenToLoginScreenState
   void initState() {
     super.initState();
     getData();
-    Timer(Duration(seconds: 3), () => Get.off(() => LoginScreenUsingMail()));
+    Timer(const Duration(seconds: 3), () => Get.off(() => const LoginScreenUsingMail()));
   }
 
   getData() async   {
@@ -47,6 +47,7 @@ class _SplashScreenToLoginScreenState
     String? shipperLocation;
     String? name;
     String? companyName;
+    String? companyStatus;
 
     if (shipperId != null){
       print("shipperId is not null");
@@ -60,6 +61,7 @@ class _SplashScreenToLoginScreenState
         shipperLocation = sidstorage.read("shipperLocation");
         name = sidstorage.read("name");
         companyName = sidstorage.read("companyName");
+        companyStatus = sidstorage.read("companyStatus");
       });
 
       if (shipperId == null) {
@@ -74,6 +76,7 @@ class _SplashScreenToLoginScreenState
         shipperIdController.updateShipperLocation(shipperLocation!);
         shipperIdController.updateName(name!);
         shipperIdController.updateCompanyName(companyName!);
+        shipperIdController.updateCompanyStatus(companyStatus!);
         print("shipperID is $shipperId");
       }
     }
@@ -96,7 +99,7 @@ class _SplashScreenToLoginScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(
+            const Image(
               image: AssetImage("assets/images/liveasyTruck.png"),
             ),
             SizedBox(height: space_2),

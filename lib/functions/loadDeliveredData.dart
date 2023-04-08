@@ -4,7 +4,7 @@ import '/functions/truckApis/truckApiCalls.dart';
 import '/models/deliveredCardModel.dart';
 import '/models/driverModel.dart';
 import '/models/onGoingCardModel.dart';
-import '/models/transporterModel.dart';
+import '/models/shipperModel.dart';
 import 'driverApiCalls.dart';
 import 'loadApiCalls.dart';
 

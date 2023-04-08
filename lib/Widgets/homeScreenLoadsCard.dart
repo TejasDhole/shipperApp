@@ -38,7 +38,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
 
     return GestureDetector(
         onTap: () => {
-              if (sIdController.companyApproved.value)
+              if (sIdController.companyStatus.value == 'verified')
                 {
                   Get.to(
                     () => LoadDetailsScreen(
@@ -86,7 +86,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                                   .tr
                               : loadDetailsScreenModel.loadingPointCity!.tr,
                           style: TextStyle(
-                              fontFamily: 'montserrat',
+                              
                               fontWeight: FontWeight.bold,
                               fontSize: size_7),
                         ),
@@ -106,7 +106,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                             "${loadDetailsScreenModel.weight} $tonnes",
                             // "${AppLocalizations.of(context)!.tonnes}",
                             style: TextStyle(
-                                fontFamily: 'montserrat',
+                                
                                 color: bidBackground,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size_5),
@@ -139,7 +139,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                                   .tr
                               : loadDetailsScreenModel.unloadingPointCity!.tr,
                           style: TextStyle(
-                              fontFamily: 'montserrat',
+                              
                               fontWeight: FontWeight.bold,
                               fontSize: size_7),
                         ),
@@ -158,7 +158,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                           child: Text(
                             rateInTonnes,
                             style: TextStyle(
-                                fontFamily: 'montserrat',
+                                
                                 color: bidBackground,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size_5),

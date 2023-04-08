@@ -7,16 +7,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //TODO:all details not fetched
 Future<String> updateShipperApi(
-    {required bool accountVerificationInProgress,
+    {required String comapnyStatus,
     required String transporterId}) async {
   ShipperIdController shipperIdController =
       Get.put(ShipperIdController());
-  final String transporterApiUrl =
-      // FlutterConfig.get("transporterApiUrl").toString();
-         dotenv.get('shipperApiUrl');
+  final String transporterApiUrl = dotenv.get('shipperApiUrl');
 
 
-  Map data = {"accountVerificationInProgress": accountVerificationInProgress};
+  Map data = {"companyStatus": comapnyStatus};
   String body = json.encode(data);
   final response =
       await http.put(Uri.parse("$transporterApiUrl/$transporterId"),
@@ -27,18 +25,18 @@ Future<String> updateShipperApi(
   if (response.statusCode == 200) {
     print(response.body);
     var decodedResponse = json.decode(response.body);
-    String transporterId = decodedResponse["transporterId"];
+    String shipperId = decodedResponse["shipperId"];
     bool transporterApproved =
         decodedResponse["transporterApproved"].toString() == "true";
-    bool companyApproved =
-        decodedResponse["companyApproved"].toString() == "true";
-    bool accountVerificationInProgress =
-        decodedResponse["accountVerificationInProgress"].toString() == "true";
+    bool companyApproved = decodedResponse["companyApproved"].toString() == "true";
+    String companyStatus = decodedResponse["companyStatus"];
+    bool accountVerificationInProgress = decodedResponse["accountVerificationInProgress"].toString() == "true";
     String mobileNum = decodedResponse["phoneNo"] != null
         ? decodedResponse["phoneNo"].toString()
         : "";
-    shipperIdController.updateShipperId(transporterId);
+    shipperIdController.updateShipperId(shipperId);
     shipperIdController.updateCompanyApproved(companyApproved);
+    shipperIdController.updateCompanyStatus(companyStatus);
     shipperIdController.updateMobileNum(mobileNum);
     shipperIdController
         .updateAccountVerificationInProgress(accountVerificationInProgress);

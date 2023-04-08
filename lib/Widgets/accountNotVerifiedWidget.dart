@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Widgets/accountVerification/accountPageUtil.dart';
 import '/constants/borderWidth.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -18,9 +19,7 @@ class AccountNotVerifiedWidget extends StatelessWidget {
         Get.put(NavigationIndexController());
     return GestureDetector(
       onTap: () {
-        //navigationIndexController.updateIndex(4);
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => const KYCScreen()));
+        navigationIndexController.updateIndex(2);
       },
       child: Container(
         height: space_8,

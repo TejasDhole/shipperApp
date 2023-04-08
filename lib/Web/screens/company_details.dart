@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shipper_app/Web/screens/login.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
-import 'package:shipper_app/main_screen.dart';
 import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'package:sizer/sizer.dart';
@@ -48,7 +47,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         padding: EdgeInsets.only(left: 3.w,top: 5.h),
                         child: Text("Company Details",
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            
                             fontWeight: FontWeight.bold,
                             fontSize: 6.sp
                           ),
@@ -66,7 +65,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 children: [
                                   Text("Company name",
                                     style: TextStyle(
-                                        fontFamily: 'Montserrat',
+                                        
                                         fontWeight: FontWeight.bold,
                                         fontSize: 4.5.sp
                                     ),
@@ -106,7 +105,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 children: [
                                   Text("Name",
                                     style: TextStyle(
-                                        fontFamily: 'Montserrat',
+                                        
                                         fontWeight: FontWeight.bold,
                                         fontSize: 4.5.sp
                                     ),
@@ -153,7 +152,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 children: [
                                   Text("GST Number (optional)",
                                     style: TextStyle(
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 4.5.sp
                                     ),
@@ -199,7 +197,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 children: [
                                   Text("Address (optional)",
                                     style: TextStyle(
-                                        fontFamily: 'Montserrat',
+                                        
                                         fontWeight: FontWeight.bold,
                                         fontSize: 4.5.sp
                                     ),
@@ -258,7 +256,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 if(id!=null) {
                                   log('Shipper id--->$id');
                                   if(!mounted){ log('In not mounted');return ;}
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
                                 }
                               }else{
                                 alertDialog("Verify Email", "Verify your mail id to continue", context);
@@ -269,7 +267,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           child: Text('Continue',
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
                               fontSize: 4.3.sp,
                               fontWeight: FontWeight.bold,
                             ),

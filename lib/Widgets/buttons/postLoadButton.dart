@@ -38,12 +38,8 @@ class PostButtonLoad extends StatelessWidget {
           providerData.resetPostLoadFilters();
           providerData.resetPostLoadScreenMultiple();
           providerData.updateEditLoad(false, "");
-          shipperIdController.companyApproved.value
+          shipperIdController.companyStatus.value == 'verified'
               ? kIsWeb
-                  // ? Get.offAll(HomeScreenWeb(
-                  //     index: screens.indexOf(postLoadNav),
-                  //     selectedIndex: screens.indexOf(postLoadScreen),
-                  //   ))
                   ? Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

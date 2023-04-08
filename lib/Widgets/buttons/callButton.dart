@@ -51,7 +51,7 @@ class CallButton extends StatelessWidget {
         ),
         onPressed: directCall == true
             ? () async {
-          if (sIdController.companyApproved.value) {
+          if (sIdController.companyStatus.value == 'verified') {
             _makingPhoneCall();
           } else {
                   showDialog(
@@ -60,7 +60,7 @@ class CallButton extends StatelessWidget {
                 }
               }
             : () async {
-                if (sIdController.companyApproved.value){
+                if (sIdController.companyStatus.value == 'verified'){
                   Get.defaultDialog(
                     radius: 10,
                     title: 'Who do you want to call?',
