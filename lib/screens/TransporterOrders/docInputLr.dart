@@ -54,7 +54,7 @@ class _docInputLrState extends State<docInputLr> {
     setState(() {
       docLinks = docLinks;
     });
-    print(docLinks);
+    // print(docLinks);
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -69,8 +69,9 @@ class _docInputLrState extends State<docInputLr> {
   }
 
   verifiedCheck() async {
+    print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
-    print(jsonresponse);
+    print("from verifiedCheck ${jsonresponse}");
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -352,6 +353,7 @@ class _docInputLrState extends State<docInputLr> {
       print("Picked file is $pickedFile");
       print("Picked file path is ${pickedFile!.path}");
       final bytes = await Io.File(pickedFile.path).readAsBytes();
+      // print("***********bytes $bytes");
       String img64 = base64Encode(bytes);
       print("Base64 is $img64");
       functionToUpdate(File(pickedFile.path));

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import '/controller/shipperIdController.dart';
 import '/functions/BackgroundAndLocation.dart';
 import '/language/localization_service.dart';
+import 'package:logger/logger.dart';
 import '/models/deviceModel.dart';
 import '/models/gpsDataModel.dart';
 // import 'package:flutter_config/flutter_config.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '/models/gpsDataModelForHistory.dart';
 import 'package:geocoding/geocoding.dart';
+
+import 'package:flutter/foundation.dart';
 
 // String traccarPass = FlutterConfig.get("traccarPass");
 String traccarPass = dotenv.get('traccarPass');
@@ -254,30 +257,44 @@ class MapUtil {
               json["longitude"] != null ? json["longitude"] : 0;
           String? addressstring;
           try {
-            List<Placemark> newPlace;
-            current_lang = LocalizationService().getCurrentLang();
-            if (current_lang == 'Hindi') {
-              newPlace = await placemarkFromCoordinates(latn, lngn,
-                  localeIdentifier: "hi_IN");
+            if(kIsWeb){
+              final apiKey = dotenv.get('mapKey');
+              http.Response addressResponse = await http.get(
+                  Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
+              );
+              var addressJSONData = await jsonDecode(addressResponse.body);
+              if (addressResponse.statusCode == 200) {
+                if(addressJSONData['results'].isNotEmpty){
+                  String? address = addressJSONData['results'][0]['formatted_address'];
+                  addressstring = address;
+                }
+              }
             } else {
-              newPlace = await placemarkFromCoordinates(latn, lngn,
-                  localeIdentifier: "en_US");
-            }
-            var first = newPlace.first;
+              List<Placemark> newPlace;
+              current_lang = LocalizationService().getCurrentLang();
+              if (current_lang == 'Hindi') {
+                newPlace = await placemarkFromCoordinates(latn, lngn,
+                    localeIdentifier: "hi_IN");
+              } else {
+                newPlace = await placemarkFromCoordinates(latn, lngn,
+                    localeIdentifier: "en_US");
+              }
+              var first = newPlace.first;
 
-            if (first.subLocality == "")
-              addressstring =
-                  "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
-            else if (first.locality == "")
-              addressstring =
-                  "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
-            else if (first.administrativeArea == "")
-              addressstring =
-                  "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
-            else
-              addressstring =
-                  "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
-            print("ADD $addressstring");
+              if (first.subLocality == "")
+                addressstring =
+                "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+              else if (first.locality == "")
+                addressstring =
+                "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+              else if (first.administrativeArea == "")
+                addressstring =
+                "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
+              else
+                addressstring =
+                "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+              // print("ADD $addressstring");
+            }
           } catch (e) {
             print(e);
             addressstring = "";
@@ -300,10 +317,10 @@ class MapUtil {
     String? from,
     String? to,
   }) async {
-    print("FROM : $from");
-    print("TO : $to");
-    print("$traccarApi");
-    print("$deviceId");
+    // print("getTraccarHistory FROM : $from");
+    // print("TO : $to");
+    // print("$traccarApi");
+    // print("$deviceId");
     try {
       http.Response response = await http.get(
         Uri.parse(
@@ -313,10 +330,12 @@ class MapUtil {
           'Accept': 'application/json'
         },
       );
-      print(response.statusCode);
-      print(response.body);
+      // print(response.statusCode);
+      var logger = Logger();
+      logger.i("response.statusCode ${response.statusCode}");
+      // print(response.body);
       var jsonData = await jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       var LatLongList = [];
       if (response.statusCode == 200) {
         for (var json in jsonData) {
@@ -340,7 +359,7 @@ class MapUtil {
 
           LatLongList.add(gpsDataModel);
         }
-        print("TDH $LatLongList");
+        // print("TDH from getTraccarHistory${LatLongList.toString()}");
         return LatLongList;
       } else {
         return null;
@@ -392,7 +411,7 @@ class MapUtil {
 
           LatLongList.add(gpsDataModel);
         }
-        print("TDS $LatLongList");
+        print("TDS ${LatLongList.length}");
         return LatLongList;
       } else {
         return null;

@@ -40,7 +40,7 @@ class TrackScreen extends StatefulWidget {
   bool active;
   bool? online;
 
-  TrackScreen(
+    TrackScreen(
       {required this.gpsData,
       required this.truckNo,
       required this.deviceId,
@@ -161,14 +161,17 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     istDate2 = now;
     loading = false;
     to = now.toIso8601String();
-    print("device ID ${widget.deviceId}");
+    // print("device ID ${widget.deviceId}");
     newGPSData.add(widget.gpsData);
+
+    logger.i("newGPSData");
+    print("${newGPSData}");
     try {
       initfunction();
 
       initfunction2();
       EasyLoading.dismiss();
-      logger.i("in init state function");
+      // logger.i("in init state function");
       lastlatLngMarker =
           LatLng(newGPSData.last.latitude, newGPSData.last.longitude);
       camPosition = CameraPosition(target: lastlatLngMarker, zoom: zoom);
@@ -181,7 +184,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     } catch (e) {
       logger.e("Error is $e");
     }
-    print("THE VALUE OF RESULT ISSSS${widget.gpsData.result}");
+    // print("THE VALUE OF RESULT ISSSS${widget.gpsData.result}");
     //lockState = lockStorage.read('lockState');
     // print("THE CACHE LOCKSTATE IS ${lockState}");
     // if (lockState == null) {
@@ -205,7 +208,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         final GoogleMapController controller = await _controller.future;
         onMapCreated(controller);
-        print('appLifeCycleState resumed');
+        // print('appLifeCycleState resumed');
         break;
       case AppLifecycleState.inactive:
         break;
@@ -276,7 +279,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
     futureGroup.close();
     await futureGroup.future;
-    print("STOPS DONE __");
+    // print("STOPS DONE __");
 
     //This is another way to fire placemark APIs in parallel ------
 
@@ -299,7 +302,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     var stoppageTime;
     var stoplatlong;
     var duration;
-    print("Stop length ${gpsStoppage}");
+    // print("Stop length ${gpsStoppage}");
     LatLng? latlong;
 
     // for(var stop in gpsStoppage) {
@@ -386,9 +389,10 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     EasyLoading.show(
       status: "Loading...",
     );
-    logger.i("It is in init function");
+    // logger.i("It is in init function");
     // var f1 = mapUtil.getTraccarPosition(deviceId: widget.deviceId);
     // print('----------- show from and now when change the time ---------------');
+
     var f = getDataHistory(widget.deviceId, from, to);
     var s = getStoppageHistory(widget.deviceId, from, to);
     //  var t = getRouteStatusList(widget.deviceId, from, to);
@@ -486,7 +490,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
   void iconthenmarker() {
     logger.i("in Icon maker function");
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5),
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(devicePixelRatio: 2.5),
             'assets/icons/truckPin.png')
         .then((value) => {
               setState(() {
@@ -502,7 +506,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     to = now.toIso8601String();
     customMarkers = [];
     polylines = {};
-    logger.i("It is in Activity Executed function");
+    // logger.i("It is in Activity Executed function");
     initfunctionAfterChange();
     getTruckHistoryAfter();
     iconthenmarker();
@@ -511,7 +515,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
   //function used to change the speed of truck after 10 seconds and to make the truck look running
   void onActivityExecuted2() async {
-    logger.i("It is in Activity2 Executed function");
+    // logger.i("It is in Activity2 Executed function");
     var gpsData = await mapUtil.getTraccarPosition(deviceId: widget.deviceId);
     setState(() {
       newGPSData = gpsData;
@@ -538,9 +542,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       final GoogleMapController controller = await _controller.future;
       LatLng latLngMarker =
           LatLng(newGPSData.last.latitude, newGPSData.last.longitude);
-      print("Live location is ${newGPSData.last.latitude}");
+      // print("Live location is ${newGPSData.last.latitude}");
 
-      print("id ${newGPSData.last.deviceId.toString()}");
+      // print("id ${newGPSData.last.deviceId.toString()}");
       String? title = widget.truckNo;
       truckAddress = await getAddress(newGPSData);
       setState(() {
@@ -575,7 +579,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         ),
       ));*/
     } catch (e) {
-      print("Exceptionis $e");
+      // print("Exceptionis $e");
     }
   }
 
@@ -584,35 +588,35 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     String endTime = DateTime.now().toString();
     switch (choice) {
       case '48 hours':
-        print("48");
+        // print("48");
         setState(() {
           endTime = DateTime.now().toString();
           startTime = DateTime.now().subtract(Duration(days: 2)).toString();
-          print("NEW start $startTime and $endTime");
+          // print("NEW start $startTime and $endTime");
         });
         break;
       case '7 days':
-        print("7");
+        // print("7");
         setState(() {
           endTime = DateTime.now().toString();
           startTime = DateTime.now().subtract(Duration(days: 7)).toString();
-          print("NEW start $startTime and $endTime");
+          // print("NEW start $startTime and $endTime");
         });
         break;
       case '14 days':
-        print("14");
+        // print("14");
         setState(() {
           endTime = DateTime.now().toString();
           startTime = DateTime.now().subtract(Duration(days: 14)).toString();
-          print("NEW start $startTime and $endTime");
+          // print("NEW start $startTime and $endTime");
         });
         break;
       case '30 days':
-        print("30");
+        // print("30");
         setState(() {
           endTime = DateTime.now().toString();
           startTime = DateTime.now().subtract(Duration(days: 30)).toString();
-          print("NEW start $startTime and $endTime");
+          // print("NEW start $startTime and $endTime");
         });
         break;
     }
@@ -626,8 +630,8 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       istDate2 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(endTime)
           .subtract(Duration(hours: 5, minutes: 30));
-      print(
-          "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
+      // print(
+      //     "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
     });
     EasyLoading.instance
       ..indicatorType = EasyLoadingIndicatorType.ring

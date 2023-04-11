@@ -22,10 +22,9 @@ Future<String> getMapMyIndiaToken() async {
       .child('clientIdMapMyIndia')
       .once()
       .then((DataSnapshot snapshot) {
-    clientSecretMapMyIndia = snapshot.value as String?;
-    print("clientIdMapMyIndia = $clientIdMapMyIndia");
-  }as FutureOr Function(DatabaseEvent value));
-  // if(clientIdMapMyIndia != null && clientSecretMapMyIndia != null){
+        clientIdMapMyIndia = snapshot.value as String?;
+        print("clientIdMapMyIndia = $clientIdMapMyIndia");
+      } as FutureOr Function(DatabaseEvent value));
 
   TokenMMIController tokenMMIController = Get.put(TokenMMIController());
   Uri tokenUrl = Uri(

@@ -24,6 +24,8 @@ getDocumentApiCall(String bookingId, String docType) async {
     final String documentApiUrl =
         // FlutterConfig.get('documentApiUrl').toString();
         dotenv.get('documentApiUrl');
+
+    // print("api from getDocumentApiCall $documentApiUrl/$bookingId");
     final response = await http.get(Uri.parse("$documentApiUrl/$bookingId"));
     // headers: <String, String>{
     //   'Content-Type': 'application/json; charset=UTF-8',
@@ -32,9 +34,9 @@ getDocumentApiCall(String bookingId, String docType) async {
     if (response.statusCode == 404) {
       return [];
     }
-    print(response.body);
+    print("from getDocumentApiCall ${response.body}");
     jsonData = json.decode(response.body);
-    print(response.body);
+    print("from getDocumentApiCall ${response.body}");
     for (var jsondata in jsonData["documents"]) {
       print(jsondata["documentType"]);
       if (jsondata["documentType"][0] == docType) {

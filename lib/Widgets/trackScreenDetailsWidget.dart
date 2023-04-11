@@ -14,6 +14,7 @@ import '/screens/playRouteHistoryScreen.dart';
 import '/screens/truckAnalysisScreen.dart';
 import '/screens/truckHistoryScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:logger/logger.dart';
 
 import '../screens/nearbyPlacesScreen.dart';
 
@@ -114,6 +115,9 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
       latitude = gpsData.last.latitude;
       longitude = gpsData.last.longitude;
 
+      var logger = Logger();
+
+      logger.i("${widget.gpsData.last.address}");
       //  status = getStatus(newGPSData, gpsStoppageHistory);
       //  gpsTruckRoute = getStopList(gpsTruckRoute, yesterday, now);
     });

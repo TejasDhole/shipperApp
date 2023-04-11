@@ -10,6 +10,8 @@ import '/functions/truckApis/truckApiCalls.dart';
 import '/screens/myLoadPages/trackOngoing/trackScreenOngoing.dart';
 import '/screens/trackScreen.dart';
 
+import 'package:logger/logger.dart';
+
 // ignore: must_be_immutable
 class TrackButton extends StatefulWidget {
   bool truckApproved = false;
@@ -55,12 +57,18 @@ class _TrackButtonState extends State<TrackButton> {
   @override
   void initState() {
     super.initState();
+
     DateTime yesterday = DateTime.now()
         .subtract(Duration(days: 1, hours: 5, minutes: 30)); //from param
     from = yesterday.toIso8601String();
     DateTime now =
         DateTime.now().subtract(Duration(hours: 5, minutes: 30)); //to param
     to = now.toIso8601String();
+
+    var logger = Logger();
+
+    // logger.i("gpsData ${widget.gpsData}");
+    // logger.i("gpsDataList ${widget.gpsData.last.latitude}");
 
     setState(() {
       loading = true;

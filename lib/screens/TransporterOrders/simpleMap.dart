@@ -163,8 +163,8 @@ class _simpleMapState extends State<simpleMap> with WidgetsBindingObserver {
                         },
                         gestureRecognizers:
                             <Factory<OneSequenceGestureRecognizer>>[
-                          new Factory<OneSequenceGestureRecognizer>(
-                            () => new EagerGestureRecognizer(),
+                          Factory<OneSequenceGestureRecognizer>(
+                            () => EagerGestureRecognizer(),
                           ),
                         ].toSet(),
                       )

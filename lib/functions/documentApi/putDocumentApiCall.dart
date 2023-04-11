@@ -24,12 +24,19 @@ putDocumentApiCall(Map datanew2, String bookingId) async {
         // FlutterConfig.get('documentApiUrl').toString();
     dotenv.get('documentApiUrl');
 
+    print("api is $documentApiUrl/$bookingId");
+
+//     headers: {
+//       'Content-Type': 'application/json',
+//   'Authorization': 'AWS $accessKey:$signature',
+// },
+
     final response = await http.put(Uri.parse("$documentApiUrl/$bookingId"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: body);
-    print(response.body);
+    print("body " + response.body);
     jsonData = json.decode(response.body);
 
     // if (jsonData["bookingId"] != null) {
@@ -47,7 +54,7 @@ putDocumentApiCall(Map datanew2, String bookingId) async {
       return "unsuccessful";
     }
   } catch (e) {
-    print(e.toString());
+    print("error" + e.toString());
     return e.toString();
   }
 }

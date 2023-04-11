@@ -47,6 +47,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
     for (var bookingData in bookingDataListWithPagei) {
       modelList.add(bookingData);
     }
+
     if (this.mounted) {
       // check whether the state object is in tree
       setState(() {

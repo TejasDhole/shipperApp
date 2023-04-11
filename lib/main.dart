@@ -167,7 +167,7 @@ class _MyAppState extends State<MyApp> {
                           if (FirebaseAuth.instance.currentUser == null) {
                             //User is Logged out or doesn't Exist
                             if (shipperId != null) {
-                              print("Current transporter is not null and user is null");
+                              // print("Current transporter is not null and user is null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
@@ -189,7 +189,7 @@ class _MyAppState extends State<MyApp> {
                             }
                           } else {
                             if (shipperId != null) {
-                              print("Current transporter is not null and user is not null");
+                              // print("Current transporter is not null and user is not null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),

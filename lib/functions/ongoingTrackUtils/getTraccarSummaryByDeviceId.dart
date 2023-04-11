@@ -25,14 +25,15 @@ Future<List<GpsDataModel>> getTraccarSummaryByDeviceId({
 
 
   try {
-    print(Uri.parse(
-        "$traccarApi/reports/summary?deviceId=$deviceId&from=${from}Z&to=${to}Z"));
+    // print("from: $from, to: $to ");
+    // print("from getTraccarSummaryByDeviceId:  ${Uri.parse(
+    //     "$traccarApi/reports/summary?deviceId=$deviceId&from=${from}Z&to=${to}Z")}");
     http.Response response = await http.get(
         Uri.parse(
             "$traccarApi/reports/summary?deviceId=$deviceId&from=${from}Z&to=${to}Z"),
         headers: <String, String>{'authorization': basicAuth});
-    print(response.statusCode);
-    print(response.body);
+    // print("from getTraccarSummaryByDeviceId: ${response.statusCode}");
+    // print("from getTraccarSummaryByDeviceId: ${response.body}");
     var jsonData = await jsonDecode(response.body);
     print(response.body);
     List<GpsDataModel> latLongList = [];
@@ -56,7 +57,7 @@ Future<List<GpsDataModel>> getTraccarSummaryByDeviceId({
 
         latLongList.add(gpsDataModel);
       }
-      print("TDSummary $latLongList");
+      // print("TDSummary $latLongList");
       return latLongList;
     } else {
       return [];

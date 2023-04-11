@@ -198,12 +198,14 @@ class _LoginWebState extends State<LoginWeb> {
                             fixedSize: Size(28.w, 7.h),
                           ),
                           onPressed: () async {
+                            // log("email $email, password $password");
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               try {
                                 UserCredential firebaseUser =
                                     await signIn(email, password, context);
                                 SharedPreferences prefs = await SharedPreferences.getInstance();
+
                                 if(isChecked){
                                   prefs.setString('uid', firebaseUser.user!.uid);
                                 }
