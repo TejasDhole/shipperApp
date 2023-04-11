@@ -129,45 +129,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: space_1,
                 ),
-                shipperIdController.companyApproved.value == false
-                    ? AccountNotVerifiedWidget()
+                !(shipperIdController.companyStatus.value == 'verified')
+                    ? const AccountNotVerifiedWidget()
                     : SizedBox(
                         height: space_2,
                       ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: space_4),
-                  child: SuggestedLoadWidgetHeader(),
-                ),
-                SizedBox(
-                  height: space_2,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: space_4),
-                    child: SuggestedLoadsWidget(),
-                  ),
-                ),
-
                 // Container(
-                //   margin: EdgeInsets.only(
-                //     top: space_6,
-                //     left: space_7,
-                //     right: space_7,
-                //   ),
-                //   child: Image(
-                //     image: AssetImage('assets/images/EmptyBox.jpeg'),
-                //   ),
-                //
+                //   padding: EdgeInsets.symmetric(horizontal: space_4),
+                //   child: const SuggestedLoadWidgetHeader(),
                 // ),
+                // SizedBox(
+                //   height: space_2,
+                // ),
+                // Expanded(
+                //   child: Container(
+                //     padding: EdgeInsets.symmetric(horizontal: space_4),
+                //     child: SuggestedLoadsWidget(),
+                //   ),
+                // ),
+
+                Container(
+                  margin: EdgeInsets.only(
+                    top: space_6,
+                    left: space_7,
+                    right: space_7,
+                  ),
+                  child: const Image(
+                    image: AssetImage('assets/images/EmptyBox.jpeg'),
+                  ),
+
+                ),
                 // Container(
                 //     alignment: Alignment.bottomCenter,
-                //   margin: EdgeInsets.only(bottom: 25),
+                //   margin: const EdgeInsets.only(bottom: 25),
                 //     child: PostButtonLoad()),
                 // Expanded(
                 //   // alignment: Alignment.bottomCenter,
                 //   child: Container(
                 //       alignment: Alignment.bottomCenter,
-                //       margin: EdgeInsets.only(bottom: 25),
+                //       margin: const EdgeInsets.only(bottom: 25),
                 //       child: PostButtonLoad()),
                 //)
               ],

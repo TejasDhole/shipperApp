@@ -1,19 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
 import 'package:shipper_app/functions/firebaseAuthentication/signIn.dart';
+import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
+import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import 'package:shipper_app/screens/LoginScreens/loginScreenUsingPhone.dart';
 import 'package:shipper_app/screens/navigationScreen.dart';
+import '../../functions/firebaseAuthentication/signInWithGoogle.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
 import '/widgets/buttons/signUpWithGoogleButton.dart';
 import 'CompanyDetailsForm.dart';
 import '/constants/fontSize.dart';
 import '/constants/radius.dart';
-
 import '/constants/elevation.dart';
 
 class LoginScreenUsingMail extends StatefulWidget {
@@ -195,20 +196,23 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                       String password = passwordController.text.toString();
                       if (email.isNotEmpty && email.contains('@')) {
                         if (password.length > 5) {
-                          UserCredential user =
+                          UserCredential firebaseUser =
                               await signIn(email, password, context);
-                          if (user.user!.phoneNumber == null) {
+                          getShipperIdFromCompanyDatabase();
+                          if(!mounted) return ;
+                          if (firebaseUser.user!.phoneNumber == null) {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreenUsingPhone()));
-                          } else if (user.user!.displayName == null) {
+                                    builder: (context) => const LoginScreenUsingPhone()));
+                          } else if (firebaseUser.user!.displayName == null) {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        CompanyDetailsForm()));
+                                        const CompanyDetailsForm()));
                           } else {
+                            runShipperApiPost(emailId: firebaseUser.user!.email.toString());
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -297,8 +301,24 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                   borderRadius: BorderRadius.circular(radius_3),
                 ),
                 child: SignUpWithGoogleButton(
-                  onPressed: () {
-                    signInWithGoogle();
+                  onPressed: () async{
+                    try {
+                      UserCredential firebaseUser = await signInWithGoogle();
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.setString('uid', firebaseUser.user!.uid);
+                      getShipperIdFromCompanyDatabase();
+                      if(!mounted) return ;
+                      if(firebaseUser.user!.phoneNumber==null){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreenUsingPhone()));
+                      }else if(firebaseUser.user!.displayName == null){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetailsForm()));
+                      }else{
+                        runShipperApiPost(emailId: firebaseUser.user!.email.toString());
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
+                      }
+                    }on FirebaseAuthException catch (e){
+                      alertDialog("Error", '$e', context);
+                    }
                   },
                 ),
               )
@@ -308,29 +328,4 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
       ),
     );
   }
-
-  signInWithGoogle() async{
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-      if(userCredential.user!.phoneNumber==null){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreenUsingPhone()));
-      }else if(userCredential.user!.displayName == null){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CompanyDetailsForm()));
-      }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
-      }
-    }on FirebaseAuthException catch (e){
-      alertDialog("Error", '$e', context);
-    }
-  }
-
 }

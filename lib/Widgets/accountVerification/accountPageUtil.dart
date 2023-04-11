@@ -8,13 +8,13 @@ import '/screens/accountScreens/accountVerificationStatusScreen.dart';
 // ignore: must_be_immutable
 class AccountPageUtil extends StatelessWidget {
   AccountPageUtil({super.key});
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {
-    if (shipperIdController.accountVerificationInProgress.value) {
-      return AccountVerificationStatusScreen(); // When transporter is unverified and hasn't applied for verification
+    if (shipperIdController.companyStatus.value == 'verified' ||
+        shipperIdController.companyStatus.value == 'inProgress') {
+      return const AccountVerificationStatusScreen(); // When transporter is unverified and hasn't applied for verification
     } else {
       return const VerificationTypeSelection();
     }

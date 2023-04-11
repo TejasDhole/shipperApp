@@ -1,21 +1,23 @@
-class ShipperModel {
+class TransporterModel {
   //parameters
-  String? shipperId;
-  String? shipperPhoneNum;
-  String? shipperLocation;
-  String? shipperName;
+  String? transporterId;
+  String? transporterPhoneNum;
+  String? transporterLocation;
+  String? transporterName;
   String? companyName;
   String? kyc;
+  bool? transporterApproved;
   bool? companyApproved;
   bool? accountVerificationInProgress;
 
-  ShipperModel(
-      {this.shipperPhoneNum,
+  TransporterModel(
+      {this.transporterPhoneNum,
       this.companyName,
-      this.shipperId,
-      this.shipperName,
+      this.transporterId,
+      this.transporterName,
       this.accountVerificationInProgress,
       this.companyApproved,
       this.kyc,
-      this.shipperLocation});
+      this.transporterApproved,
+      this.transporterLocation});
 }

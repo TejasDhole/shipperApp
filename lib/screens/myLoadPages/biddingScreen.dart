@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import '../../functions/loadApis/findLoadByLoadID.dart';
+import '../../functions/transporterApis/transporterApiCalls.dart';
 import '/constants/spaces.dart';
 import '/functions/shipperApis/shipperApiCalls.dart';
 import '/models/biddingModel.dart';
@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shipper_app/models/transporterModel.dart';
+
 
 class BiddingScreens extends StatefulWidget {
   final String? loadId;
@@ -40,6 +40,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
   ScrollController scrollController = ScrollController();
 
   ShipperApiCalls shipperApiCalls = ShipperApiCalls();
+  TransporterApiCalls transporterApiCalls = TransporterApiCalls();
 
   List<BiddingModel> biddingModelList = [];
 
@@ -77,7 +78,6 @@ class _BiddingScreensState extends State<BiddingScreens> {
     super.initState();
 
     getBidDataByLoadId(i);
-    data();
 
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -92,19 +92,6 @@ class _BiddingScreensState extends State<BiddingScreens> {
   void dispose() {
     scrollController.dispose();
     super.dispose();
-  }
-
-  List<ShipperModel> dataUsingShipperId = [];
-
-  Future<List<ShipperModel>> data() async{
-    dataUsingShipperId.clear();
-    for(int i = 0; i<biddingModelList.length; i++){
-      dataUsingShipperId.add(await shipperApiCalls.getDataByShipperId(biddingModelList[i].transporterId));
-    }
-
-    print("biddingList ${dataUsingShipperId.length}");
-    print("****************************** datausingshipperid $dataUsingShipperId");
-    return dataUsingShipperId;
   }
 
   @override
@@ -140,13 +127,11 @@ class _BiddingScreensState extends State<BiddingScreens> {
                           return LoadingWidget();
                         }
                         return FutureBuilder(
-                          // future: shipperApiCalls.getDataByShipperId(
-                          //     biddingModelList[index].transporterId),
-                          future: data(),
+                          future: transporterApiCalls.getDataByTransporterId(
+                              biddingModelList[index].transporterId),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
-                              // print("snapshot.data ********************************************* ${snapshot.data}");
                               return LoadingWidget();
                             }
                             return BiddingsCardShipperSide(
@@ -160,10 +145,10 @@ class _BiddingScreensState extends State<BiddingScreens> {
                               biddingDate: biddingModelList[index].biddingDate,
                               bidId: biddingModelList[index].bidId,
                               transporterPhoneNum:
-                                  snapshot.data.shipperPhoneNum,
+                                  snapshot.data.transporterPhoneNum,
                               transporterLocation:
-                                  snapshot.data.shipperLocation,
-                              transporterName: snapshot.data.shipperName,
+                                  snapshot.data.transporterLocation,
+                              transporterName: snapshot.data.transporterName,
                               shipperApproved:
                                   biddingModelList[index].shipperApproval,
                               transporterApproved:

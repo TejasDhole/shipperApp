@@ -9,7 +9,7 @@ class BiddingCardParameter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       parameter,
-      style: TextStyle(
+      style: const TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 14,
           color: liveasyBlackColor,

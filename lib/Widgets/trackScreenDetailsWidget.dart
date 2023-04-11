@@ -1,21 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '/constants/borderWidth.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/controller/dynamicLink.dart';
-import '/functions/BackgroundAndLocation.dart';
 import '/functions/trackScreenFunctions.dart';
-import '/screens/playRouteHistoryScreen.dart';
-import '/screens/truckAnalysisScreen.dart';
-import '/screens/truckHistoryScreen.dart';
+import '/screens/mapFunctionScreens/playRouteHistoryScreen.dart';
+import '/screens/mapFunctionScreens/truckAnalysisScreen.dart';
+import '/screens/mapFunctionScreens/truckHistoryScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:logger/logger.dart';
-
 import '../screens/nearbyPlacesScreen.dart';
 
 class TrackScreenDetails extends StatefulWidget {
@@ -77,9 +72,9 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
   var recentStops;
   late Timer timer;
   DateTime now =
-      DateTime.now().subtract(Duration(days: 0, hours: 5, minutes: 30));
+      DateTime.now().subtract(const Duration(days: 0, hours: 5, minutes: 30));
   DateTime yesterday =
-      DateTime.now().subtract(Duration(days: 1, hours: 5, minutes: 30));
+      DateTime.now().subtract(const Duration(days: 1, hours: 5, minutes: 30));
   String selectedLocation = '24 hours';
   @override
   void initState() {
@@ -88,10 +83,10 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
     initFunction();
 
     timer = Timer.periodic(
-        Duration(minutes: 0, seconds: 10), (Timer t) => initFunction2());
+        const Duration(minutes: 0, seconds: 10), (Timer t) => initFunction2());
   }
 
-  distancecalculation(String from, String to) async {
+  distanceCalculation(String from, String to) async {
     var gpsRoute1 = await mapUtil.getTraccarSummary(
         deviceId: widget.gpsData.last.deviceId, from: from, to: to);
     setState(() {
@@ -115,16 +110,13 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
       latitude = gpsData.last.latitude;
       longitude = gpsData.last.longitude;
 
-      var logger = Logger();
-
-      logger.i("${widget.gpsData.last.address}");
       //  status = getStatus(newGPSData, gpsStoppageHistory);
       //  gpsTruckRoute = getStopList(gpsTruckRoute, yesterday, now);
     });
   }
 
   initFunction() {
-    distancecalculation(yesterday.toIso8601String(), now.toIso8601String());
+    distanceCalculation(yesterday.toIso8601String(), now.toIso8601String());
     // distancecalculation(widget.dateRange!.start.toIso8601String(),
     //     widget.dateRange!.end.toIso8601String());
   }
@@ -142,8 +134,8 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
   static Future<void> openMap(double latitude, double longitude) async {
     String googleUrl =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(Uri.parse(googleUrl));
     } else {
       throw 'Could not open the map.';
     }
@@ -163,14 +155,14 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
       height: height / 3 + 106,
       width: width,
       padding: EdgeInsets.fromLTRB(0, 0, 0, space_3),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           boxShadow: [
             BoxShadow(
               color: darkShadow,
-              offset: const Offset(
+              offset: Offset(
                 0,
                 -5.0,
               ),
@@ -179,7 +171,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
             ),
             BoxShadow(
               color: white,
-              offset: const Offset(0, 1.0),
+              offset: Offset(0, 1.0),
               blurRadius: 0.0,
               spreadRadius: 2.0,
             ),
@@ -188,8 +180,8 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(
-              color: const Color(0xFFCBCBCB),
+            const Divider(
+              color: Color(0xFFCBCBCB),
               // height: size_3,
               thickness: 3,
               indent: 150,
@@ -217,8 +209,8 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                                     color: bidBackground,
                                     size: 15,
                                   ),
-                                  SizedBox(width: 8),
-                                  Container(
+                                  const SizedBox(width: 8),
+                                  SizedBox(
                                     width: width / 2 + 10,
                                     child: Text(
                                       "${gpsData.last.address}",
@@ -231,11 +223,11 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                                     ),
                                   ),
                                 ]),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(2, 0, 0, 0),
+                              margin: const EdgeInsets.fromLTRB(2, 0, 0, 0),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   //  textDirection:
@@ -247,7 +239,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                                       width: 11,
                                       height: 11,
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Container(
                                       alignment: Alignment.centerLeft,
                                       child: Text('ignition'.tr,
@@ -265,7 +257,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
 
                                             child: Text('on'.tr,
                                                 softWrap: true,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: black,
                                                     fontSize: 12,
                                                     fontStyle: FontStyle.normal,
@@ -278,22 +270,22 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
 
                                             child: Text("off".tr,
                                                 softWrap: true,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: black,
                                                     fontSize: 12,
                                                     fontStyle: FontStyle.normal,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                    SizedBox(),
+                                    const SizedBox(),
                                   ]),
                             ),
                           ] //
 
                           ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Column(
                           children: [
                             Image.asset('assets/icons/speed_status.png',
@@ -342,20 +334,20 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ]),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Image(
+                      const Image(
                         image: AssetImage('assets/icons/distanceCovered.png'),
                         height: 14,
                         width: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Container(
@@ -372,7 +364,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                                         fontSize: size_6,
                                         fontStyle: FontStyle.normal,
                                         fontWeight: regularWeight)),
-                                Text("$finalDistance " + "km".tr,
+                                Text("$finalDistance ${"km".tr}",
                                     softWrap: true,
                                     style: TextStyle(
                                         color: black,
@@ -397,7 +389,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                         ),
                       ),
                     ]),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Container(
@@ -405,11 +397,11 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                       height: 20,
                       color: Colors.grey,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Row(children: [
-                      Icon(Icons.pause, size: 20),
+                      const Icon(Icons.pause, size: 20),
                       SizedBox(
                         width: space_1,
                       ),
@@ -465,7 +457,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                     )
                   ],
                 ),
-                SizedBox(height: 0),
+                const SizedBox(height: 0),
               ]),
             ),
             Divider(
@@ -505,7 +497,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -523,7 +515,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                         // truckId: widget.truckId,
                         truckNo: widget.TruckNo,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -555,16 +547,16 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                             getValue();
                             if (waiting) {
                               Get.to(
-                                Container(
+                                const SizedBox(
                                     height: 100,
                                     width: 100,
                                     child: Center(
                                         child: CircularProgressIndicator())),
                               );
-                              Timer(Duration(seconds: 10), () {
+                              Timer(const Duration(seconds: 10), () {
                                 Navigator.pop(context);
                               });
-                              Timer(Duration(seconds: 10), () {
+                              Timer(const Duration(seconds: 10), () {
                                 Get.to(PlayRouteHistory(
                                   finalDistance: finalDistance,
                                   ignition: gpsData.last.ignition,
@@ -579,7 +571,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                                   totalRunningTime: totalRunningTime,
                                   totalStoppedTime: totalStoppedTime,
                                 ));
-                                Timer(Duration(seconds: 10), () {
+                                Timer(const Duration(seconds: 10), () {
                                   getValue();
                                 });
                               });
@@ -602,7 +594,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -646,7 +638,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -701,7 +693,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -748,7 +740,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -787,7 +779,7 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(

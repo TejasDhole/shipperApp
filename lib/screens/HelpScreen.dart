@@ -26,7 +26,7 @@ class _HelpScreenState extends State<HelpScreen> {
   List<String> questions = [
  //   'How to add truck?',
     'How to post load?',
-    'How to bid?',
+ //   'How to bid?',
  //   'How to purchase GPS?',
     'How to see my orders?',
  //   'How to verify my account?',

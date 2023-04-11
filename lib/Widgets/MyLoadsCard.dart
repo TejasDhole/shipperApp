@@ -107,7 +107,7 @@ class MyLoadsCard extends StatelessWidget {
                             color: declineButtonRed,
                             fontSize: size_8,
                             fontWeight: mediumBoldWeight,
-                            fontFamily: 'montserrat',
+                            
                           ),
                         ),
                         RepostButton(),
@@ -156,7 +156,7 @@ class MyLoadsCard extends StatelessWidget {
                 item.itemText,
                 style: TextStyle(
                   fontWeight: mediumBoldWeight,
-                  fontFamily: 'montserrat',
+                  
                 ),
               ),
             ],

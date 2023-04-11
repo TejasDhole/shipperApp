@@ -2,14 +2,14 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Web/screens/login_phone_no.dart';
-import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
+import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import '../../functions/firebaseAuthentication/signIn.dart';
+import '../../functions/firebaseAuthentication/signInWithGoogle.dart';
 import '/Web/screens/home_web.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'company_details.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import '/../functions/alert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +28,7 @@ class _LoginWebState extends State<LoginWeb> {
   bool passwordVisible = true;
   bool isChecked = false;
   bool isError = false;
+  Iterable<String>? autofillHints = {'@gmail.com','@outlook.in','@yahoo.com'};
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,6 @@ class _LoginWebState extends State<LoginWeb> {
                         child: const Text(
                           'Email',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -66,6 +66,8 @@ class _LoginWebState extends State<LoginWeb> {
                         padding:
                             EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
                         child: TextFormField(
+                          autofocus: true,
+                          autofillHints: autofillHints,
                           decoration: const InputDecoration(
                             hintText: 'xyz@gmail.com',
                             labelText: 'Email Id',
@@ -104,7 +106,6 @@ class _LoginWebState extends State<LoginWeb> {
                         child: const Text(
                           'Password',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -177,7 +178,7 @@ class _LoginWebState extends State<LoginWeb> {
                           label: const Text(
                             "Keep me logged in",
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -228,10 +229,63 @@ class _LoginWebState extends State<LoginWeb> {
                             'Sign In',
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
                               fontSize: 4.3.sp,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            backgroundColor: Colors.white,
+                            fixedSize: Size(28.w, 7.h),
+                          ),
+                          onPressed: () async {
+                              try {
+                                UserCredential firebaseUser = await signInWithGoogle();
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                prefs.setString('uid', firebaseUser.user!.uid);
+                                getShipperIdFromCompanyDatabase();
+                                if (firebaseUser.user!.phoneNumber == null) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
+                                } else if (firebaseUser.user!.displayName == null) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
+                                } else if (firebaseUser.user!.emailVerified) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
+                                } else {
+                                  alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
+                                  // firebaseUser.user!.sendEmailVerification();
+                                }
+                              } catch (e) {
+                                log('in sign in button catch--->$e');
+                              }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: 5.h,
+                                  width: 5.w,
+                                  child: const Image(
+                                    image: AssetImage("assets/icons/google_icon.png"),
+                                  )
+                              ),
+                              Text(
+                                'Sign in Using Google',
+                                style: TextStyle(
+                                  color: const Color(0xFF000066),
+                                  
+                                  fontSize: 4.3.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

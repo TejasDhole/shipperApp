@@ -16,7 +16,7 @@ import '/functions/ongoingTrackUtils/getDataHistoryByDeviceId.dart';
 import '/functions/ongoingTrackUtils/getTraccarStoppagesByDeviceId.dart';
 import '/functions/ongoingTrackUtils/getTraccarSummaryByDeviceId.dart';
 import '/functions/trackScreenFunctions.dart';
-import '/screens/truckHistoryScreen.dart';
+import '../../screens/mapFunctionScreens/truckHistoryScreen.dart';
 import '/widgets/stoppageInfoWindow.dart';
 import 'package:logger/logger.dart';
 import 'package:screenshot/screenshot.dart';

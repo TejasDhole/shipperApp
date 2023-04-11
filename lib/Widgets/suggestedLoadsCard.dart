@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class SuggestedLoadsCard extends StatelessWidget {
   final LoadDetailsScreenModel loadDetailsScreenModel;
-  final ShipperIdController tIdController =
+  final ShipperIdController sIdController =
       Get.put(ShipperIdController());
 
   SuggestedLoadsCard({Key? key, required this.loadDetailsScreenModel})
@@ -24,7 +24,7 @@ class SuggestedLoadsCard extends StatelessWidget {
       child: Column(children: [
         GestureDetector(
           onTap: () {
-            if (tIdController.companyApproved.value) {
+            if (sIdController.companyStatus.value == 'verified') {
               Get.to(() => LoadDetailsScreen(
                   loadDetailsScreenModel: loadDetailsScreenModel));
             } else {

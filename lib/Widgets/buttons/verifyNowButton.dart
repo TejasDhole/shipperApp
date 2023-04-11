@@ -23,8 +23,8 @@ class VerifyNowButton extends StatelessWidget {
         if(kIsWeb){
           Get.offAll(const HomeScreenWeb(index:3,selectedIndex: 3,));
         }else {
-          Get.offAll(NavigationScreen(initScreen: 4));
-          navigationIndexController.updateIndex(4);
+          Get.offAll(NavigationScreen(initScreen: 2));
+          navigationIndexController.updateIndex(2);
         }
       },
       child: Container(

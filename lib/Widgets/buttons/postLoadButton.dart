@@ -13,7 +13,7 @@ import '/providerClass/providerData.dart';
 import '/constants/spaces.dart';
 import '/screens/PostLoadScreens/postloadnavigation.dart';
 
-// ignore: must_be_immutablet
+// ignore: must_be_immutable
 class PostButtonLoad extends StatelessWidget {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
@@ -38,13 +38,8 @@ class PostButtonLoad extends StatelessWidget {
           providerData.resetPostLoadFilters();
           providerData.resetPostLoadScreenMultiple();
           providerData.updateEditLoad(false, "");
-          shipperIdController.companyApproved.value
+          shipperIdController.companyStatus.value == 'verified'
               ? kIsWeb
-                  // ? Get.offAll(HomeScreenWeb(
-                  //     index: screens.indexOf(postLoadNav),
-                  //     selectedIndex: screens.indexOf(postLoadScreen),
-                  //   ))
-                  //
                   ? Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

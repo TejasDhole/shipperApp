@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-import '/screens/truckLockUnlockScreen.dart';
-import '/widgets/buttons/okButton.dart';
-
 import '../constants/colors.dart';
 import '../constants/fontSize.dart';
 import '../constants/fontWeights.dart';
@@ -20,8 +17,8 @@ class TryAgainLaterScreen extends StatefulWidget {
   final String? driverName;
   final String? truckId;
 
-  TryAgainLaterScreen(
-      {required this.gpsData,
+  const TryAgainLaterScreen(
+      {super.key, required this.gpsData,
       required this.gpsDataHistory,
       required this.gpsStoppageHistory,
       //required this.routeHistory,

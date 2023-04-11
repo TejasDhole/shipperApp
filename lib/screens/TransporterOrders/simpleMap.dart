@@ -1,33 +1,12 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import '/constants/colors.dart';
-import '/constants/fontSize.dart';
-import '/constants/radius.dart';
-import '/constants/spaces.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '/functions/ongoingTrackUtils/getPositionByDeviceId.dart';
-import '/functions/trackScreenFunctions.dart';
-import '/functions/mapUtils/getLoactionUsingImei.dart';
-import '/models/gpsDataModel.dart';
-import '/screens/truckLockUnlockScreen.dart';
-import '/widgets/Header.dart';
-import '/widgets/stoppageInfoWindow.dart';
-import '/widgets/trackScreenDetailsWidget.dart';
-import '/widgets/truckInfoWindow.dart';
 import 'package:logger/logger.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:custom_info_window/custom_info_window.dart';
-// import 'package:flutter_config/flutter_config.dart';
-import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 

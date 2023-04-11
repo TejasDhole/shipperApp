@@ -11,12 +11,13 @@ class AccountDetailVerified extends StatelessWidget {
   final String name;
   final String companyName;
   final String address;
+  final String mailId;
 
-  AccountDetailVerified(
-      {required this.mobileNum,
+  const AccountDetailVerified(
+      {super.key, required this.mobileNum,
       required this.name,
-      required this.address,
-      required this.companyName});
+      required this.address, required this.mailId,
+      required this.companyName,});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class AccountDetailVerified extends StatelessWidget {
             Container(
               height: space_3,
               width: space_2,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                     "assets/icons/callIcon.png",
@@ -65,8 +66,36 @@ class AccountDetailVerified extends StatelessWidget {
         ),
         Row(
           children: [
+            Container(
+              height: space_4,
+              width: space_3,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "assets/icons/mailIcon.png",
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: space_1 - 2,
+            ),
+            Text(
+              mailId,
+              style: TextStyle(
+                  fontWeight: normalWeight,
+                  color: lightGrayishBlue,
+                  fontSize: size_6),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: space_1,
+        ),
+        Row(
+          children: [
             Image(
-              image: AssetImage("assets/icons/buildingIcon.png"),
+              image: const AssetImage("assets/icons/buildingIcon.png"),
               height: space_3 + 1,
               width: space_3,
             ),
@@ -93,7 +122,7 @@ class AccountDetailVerified extends StatelessWidget {
             Container(
               height: space_3,
               width: space_3 - 2,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage(
                   "assets/icons/locationIcon.png",
@@ -131,7 +160,7 @@ class AccountDetailVerified extends StatelessWidget {
               Image(
                 height: space_1 + 3,
                 width: space_1 + 3,
-                image: AssetImage("assets/icons/verifiedButtonIcon.png"),
+                image: const AssetImage("assets/icons/verifiedButtonIcon.png"),
               ),
               Text(
                 "verified".tr,

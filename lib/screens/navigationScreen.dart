@@ -8,7 +8,7 @@ import '/controller/shipperIdController.dart';
 import '/functions/AppVersionCheck.dart';
 import '/functions/loadApis/findLoadByLoadID.dart';
 import '/models/loadDetailsScreenModel.dart';
-import '/screens/isolatedTransporterGetData.dart';
+import '../functions/shipperApis/isolatedShipperGetData.dart';
 import '/screens/postLoadScreens/postLoadScreen.dart';
 import '/widgets/accountVerification/accountPageUtil.dart';
 import '/providerClass/providerData.dart';
@@ -57,7 +57,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     this.initDynamicLinks();
     this.checkUpdate();
 
-    isolatedTransporterGetData();
+    isolatedShipperGetData();
     print("in navigation screen ${shipperIdController.shipperId.value}");
   }
 
