@@ -3,7 +3,6 @@ import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/widgets/buttons/postLoadButton.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
-import '../../Widgets/suggestedLoadsWidget.dart';
 import '../../controller/shipperIdController.dart';
 
 class WebDashBoard extends StatefulWidget {

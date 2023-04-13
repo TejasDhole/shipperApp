@@ -22,10 +22,11 @@ class LogoutOkButton extends StatelessWidget {
       onTap: () async{
         SharedPreferences prefs =await SharedPreferences.getInstance();
         prefs.remove('uid');
-        prefs.clear();
-        prefs.remove('uid');
         sidstorage.erase();
-        await GoogleSignIn().disconnect();
+        if(prefs.getBool('isGoogleLogin')==true) {
+          await GoogleSignIn().disconnect();
+        }
+        prefs.clear();
         FirebaseAuth.instance.signOut().then((value) =>
             sidstorage.erase().then((value) => print('Storage is erased')));
         kIsWeb ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb())) : Get.offAll(LoginScreenUsingMail());
@@ -45,7 +46,6 @@ class LogoutOkButton extends StatelessWidget {
           child: Text(
             "ok".tr,
             style: TextStyle(
-                
                 color: backgroundColor,
                 fontWeight: mediumBoldWeight,
                 fontSize: 13),

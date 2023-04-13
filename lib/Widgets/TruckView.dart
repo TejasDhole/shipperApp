@@ -10,7 +10,7 @@ class TruckView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        const SizedBox(
           width: 130,
           height: 140,
         ),
@@ -25,12 +25,10 @@ class TruckView extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: space_1),
-            child: Image(
-              image: AssetImage("assets/images/overviewtataultra.png"),
-            ),
+        Padding(
+          padding: EdgeInsets.only(top: space_1),
+          child: const Image(
+            image: AssetImage("assets/images/overviewtataultra.png"),
           ),
         )
       ],

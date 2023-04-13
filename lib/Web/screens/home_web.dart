@@ -25,7 +25,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   @override
   void initState() {
     super.initState();
-    runShipperApiPost(emailId: FirebaseAuth.instance.currentUser!.email.toString());
+    runShipperApiPost(
+        emailId: FirebaseAuth.instance.currentUser!.email.toString());
     if (widget.index != null) {
       setState(() {
         _index = widget.index!;
@@ -34,7 +35,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     }
     isolatedShipperGetData();
   }
-
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
   List<NavigationRailDestination> destinations = [
@@ -54,10 +54,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       icon: Icon(Icons.person_outline_outlined),
       label: Text("Account"),
     ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.supervised_user_circle_outlined),
-      label: Text("Add User"),
-    ),
+    // const NavigationRailDestination(
+    //   icon: Icon(Icons.supervised_user_circle_outlined),
+    //   label: Text("Add User"),
+    // ),
     const NavigationRailDestination(
       icon: Icon(Icons.support_agent_outlined),
       label: Text("Help and Support"),
@@ -116,7 +116,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                 MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
           },
           child: SizedBox(
-            width: Responsive.isMobile(context)?10.w :9.w,
+            width: Responsive.isMobile(context) ? 10.w : 9.w,
             child: Row(
               children: [
                 const LiveasyLogoImage(),
@@ -198,12 +198,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   extended: Responsive.isDesktop(context) ? true : false,
                   selectedIconTheme: const IconThemeData(color: kLiveasyColor),
                   unselectedLabelTextStyle: TextStyle(
-                      
                       fontWeight: FontWeight.bold,
                       fontSize: 3.6.sp,
                       color: Colors.black),
                   selectedLabelTextStyle: TextStyle(
-                      
                       fontWeight: FontWeight.bold,
                       fontSize: 3.9.sp,
                       color: kLiveasyColor),

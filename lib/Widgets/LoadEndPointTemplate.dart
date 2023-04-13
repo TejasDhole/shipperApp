@@ -25,8 +25,8 @@ class LoadEndPointTemplate extends StatelessWidget {
               height: 10,
               width: 10,
               image: endPointType == 'loading'
-                  ? AssetImage('assets/icons/greenFilledCircleIcon.png')
-                  : AssetImage('assets/icons/redSemiFilledCircleIcon.png')),
+                  ? const AssetImage('assets/icons/greenFilledCircleIcon.png')
+                  : const AssetImage('assets/icons/redSemiFilledCircleIcon.png')),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
