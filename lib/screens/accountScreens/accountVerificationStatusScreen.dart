@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shipper_app/Web/screens/add_user_screen.dart';
+import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
+import '../../Web/screens/home_web.dart';
+import '../../constants/screens.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
@@ -40,7 +43,7 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                           ),
                     ],
                   ),
-                  HelpButtonWidget(),
+                  const HelpButtonWidget(),
                 ],
               ),
               SizedBox(
@@ -100,8 +103,8 @@ class AccountVerificationStatusScreen extends StatelessWidget {
               //       )
               //     : Container(),
               const SizedBox(height: 20,),
-              //TODO: Add user/ employee button in account page
-              Center(
+              //TODO: Add user/ employee button in account page, it is only displayed if the user role is owner
+              shipperIdController.isOwner.value?Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -109,12 +112,21 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                     ),
                     backgroundColor: const Color(0xFF000066),
                   ),
-                  child: const Text('Add User/ Employee'),
+                  child: const Text('Employee List'),
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddUser()));
+                    kIsWeb
+                        ? Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreenWeb(
+                              index: screens.indexOf(employeeListScreen),
+                              selectedIndex:
+                              screens.indexOf(accountVerificationStatusScreen),
+                            )))
+                        : Get.to(() => const EmployeeListRolesScreen());
                   },
                 ),
-              ),
+              ):const SizedBox(height:5,),
             ],
           ),
         ),

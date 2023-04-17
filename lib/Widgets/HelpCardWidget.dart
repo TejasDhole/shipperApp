@@ -48,7 +48,7 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
 
   var redirect_links = [
   //  AddNewTruck("redirectlinks"),
-    PostLoadScreenOne(),
+    const PostLoadScreenOne(),
   //  SuggestedLoadScreen(),
   //  BuyGpsScreen(),
     kIsWeb?const HomeScreenWeb():NavigationScreen(),
@@ -66,98 +66,97 @@ class _HelpCardWidgetState extends State<HelpCardWidget> {
   Widget build(BuildContext context) {
     NavigationIndexController navigationIndex =
         Get.put(NavigationIndexController(), permanent: true);
-    return Container(
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          SizedBox(height: 10.0),
-          GestureDetector(
-              onTap: () {
-                setState(() => _showData = !_showData);
-              },
-              child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(7)),
-                  child: Padding(
-                      padding: EdgeInsets.all(3.0),
-                      child: Column(children: [
-                        ListTile(
-                          title: Text(
-                            widget.title,
-                            style: TextStyle(
-                                
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14),
-                          ),
-                          trailing: !_showData
-                              ? Icon(Icons.arrow_forward_ios,
-                                  color: Colors.black, size: 14)
-                              : Icon(Icons.keyboard_arrow_down,
-                                  color: Colors.black, size: 25),
-                        ),
-                        _showData
-                            ? Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.only(
-                                    left: 20, bottom: 14, right: 20),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(answers[widget.index].tr,
-                                          style: TextStyle(
-                                              
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                          textAlign: TextAlign.left),
-                                      GestureDetector(
-                                          onTap: () {
-                                            navigationIndex.updateIndex(2);
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        redirect_links[
-                                                            widget.index]));
-                                          },
-                                          child: Container(
-                                              margin: EdgeInsets.only(top: 10),
-                                              child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        redirect[
-                                                                widget.index]
-                                                            .tr,
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'montserrat',
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 12,
-                                                            color: Color(
-                                                                0xff09B778)),
-                                                        textAlign:
-                                                            TextAlign.left),
-                                                    Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: 2),
-                                                        child: Icon(
-                                                            Icons
-                                                                .arrow_forward_ios,
-                                                            color: Color(
-                                                                0xff09B778),
-                                                            size: 12))
-                                                  ])))
-                                    ]))
-                            : SizedBox() // else blank
-                      ])))),
-        ]));
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+      const SizedBox(height: 10.0),
+      GestureDetector(
+          onTap: () {
+            setState(() => _showData = !_showData);
+          },
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7)),
+              child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(
+                        widget.title,
+                        style: const TextStyle(
+
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14),
+                      ),
+                      trailing: !_showData
+                          ? const Icon(Icons.arrow_forward_ios,
+                              color: Colors.black, size: 14)
+                          : const Icon(Icons.keyboard_arrow_down,
+                              color: Colors.black, size: 25),
+                    ),
+                    _showData
+                        ? Container(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.only(
+                                left: 20, bottom: 14, right: 20),
+                            child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Text(answers[widget.index].tr,
+                                      style: const TextStyle(
+
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                      textAlign: TextAlign.left),
+                                  GestureDetector(
+                                      onTap: () {
+                                        navigationIndex.updateIndex(2);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    redirect_links[
+                                                        widget.index]));
+                                      },
+                                      child: Container(
+                                          margin: const EdgeInsets.only(top: 10),
+                                          child: Row(
+                                              mainAxisSize:
+                                                  MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    redirect[
+                                                            widget.index]
+                                                        .tr,
+                                                    style: const TextStyle(
+                                                        fontFamily:
+                                                            'montserrat',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12,
+                                                        color: Color(
+                                                            0xff09B778)),
+                                                    textAlign:
+                                                        TextAlign.left),
+                                                Container(
+                                                    margin: const EdgeInsets.only(
+                                                        top: 2),
+                                                    child: const Icon(
+                                                        Icons
+                                                            .arrow_forward_ios,
+                                                        color: Color(
+                                                            0xff09B778),
+                                                        size: 12))
+                                              ])))
+                                ]))
+                        : const SizedBox() // else blank
+                  ])))),
+    ]);
   }
 }

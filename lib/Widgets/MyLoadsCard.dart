@@ -66,15 +66,15 @@ class MyLoadsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'postedon'.tr + ': ${loadDetailsScreenModel.postLoadDate}',
+                    '${'postedon'.tr}: ${loadDetailsScreenModel.postLoadDate}',
                     style: TextStyle(
                         fontSize: kIsWeb ? size_8 : size_6,
                         color: veryDarkGrey,
                         fontFamily: 'montserrat'),
                   ),
                   loadDetailsScreenModel.status == 'EXPIRED'
-                      ? Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(Icons.more_vert, color: black),
                         )
                       : PopupMenuButton<popupMenuforloads>(
@@ -121,7 +121,7 @@ class MyLoadsCard extends StatelessWidget {
                                 rate: loadDetailsScreenModel.rate,
                                 unitValue: loadDetailsScreenModel.unitValue,
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         ViewBidsButton(
                           loadId: loadDetailsScreenModel.loadId,
                           loadingPointCity:
@@ -218,12 +218,12 @@ class MyLoadsCard extends StatelessWidget {
         providerData.updateEditLoad(true, loadDetailsScreenModel.loadId!);
 
         print(providerData.editLoad); // true
-        Get.to(PostLoadNav());
+        Get.to(const PostLoadNav());
         break;
       case MenuItems.itemDisable:
         LoadApiCalls loadApiCalls = LoadApiCalls();
         loadApiCalls.disableActionOnLoad(loadId: loadDetailsScreenModel.loadId);
-        Timer(Duration(seconds: 1), () {
+        Timer(const Duration(seconds: 1), () {
           navigationIndexController.updateIndex(2);
           // Get.offAll(NavigationScreen());
           Navigator.of(context).push(MaterialPageRoute(
@@ -274,17 +274,15 @@ class MyLoadsCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: 8),
-                  child: Image(
+                  margin: const EdgeInsets.only(right: 8),
+                  child: const Image(
                     image: AssetImage('assets/images/TruckListEmptyImage.png'),
                     height: 24,
                     width: 24,
                   ),
                 ),
                 Text(
-                  '${loadDetailsScreenModel.truckType}'.tr +
-                      '|' '${loadDetailsScreenModel.noOfTyres} ' +
-                      'tyres'.tr,
+                  '${'${loadDetailsScreenModel.truckType}'.tr}|${loadDetailsScreenModel.noOfTyres} ${'tyres'.tr}',
                   style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
                 ),
               ],
@@ -295,17 +293,15 @@ class MyLoadsCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: 8),
-                  child: Image(
+                  margin: const EdgeInsets.only(right: 8),
+                  child: const Image(
                     image: AssetImage('assets/images/EmptyLoad.png'),
                     height: 24,
                     width: 24,
                   ),
                 ),
                 Text(
-                  '${loadDetailsScreenModel.productType}'.tr +
-                      '| ${loadDetailsScreenModel.weight} ' +
-                      'tons'.tr,
+                  '${'${loadDetailsScreenModel.productType}'.tr}| ${loadDetailsScreenModel.weight} ${'tons'.tr}',
                   style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
                 ),
               ],
@@ -354,8 +350,8 @@ class MyLoadsCard extends StatelessWidget {
         Row(
           children: [
             Container(
-              margin: EdgeInsets.only(right: 8),
-              child: Image(
+              margin: const EdgeInsets.only(right: 8),
+              child: const Image(
                 image: AssetImage(
                     'assets/images/TruckListEmptyImage.png'),
                 height: 24,
@@ -363,9 +359,7 @@ class MyLoadsCard extends StatelessWidget {
               ),
             ),
             Text(
-              '${loadDetailsScreenModel.truckType}'.tr +
-                  '|' '${loadDetailsScreenModel.noOfTyres} ' +
-                  'tyres'.tr,
+              '${'${loadDetailsScreenModel.truckType}'.tr}|${loadDetailsScreenModel.noOfTyres} ${'tyres'.tr}',
               style: TextStyle(
                   fontSize: size_6, fontWeight: mediumBoldWeight),
             ),
@@ -377,17 +371,15 @@ class MyLoadsCard extends StatelessWidget {
         Row(
           children: [
             Container(
-              margin: EdgeInsets.only(right: 8),
-              child: Image(
+              margin: const EdgeInsets.only(right: 8),
+              child: const Image(
                 image: AssetImage('assets/images/EmptyLoad.png'),
                 height: 24,
                 width: 24,
               ),
             ),
             Text(
-              '${loadDetailsScreenModel.productType}'.tr +
-                  '| ${loadDetailsScreenModel.weight} ' +
-                  'tons'.tr,
+              '${'${loadDetailsScreenModel.productType}'.tr}| ${loadDetailsScreenModel.weight} ${'tons'.tr}',
               style: TextStyle(
                   fontSize: size_6, fontWeight: mediumBoldWeight),
             ),

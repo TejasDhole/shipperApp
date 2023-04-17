@@ -25,7 +25,7 @@ class LoadConfirmationTemplate extends StatelessWidget {
                   '$label',
                   style: TextStyle(fontWeight: normalWeight),
                 ),
-                Container(
+                SizedBox(
                     width: MediaQuery.of(context).size.width / 1.8,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -33,13 +33,13 @@ class LoadConfirmationTemplate extends StatelessWidget {
                         label == 'Location'
                             ? Row(
                                 children: [
-                                  Text(":  "),
-                                  Container(
+                                  const Text(":  "),
+                                  SizedBox(
                                     height: 20,
                                     width:
                                         MediaQuery.of(context).size.width / 2,
                                     child: Marquee(
-                                      text: "${value!}",
+                                      text: value!,
                                       style: TextStyle(
                                           fontWeight: mediumBoldWeight,
                                           color: veryDarkGrey,
@@ -50,12 +50,12 @@ class LoadConfirmationTemplate extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       blankSpace: 20.0,
                                       velocity: 100.0,
-                                      pauseAfterRound: Duration(seconds: 1),
+                                      pauseAfterRound: const Duration(seconds: 1),
                                       accelerationDuration:
-                                          Duration(milliseconds: 10),
+                                          const Duration(milliseconds: 10),
                                       accelerationCurve: Curves.linear,
                                       decelerationDuration:
-                                          Duration(milliseconds: 500),
+                                          const Duration(milliseconds: 500),
                                       decelerationCurve: Curves.easeOut,
                                     ),
                                   )
@@ -77,7 +77,7 @@ class LoadConfirmationTemplate extends StatelessWidget {
             SizedBox(
               height: space_2,
             ),
-            Divider(
+            const Divider(
               color: grey,
             )
           ],

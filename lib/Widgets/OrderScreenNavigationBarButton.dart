@@ -15,20 +15,18 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
 
-    return Container(
-      child: TextButton(
-        onPressed: () {
-          providerData.updateUpperNavigatorIndex(value);
-          pageController.jumpToPage(value);
-        },
-        child: Text(
-          '$text',
-          style: TextStyle(
-            color: providerData.upperNavigatorIndex == value
-                ? loadingPointTextColor
-                : locationLineColor,
-            fontWeight: normalWeight,
-          ),
+    return TextButton(
+      onPressed: () {
+        providerData.updateUpperNavigatorIndex(value);
+        pageController.jumpToPage(value);
+      },
+      child: Text(
+        text,
+        style: TextStyle(
+          color: providerData.upperNavigatorIndex == value
+              ? loadingPointTextColor
+              : locationLineColor,
+          fontWeight: normalWeight,
         ),
       ),
     );

@@ -85,10 +85,10 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                                 });
                               },
                               child: Container(
-                                decoration: BoxDecoration(shape: BoxShape.rectangle),
+                                decoration: const BoxDecoration(shape: BoxShape.rectangle),
                                 height: space_5,
                                 width: space_5,
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.clear,
                                     color: darkBlueColor,
@@ -129,10 +129,10 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                                 });
                               },
                               child: Container(
-                                decoration: BoxDecoration(shape: BoxShape.rectangle),
+                                decoration: const BoxDecoration(shape: BoxShape.rectangle),
                                 height: space_5,
                                 width: space_5,
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.clear,
                                     color: darkBlueColor,
@@ -194,10 +194,10 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                             });
                           },
                           child: Container(
-                            decoration: BoxDecoration(shape: BoxShape.rectangle),
+                            decoration: const BoxDecoration(shape: BoxShape.rectangle),
                             height: space_5,
                             width: space_5,
-                            child: Center(
+                            child: const Center(
                               child: Icon(
                                 Icons.clear_rounded,
                                 color: darkBlueColor,

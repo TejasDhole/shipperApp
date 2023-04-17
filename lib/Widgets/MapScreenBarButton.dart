@@ -18,7 +18,7 @@ class MapScreenBarButton extends StatelessWidget {
     return Container(
     //  height: 26,
       width: 80,
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: GestureDetector(
         
         onTap: () {

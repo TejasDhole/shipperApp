@@ -278,7 +278,6 @@ class _LoginWebState extends State<LoginWeb> {
                                 'Sign in Using Google',
                                 style: TextStyle(
                                   color: const Color(0xFF000066),
-                                  
                                   fontSize: 4.3.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
