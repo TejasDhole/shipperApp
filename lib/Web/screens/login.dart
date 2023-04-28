@@ -42,7 +42,7 @@ class _LoginWebState extends State<LoginWeb> {
                 key: _formKey,
                 child: Container(
                   width: kIsWeb ? 35.w : 40.w,
-                  height: isError ? 65.h : 60.h,
+                  // height: isError ? 65.h + 20 : 60.h + 20,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
@@ -64,7 +64,7 @@ class _LoginWebState extends State<LoginWeb> {
                       //TODO : Email text field
                       Padding(
                         padding:
-                            EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
+                        EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
                         child: TextFormField(
                           autofocus: true,
                           autofillHints: autofillHints,
@@ -73,7 +73,7 @@ class _LoginWebState extends State<LoginWeb> {
                             labelText: 'Email Id',
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(25)),
+                              BorderRadius.all(Radius.circular(25)),
                             ),
                           ),
                           validator: (value) {
@@ -102,7 +102,7 @@ class _LoginWebState extends State<LoginWeb> {
                       //TODO : Password text field title
                       Padding(
                         padding:
-                            EdgeInsets.only(left: kIsWeb ? 3.w : 10, top: 3.h),
+                        EdgeInsets.only(left: kIsWeb ? 3.w : 10, top: 3.h),
                         child: const Text(
                           'Password',
                           style: TextStyle(
@@ -114,7 +114,7 @@ class _LoginWebState extends State<LoginWeb> {
                       //TODO : Password text field
                       Padding(
                         padding:
-                            EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
+                        EdgeInsets.only(left: 3.w, top: 1.h, right: 4.w),
                         child: TextFormField(
                           obscureText: passwordVisible,
                           decoration: InputDecoration(
@@ -122,7 +122,7 @@ class _LoginWebState extends State<LoginWeb> {
                             labelText: 'Password',
                             border: const OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(25)),
+                              BorderRadius.all(Radius.circular(25)),
                             ),
                             suffixIcon: IconButton(
                               icon: Icon(passwordVisible
@@ -169,16 +169,16 @@ class _LoginWebState extends State<LoginWeb> {
                           },
                           icon: isChecked
                               ? const Icon(
-                                  Icons.check_box,
-                                )
+                            Icons.check_box,
+                          )
                               : const Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: Colors.black,
-                                ),
+                            Icons.check_box_outline_blank,
+                            color: Colors.black,
+                          ),
                           label: const Text(
                             "Keep me logged in",
                             style: TextStyle(
-                              
+
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -189,7 +189,7 @@ class _LoginWebState extends State<LoginWeb> {
                       //TODO : Sign In button
                       Padding(
                         padding:
-                            EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
+                        EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -204,7 +204,7 @@ class _LoginWebState extends State<LoginWeb> {
                               _formKey.currentState!.save();
                               try {
                                 UserCredential firebaseUser =
-                                    await signIn(email, password, context);
+                                await signIn(email, password, context);
                                 SharedPreferences prefs = await SharedPreferences.getInstance();
 
                                 if(isChecked){
@@ -218,7 +218,7 @@ class _LoginWebState extends State<LoginWeb> {
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
                                 } else {
                                   alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
-                                 // firebaseUser.user!.sendEmailVerification();
+                                  // firebaseUser.user!.sendEmailVerification();
                                 }
                               } catch (e) {
                                 log('in sign in button catch--->$e');
@@ -237,7 +237,7 @@ class _LoginWebState extends State<LoginWeb> {
                       ),
                       Padding(
                         padding:
-                        EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
+                        EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w, bottom: 2.h),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -247,24 +247,24 @@ class _LoginWebState extends State<LoginWeb> {
                             fixedSize: Size(28.w, 7.h),
                           ),
                           onPressed: () async {
-                              try {
-                                UserCredential firebaseUser = await signInWithGoogle();
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                prefs.setString('uid', firebaseUser.user!.uid);
-                                getShipperIdFromCompanyDatabase();
-                                if (firebaseUser.user!.phoneNumber == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
-                                } else if (firebaseUser.user!.displayName == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
-                                } else if (firebaseUser.user!.emailVerified) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
-                                } else {
-                                  alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
-                                  // firebaseUser.user!.sendEmailVerification();
-                                }
-                              } catch (e) {
-                                log('in sign in button catch--->$e');
+                            try {
+                              UserCredential firebaseUser = await signInWithGoogle();
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              prefs.setString('uid', firebaseUser.user!.uid);
+                              getShipperIdFromCompanyDatabase();
+                              if (firebaseUser.user!.phoneNumber == null) {
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
+                              } else if (firebaseUser.user!.displayName == null) {
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
+                              } else if (firebaseUser.user!.emailVerified) {
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
+                              } else {
+                                alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
+                                // firebaseUser.user!.sendEmailVerification();
                               }
+                            } catch (e) {
+                              log('in sign in button catch--->$e');
+                            }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -280,7 +280,7 @@ class _LoginWebState extends State<LoginWeb> {
                                 'Sign in Using Google',
                                 style: TextStyle(
                                   color: const Color(0xFF000066),
-                                  
+
                                   fontSize: 4.3.sp,
                                   fontWeight: FontWeight.bold,
                                 ),

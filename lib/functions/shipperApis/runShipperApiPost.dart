@@ -47,6 +47,7 @@ Future<String?> runShipperApiPost({
             "companyStatus": "notVerified",
             "shipperLocation": address,
           };
+    // print("printed from runShipperApiPost: ${Uri.parse(shipperApiUrl)}");
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
@@ -55,7 +56,8 @@ Future<String?> runShipperApiPost({
         },
         body: body);
 
-    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
+    // print("response $response");
+    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
 
     if (!kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {

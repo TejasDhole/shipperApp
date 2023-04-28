@@ -136,7 +136,7 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
 
   initfunction() {
     var logger = Logger();
-    logger.i("in initState 1 function");
+    // logger.i("in initState 1 function");
     setState(() {
       gpsData = widget.gpsData;
       gpsTruckHistory = widget.gpsTruckHistory;
@@ -230,7 +230,7 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
         customMarkers.add(Marker(
           markerId: MarkerId("Stop Mark $i"),
           position: stops[i],
-          icon: BitmapDescriptor.fromBytes(markerIcon),
+          icon: kIsWeb ?  BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40)) :BitmapDescriptor.fromBytes(markerIcon),
         ));
       });
     }
@@ -260,41 +260,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
     }
   }
 
-  //New location when truck moves
-  void newLocationUpdate(LatLng latLng) async {
-    markerIcon = await getBytesFromCanvas2(
-        routeTime[i].toString(), routeSpeed[i].toString(), 600, 150);
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5),
-            'assets/icons/playHistoryPin.png')
-        .then((value) => {
-              if (mounted)
-                {
-                  print(
-                      "-------------------------------------->in newLocationUpdate:${latlng.length}"),
-                  setState(() {
-                    pinLocationIconTruck = value;
-                    // }),
-                    // setState(() {
-                    markers[kMarkerId] = Marker(
-                        markerId: kMarkerId,
-                        position: latLng,
-                        icon: pinLocationIconTruck,
-                        anchor: const Offset(0.5, 0.5),
-                        rotation: 90,
-                        onTap: () {
-                          print("Tapped");
-                        });
-                    customMarkers.add(Marker(
-                      markerId: kMarkerId2,
-                      position: latLng,
-                      icon: BitmapDescriptor.fromBytes(markerIcon),
-                    ));
-                  })
-                }
-            });
-    i = i + 1;
-  }
-
   getDateRange() {
     var logger = Logger();
     logger.i("in getDateRange function");
@@ -306,6 +271,44 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
     print("Start is ${start} and ENd is ${end}");
   }
 
+  //New location when truck moves
+  void newLocationUpdate(LatLng latLng) async {
+    markerIcon = await getBytesFromCanvas2(
+        routeTime[i].toString(), routeSpeed[i].toString(), 600, 150);
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5, size: Size(100, 200)),
+            'assets/icons/playHistoryPin.png')
+        .then((value) => {
+              if (mounted)
+                {
+                  print(
+                      "--------------------------------------> in newLocationUpdate:${latlng}"),
+                  setState(() {
+                    print("value ${value.toString()}");
+                    pinLocationIconTruck = value;
+                    // }),
+                    // setState(() {
+                    markers[kMarkerId] = Marker(
+                        markerId: kMarkerId,
+                        position: latLng,
+                        icon: value,
+                        anchor: const Offset(0.5, 0.5),
+                        rotation: 90,
+                        onTap: () {
+                          print("Tapped");
+                        });
+                    customMarkers.add(Marker(
+                      markerId: kMarkerId2,
+                      position: latLng,
+                      icon: kIsWeb ?  BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40)) :BitmapDescriptor.fromBytes(markerIcon),
+                    ));
+                  } ) //setState
+                }
+            });
+
+    print("markers $markers");
+    i = i + 1;
+  }
+
   getTruckHistory() {
     var logger = Logger();
     logger.i("in truck historyfunction");
@@ -315,7 +318,7 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
 
   _getPolyline(List<LatLng> polylineCoordinates2) {
     var logger = Logger();
-    logger.i("in polyline function 2");
+    // logger.i("in polyline function 2");
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,
@@ -323,10 +326,12 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
       points: polylineCoordinates2,
       width: 2,
     );
+
+    //
     setState(() {
       polylines[id] = polyline;
     });
-    print("$polylines");
+    print("polylines $polylines");
 
     _addPolyLine();
   }
@@ -415,40 +420,23 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
                             compassEnabled: true,
                             mapType: MapType.normal,
                             onMapCreated: (gController) async {
-                              // newLocationUpdate(stream[1]);
-                              // stream.forEach((value) {
-                              //   print(
-                              //       "Stream-------------------------------------------->$value");
-                              //   newLocationUpdate(value);
-                              // });
                               subscription = stream.listen(
                                 (data) => {
+                                  // print("data"),
                                   newLocationUpdate(data),
                                   value = Locations.indexOf(data).toDouble(),
                                 },
                               );
-                              // streamedData.forEach((element) {
-                              //   print(
-                              //       "----------------------->$element in stremedData");
-                              //   newLocationUpdate(element);
-                              //   value =
-                              //       streamedData.indexOf(element).toDouble();
-                              //   sleep(Duration(milliseconds: 457));
-                              // });
-                              // print(
-                              //     "Streamed data length----------------->${streamedData.length}");
-                              // // await loadData();
-                              // print("Function called");
                               controller.complete(gController);
                               _customInfoWindowController.googleMapController =
                                   gController;
                             },
                             gestureRecognizers:
-                                <Factory<OneSequenceGestureRecognizer>>[
-                              new Factory<OneSequenceGestureRecognizer>(
-                                () => new EagerGestureRecognizer(),
+                                <Factory<OneSequenceGestureRecognizer>>{
+                              Factory<OneSequenceGestureRecognizer>(
+                                () => EagerGestureRecognizer(),
                               ),
-                            ].toSet(),
+                            },
                           ),
                         ),
                       ])),

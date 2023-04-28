@@ -463,6 +463,7 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
+
           title: Text(
             "$truckNo",
             style: TextStyle(color: black, fontWeight: FontWeight.bold),

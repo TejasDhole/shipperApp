@@ -10,7 +10,9 @@ getMMIToken()async{
   TokenMMIController tokenMMIController = Get.put(TokenMMIController());
   String token;
   if (tokenMMIController.tokenMMI.value == "") {
+    print("getting the token");
     token = await getMapMyIndiaToken();
+    print("got the token");
   } else {
     token = tokenMMIController.tokenMMI.value;
   }

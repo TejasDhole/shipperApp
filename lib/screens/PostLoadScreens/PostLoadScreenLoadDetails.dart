@@ -154,8 +154,9 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                                 ),
                               ),
                         SizedBox(height: space_3),
-                        AddTruckSubtitleText(text: 'priceoptional'.tr
-                            // "Price(Optional)"
+                        AddTruckSubtitleText(
+                            text: 'priceoptional'.tr
+                            // text: "Freight(Optional)"
                             ),
                         SizedBox(height: space_2),
                         UnitValueWidget(),

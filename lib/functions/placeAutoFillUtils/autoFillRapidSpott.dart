@@ -1,7 +1,11 @@
 import '/models/autoFillMMIModel.dart';
 import '../rapidApi.dart';
+import 'package:logger/logger.dart';
 
 Future<List<AutoFillMMIModel>> fillCity(String cityName) async{
+  var logger = Logger();
+
+  // logger.i("fillcity called");
   if(cityName.length>1) {
     List<AutoFillMMIModel> card = [];
     List<CityModel> citydetails = [];

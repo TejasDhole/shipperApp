@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
@@ -22,6 +23,7 @@ import '/widgets/alertDialog/loadingAlertDialog.dart';
 import '/widgets/alertDialog/CompletedDialog.dart';
 import '/widgets/alertDialog/orderFailedAlertDialog.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 
 class LoadConfirmationScreenButton extends StatelessWidget {
   String title;
@@ -91,8 +93,8 @@ class LoadConfirmationScreenButton extends StatelessWidget {
           Timer(
               Duration(seconds: 3),
               () => {
-                    navigationIndexController.updateIndex(1),
-                    Get.offAll(() => NavigationScreen()),
+                    navigationIndexController.updateIndex(0),
+                    Get.offAll(() => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
                     providerData.resetPostLoadFilters(),
                     providerData.resetPostLoadScreenOne(),
                     providerData.resetPostLoadScreenMultiple(),
@@ -151,8 +153,8 @@ class LoadConfirmationScreenButton extends StatelessWidget {
           Timer(
               Duration(seconds: 3),
               () => {
-                    Get.offAll(() => NavigationScreen()),
-                    navigationIndexController.updateIndex(1),
+                    Get.offAll(() => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
+                    navigationIndexController.updateIndex(0),
                     providerData.resetPostLoadFilters(),
                     providerData.resetPostLoadScreenOne(),
                     providerData.resetPostLoadScreenMultiple(),

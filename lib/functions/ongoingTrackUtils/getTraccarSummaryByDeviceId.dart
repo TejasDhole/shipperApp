@@ -35,7 +35,7 @@ Future<List<GpsDataModel>> getTraccarSummaryByDeviceId({
     // print("from getTraccarSummaryByDeviceId: ${response.statusCode}");
     // print("from getTraccarSummaryByDeviceId: ${response.body}");
     var jsonData = await jsonDecode(response.body);
-    print(response.body);
+    // print(response.body);
     List<GpsDataModel> latLongList = [];
     if (response.statusCode == 200) {
       for (var json in jsonData) {

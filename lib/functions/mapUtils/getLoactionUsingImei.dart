@@ -332,7 +332,7 @@ class MapUtil {
       );
       // print(response.statusCode);
       var logger = Logger();
-      logger.i("response.statusCode ${response.statusCode}");
+      // logger.i("response.statusCode ${response.statusCode}");
       // print(response.body);
       var jsonData = await jsonDecode(response.body);
       // print(response.body);

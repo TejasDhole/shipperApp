@@ -15,7 +15,7 @@ class LoadEndPointTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (text!.length > 20) {
-      text = text!.substring(0, 19) + '..';
+      text = '${text!.substring(0, 19)}..';
     }
     return Row(
       children: [

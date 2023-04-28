@@ -79,7 +79,7 @@ Future<List<GpsDataModel>> getPositionByDeviceId(String deviceId) async {
           if(kIsWeb){
             final apiKey = dotenv.get('mapKey');
             http.Response addressResponse = await http.get(
-                Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
+                Uri.parse("http://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
             );
             var addressJSONData = await jsonDecode(addressResponse.body);
             if (addressResponse.statusCode == 200) {

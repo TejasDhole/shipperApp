@@ -72,8 +72,10 @@ Future<String?> runShipperApiPostIsolated(
     Map data = userLocation != null
         ? {"emailId": emailId, "shipperLocation": userLocation}
         : {"emailId": emailId,"phoneNo": phoneNo };
+    print("data $data");
     String body = json.encode(data);
     print("here is api call started");
+    print("url: $shipperApiUrl");
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -83,6 +85,7 @@ Future<String?> runShipperApiPostIsolated(
     print(response.body);
     print("here api call stopped");
 
+    print(FirebaseAuth.instance.currentUser != null && !kIsWeb);
     if (FirebaseAuth.instance.currentUser != null && !kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {
         if (value != null) {
@@ -91,6 +94,8 @@ Future<String?> runShipperApiPostIsolated(
         createTraccarUserAndNotifications(value, phoneNo);
       });
     }
+
+    // print("'from runShipperApiPostIsolated' response statue code: ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
@@ -159,7 +164,7 @@ Future<String?> runShipperApiPostIsolated(
       return null;
     }
   } catch (e) {
-    print(e);
+    print("from runShipperApiPostIsolated: $e");
     return null;
   }
 }

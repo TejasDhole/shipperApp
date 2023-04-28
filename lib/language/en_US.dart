@@ -207,7 +207,7 @@ const Map<String, String> enUS = {
   'addDriver': "Add Driver",
   'weights': 'Weight(in tons)',
   "chooseproductType": "Choose Product Type",
-  'priceoptional': 'Price(Optional)',
+  'priceoptional': 'Freight(Optional)',
   'enterprice': 'enter price',
 
   //my account

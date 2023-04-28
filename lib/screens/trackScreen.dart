@@ -250,7 +250,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   // function is called to make the truck look running
   getTruckHistoryForSpeed() {
     var logger = Logger();
-    logger.i("in truck history after function");
+    // logger.i("in truck history after function");
     // getStoppage(gpsStoppageHistory);
     polylineCoordinates =
         getPoylineCoordinates(gpsDataHistory, polylineCoordinates);
@@ -261,7 +261,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
   addstops(var gpsStoppage) async {
     var logger = Logger();
-    logger.i("in addstops function");
+    // logger.i("in addstops function");
     averagelat = 0;
     averagelon = 0;
     FutureGroup futureGroup = FutureGroup();
@@ -307,14 +307,24 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     stoplatlong = latlong;
     // }
 
+    stopAddress = await getStoppageAddress(gpsStoppage);
+    stoppageTime = getStoppageTime(gpsStoppage);
+    duration = getStoppageDuration(gpsStoppage);
+
     // for(int i=0; i<stoplatlong.length; i++){
     markerIcon = await getBytesFromCanvas(i + 1, 100, 100);
+    String snippet = "$duration  ------------  $stoppageTime  -----------  $stopAddress";
+    logger.i(snippet);
     setState(() {
+      // logger.i("getStoppage called");
       customMarkers.add(Marker(
         markerId: MarkerId("Stop Mark $i"),
         position: stoplatlong,
-        icon: BitmapDescriptor.fromBytes(markerIcon),
-        //info window
+        icon: kIsWeb ? BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40)) : BitmapDescriptor.fromBytes(markerIcon),
+        infoWindow: InfoWindow(
+          snippet: snippet,
+          anchor: Offset(50,50),
+        ),
         onTap: () async {
           stopAddress = await getStoppageAddress(gpsStoppage);
           stoppageTime = getStoppageTime(gpsStoppage);
@@ -764,38 +774,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                 ),
                               ),
                             ),
-                      // loading?
-                      // GoogleMap(
-                      //   onTap: (position) {
-                      //     _customInfoWindowController.hideInfoWindow!();
-                      //     _customDetailsInfoWindowController.hideInfoWindow!();
-                      //   },
-                      //   onCameraMove: (position) {
-                      //     _customInfoWindowController.onCameraMove!();
-                      //     _customDetailsInfoWindowController.onCameraMove!();
-                      //   },
-                      //   markers: customMarkers.toSet(),
-                      //   polylines: Set.from(polylines.values),
-                      //   myLocationButtonEnabled: true,
-                      //   zoomControlsEnabled: false,
-                      //   initialCameraPosition: camPosition,
-                      //   compassEnabled: true,
-                      //   mapType: maptype,
-                      //   onMapCreated: (GoogleMapController controller) {
-                      //     _controller.complete(controller);
-                      //     _customInfoWindowController.googleMapController =
-                      //         controller;
-                      //     _customDetailsInfoWindowController
-                      //         .googleMapController = controller;
-                      //   },
-                      //   gestureRecognizers:
-                      //       <Factory<OneSequenceGestureRecognizer>>[
-                      //     new Factory<OneSequenceGestureRecognizer>(
-                      //       () => new EagerGestureRecognizer(),
-                      //     ),
-                      //   ].toSet(),
-                      // ),
-                      //   :Container(),
                       CustomInfoWindow(
                         controller: _customInfoWindowController,
                         height: 110,

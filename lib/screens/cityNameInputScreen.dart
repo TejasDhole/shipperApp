@@ -42,6 +42,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     logger = Logger();
     async_method();
     getMMIToken();
+    logger.i("back from mmitoken");
     _initSpeech();
   }
   void async_method()async{
