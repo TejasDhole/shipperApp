@@ -306,6 +306,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                       UserCredential firebaseUser = await signInWithGoogle();
                       SharedPreferences prefs = await SharedPreferences.getInstance();
                       prefs.setString('uid', firebaseUser.user!.uid);
+                      prefs.setBool('isGoogleLogin', true);
                       getShipperIdFromCompanyDatabase();
                       if(!mounted) return ;
                       if(firebaseUser.user!.phoneNumber==null){

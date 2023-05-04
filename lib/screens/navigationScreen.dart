@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/functions/get_role_of_employee.dart';
 import '/constants/colors.dart';
 import '/controller/navigationIndexController.dart';
 import '/controller/shipperIdController.dart';
@@ -56,9 +58,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
     super.initState();
     this.initDynamicLinks();
     this.checkUpdate();
-
+    getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid);
     isolatedShipperGetData();
-    print("in navigation screen ${shipperIdController.shipperId.value}");
   }
 
 

@@ -25,7 +25,7 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
             decoration: BoxDecoration(
               color: white,
               shape: BoxShape.circle,
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: grey,
                   blurRadius: 5.0,
@@ -51,14 +51,14 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
                           });
                         },
                         child: Container(
-                          decoration: BoxDecoration(shape: BoxShape.rectangle),
+                          decoration: const BoxDecoration(shape: BoxShape.rectangle),
                           height: space_4,
                           width: space_4,
                           child: Container(
                             // width: space_5,
                             // height: space_5,
                             color: darkBlueColor,
-                            child: Center(
+                            child: const Center(
                               child: Icon(
                                 Icons.clear,
                                 color: Colors.white,
@@ -83,7 +83,7 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
         : Container(
             height: space_23,
             width: space_23,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
               shape: BoxShape.circle,
               boxShadow: [
@@ -100,7 +100,7 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
                   child: Container(
                     height: space_6 + 1,
                     width: space_6 - 2,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image:
                             AssetImage("assets/icons/defaultAccountIcon.png"),
@@ -115,10 +115,10 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(radius_11),
                       child: Container(
-                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
                         height: space_4,
                         width: space_4,
-                        child: Center(
+                        child: const Center(
                           child: Icon(
                             Icons.add_box_rounded,
                             color: darkBlueColor,

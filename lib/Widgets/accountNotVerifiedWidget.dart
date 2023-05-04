@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shipper_app/Widgets/accountVerification/accountPageUtil.dart';
 import '/constants/borderWidth.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
 import '/controller/navigationIndexController.dart';
-
-// import '../screens/accountScreens/kycIDfyScreen.dart';
 
 class AccountNotVerifiedWidget extends StatelessWidget {
   const AccountNotVerifiedWidget({Key? key}) : super(key: key);
@@ -38,7 +35,7 @@ class AccountNotVerifiedWidget extends StatelessWidget {
                 Container(
                   height: space_5 - 2,
                   width: space_5 - 2,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/icons/errorIcon.png"),
                     ),
@@ -57,7 +54,7 @@ class AccountNotVerifiedWidget extends StatelessWidget {
                         // "Account details pending!",
                         style: TextStyle(
                             fontSize: size_5,
-                            color: Color(0xFF212121),
+                            color: const Color(0xFF212121),
                             fontFamily: "roboto",
                             fontWeight: mediumBoldWeight),
                       ),

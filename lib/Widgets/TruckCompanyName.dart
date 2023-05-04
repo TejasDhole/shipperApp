@@ -16,8 +16,8 @@ class TruckCompanyName extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image(image: AssetImage("assets/images/truck.png")),
-          SizedBox(
+          const Image(image: AssetImage("assets/images/truck.png")),
+          const SizedBox(
             width: 4,
           ),
           Text(

@@ -13,6 +13,12 @@ class ShipperIdController extends GetxController {
     companyApproved.value = newValue;
   }
 
+  RxBool isOwner = false.obs;
+
+  void updateOwnerStatus(bool newValue) {
+    isOwner.value = newValue;
+  }
+
   RxString name = "".obs;
 
   void updateName(String newValue) {

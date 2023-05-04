@@ -6,6 +6,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/get_role_of_employee.dart';
+import '../create_company_database.dart';
 import '../shipperId_fromCompaniesDatabase.dart';
 import '/controller/shipperIdController.dart';
 import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
@@ -127,6 +129,8 @@ Future<String?> runShipperApiPost({
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
+        CreateCompanyDatabase().createCompanyDatabase(shipperIdController.companyName.value.toString(),shipperIdController.shipperId.value.toString());
+        getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
         getShipperIdFromCompanyDatabase();
         return shipperId;
       } else {

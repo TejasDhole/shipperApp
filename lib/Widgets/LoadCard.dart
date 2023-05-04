@@ -37,7 +37,7 @@ class LoadCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 243,
-      color: Color(0xffF7F8FA),
+      color: const Color(0xffF7F8FA),
       margin: EdgeInsets.only(bottom: space_2),
       child: Card(
         elevation: size_4,
@@ -52,7 +52,7 @@ class LoadCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      FromLoadPrefix(),
+                      const FromLoadPrefix(),
                       Text(
                         loadFrom!,
                         style: TextStyle(
@@ -72,7 +72,7 @@ class LoadCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      ToLoadPrefix(),
+                      const ToLoadPrefix(),
                       Text(
                         loadTo!,
                         style: TextStyle(
@@ -84,7 +84,7 @@ class LoadCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 7.0),
+                        padding: const EdgeInsets.only(top: 7.0),
                         child: Row(
                           children: [
                             Column(
@@ -96,7 +96,7 @@ class LoadCard extends StatelessWidget {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 48),
+                              padding: const EdgeInsets.only(left: 48),
                               child: Column(
                                 children: [
                                   LoadParameter(
@@ -111,7 +111,7 @@ class LoadCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 7.0),
+                        padding: const EdgeInsets.only(top: 7.0),
                         child: Row(
                           children: [
                             Column(
@@ -155,7 +155,7 @@ class LoadCard extends StatelessWidget {
                   padding: EdgeInsets.only(
                     top: space_7,
                   ),
-                  child: TruckView(),
+                  child: const TruckView(),
                 ),
                 ViewBidButton(
                   loadFrom: loadFrom,

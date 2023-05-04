@@ -17,8 +17,6 @@ import 'package:shipper_app/widgets/referAndEarnWidget.dart';
 import 'package:shipper_app/widgets/searchLoadWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/widgets/buttons/postLoadButton.dart';
-import '../Widgets/suggestedLoadWidgetHeader.dart';
-import '../Widgets/suggestedLoadsWidget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -39,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     imageUrl();
-    print("shipper id---->${shipperIdController.emailId.value}");
   }
 
   @override
