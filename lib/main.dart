@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
     subscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       _connectionStatus = result.toString();
-      print(_connectionStatus);
+      // print(_connectionStatus);
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi) {
         if (isDisconnected) {
@@ -180,7 +180,7 @@ class _MyAppState extends State<MyApp> {
                                   fallbackLocale: const Locale('en', 'US'),
                                   home: const SplashScreenToHomePage());
                             } else {
-                              print("Current transporter is not null and user is null");
+                              // print("Current transporter is not null and user is null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),
@@ -203,7 +203,7 @@ class _MyAppState extends State<MyApp> {
                                   fallbackLocale: const Locale('en', 'US'),
                                   home: const SplashScreenToHomePage());
                             } else {
-                              print("Current transporter is null and user is not null");
+                              // print("Current transporter is null and user is not null");
                               return GetMaterialApp(
                                   debugShowCheckedModeBanner: false,
                                   theme: ThemeData(fontFamily: "Montserrat"),

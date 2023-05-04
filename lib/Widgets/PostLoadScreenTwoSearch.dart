@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/borderWidth.dart';
@@ -41,17 +42,28 @@ class PostLoadScreenTwoSearch extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               content: Container(
-                width: MediaQuery.of(context).size.width,
-                child: GridView.count(
+                width: kIsWeb ? 500 : MediaQuery.of(context).size.width,
+                height: 530,
+                child: kIsWeb ? ListView.builder(
+                  itemCount: productTypeList.length,
+                  itemBuilder: (context, index) {
+                      return  addRectangularButtonProductType(
+                        text: productTypeList[index].tr,
+                        value: productTypeList[index],
+                      );
+                    },
+                ) :
+                GridView.count(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   childAspectRatio: size_1,
-                  crossAxisSpacing: space_6,
+                  crossAxisSpacing: space_10,
                   mainAxisSpacing: space_2,
                   crossAxisCount: 2,
                   children: productTypeList
-                      .map((e) =>
-                          addRectangularButtonProductType(value: e, text: e.tr))
+                      .map((e) {
+                    return addRectangularButtonProductType(value: e, text: e.tr);
+                      },)
                       .toList(),
                 ),
               ),

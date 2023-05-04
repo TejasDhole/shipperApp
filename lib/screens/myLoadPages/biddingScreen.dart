@@ -50,7 +50,6 @@ class _BiddingScreensState extends State<BiddingScreens> {
   List<TransporterModel> transporterModelList = [];
 
   getBidDataByLoadId(int i) async {
-    print('$biddingApiUrl?loadId=${widget.loadId}&pageNo=$i');
     http.Response response = await http
         .get(Uri.parse('$biddingApiUrl?loadId=${widget.loadId}&pageNo=$i'));
 

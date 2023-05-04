@@ -84,11 +84,6 @@ String kGoogleApiKey = dotenv.get('mapKey');
 // }
 
 Future<List<AutoFillMMIModel>> fillCityGoogle(String cityName,Position position) async {
-  print('https://maps.googleapis.com/maps/api/place/autocomplete/json?'
-      'input=$cityName&location=${position.latitude},${position.longitude}&radius=50000&language=en&components=country:in&key=$kGoogleApiKey');
-
-  // Url is getting printed
-  // but next line is not getting executed.
   http.Response response = await http.get(
     Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?'
         'input=$cityName&location=${position.latitude},${position.longitude}&radius=50000&language=en&components=country:in&key=$kGoogleApiKey'),
@@ -96,7 +91,6 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(String cityName,Position position)
         'Content-Type': 'application/json; charset=UTF-8',
       }
   );
-  print("address ${response.body}");
 
   var address = await jsonDecode(response.body);
 
@@ -108,7 +102,6 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(String cityName,Position position)
     address = address["predictions"];
     //print(address);
     for (var json in address) {
-      print("json Description From fillCity ${json["description"]}");
       List<String> result = json["description"]!.split(",");
       //print(result);
       int resultLength = 0;
@@ -144,8 +137,8 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(String cityName,Position position)
             // placeStateName: json["placeAddress"]\
             placeStateName: "${result[resultLength - 2].toString()}");
         card.add(locationCardsModal);
-        print(card[0]);
-      }
+        // print(card[0]);
+        }
     }
     return card;
   } else {

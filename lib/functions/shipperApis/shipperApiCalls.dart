@@ -13,7 +13,7 @@ class ShipperApiCalls {
     http.Response response =
         await http.get(Uri.parse('$shipperApiUrl/$shipperId'));
     var jsonData = json.decode(response.body);
-    print("response for shipper get call--->${response.body}");
+    // print("response for shipper get call--->${response.body}");
     ShipperModel shipperModel = ShipperModel();
     shipperModel.shipperId =jsonData['shipperId'] ?? 'Na';
     shipperModel.shipperName = jsonData['shipperName'] ?? 'Na';

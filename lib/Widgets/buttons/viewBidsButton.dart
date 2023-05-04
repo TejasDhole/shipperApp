@@ -40,7 +40,7 @@ class ViewBidsButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          print(loadId);
+          // print(loadId);
           Get.to(() => BiddingScreens(loadId: loadId,loadingPointCity: loadingPointCity, unloadingPointCity: unloadingPointCity,));
         },
       ),

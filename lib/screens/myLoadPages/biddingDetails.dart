@@ -67,6 +67,7 @@ class BiddingDetails extends StatelessWidget {
                       loadPosterCompanyApproved: isLoadPosterVerified != null
                           ? isLoadPosterVerified
                           : false,
+                      imageUrl: "no profile",
                     ),
                     Padding(
                       padding: EdgeInsets.only(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
@@ -537,7 +538,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                     padding: const EdgeInsets.only(
                                         top: 0, left: 10, right: 10),
                                     child:
-                                        Image.file(providerData.LrPhotoFile!),
+                                        kIsWeb ? Image.network(providerData.LrPhotoFile!.path) : Image.file(providerData.LrPhotoFile!),
                                   ),
                                 ),
                               )
@@ -694,7 +695,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 0, left: 10, right: 10),
-                                        child: Image.file(
+                                        child: kIsWeb ? Image.network(providerData.EwayBillPhotoFile!.path) : Image.file(
                                             providerData.EwayBillPhotoFile!),
                                       ),
                                     ),
@@ -854,8 +855,9 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 0, left: 10, right: 10),
-                                            child: Image.file(providerData
-                                                .WeightReceiptPhotoFile!),
+                                            child: kIsWeb ?
+                                            Image.network(providerData.WeightReceiptPhotoFile!.path) :
+                                            Image.file(providerData.WeightReceiptPhotoFile!),
                                           ),
                                         ),
                                       )
@@ -1027,8 +1029,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                     top: 0,
                                                     left: 10,
                                                     right: 10),
-                                                child: Image.file(
-                                                    providerData.PodPhotoFile!),
+                                                child: kIsWeb ? Image.network(providerData.PodPhotoFile!.path) : Image.file(providerData.PodPhotoFile!),
                                               ),
                                             ),
                                           )
