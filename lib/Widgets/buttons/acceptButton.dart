@@ -42,7 +42,7 @@ class AcceptButton extends StatelessWidget {
           (transporterApproved == true && shipperApproved == false);
     }
 
-    print('bid id : $bidId');
+    // print('bid id : $bidId');
     return Container(
       height: isBiddingDetails! ? null : 31,
       width: isBiddingDetails! ? null : 80,

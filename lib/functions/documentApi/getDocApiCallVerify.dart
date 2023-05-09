@@ -9,9 +9,11 @@ getDocApiCallVerify(String bookingId, String docType) async {
     final String documentApiUrl =
         // FlutterConfig.get('documentApiUrl').toString();
         dotenv.get('documentApiUrl');
+
+    print("from getDocApiCallVerify $documentApiUrl/$bookingId");
     final response = await http.get(Uri.parse("$documentApiUrl/$bookingId"));
 
-    print(response.body);
+    print("from getDocApiCallVerify" + response.body);
     jsonData = json.decode(response.body);
     print(response.body);
     for (var jsondata in jsonData["documents"]) {
@@ -25,7 +27,7 @@ getDocApiCallVerify(String bookingId, String docType) async {
 
     return true;
   } catch (e) {
-    print(e.toString());
+    print("exception from getDocApiCallVerify ${e.toString()}");
     return e.toString();
   }
 }

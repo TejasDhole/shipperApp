@@ -28,7 +28,7 @@ class _ProductTypeEnterAlertDialogState
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: MediaQuery.of(context).size.width,
+          // width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.2,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

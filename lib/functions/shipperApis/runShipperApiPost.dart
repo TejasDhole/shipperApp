@@ -49,6 +49,7 @@ Future<String?> runShipperApiPost({
             "companyStatus": "notVerified",
             "shipperLocation": address,
           };
+    // print("printed from runShipperApiPost: ${Uri.parse(shipperApiUrl)}");
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
@@ -57,12 +58,13 @@ Future<String?> runShipperApiPost({
         },
         body: body);
 
-    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
+    // print("response $response");
+    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
 
     if (!kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {
         if (value != null) {
-          log("firebase registration token =========> " + value);
+          // log("firebase registration token =========> " + value);
         }
         //TODO : Have update or change traccar usage for shipper, Need to update by me
         createTraccarUserAndNotifications(value, phoneNo);
@@ -74,7 +76,7 @@ Future<String?> runShipperApiPost({
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
-        debugPrint(shipperId);
+        // debugPrint(shipperId);
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
@@ -88,7 +90,9 @@ Future<String?> runShipperApiPost({
         shipperIdController.updateShipperId(shipperId);
         sidstorage
             .write("shipperId", shipperId)
-            .then((value) => print("Written shipperId"));
+            .then((value) =>
+            print("Written shipperId")
+        );
         shipperIdController.updateCompanyApproved(companyApproved);
         sidstorage
             .write("companyApproved", companyApproved)
@@ -130,15 +134,15 @@ Future<String?> runShipperApiPost({
         getShipperIdFromCompanyDatabase();
         return shipperId;
       } else {
-        print("shipperId is null");
+        // print("shipperId is null");
         return null;
       }
     } else {
-      print("different status code");
+      // print("different status code");
       return null;
     }
   } catch (e) {
-    print("in catch block*********************************************");
+    // print("in catch block*********************************************");
     print(e);
     return null;
   }

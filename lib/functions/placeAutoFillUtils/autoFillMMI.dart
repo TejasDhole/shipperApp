@@ -10,7 +10,9 @@ getMMIToken()async{
   TokenMMIController tokenMMIController = Get.put(TokenMMIController());
   String token;
   if (tokenMMIController.tokenMMI.value == "") {
+    print("getting the token");
     token = await getMapMyIndiaToken();
+    print("got the token");
   } else {
     token = tokenMMIController.tokenMMI.value;
   }
@@ -40,7 +42,9 @@ getMMIToken()async{
 //     print(response.reasonPhrase);
 //   }
 // }
+
 Future<List<AutoFillMMIModel>> fillCityName(String cityName) async {
+  print("*********************fillcityname called");
   if (cityName.length > 1) {
     // TokenMMIController tokenMMIController = Get.put(TokenMMIController());
     // String token;

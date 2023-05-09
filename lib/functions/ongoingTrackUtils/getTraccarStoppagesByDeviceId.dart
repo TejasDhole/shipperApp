@@ -28,8 +28,11 @@ getTraccarStoppagesByDeviceId({
           'authorization': basicAuth,
           'Accept': 'application/json'
         });
-    print(response.statusCode);
-    print(response.body);
+    // print("${
+    //     Uri.parse(
+    //         "$traccarApi/reports/stops?deviceId=$deviceId&from=${from}Z&to=${to}Z")}");
+    // print(response.statusCode);
+    // print(response.body);
     var jsonData = await jsonDecode(response.body);
     print(response.body);
     var LatLongList = [];

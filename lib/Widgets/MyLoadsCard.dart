@@ -13,7 +13,7 @@ import '/controller/navigationIndexController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/models/popupModelForMyLoads.dart';
 import '/providerClass/providerData.dart';
-import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
+// import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 import '/screens/navigationScreen.dart';
 import '/variables/truckFilterVariables.dart';
 import '/widgets/LoadEndPointTemplate.dart';
@@ -30,7 +30,7 @@ import '/screens/PostLoadScreens/postloadnavigation.dart';
 class MyLoadsCard extends StatelessWidget {
   LoadDetailsScreenModel loadDetailsScreenModel;
 
-  MyLoadsCard({required this.loadDetailsScreenModel});
+  MyLoadsCard({super.key, required this.loadDetailsScreenModel});
 
   TruckFilterVariables truckFilterVariables = TruckFilterVariables();
 

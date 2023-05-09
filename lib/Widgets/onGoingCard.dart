@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
+import 'package:logger/logger.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
@@ -36,16 +37,21 @@ class _OngoingCardState extends State<OngoingCard> {
   var gpsDataList = [];
   var gpsList = [];
 
-  DateTime yesterday =
-      DateTime.now().subtract(const Duration(days: 1, hours: 5, minutes: 30));
   String? from;
   String? to;
-  DateTime now = DateTime.now().subtract(const Duration(hours: 5, minutes: 30));
   String? totalDistance;
 
   @override
   void initState() {
     super.initState();
+
+    DateTime yesterday = DateTime.now()
+        .subtract(Duration(days: 1, hours: 5, minutes: 30)); //from param
+    from = yesterday.toIso8601String();
+    DateTime now =
+    DateTime.now().subtract(Duration(hours: 5, minutes: 30)); //to param
+    to = now.toIso8601String();
+
     getMyTruckPosition();
     initFunction();
   }
@@ -240,6 +246,7 @@ class _OngoingCardState extends State<OngoingCard> {
 
     gpsList = List.filled(devices.length, null, growable: true);
 
+    //for loop will iterate and change the gpsList contents
     for (int i = 0; i < gpsDataAll.length; i++) {
       getGPSData(gpsDataAll[i], i);
     }
@@ -247,6 +254,7 @@ class _OngoingCardState extends State<OngoingCard> {
     setState(() {
       gpsDataList = gpsList;
     });
+
   }
 
   void getGPSData(var gpsData, int i) async {
@@ -261,6 +269,8 @@ class _OngoingCardState extends State<OngoingCard> {
     setState(() {
       totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
     });
-    print('in init');
+
+
+    // print('in init');
   }
 }

@@ -7,7 +7,6 @@ class TransporterApiCalls {
   final String transporterApiUrl = dotenv.get("transporterApiUrl");
 
   Future<TransporterModel> getDataByTransporterId(String? transporterId) async {
-
     http.Response response =
         await http.get(Uri.parse('$transporterApiUrl/$transporterId'));
     var jsonData = json.decode(response.body);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
@@ -81,7 +82,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                           padding: EdgeInsets.all(10.0),
-                          crossAxisCount: 2,
+                          crossAxisCount: kIsWeb ? 7 : 2,
                           children: truckFilterVariables.truckTypeValueList
                               .map((e) => AddTruckRectangularButtonTemplate(
                                   value: e,
@@ -104,7 +105,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                             child: GridView.count(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              crossAxisCount: 6,
+                              crossAxisCount: kIsWeb ? 18 : 6,
                               children: numberOfTyresList
                                   .map((e) => Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -137,7 +138,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                                 child: GridView.count(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  crossAxisCount: 6,
+                                  crossAxisCount: kIsWeb ? 18 : 6 ,
                                   children: truckFilterVariables
                                       .passingWeightList[
                                           providerData.truckTypeValue]!
@@ -154,8 +155,9 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                                 ),
                               ),
                         SizedBox(height: space_3),
-                        AddTruckSubtitleText(text: 'priceoptional'.tr
-                            // "Price(Optional)"
+                        AddTruckSubtitleText(
+                            text: 'priceoptional'.tr
+                            // text: "Freight(Optional)"
                             ),
                         SizedBox(height: space_2),
                         UnitValueWidget(),

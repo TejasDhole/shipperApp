@@ -37,8 +37,8 @@ Future<dynamic> apirun2() async {
       emailId: FirebaseAuth.instance.currentUser!.email.toString(),phoneNo: FirebaseAuth.instance.currentUser!.phoneNumber.toString().replaceFirst("+91", ""));
   count = count + 1;
   print(count);
-  print("response = ");
-  print(response);
+  // print("response = ");
+  // print(response);
   if (response != null ||
       count == 5 ||
       FirebaseAuth.instance.currentUser == null) {
@@ -55,7 +55,7 @@ GetStorage sidstorage = GetStorage('ShipperIDStorage');
 Future<String?> runShipperApiPostIsolated(
     {required String emailId, String? userLocation,String? phoneNo}) async {
   try {
-    print("in the try block of api file");
+    // print("in the try block of api file");
     // var mUser = FirebaseAuth.instance.currentUser;
     // String? firebaseToken;
     // await mUser!.getIdToken(true).then((value) {
@@ -74,16 +74,16 @@ Future<String?> runShipperApiPostIsolated(
         ? {"emailId": emailId, "shipperLocation": userLocation}
         : {"emailId": emailId,"phoneNo": phoneNo };
     String body = json.encode(data);
-    print("here is api call started");
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           // HttpHeaders.authorizationHeader: firebaseToken!
         },
         body: body);
-    print(response.body);
-    print("here api call stopped");
+    // print(response.body);
+    // print("here api call stopped");
 
+    // print(FirebaseAuth.instance.currentUser != null && !kIsWeb);
     if (FirebaseAuth.instance.currentUser != null && !kIsWeb) {
       FirebaseMessaging.instance.getToken().then((value) {
         if (value != null) {
@@ -93,14 +93,16 @@ Future<String?> runShipperApiPostIsolated(
       });
     }
 
+    // print("'from runShipperApiPostIsolated' response statue code: ${response.statusCode}");
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
-      print("isolated data--->${response.body}");
+      // print("isolated data--->${response.body}");
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
-        debugPrint(shipperId);
-        debugPrint("*********************************************************$shipperId");
+        // debugPrint(shipperId);
+        // debugPrint("*********************************************************$shipperId");
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
@@ -161,7 +163,7 @@ Future<String?> runShipperApiPostIsolated(
       return null;
     }
   } catch (e) {
-    print(e);
+    print("from runShipperApiPostIsolated: $e");
     return null;
   }
 }

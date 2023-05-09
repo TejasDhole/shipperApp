@@ -4,6 +4,7 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 
 Widget getInfoWindow(var duration, var stoppageTime, var stopAddress){
+  // print("getInfoWindow called");
   return  Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,

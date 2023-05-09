@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +17,7 @@ import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
 //import 'getDocName.dart';
-
+import 'package:image_picker_for_web/image_picker_for_web.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 
@@ -54,7 +55,7 @@ class _docInputLrState extends State<docInputLr> {
     setState(() {
       docLinks = docLinks;
     });
-    print(docLinks);
+    // print(docLinks);
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -69,8 +70,9 @@ class _docInputLrState extends State<docInputLr> {
   }
 
   verifiedCheck() async {
+    print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
-    print(jsonresponse);
+    print("from verifiedCheck ${jsonresponse}");
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -347,16 +349,25 @@ class _docInputLrState extends State<docInputLr> {
         // }
       }
     } else {
-      final picker = ImagePicker();
-      var pickedFile = await picker.pickImage(source: ImageSource.camera);
-      print("Picked file is $pickedFile");
-      print("Picked file path is ${pickedFile!.path}");
-      final bytes = await Io.File(pickedFile.path).readAsBytes();
+      final picker;
+      var pickedFile;
+      final bytes;
+      if(kIsWeb) {
+        picker = ImagePickerPlugin();
+        pickedFile = await picker.pickImage(
+            source: ImageSource.camera
+        );
+        bytes = await pickedFile.readAsBytes();
+      } else {
+        picker = ImagePicker();
+        pickedFile = await picker.pickImage(source: ImageSource.camera);
+        bytes = await Io.File(pickedFile!.path).readAsBytes();
+      }
       String img64 = base64Encode(bytes);
-      print("Base64 is $img64");
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
       setState(() {});
+
     }
   }
 
@@ -376,9 +387,20 @@ class _docInputLrState extends State<docInputLr> {
         // }
       }
     } else {
-      final picker = ImagePicker();
-      var pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      final bytes = await Io.File(pickedFile!.path).readAsBytes();
+      final picker;
+      var pickedFile;
+      final bytes;
+      if(kIsWeb) {
+        picker = ImagePickerPlugin();
+        pickedFile = await picker.pickImage(
+            source: ImageSource.gallery
+        );
+        bytes = await pickedFile.readAsBytes();
+      } else {
+        picker = ImagePicker();
+        pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        bytes = await Io.File(pickedFile!.path).readAsBytes();
+      }
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);

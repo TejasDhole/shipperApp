@@ -234,7 +234,7 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
               }),
               createmarker()
             });
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(16, 16)),
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: kIsWeb ? Size(50,50) :Size(16, 16) ),
             "assets/icons/" + widget.placeOnTheMapTag + "_rounded.png")
         .then((value) => {
               setState(() {

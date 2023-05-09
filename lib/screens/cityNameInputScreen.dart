@@ -16,6 +16,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:logger/logger.dart';
 
 class CityNameInputScreen extends StatefulWidget {
   final String page;
@@ -33,17 +34,21 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   String _lastWords = '';
   late Position currentPosition;
   bool loading = true;
+  var logger;
 
   @override
   void initState() {
     super.initState();
+    logger = Logger();
     async_method();
     getMMIToken();
+    logger.i("back from mmitoken");
     _initSpeech();
   }
   void async_method()async{
     await getCurrentPosition();
   }
+
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -82,6 +87,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
         loading = false;
       });
     }).catchError((e) {
+      // logger.i("got error in while getting current position");
       debugPrint(e);
     });
   }

@@ -29,10 +29,10 @@ getTraccarTripsByDeviceId({
           'authorization': basicAuth,
           'Accept': 'application/json'
         });
-    print(response.statusCode);
-    print(response.body);
+    // print(response.statusCode);
+    // print(response.body);
     var jsonData = await jsonDecode(response.body);
-    print(response.body);
+    // print(response.body);
     var LatLongList = [];
     if (response.statusCode == 200) {
       for (var json in jsonData) {

@@ -114,6 +114,8 @@ class _PostLoadScreenOneState extends State<PostLoadScreenOne> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
+
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
