@@ -17,7 +17,6 @@ import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
 //import 'getDocName.dart';
-import 'package:image_picker_for_web/image_picker_for_web.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 
@@ -352,17 +351,20 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      if(kIsWeb) {
-        picker = ImagePickerPlugin();
-        pickedFile = await picker.pickImage(
-            source: ImageSource.camera
-        );
-        bytes = await pickedFile.readAsBytes();
-      } else {
-        picker = ImagePicker();
-        pickedFile = await picker.pickImage(source: ImageSource.camera);
-        bytes = await Io.File(pickedFile!.path).readAsBytes();
-      }
+      // if(kIsWeb) {
+      //   picker = ImagePickerPlugin();
+      //   pickedFile = await picker.pickImage(
+      //       source: ImageSource.camera
+      //   );
+      //   bytes = await pickedFile.readAsBytes();
+      // } else {
+      //   picker = ImagePicker();
+      //   pickedFile = await picker.pickImage(source: ImageSource.camera);
+      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
+      // }
+      picker = ImagePicker();
+      pickedFile = await picker.pickImage(source: ImageSource.camera);
+      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
@@ -390,17 +392,22 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      if(kIsWeb) {
-        picker = ImagePickerPlugin();
-        pickedFile = await picker.pickImage(
-            source: ImageSource.gallery
-        );
-        bytes = await pickedFile.readAsBytes();
-      } else {
-        picker = ImagePicker();
-        pickedFile = await picker.pickImage(source: ImageSource.gallery);
-        bytes = await Io.File(pickedFile!.path).readAsBytes();
-      }
+      // if(kIsWeb) {
+      //   picker = ImagePickerPlugin();
+      //   picker = ImagePicker();
+      //   pickedFile = await picker.pickImage(
+      //       source: ImageSource.gallery
+      //   );
+      //   bytes = await pickedFile.readAsBytes();
+      // } else {
+      // picker = ImagePicker();
+      // pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      // bytes = await Io.File(pickedFile!.path).readAsBytes();
+      // }
+      picker = ImagePicker();
+      pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      // print("pickedFile!.path ${pickedFile!.path}");
+      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);

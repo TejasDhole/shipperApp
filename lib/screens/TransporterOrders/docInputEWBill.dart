@@ -23,7 +23,6 @@ import 'package:permission_handler/permission_handler.dart';
 //import 'getDocApiCallVerify.dart';
 //import 'getDocName.dart';
 //import 'getDocumentApiCall.dart';
-import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:flutter/foundation.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
@@ -266,11 +265,11 @@ class _docInputEWBillState extends State<docInputEWBill> {
                         color: white,
                       ),
                       width: 240,
-                      child: new ListTile(
+                      child: ListTile(
                         textColor: black,
                         iconColor: black,
-                        leading: new Icon(Icons.photo_camera),
-                        title: new Text("Camera".tr),
+                        leading: Icon(Icons.photo_camera),
+                        title: Text("Camera".tr),
                         onTap: () async {
                           await getImageFromCamera2(
                               functionToUpdate, strToUpdate, context);
@@ -305,17 +304,20 @@ class _docInputEWBillState extends State<docInputEWBill> {
       final picker;
       var pickedFile;
       final bytes;
-      if(kIsWeb) {
-        picker = ImagePickerPlugin();
-        pickedFile = await picker.pickImage(
-            source: ImageSource.camera
-        );
-        bytes = await pickedFile.readAsBytes();
-      } else {
-        picker = ImagePicker();
-        pickedFile = await picker.pickImage(source: ImageSource.camera);
-        bytes = await Io.File(pickedFile!.path).readAsBytes();
-      }
+      // if(kIsWeb) {
+      //   picker = ImagePickerPlugin();
+      //   pickedFile = await picker.pickImage(
+      //       source: ImageSource.camera
+      //   );
+      //   bytes = await pickedFile.readAsBytes();
+      // } else {
+      //   picker = ImagePicker();
+      //   pickedFile = await picker.pickImage(source: ImageSource.camera);
+      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
+      // }
+      picker = ImagePicker();
+      pickedFile = await picker.pickImage(source: ImageSource.camera);
+      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
@@ -342,17 +344,20 @@ class _docInputEWBillState extends State<docInputEWBill> {
       final picker;
       var pickedFile;
       final bytes;
-      if(kIsWeb) {
-        picker = ImagePickerPlugin();
-        pickedFile = await picker.pickImage(
-            source: ImageSource.gallery
-        );
-        bytes = await pickedFile.readAsBytes();
-      } else {
-        picker = ImagePicker();
-        pickedFile = await picker.pickImage(source: ImageSource.gallery);
-        bytes = await Io.File(pickedFile!.path).readAsBytes();
-      }
+      // if(kIsWeb) {
+      //   picker = ImagePickerPlugin();
+      //   pickedFile = await picker.pickImage(
+      //       source: ImageSource.gallery
+      //   );
+      //   bytes = await pickedFile.readAsBytes();
+      // } else {
+      //   picker = ImagePicker();
+      //   pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
+      // }
+      picker = ImagePicker();
+      pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
