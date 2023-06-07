@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   ## These are the packages supported by both "Android" & "Web" ##
-
+  aws_sesv2_api: ^2.0.0
   shared_preferences: ^2.0.18
   sizer: ^2.0.15
   firebase_auth:
@@ -96,7 +96,7 @@ dependencies:
 
   ## These are the packages supported by only "Android"##
 #
-#  geocoding: ^2.0.2
+  #  geocoding: ^2.0.2
   geocoding: ^2.1.0
   google_maps_flutter: ^2.2.5
   social_share: ^2.1.1
@@ -116,8 +116,6 @@ dependencies:
   webview_flutter: ^4.0.1
 
   ## End of packages supported by only "Android"##
-
-  image_picker_for_web: ^2.1.12
 
 dev_dependencies:
   flutter_test:
