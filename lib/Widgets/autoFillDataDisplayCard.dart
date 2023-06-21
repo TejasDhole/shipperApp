@@ -12,6 +12,9 @@ class AutoFillDataDisplayCard extends StatelessWidget {
   String placeAddress;
   var onTap;
 
+
+
+
   AutoFillDataDisplayCard(
       this.placeName,
     this.addresscomponent,
@@ -19,7 +22,6 @@ class AutoFillDataDisplayCard extends StatelessWidget {
     this.placeAddress,
     this.onTap,
   );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -65,8 +67,7 @@ class AutoFillDataDisplayCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Text(
-                        addresscomponent==null?
+                      child: Text(addresscomponent==null?
                         placeAddress==placeCity?'$placeCity'.tr:'$placeCity'.tr + '$placeAddress'.tr:
                         '$addresscomponent'.tr+','+ '$placeCity'.tr+','+ '$placeAddress'.tr,
                         style: TextStyle(fontSize: size_6, color: darkGreyColor),

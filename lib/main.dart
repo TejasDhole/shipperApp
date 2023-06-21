@@ -40,6 +40,7 @@ void main() async {
   await dotenv.load();
   await GetStorage.init();
   await GetStorage.init('ShipperIDStorage');
+
   runApp(const MyApp());
 }
 

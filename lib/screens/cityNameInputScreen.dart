@@ -245,10 +245,15 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                           future: locationCard,
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
+
+
                             if(snapshot.connectionState == ConnectionState.done){
                               if (snapshot.data == null) {
                                 return Container();
                               }
+
+
+
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 reverse: false,
@@ -266,7 +271,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                         Provider.of<ProviderData>(context,
                                             listen: false)
                                             .updateLoadingPointFindLoad(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot
                                                 .data[index].placeCityName,
                                             state: snapshot
@@ -277,7 +282,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                         Provider.of<ProviderData>(context,
                                             listen: false)
                                             .updateUnloadingPointFindLoad(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot
                                                 .data[index].placeCityName,
                                             state: snapshot
@@ -289,7 +294,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                         Provider.of<ProviderData>(context,
                                             listen: false)
                                             .updateLoadingPointPostLoad(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot
                                                 .data[index].placeCityName,
                                             state: snapshot
@@ -298,7 +303,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                       } else if(widget.valueType == "Loading point 2"){
                                         Provider.of<ProviderData>(context,listen: false)
                                             .updateLoadingPointPostLoad2(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot
                                                 .data[index].placeCityName,
                                             state: snapshot
@@ -309,7 +314,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                         Provider.of<ProviderData>(context,
                                             listen: false)
                                             .updateUnloadingPointPostLoad(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot
                                                 .data[index].placeCityName,
                                             state: snapshot
@@ -319,7 +324,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                       {
                                         Provider.of<ProviderData>(context,listen: false)
                                             .updateUnloadingPointPostLoad2(
-                                            place: snapshot.data[index].placeName,
+                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
                                             city: snapshot.data[index].placeCityName,
                                             state: snapshot.data[index].placeStateName);
                                         Get.back();
