@@ -41,14 +41,15 @@ dependencies:
   aws_sesv2_api: ^2.0.0
   shared_preferences: ^2.0.18
   sizer: ^2.0.15
-  firebase_auth:
-  firebase_core:
+  firebase_auth: ^4.1.0
+  firebase_core: ^2.8.0
   firebase_database:
   pin_code_fields: ^7.4.0
   flutter_dotenv: ^5.0.2
   http: ^0.13.3
   get: ^4.3.8
   intl: ^0.17.0
+  app_settings: ^4.1.5
   geolocator: ^9.0.2
   syncfusion_flutter_charts: ^20.4.53
   provider: ^6.0.5
@@ -107,6 +108,9 @@ dependencies:
   package_info: ^2.0.2
   device_info: ^2.0.2
   flutter_background: ^1.0.2+1
+  flutter_background_service: ^2.4.4
+  flutter_background_service_android: ^3.0.2
+  flutter_local_notifications: ^12.0.2
   flutter_cache_manager: ^3.1.2
   connectivity: ^3.0.6
   flutter_gifimage: ^1.0.0
@@ -114,6 +118,7 @@ dependencies:
   share: ^2.0.4
   gallery_saver: ^2.3.2
   webview_flutter: ^4.0.1
+#  carp_background_location: ^3.0.1
 
   ## End of packages supported by only "Android"##
 
