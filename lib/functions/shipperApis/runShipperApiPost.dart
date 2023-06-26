@@ -101,6 +101,7 @@ Future<String?> runShipperApiPost({
         sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
+
         shipperIdController.updateCompanyStatus(companyStatus);
         sidstorage
             .write("companyStatus", companyStatus)

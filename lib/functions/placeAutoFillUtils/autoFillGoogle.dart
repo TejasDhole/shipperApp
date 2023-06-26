@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
+
 import '/functions/googleAutoCorrectionApi.dart';
 import '/models/autoFillMMIModel.dart';
 import '../googleAutoCorrectionApi.dart';
@@ -84,16 +88,20 @@ String kGoogleApiKey = dotenv.get('mapKey');
 // }
 
 Future<List<AutoFillMMIModel>> fillCityGoogle(String cityName,Position position) async {
+
+
   http.Response response = await http.get(
-    Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?'
-        'input=$cityName&location=${position.latitude},${position.longitude}&radius=50000&language=en&components=country:in&key=$kGoogleApiKey'),
+      Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?'
+          'input=$cityName&location=${position.latitude},${position.longitude}&radius=50000&language=en&components=country:in&key=$kGoogleApiKey'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-      }
+      },
   );
 
+
   var address = await jsonDecode(response.body);
+
 
   List<AutoFillMMIModel> card = [];
   if (response.statusCode == 200) {

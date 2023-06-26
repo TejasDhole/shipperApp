@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
@@ -44,6 +45,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
     SharedPreferences prefs =await SharedPreferences.getInstance();
     prefs.remove('uid');
     sidstorage.erase();
+    Get.deleteAll(force: true);
     if(prefs.getBool('isGoogleLogin')==true) {
       await GoogleSignIn().disconnect();
     }
@@ -232,6 +234,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                                         const CompanyDetailsForm()));
                           } else {
                             runShipperApiPost(emailId: firebaseUser.user!.email.toString());
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

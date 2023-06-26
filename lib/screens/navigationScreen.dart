@@ -56,10 +56,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
     from = yesterday.toIso8601String();
     to = now.toIso8601String();
     super.initState();
-    this.initDynamicLinks();
-    this.checkUpdate();
     getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid);
     isolatedShipperGetData();
+    this.initDynamicLinks();
+    this.checkUpdate();
   }
 
 

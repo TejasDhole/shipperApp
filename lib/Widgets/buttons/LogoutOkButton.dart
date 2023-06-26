@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -23,6 +24,7 @@ class LogoutOkButton extends StatelessWidget {
         SharedPreferences prefs =await SharedPreferences.getInstance();
         prefs.remove('uid');
         sidstorage.erase();
+        Get.deleteAll(force: true);
         if(prefs.getBool('isGoogleLogin')==true) {
           await GoogleSignIn().disconnect();
         }

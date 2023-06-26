@@ -46,10 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
   var imageLinks;
   bool isSwitched = false;
   final switchData = GetStorage();
-
+  var companyStatus;
   @override
   void initState() {
     super.initState();
+    companyStatus = shipperIdController.companyStatus.value;
+    print("Company Status: $companyStatus");
     imageUrl();
   }
 
@@ -141,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: space_1,
                 ),
-                !(shipperIdController.companyStatus.value == 'verified')
+                !(companyStatus== 'verified' || companyStatus == null || companyStatus == "")
                     ? const AccountNotVerifiedWidget()
                     : SizedBox(
                         height: space_2,
