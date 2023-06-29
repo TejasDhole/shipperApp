@@ -49,6 +49,9 @@ Future<String?> runShipperApiPost({
             "companyStatus": "notVerified",
             "shipperLocation": address,
           };
+
+    print(data);
+
     // print("printed from runShipperApiPost: ${Uri.parse(shipperApiUrl)}");
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
@@ -72,6 +75,7 @@ Future<String?> runShipperApiPost({
     }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+
       var decodedResponse = json.decode(response.body);
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
@@ -97,6 +101,7 @@ Future<String?> runShipperApiPost({
         sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
+
         shipperIdController.updateCompanyStatus(companyStatus);
         sidstorage
             .write("companyStatus", companyStatus)
@@ -138,7 +143,7 @@ Future<String?> runShipperApiPost({
         return null;
       }
     } else {
-      // print("different status code");
+      print(response.body);
       return null;
     }
   } catch (e) {

@@ -113,14 +113,14 @@ Future<String?> runShipperApiPostIsolated(
         String companyName = decodedResponse["companyName"] ?? " ";
         String companyStatus = decodedResponse["companyStatus"] ?? " ";
         String mobileNum = decodedResponse["phoneNo"] ?? " ";
-        shipperIdController.updateShipperId(shipperId);
-        sidstorage
-            .write("shipperId", shipperId)
-            .then((value) => print("Written shipperId"));
         shipperIdController.updateCompanyApproved(companyApproved);
         sidstorage
             .write("companyApproved", companyApproved)
             .then((value) => print("Written companyApproved"));
+        shipperIdController.updateShipperId(shipperId);
+        sidstorage
+            .write("shipperId", shipperId)
+            .then((value) => print("Written shipperId"));
         shipperIdController.updateCompanyStatus(companyStatus);
         sidstorage
             .write("companyStatus", companyStatus)

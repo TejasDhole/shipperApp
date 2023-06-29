@@ -295,7 +295,6 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
       firebaseAuth.currentUser!.updateDisplayName(nameController.text.toString());
       String? id = await runShipperApiPost(
         emailId:firebaseAuth.currentUser!.email.toString(),
-        phoneNo: firebaseAuth.currentUser!.phoneNumber.toString().replaceFirst("+91", ""),
         shipperName: nameController.text.toString(),
         companyName: companyNameController.text.toString(),
         gst: gstController.text.toString(),

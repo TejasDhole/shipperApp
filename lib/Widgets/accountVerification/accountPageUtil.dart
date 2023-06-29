@@ -14,9 +14,9 @@ class AccountPageUtil extends StatelessWidget {
   Widget build(BuildContext context) {
     if (shipperIdController.companyStatus.value == 'verified' ||
         shipperIdController.companyStatus.value == 'inProgress') {
-      return const AccountVerificationStatusScreen(); // When transporter is unverified and hasn't applied for verification
+      return const AccountVerificationStatusScreen();
     } else {
-      return const VerificationTypeSelection();
+      return const VerificationTypeSelection(); // When transporter is unverified and hasn't applied for verification
     }
   }
 }

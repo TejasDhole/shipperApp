@@ -32,29 +32,29 @@ class _OkButtonProductTypeState extends State<OkButtonProductType> {
           style: ButtonStyle(backgroundColor: activeButtonColor),
           onPressed: () {
             if (controllerOthers.text.length > 0) {
-              //int data = int.parse(controllerOthers.text);
+              int data = int.parse(controllerOthers.text);
               switch (widget.category) {
-                // case 'weight':
-                //   providerData.updatePassingWeightValue(
-                //       controllerOthers.text == ""
-                //           ? "Choose Product Weight"
-                //           : data);
-                //   print(data);
-                //   //weightList.remove(0);
-                //   if (!truckFilterVariables
-                //       .passingWeightList[providerData.truckTypeValue]!
-                //       .contains(data)) {
-                //     truckFilterVariables
-                //         .passingWeightList[providerData.truckTypeValue]!
-                //         .insert(
-                //             truckFilterVariables
-                //                     .passingWeightList[
-                //                         providerData.truckTypeValue]!
-                //                     .length -
-                //                 1,
-                //             data);
-                //   }
-                //   break;
+                case 'weight':
+                  providerData.updatePassingWeightValue(
+                      controllerOthers.text == ""
+                          ? "Choose Product Weight"
+                          : data);
+                  print(data);
+                  //weightList.remove(0);
+                  if (!truckFilterVariables
+                      .passingWeightList[providerData.truckTypeValue]!
+                      .contains(data)) {
+                    truckFilterVariables
+                        .passingWeightList[providerData.truckTypeValue]!
+                        .insert(
+                            truckFilterVariables
+                                    .passingWeightList[
+                                        providerData.truckTypeValue]!
+                                    .length -
+                                1,
+                            data);
+                  }
+                  break;
                 // case 'tyres':
                 //   providerData.updateTotalTyresValue(controllerOthers.text == ""
                 //       ? "Choose Product Tyres"

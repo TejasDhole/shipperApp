@@ -44,4 +44,35 @@ class ShipperApiCalls {
     return transporterIDImei;
   }
 
+  Future<ShipperModel> getShipperCompanyDetailsByEmail(String? emailId) async{
+    http.Response response =
+        await http.get(Uri.parse('$shipperApiUrl/?emailId=$emailId'));
+
+    ShipperModel shipperModel = ShipperModel();
+    if(response.statusCode == 200){
+      var jsonData = json.decode(response.body);
+      print("json: $jsonData");
+      shipperModel.shipperId =jsonData[0]['shipperId'] ?? 'Na';
+      shipperModel.shipperName = jsonData[0]['shipperName'] ?? 'Na';
+      shipperModel.companyName = jsonData[0]['companyName'] ?? 'Na';
+      shipperModel.shipperPhoneNum = jsonData[0]['phoneNo'] ?? '';
+      shipperModel.shipperLocation = jsonData[0]['shipperLocation'] ?? 'Na';
+      shipperModel.companyApproved = jsonData[0]['companyApproved'] ?? false;
+      shipperModel.accountVerificationInProgress = jsonData[0]['accountVerificationInProgress'] ?? false;
+    }
+    else{
+      shipperModel.shipperId ='Na';
+      shipperModel.shipperName ='Na';
+      shipperModel.companyName = 'Na';
+      shipperModel.shipperPhoneNum = '';
+      shipperModel.shipperLocation ='Na';
+      shipperModel.companyApproved = false;
+      shipperModel.accountVerificationInProgress = false;
+    }
+
+
+
+    return shipperModel;
+  }
+
 }

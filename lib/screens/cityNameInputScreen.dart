@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/constants/colors.dart';
@@ -178,7 +179,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                         // onChanged: widget.onChanged,
                         onChanged: (String value) {
                           setState(() {
-                            if (widget.page == "postLoad") {
+                            if (widget.page == "postLoad" && !kIsWeb) {
                               locationCard = fillCityGoogle(
                                   value,currentPosition);
                              //google place api is used in postLoad

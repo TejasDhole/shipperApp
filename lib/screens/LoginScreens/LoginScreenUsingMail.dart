@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
 import 'package:shipper_app/functions/firebaseAuthentication/signIn.dart';
+import 'package:shipper_app/functions/loadOnGoingData.dart';
 import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/models/shipperModel.dart';
 import 'package:shipper_app/screens/LoginScreens/loginScreenUsingPhone.dart';
 import 'package:shipper_app/screens/navigationScreen.dart';
 import '../../functions/firebaseAuthentication/signInWithGoogle.dart';
@@ -13,6 +17,7 @@ import '/constants/spaces.dart';
 import '/constants/colors.dart';
 import '/widgets/buttons/signUpWithGoogleButton.dart';
 import 'CompanyDetailsForm.dart';
+import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
 import '/constants/fontSize.dart';
 import '/constants/radius.dart';
 import '/constants/elevation.dart';
@@ -28,6 +33,26 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isVisible = false;
+
+  @override
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+    clearFirebaseAndSharedPreference();
+  }
+
+  void clearFirebaseAndSharedPreference() async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    prefs.remove('uid');
+    sidstorage.erase();
+    Get.deleteAll(force: true);
+    if(prefs.getBool('isGoogleLogin')==true) {
+      await GoogleSignIn().disconnect();
+    }
+    prefs.clear();
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,13 +224,9 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                           UserCredential firebaseUser =
                               await signIn(email, password, context);
                           getShipperIdFromCompanyDatabase();
+                          ShipperModel shipperModel = await shipperApiCalls.getShipperCompanyDetailsByEmail(firebaseUser.user!.email.toString());
                           if(!mounted) return ;
-                          if (firebaseUser.user!.phoneNumber == null) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreenUsingPhone()));
-                          } else if (firebaseUser.user!.displayName == null) {
+                          if(shipperModel.companyName=="Na" && shipperModel.shipperName=="Na" ){ //firebaseUser.user!.displayName == null --> previous condition
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -213,6 +234,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                                         const CompanyDetailsForm()));
                           } else {
                             runShipperApiPost(emailId: firebaseUser.user!.email.toString());
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -309,14 +331,16 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                       prefs.setBool('isGoogleLogin', true);
                       getShipperIdFromCompanyDatabase();
                       if(!mounted) return ;
-                      if(firebaseUser.user!.phoneNumber==null){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreenUsingPhone()));
-                      }else if(firebaseUser.user!.displayName == null){
+                      ShipperModel shipperModel = await shipperApiCalls.getShipperCompanyDetailsByEmail(firebaseUser.user!.email.toString());
+
+                      if(shipperModel.companyName=="Na" && shipperModel.shipperName=="Na" ){ //firebaseUser.user!.displayName == null --> previous condition
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetailsForm()));
-                      }else{
+                      }
+                      else{
                         runShipperApiPost(emailId: firebaseUser.user!.email.toString());
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
                       }
+
                     }on FirebaseAuthException catch (e){
                       alertDialog("Error", '$e', context);
                     }
