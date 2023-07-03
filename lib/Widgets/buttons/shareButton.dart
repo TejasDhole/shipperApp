@@ -12,8 +12,10 @@ import '/models/WidgetLoadDetailsScreenModel.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/widgets/shareImageWidget.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
-import 'package:package_info/package_info.dart';
+// import 'package:wc_flutter_share/wc_flutter_share.dart';
+import 'package:share_plus/share_plus.dart';
+// import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -97,14 +99,10 @@ class _ShareButtonState extends State<ShareButton> {
                 context, Material(child: shareImageWidget(widget.loadDetails))))
             .then((capturedImage) async {
           var pngBytes = capturedImage.buffer.asUint8List();
-          await WcFlutterShare.share(
-                  sharePopupTitle: 'share',
-                  subject: 'This is subject',
-                  text:
-                      "loadAvailable".tr +"\n$_stringUrl\n\n" +"callonthisnum".tr +" ${widget.widgetLoadDetailsScreenModel.phoneNo} \n\n"+ "moreLoad".tr,
-                  fileName: 'share.png',
-                  mimeType: 'image/png',
-                  bytesOfFile: pngBytes)
+          await Share.share(
+              "loadAvailable".tr +"\n$_stringUrl\n\n" +"callonthisnum".tr +" ${widget.widgetLoadDetailsScreenModel.phoneNo} \n\n"+ "moreLoad".tr,
+            subject: "This is subject"
+                  )
               .then((value) => EasyLoading.dismiss());
         });
       },

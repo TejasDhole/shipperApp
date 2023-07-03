@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/screens/ForceUpdateScreen.dart';
 import '/widgets/alertDialog/AppUpdateDialog.dart';
-import 'package:package_info/package_info.dart';
+// import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> versionCheck(BuildContext context) async {
   final PackageInfo info = await PackageInfo.fromPlatform();
   double currentVersion = double.parse(info.version.trim().replaceAll(".", ""));
 
   try {
-    RemoteConfig _remoteConfig = RemoteConfig.instance;
+    //in place of FirebaseRemoteConfig it was RemoteConfig
+    FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: Duration(
           seconds: 1),

@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+// import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/trackScreenFunctions.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
@@ -87,9 +87,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   var istDate2;
   List<LatLng> polylineCoordinates = [];
   List<LatLng> polylineCoordinates2 = [];
-  PolylinePoints polylinePoints = PolylinePoints();
-  late PointLatLng start;
-  late PointLatLng end;
+  // PolylinePoints polylinePoints = PolylinePoints();
+  late LatLng start;
+  late LatLng end;
   String? truckAddress;
   String? truckDate;
   var gpsDataHistory;
@@ -105,7 +105,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   String googleAPiKey = dotenv.get('mapKey');
 
   bool popUp = false;
-  List<PolylineWayPoint> waypoints = [];
+  // List<PolylineWayPoint> waypoints = [];
   late Uint8List markerIcon;
   var markerslist;
   CustomInfoWindowController _customInfoWindowController =

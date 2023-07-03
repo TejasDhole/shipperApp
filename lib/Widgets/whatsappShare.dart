@@ -7,8 +7,10 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
-import 'package:package_info/package_info.dart';
-import 'package:share/share.dart';
+// import 'package:package_info/package_info.dart';
+// import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

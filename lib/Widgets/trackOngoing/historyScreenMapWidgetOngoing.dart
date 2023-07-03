@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+// import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/ongoingTrackUtils/getDataHistoryByDeviceId.dart';
 import '/functions/ongoingTrackUtils/getTraccarStoppagesByDeviceId.dart';
@@ -68,9 +68,9 @@ class _HistoryScreenMapWidgetOngoingState extends State<HistoryScreenMapWidgetOn
 
   List<LatLng> polylineCoordinates1 = [];
   List<LatLng> polylineCoordinates2 = [];
-  PolylinePoints polylinePoints1 = PolylinePoints();
-  late PointLatLng start;
-  late PointLatLng end;
+  // PolylinePoints polylinePoints1 = PolylinePoints();
+  late LatLng start;
+  late LatLng end;
   String? truckAddress;
   double averagelat = 0;
   double averagelon = 0;
@@ -96,7 +96,7 @@ class _HistoryScreenMapWidgetOngoingState extends State<HistoryScreenMapWidgetOn
   // String googleAPiKey = FlutterConfig.get("mapKey");
   String googleAPiKey = dotenv.get('mapKey');
   bool popUp = false;
-  List<PolylineWayPoint> waypoints = [];
+  // List<PolylineWayPoint> waypoints = [];
   late Uint8List markerIcon;
   var markerslist;
   CustomInfoWindowController _customInfoWindowController =
