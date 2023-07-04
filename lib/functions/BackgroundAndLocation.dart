@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:device_info/device_info.dart';
+// import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_background/flutter_background.dart' as fbg;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+// import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/nearbySearchFunctions.dart';
 import '/functions/trackScreenFunctions.dart';
@@ -319,19 +319,19 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPiKey,
-      PointLatLng(startLocationForDistance.latitude,
+      LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      PointLatLng(
+      LatLng(
           endLocationForDistance.latitude, endLocationForDistance.longitude),
       travelMode: TravelMode.driving,
     );
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+    if (result.polylinePoints.isNotEmpty) {
+      result.polylinePoints.forEach((LatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     } else {
-      print(result.errorMessage);
+      print(result);
     }
 
     //polulineCoordinates is the List of longitute and latidtude.
@@ -372,19 +372,19 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
         _placesNearbyData.results![index].geometry!.location!.lng!.toDouble());
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPiKey,
-      PointLatLng(startLocationForDistance.latitude,
+      LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      PointLatLng(endLocationForDistanceForTarget.latitude,
+      LatLng(endLocationForDistanceForTarget.latitude,
           endLocationForDistanceForTarget.longitude),
       travelMode: TravelMode.driving,
     );
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+    if (result.polylinePoints.isNotEmpty) {
+      result.polylinePoints.forEach((LatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     } else {
-      print(result.errorMessage);
+      print(result);
     }
 
     PolylineId id = PolylineId("polytarget");
@@ -765,4 +765,117 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
               ]),
         ]));
   }
+}
+
+class PolylinePoints {
+  List<LatLng> _decodePolylinePoints(String encodedPolyline) {
+    List<LatLng> polylinePoints = [];
+    int index = 0;
+    int len = encodedPolyline.length;
+    int lat = 0;
+    int lng = 0;
+
+    while (index < len) {
+      int shift = 0;
+      int result = 0;
+      int byte;
+
+      do {
+        byte = encodedPolyline.codeUnitAt(index++) - 63;
+        result |= (byte & 0x1F) << shift;
+        shift += 5;
+      } while (byte >= 0x20);
+
+      int deltaLat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lat += deltaLat;
+
+      shift = 0;
+      result = 0;
+
+      do {
+        byte = encodedPolyline.codeUnitAt(index++) - 63;
+        result |= (byte & 0x1F) << shift;
+        shift += 5;
+      } while (byte >= 0x20);
+
+      int deltaLng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lng += deltaLng;
+
+      double latitude = lat / 1e5;
+      double longitude = lng / 1e5;
+
+      LatLng point = LatLng(latitude, longitude);
+      polylinePoints.add(point);
+    }
+
+    return polylinePoints;
+  }
+
+
+  Future<PolylineResult> getRouteBetweenCoordinates(
+      String apiKey,
+      LatLng origin,
+      LatLng destination, {
+        TravelMode travelMode = TravelMode.driving,
+      }) async {
+    String url =
+        'https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&mode=${_getTravelModeString(travelMode)}&key=$apiKey';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      List<LatLng> polylinePoints =
+      _decodePolylinePoints(decodedResponse['routes'][0]['overview_polyline']['points']);
+      Duration duration = _getDuration(decodedResponse['routes'][0]['legs'][0]['duration']['value']);
+      String distance = decodedResponse['routes'][0]['legs'][0]['distance']['text'];
+
+      return PolylineResult(
+        polylinePoints: polylinePoints,
+        duration: duration,
+        distance: distance,
+      );
+    } else {
+      throw Exception('Failed to fetch route');
+    }
+  }
+
+  Duration _getDuration(int value) {
+    return Duration(seconds: value);
+  }
+
+
+  String _getTravelModeString(TravelMode travelMode) {
+    switch (travelMode) {
+      case TravelMode.driving:
+        return 'driving';
+      case TravelMode.walking:
+        return 'walking';
+      case TravelMode.bicycling:
+        return 'bicycling';
+      case TravelMode.transit:
+        return 'transit';
+      default:
+        return 'driving';
+    }
+  }
+}
+
+class PolylineResult {
+  final List<LatLng> polylinePoints;
+  final Duration duration;
+  final String distance;
+
+  PolylineResult({
+    required this.polylinePoints,
+    required this.duration,
+    required this.distance,
+  });
+}
+
+enum TravelMode {
+  driving,
+  walking,
+  bicycling,
+  transit,
 }

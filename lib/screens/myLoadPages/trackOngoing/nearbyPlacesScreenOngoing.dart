@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+// import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:shipper_app/screens/nearbyPlacesScreen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '/functions/nearbySearchFunctions.dart';
 import '/functions/ongoingTrackUtils/getPositionByDeviceId.dart';
@@ -316,19 +317,19 @@ class _NearbyPlacesScreenOngoingState extends State<NearbyPlacesScreenOngoing>
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPiKey,
-      PointLatLng(startLocationForDistance.latitude,
+      LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      PointLatLng(
+      LatLng(
           endLocationForDistance.latitude, endLocationForDistance.longitude),
       travelMode: TravelMode.driving,
     );
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+    if (result.polylinePoints.isNotEmpty) {
+      result.polylinePoints.forEach((LatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     } else {
-      print(result.errorMessage);
+      print(result);
     }
 
     //polulineCoordinates is the List of longitute and latidtude.
@@ -369,19 +370,19 @@ class _NearbyPlacesScreenOngoingState extends State<NearbyPlacesScreenOngoing>
         _placesNearbyData.results![index].geometry!.location!.lng!.toDouble());
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPiKey,
-      PointLatLng(startLocationForDistance.latitude,
+      LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      PointLatLng(endLocationForDistanceForTarget.latitude,
+      LatLng(endLocationForDistanceForTarget.latitude,
           endLocationForDistanceForTarget.longitude),
       travelMode: TravelMode.driving,
     );
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+    if (result.polylinePoints.isNotEmpty) {
+      result.polylinePoints.forEach((LatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     } else {
-      print(result.errorMessage);
+      print(result);
     }
 
     PolylineId id = PolylineId("polytarget");

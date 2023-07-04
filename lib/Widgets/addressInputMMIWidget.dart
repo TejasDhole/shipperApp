@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import '/widgets/cancelIconWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart';
+// import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart';
 
 // ignore: must_be_immutable
 class AddressInputMMIWidget extends StatefulWidget {
