@@ -42,8 +42,8 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     super.initState();
     logger = Logger();
     async_method();
-    getMMIToken();
-    logger.i("back from mmitoken");
+    // getMMIToken();
+    // logger.i("back from mmitoken");
     _initSpeech();
   }
   void async_method()async{
@@ -89,7 +89,8 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
       });
     }).catchError((e) {
       // logger.i("got error in while getting current position");
-      debugPrint(e);
+      // debugPrint(e);
+      print("error : $e");
     });
   }
 
@@ -179,7 +180,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                         // onChanged: widget.onChanged,
                         onChanged: (String value) {
                           setState(() {
-                            if (widget.page == "postLoad" && !kIsWeb) {
+                            if (widget.page == "postLoad") {
                               locationCard = fillCityGoogle(
                                   value,currentPosition);
                              //google place api is used in postLoad
