@@ -30,7 +30,9 @@ class PostButtonLoad extends StatelessWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-            borderRadius: (Responsive.isMobile(context))?BorderRadius.circular(50):BorderRadius.all(Radius.zero),
+            borderRadius: (Responsive.isMobile(context))
+                ? BorderRadius.circular(50)
+                : BorderRadius.all(Radius.zero),
           )),
           backgroundColor: MaterialStateProperty.all<Color>(truckGreen),
         ),

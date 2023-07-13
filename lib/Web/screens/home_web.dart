@@ -65,7 +65,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
 
-
   //TODO : This is the list for Bottom Navigation Bar
   List<BottomNavigationBarItem> bottom_destinations = [
     const BottomNavigationBarItem(
@@ -81,7 +80,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //TODO : Bottom Navigation Bar is only displayed when the screen size is in between sizes of mobile devices
       bottomNavigationBar: Responsive.isMobile(context)
@@ -190,107 +188,112 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   width: 0.01,
                 )
               : Container(
-            child: Stack(
-              children: [
-                Row(children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.zero)),
-                    elevation: 5,
-                    shadowColor: Colors.grey,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                      height: MediaQuery.of(context).size.height,
-                      width: widthOfSideBar,
-                      child: Column(
-                        children: [
-                          SideExpandedItem(
-                              title: "Dashboard",
-                              icon: AssetImage(
-                                  'assets/images/shipper_web_dashboard.png')),
-                          SizedBox(
-                            height: 20,
+                  child: Stack(
+                    children: [
+                      Row(children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.zero)),
+                          elevation: 5,
+                          shadowColor: Colors.grey,
+                          child: Container(
+                            padding:
+                                EdgeInsets.only(left: 20, right: 20, top: 100),
+                            height: MediaQuery.of(context).size.height,
+                            width: widthOfSideBar,
+                            child: Column(
+                              children: [
+                                SideExpandedItem(
+                                    title: "Dashboard",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_dashboard.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "My Loads",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_my_loads.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "Invoice",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_invoice.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "Account",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_account.png')),
+                                Expanded(
+                                    child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 30),
+                                            child: SideExpandedItem(
+                                                title: "Liveasy",
+                                                icon: AssetImage(
+                                                    'assets/images/shipper_liveasy_logo.png'))))),
+                              ],
+                            ),
+                            color: Colors.white,
                           ),
-                          SideExpandedItem(
-                              title: "My Loads",
-                              icon: AssetImage(
-                                  'assets/images/shipper_web_my_loads.png')),
-                          SizedBox(
-                            height: 20,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        )
+                      ]),
+                      Positioned(
+                        left: widthOfSideBar - 10,
+                        top: (MediaQuery.of(context).size.height -
+                                AppBar().preferredSize.height) *
+                            0.45,
+                        height: 30,
+                        width: 30,
+                        child: Container(
+                          padding: EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white),
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (expandMode) {
+                                  expandMode = false;
+                                  widthOfSideBar = 110;
+                                } else {
+                                  expandMode = true;
+                                  widthOfSideBar = 220;
+                                }
+                              });
+                            },
+                            iconSize: 20,
+                            padding: EdgeInsets.zero,
+                            icon: Icon(
+                                (expandMode)
+                                    ? Icons.arrow_back_ios_rounded
+                                    : Icons.arrow_forward_ios_rounded,
+                                color: Color.fromRGBO(21, 41, 104, 1),
+                                size: 20),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll<Color>(Colors.white),
+                              side: MaterialStateProperty.all(
+                                BorderSide(width: 1, color: Colors.black),
+                              ),
+                            ),
+                            hoverColor: Colors.transparent,
                           ),
-                          SideExpandedItem(
-                              title: "Invoice",
-                              icon: AssetImage(
-                                  'assets/images/shipper_web_invoice.png')),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SideExpandedItem(
-                              title: "Account",
-                              icon: AssetImage(
-                                  'assets/images/shipper_web_account.png')),
-                          Expanded(
-                              child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(bottom: 30),
-                                      child: SideExpandedItem(
-                                          title: "Liveasy",
-                                          icon: AssetImage(
-                                              'assets/images/shipper_liveasy_logo.png'))))),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  )
-                ]),
-                Positioned(
-                  left: widthOfSideBar - 10,
-                  top: (MediaQuery.of(context).size.height - AppBar().preferredSize.height) * 0.45,
-                  height: 30,
-                  width: 30,
-                  child: Container(
-                    padding: EdgeInsets.all(0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.white
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (expandMode) {
-                            expandMode = false;
-                            widthOfSideBar = 110;
-                          } else {
-                            expandMode = true;
-                            widthOfSideBar = 220;
-                          }
-                        });
-                      },
-                      iconSize: 20,
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                          (expandMode)
-                              ? Icons.arrow_back_ios_rounded
-                              : Icons.arrow_forward_ios_rounded,
-                          color: Color.fromRGBO(21, 41, 104, 1),size: 20),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
-                        side: MaterialStateProperty.all(
-                          BorderSide(width: 1, color: Colors.black),
                         ),
                       ),
-                      hoverColor: Colors.transparent,
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
           Expanded(
             child: Container(
               child: Center(
@@ -369,12 +372,12 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                 gradient: (title == "Liveasy")
                     ? liveasySelectedTabGradientColor
                     : (title == "Dashboard")
-                    ? dashboardSelectedTabGradientColor
-                    : (title == "My Loads")
-                    ? myLoadsSelectedTabGradientColor
-                    : (title == "Invoice")
-                    ? invoiceSelectedTabGradientColor
-                    : accountSelectedTabGradientColor),
+                        ? dashboardSelectedTabGradientColor
+                        : (title == "My Loads")
+                            ? myLoadsSelectedTabGradientColor
+                            : (title == "Invoice")
+                                ? invoiceSelectedTabGradientColor
+                                : accountSelectedTabGradientColor),
             child: Row(
               children: [
                 Image(image: icon, filterQuality: FilterQuality.high),
@@ -385,25 +388,24 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     visible: expandMode,
                     child: (title == "Liveasy")
                         ? Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Montserrat Bold",
-                          color: Color.fromRGBO(21, 41, 104, 1)),
-                    )
+                            title,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Montserrat Bold",
+                                color: Color.fromRGBO(21, 41, 104, 1)),
+                          )
                         : Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "Montserrat",
-                          color: Color.fromRGBO(21, 41, 104, 1)),
-                    ))
+                            title,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "Montserrat",
+                                color: Color.fromRGBO(21, 41, 104, 1)),
+                          ))
               ],
             )));
   }
 }
-
 
 // List<NavigationRailDestination> destinations = [
 //   const NavigationRailDestination(

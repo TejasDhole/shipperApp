@@ -13,24 +13,27 @@ import '/screens/myLoadPages/biddingScreen.dart';
 import '/screens/PostLoadScreens/postloadnavigation.dart';
 
 // ignore: must_be_immutable
-Widget Repostbutton(bool? small, BuildContext context){
-  if(kIsWeb && Responsive.isDesktop(context)){
+Widget Repostbutton(bool? small, BuildContext context) {
+  if (kIsWeb && Responsive.isDesktop(context)) {
     return Expanded(
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Container(
           decoration: BoxDecoration(color: declineButtonRed),
           margin: EdgeInsets.all(0),
-          padding: EdgeInsets.only(top: 5,bottom: 5),
+          padding: EdgeInsets.only(top: 5, bottom: 5),
           child: TextButton(
             style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.zero),
-                  )),
-              backgroundColor: MaterialStateProperty.all<Color>(declineButtonRed),
+                borderRadius: BorderRadius.all(Radius.zero),
+              )),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(declineButtonRed),
             ),
-            onPressed: () { Get.to(PostLoadNav()); },
+            onPressed: () {
+              Get.to(PostLoadNav());
+            },
             child: Text(
               'repost'.tr,
               style: TextStyle(
@@ -44,32 +47,32 @@ Widget Repostbutton(bool? small, BuildContext context){
         ),
       ),
     );
-  }
-  else{
+  } else {
     return Container(
       decoration: BoxDecoration(color: declineButtonRed),
       margin: EdgeInsets.all(0),
-      padding: EdgeInsets.only(top: 5,bottom: 5),
+      padding: EdgeInsets.only(top: 5, bottom: 5),
       child: TextButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.zero),
-              )),
+            borderRadius: BorderRadius.all(Radius.zero),
+          )),
           backgroundColor: MaterialStateProperty.all<Color>(declineButtonRed),
         ),
-        onPressed: () { Get.to(PostLoadNav()); },
+        onPressed: () {
+          Get.to(PostLoadNav());
+        },
         child: Text(
           'repost'.tr,
           style: TextStyle(
             letterSpacing: 0.7,
             fontWeight: mediumBoldWeight,
             color: white,
-            fontSize:size_7,
+            fontSize: size_7,
           ),
         ),
       ),
     );
   }
-
 }

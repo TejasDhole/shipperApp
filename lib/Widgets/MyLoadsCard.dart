@@ -31,22 +31,26 @@ import '/screens/PostLoadScreens/postloadnavigation.dart';
 class MyLoadsCard extends StatelessWidget {
   LoadDetailsScreenModel loadDetailsScreenModel;
 
-  MyLoadsCard({super.key, required this.loadDetailsScreenModel,});
+  MyLoadsCard({
+    super.key,
+    required this.loadDetailsScreenModel,
+  });
 
   TruckFilterVariables truckFilterVariables = TruckFilterVariables();
 
   @override
   Widget build(BuildContext context) {
     bool small = true;
-    double  textFontSize;
-    if(MediaQuery.of(context).size.width >1099 && MediaQuery.of(context).size.width <1400){
+    double textFontSize;
+    if (MediaQuery.of(context).size.width > 1099 &&
+        MediaQuery.of(context).size.width < 1400) {
       small = true;
+    } else {
+      small = false;
     }
-    else{small = false;}
-    if(small){
+    if (small) {
       textFontSize = 12;
-    }
-    else{
+    } else {
       textFontSize = 16;
     }
 
@@ -63,57 +67,188 @@ class MyLoadsCard extends StatelessWidget {
       loadDetailsScreenModel.unitValue = 'truck'.tr;
     }
 
-    if(kIsWeb && Responsive.isDesktop(context)){
+    if (kIsWeb && Responsive.isDesktop(context)) {
       return Expanded(
-        child: Row(children: [
-          Expanded(flex:2,child: Center(child: Container(padding: EdgeInsets.only(left: 8),child: Text(loadDetailsScreenModel.postLoadDate ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: kLiveasyColor, fontSize: textFontSize, fontFamily: 'Montserrat'),)))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex:5,child: Center(child: Text(loadDetailsScreenModel.loadingPointCity ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: kLiveasyColor, fontSize: textFontSize, fontFamily: 'Montserrat'),))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex:5,child: Center(child: Text(loadDetailsScreenModel.unloadingPointCity?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: kLiveasyColor, fontSize: textFontSize, fontFamily: 'Montserrat'),))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex:4,child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text('${loadDetailsScreenModel.truckType}' ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: kLiveasyColor, fontSize: textFontSize, fontFamily: 'Montserrat'),),SizedBox(height: 5,),Text('${loadDetailsScreenModel.noOfTyres}' ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: truckGreen, fontSize: 16, fontFamily: 'Montserrat'),)]))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex:4,child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text('${loadDetailsScreenModel.productType}' ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: kLiveasyColor, fontSize: textFontSize, fontFamily: 'Montserrat'),),SizedBox(height: 5,),Text('${loadDetailsScreenModel.weight}' ?? 'Null', textAlign: TextAlign.center,style: TextStyle(color: truckGreen, fontSize: 16, fontFamily: 'Montserrat'),)]))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex: 3,
-            child: Center(child: (loadDetailsScreenModel.status == 'EXPIRED') ? null: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [ViewBidsButton(
-                loadId: loadDetailsScreenModel.loadId,
-                loadingPointCity:
-                loadDetailsScreenModel.loadingPointCity,
-                unloadingPointCity:
-                loadDetailsScreenModel.unloadingPointCity,
-                screenSmall: small,
-              ),]
-            )),
-          ),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex:3,child: Center(child: Flex(mainAxisSize: MainAxisSize.min,direction: Axis.vertical,children:[Flexible(child: Text((loadDetailsScreenModel.status=='EXPIRED') ?'Load\nExpired': 'Load\nPending', textAlign: TextAlign.center,style: TextStyle(color: (loadDetailsScreenModel.status=='EXPIRED')?declineButtonRed:truckGreen, fontSize: textFontSize, fontFamily: 'Montserrat'),))] ))),
-          VerticalDivider(color: Colors.grey, ),
-          Expanded(flex: 4,
-            child: Center(child: Row(mainAxisAlignment:  MainAxisAlignment.end ,children: [(loadDetailsScreenModel.status == 'EXPIRED') ? Repostbutton(small,context) : SizedBox(), PopupMenuButton<popupMenuforloads>(
-                padding: EdgeInsets.all(0),
-                offset: Offset(0, kToolbarHeight),
-                //padding: (small)?EdgeInsets.only(left: 0, right: 0): EdgeInsets.all(5),
-                // offset: Offset(0, space_2),
-                // shape: RoundedRectangleBorder(
-                //     borderRadius:
-                //     BorderRadius.all((small)?Radius.circular(radius_0):Radius.circular(radius_2))),
-                iconSize: (small)?20:30,
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                  ...MenuItems.listItem
-                      .map(showEachItemFromList)
-                      .toList(),
-                ]),],) ),
-          ),
-
-        ],),
+        child: Row(
+          children: [
+            Expanded(
+                flex: 2,
+                child: Center(
+                    child: Container(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text(
+                          loadDetailsScreenModel.postLoadDate ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                        )))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+                flex: 5,
+                child: Center(
+                    child: Text(
+                  loadDetailsScreenModel.loadingPointCity ?? 'Null',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kLiveasyColor,
+                      fontSize: textFontSize,
+                      fontFamily: 'Montserrat'),
+                ))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+                flex: 5,
+                child: Center(
+                    child: Text(
+                  loadDetailsScreenModel.unloadingPointCity ?? 'Null',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: kLiveasyColor,
+                      fontSize: textFontSize,
+                      fontFamily: 'Montserrat'),
+                ))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+                flex: 4,
+                child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Text(
+                        '${loadDetailsScreenModel.truckType}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kLiveasyColor,
+                            fontSize: textFontSize,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${loadDetailsScreenModel.noOfTyres}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: truckGreen,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ]))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+                flex: 4,
+                child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Text(
+                        '${loadDetailsScreenModel.productType}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kLiveasyColor,
+                            fontSize: textFontSize,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${loadDetailsScreenModel.weight}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: truckGreen,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ]))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+              flex: 3,
+              child: Center(
+                  child: (loadDetailsScreenModel.status == 'EXPIRED')
+                      ? null
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                              ViewBidsButton(
+                                loadId: loadDetailsScreenModel.loadId,
+                                loadingPointCity:
+                                    loadDetailsScreenModel.loadingPointCity,
+                                unloadingPointCity:
+                                    loadDetailsScreenModel.unloadingPointCity,
+                                screenSmall: small,
+                              ),
+                            ])),
+            ),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+                flex: 3,
+                child: Center(
+                    child: Flex(
+                        mainAxisSize: MainAxisSize.min,
+                        direction: Axis.vertical,
+                        children: [
+                      Flexible(
+                          child: Text(
+                        (loadDetailsScreenModel.status == 'EXPIRED')
+                            ? 'Load\nExpired'
+                            : 'Load\nPending',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: (loadDetailsScreenModel.status == 'EXPIRED')
+                                ? declineButtonRed
+                                : truckGreen,
+                            fontSize: textFontSize,
+                            fontFamily: 'Montserrat'),
+                      ))
+                    ]))),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Expanded(
+              flex: 4,
+              child: Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  (loadDetailsScreenModel.status == 'EXPIRED')
+                      ? Repostbutton(small, context)
+                      : SizedBox(),
+                  PopupMenuButton<popupMenuforloads>(
+                      padding: EdgeInsets.all(0),
+                      offset: Offset(0, kToolbarHeight),
+                      //padding: (small)?EdgeInsets.only(left: 0, right: 0): EdgeInsets.all(5),
+                      // offset: Offset(0, space_2),
+                      // shape: RoundedRectangleBorder(
+                      //     borderRadius:
+                      //     BorderRadius.all((small)?Radius.circular(radius_0):Radius.circular(radius_2))),
+                      iconSize: (small) ? 20 : 30,
+                      onSelected: (item) => onSelected(context, item),
+                      itemBuilder: (context) => [
+                            ...MenuItems.listItem
+                                .map(showEachItemFromList)
+                                .toList(),
+                          ]),
+                ],
+              )),
+            ),
+          ],
+        ),
       );
-    }
-    else{
+    } else {
       return Container(
         margin: EdgeInsets.only(bottom: space_2),
         child: Card(
@@ -123,7 +258,7 @@ class MyLoadsCard extends StatelessWidget {
           elevation: 3,
           child: Container(
             padding:
-            EdgeInsets.only(bottom: space_2, left: space_2, right: space_2),
+                EdgeInsets.only(bottom: space_2, left: space_2, right: space_2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -139,73 +274,67 @@ class MyLoadsCard extends StatelessWidget {
                     ),
                     loadDetailsScreenModel.status == 'EXPIRED'
                         ? const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.more_vert, color: black),
-                    )
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.more_vert, color: black),
+                          )
                         : PopupMenuButton<popupMenuforloads>(
-                        offset: Offset(0, space_2),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(radius_2))),
-                        onSelected: (item) => onSelected(context, item),
-                        itemBuilder: (context) => [
-                          ...MenuItems.listItem
-                              .map(showEachItemFromList)
-                              .toList(),
-                        ]),
+                            offset: Offset(0, space_2),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(radius_2))),
+                            onSelected: (item) => onSelected(context, item),
+                            itemBuilder: (context) => [
+                                  ...MenuItems.listItem
+                                      .map(showEachItemFromList)
+                                      .toList(),
+                                ]),
                   ],
                 ),
-                !Responsive.isMobile(context)
-                    ? webView(context)
-                    : mobileView(),
+                !Responsive.isMobile(context) ? webView(context) : mobileView(),
                 SizedBox(
                   height: space_2,
                 ),
                 loadDetailsScreenModel.status == 'EXPIRED'
                     ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'loadexpired'.tr,
-                      // "Load Expired!",
-                      style: TextStyle(
-                        color: declineButtonRed,
-                        fontSize: size_8,
-                        fontWeight: mediumBoldWeight,
-
-                      ),
-                    ),
-                    Repostbutton(small,context),
-                  ],
-                )
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'loadexpired'.tr,
+                            // "Load Expired!",
+                            style: TextStyle(
+                              color: declineButtonRed,
+                              fontSize: size_8,
+                              fontWeight: mediumBoldWeight,
+                            ),
+                          ),
+                          Repostbutton(small, context),
+                        ],
+                      )
                     : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    loadDetailsScreenModel.rate != 'NA'
-                        ? PriceContainer(
-                      rate: loadDetailsScreenModel.rate,
-                      unitValue: loadDetailsScreenModel.unitValue,
-                    )
-                        : const SizedBox(),
-                    ViewBidsButton(
-                      loadId: loadDetailsScreenModel.loadId,
-                      loadingPointCity:
-                      loadDetailsScreenModel.loadingPointCity,
-                      unloadingPointCity:
-                      loadDetailsScreenModel.unloadingPointCity,
-                      screenSmall : small,
-                    ),
-                  ],
-                ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          loadDetailsScreenModel.rate != 'NA'
+                              ? PriceContainer(
+                                  rate: loadDetailsScreenModel.rate,
+                                  unitValue: loadDetailsScreenModel.unitValue,
+                                )
+                              : const SizedBox(),
+                          ViewBidsButton(
+                            loadId: loadDetailsScreenModel.loadId,
+                            loadingPointCity:
+                                loadDetailsScreenModel.loadingPointCity,
+                            unloadingPointCity:
+                                loadDetailsScreenModel.unloadingPointCity,
+                            screenSmall: small,
+                          ),
+                        ],
+                      ),
               ],
             ),
           ),
         ),
       );
     }
-
-
-
   }
 
   PopupMenuItem<popupMenuforloads> showEachItemFromList(
@@ -226,7 +355,6 @@ class MyLoadsCard extends StatelessWidget {
                 item.itemText,
                 style: TextStyle(
                   fontWeight: mediumBoldWeight,
-                  
                 ),
               ),
             ],
@@ -309,15 +437,17 @@ class MyLoadsCard extends StatelessWidget {
     return Row(
       children: [
         Column(
-          crossAxisAlignment: !Responsive.isMobile(context)?CrossAxisAlignment.start:CrossAxisAlignment.center,
+          crossAxisAlignment: !Responsive.isMobile(context)
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
           children: [
             LoadEndPointTemplate(
                 text: "${loadDetailsScreenModel.loadingPointCity}".tr,
                 endPointType: 'loading'),
             loadDetailsScreenModel.loadingPointCity2 != "NA"
                 ? LoadEndPointTemplate(
-                text: "${loadDetailsScreenModel.loadingPointCity2}",
-                endPointType: 'loading')
+                    text: "${loadDetailsScreenModel.loadingPointCity2}",
+                    endPointType: 'loading')
                 : Container(),
             Container(
               height: space_4 + 2,
@@ -331,8 +461,8 @@ class MyLoadsCard extends StatelessWidget {
                 endPointType: 'unloading'),
             loadDetailsScreenModel.unloadingPointCity2 != "NA"
                 ? LoadEndPointTemplate(
-                text: "${loadDetailsScreenModel.unloadingPointCity2}".tr,
-                endPointType: 'unloading')
+                    text: "${loadDetailsScreenModel.unloadingPointCity2}".tr,
+                    endPointType: 'unloading')
                 : Container(),
           ],
         ),
@@ -353,10 +483,11 @@ class MyLoadsCard extends StatelessWidget {
                 ),
                 Text(
                   '${'${loadDetailsScreenModel.truckType}'.tr}|${loadDetailsScreenModel.noOfTyres} ${'tyres'.tr}',
-                  style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
+                  style:
+                      TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
                 ),
               ],
-            ) ,
+            ),
             SizedBox(
               height: space_5,
             ),
@@ -372,7 +503,8 @@ class MyLoadsCard extends StatelessWidget {
                 ),
                 Text(
                   '${'${loadDetailsScreenModel.productType}'.tr}| ${loadDetailsScreenModel.weight} ${'tons'.tr}',
-                  style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
+                  style:
+                      TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
                 ),
               ],
             ),
@@ -382,7 +514,7 @@ class MyLoadsCard extends StatelessWidget {
     );
   }
 
-  mobileView(){
+  mobileView() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -391,28 +523,23 @@ class MyLoadsCard extends StatelessWidget {
             endPointType: 'loading'),
         loadDetailsScreenModel.loadingPointCity2 != "NA"
             ? LoadEndPointTemplate(
-            text:
-            "${loadDetailsScreenModel.loadingPointCity2}",
-            endPointType: 'loading')
+                text: "${loadDetailsScreenModel.loadingPointCity2}",
+                endPointType: 'loading')
             : Container(),
         Container(
           height: space_4 + 2,
           padding: EdgeInsets.only(left: space_1 - 3),
           child: CustomPaint(
-            foregroundPainter:
-            LinePainter(height: space_4 + 2, width: 1),
+            foregroundPainter: LinePainter(height: space_4 + 2, width: 1),
           ),
         ),
         LoadEndPointTemplate(
-            text:
-            "${loadDetailsScreenModel.unloadingPointCity}".tr,
+            text: "${loadDetailsScreenModel.unloadingPointCity}".tr,
             endPointType: 'unloading'),
         loadDetailsScreenModel.unloadingPointCity2 != "NA"
             ? LoadEndPointTemplate(
-            text:
-            "${loadDetailsScreenModel.unloadingPointCity2}"
-                .tr,
-            endPointType: 'unloading')
+                text: "${loadDetailsScreenModel.unloadingPointCity2}".tr,
+                endPointType: 'unloading')
             : Container(),
         SizedBox(
           height: space_1,
@@ -422,16 +549,14 @@ class MyLoadsCard extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 8),
               child: const Image(
-                image: AssetImage(
-                    'assets/images/TruckListEmptyImage.png'),
+                image: AssetImage('assets/images/TruckListEmptyImage.png'),
                 height: 24,
                 width: 24,
               ),
             ),
             Text(
               '${'${loadDetailsScreenModel.truckType}'.tr}|${loadDetailsScreenModel.noOfTyres} ${'tyres'.tr}',
-              style: TextStyle(
-                  fontSize: size_6, fontWeight: mediumBoldWeight),
+              style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
             ),
           ],
         ),
@@ -450,13 +575,11 @@ class MyLoadsCard extends StatelessWidget {
             ),
             Text(
               '${'${loadDetailsScreenModel.productType}'.tr}| ${loadDetailsScreenModel.weight} ${'tons'.tr}',
-              style: TextStyle(
-                  fontSize: size_6, fontWeight: mediumBoldWeight),
+              style: TextStyle(fontSize: size_6, fontWeight: mediumBoldWeight),
             ),
           ],
         ),
       ],
     );
   }
-
 }

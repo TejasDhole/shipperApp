@@ -34,26 +34,45 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
     ProviderData providerData = Provider.of<ProviderData>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton: (kIsWeb && (Responsive.isDesktop(context) || Responsive.isTablet(context)))?null:PostButtonLoad(),
+      floatingActionButton: (kIsWeb &&
+              (Responsive.isDesktop(context) || Responsive.isTablet(context)))
+          ? null
+          : PostButtonLoad(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(space_4, space_4, space_4, space_2),
           child: Column(
             children: [
-              (kIsWeb && (Responsive.isDesktop(context) || Responsive.isTablet(context)))?
-                  Container(
-                    padding: EdgeInsets.only(bottom: space_2),
-                    color: Color.fromRGBO(245, 246, 250, 1),
-                    child: Row(children: [ Text('loads'.tr, style: TextStyle(fontFamily: 'Montserrat', color: kLiveasyColor, fontWeight: FontWeight.w600,fontSize: 30 ),),
-                    Expanded(child: Align(alignment: Alignment.centerRight,child: PostButtonLoad(),)),
-                    ],),
-                  ):
-                  Header(
-                  reset: false,
-                  text: 'loads'.tr,
-                  // AppLocalizations.of(context)!.loads,
-                  backButton: false),
+              (kIsWeb &&
+                      (Responsive.isDesktop(context) ||
+                          Responsive.isTablet(context)))
+                  ? Container(
+                      padding: EdgeInsets.only(bottom: space_2),
+                      color: Color.fromRGBO(245, 246, 250, 1),
+                      child: Row(
+                        children: [
+                          Text(
+                            'loads'.tr,
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: kLiveasyColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 30),
+                          ),
+                          Expanded(
+                              child: Align(
+                            alignment: Alignment.centerRight,
+                            child: PostButtonLoad(),
+                          )),
+                        ],
+                      ),
+                    )
+                  : Header(
+                      reset: false,
+                      text: 'loads'.tr,
+                      // AppLocalizations.of(context)!.loads,
+                      backButton: false),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,10 +98,12 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
               Container(
                 height: 5,
                 padding: EdgeInsets.zero,
-                margin: EdgeInsets.only(top: 5,bottom: 5),
+                margin: EdgeInsets.only(top: 5, bottom: 5),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [Color.fromRGBO(21, 41, 104, 1), Color.fromRGBO(9, 183, 120, 1)])
-                ),
+                    gradient: LinearGradient(colors: [
+                  Color.fromRGBO(21, 41, 104, 1),
+                  Color.fromRGBO(9, 183, 120, 1)
+                ])),
               ),
               Stack(
                 // alignment: Alignment.center,
