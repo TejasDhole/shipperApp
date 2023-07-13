@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/responsive.dart';
 import '../../constants/screens.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -29,9 +30,9 @@ class PostButtonLoad extends StatelessWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: (Responsive.isMobile(context))?BorderRadius.circular(50):BorderRadius.all(Radius.zero),
           )),
-          backgroundColor: MaterialStateProperty.all<Color>(liveasyGreen),
+          backgroundColor: MaterialStateProperty.all<Color>(truckGreen),
         ),
         onPressed: () {
           providerData.resetPostLoadScreenOne();
