@@ -26,7 +26,7 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
           color: providerData.upperNavigatorIndex == value
               ? loadingPointTextColor
               : locationLineColor,
-          fontWeight: normalWeight,
+          fontWeight:  FontWeight.w600,
         ),
       ),
     );

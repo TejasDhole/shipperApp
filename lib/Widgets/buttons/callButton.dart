@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -37,101 +39,213 @@ class CallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 31,
-      width: 80,
-      child: TextButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  side: BorderSide(color: darkBlueColor))),
-          backgroundColor:
-              MaterialStateProperty.all(Colors.white.withOpacity(0)),
-        ),
-        onPressed: directCall == true
-            ? () async {
-          if (sIdController.companyStatus.value == 'verified') {
-            _makingPhoneCall();
-          } else {
-                  showDialog(
-                      context: context,
-                      builder: (context) => VerifyAccountNotifyAlertDialog());
-                }
-              }
-            : () async {
-                if (sIdController.companyStatus.value == 'verified'){
-                  Get.defaultDialog(
-                    radius: 10,
-                    title: 'Who do you want to call?',
-                    titleStyle: TextStyle(
-                        fontSize: size_8,
-                        color: loadingPointTextColor,
-                        fontWeight: mediumBoldWeight),
-                    middleText: '',
-                    content: Center(
-                      child: Column(
-                        children: [
-                          ChooseReceiverButton(
-                            label: (transporterName != null)
-                                ? transporterName!
-                                : "",
-                            phoneNum: transporterPhoneNum,
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: space_2),
-                            child: Text(
-                              'or',
-                              style: TextStyle(
+    return (kIsWeb && Responsive.isDesktop(context))
+        ? Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Container(
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.only(left: 0, right: 8)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: BorderSide(color: darkBlueColor))),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.white.withOpacity(0)),
+                  ),
+                  onPressed: directCall == true
+                      ? () async {
+                          if (sIdController.companyStatus.value == 'verified') {
+                            _makingPhoneCall();
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    VerifyAccountNotifyAlertDialog());
+                          }
+                        }
+                      : () async {
+                          if (sIdController.companyStatus.value == 'verified') {
+                            Get.defaultDialog(
+                              radius: 10,
+                              title: 'Who do you want to call?',
+                              titleStyle: TextStyle(
                                   fontSize: size_8,
-                                  fontWeight: mediumBoldWeight,
-                                  color: Colors.black),
+                                  color: loadingPointTextColor,
+                                  fontWeight: mediumBoldWeight),
+                              middleText: '',
+                              content: Center(
+                                child: Column(
+                                  children: [
+                                    ChooseReceiverButton(
+                                      label: (transporterName != null)
+                                          ? transporterName!
+                                          : "",
+                                      phoneNum: transporterPhoneNum,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: space_2),
+                                      child: Text(
+                                        'or',
+                                        style: TextStyle(
+                                            fontSize: size_8,
+                                            fontWeight: mediumBoldWeight,
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                    ChooseReceiverButton(
+                                      label: (driverName != null)
+                                          ? driverName!
+                                          : "",
+                                      phoneNum: driverPhoneNum,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    VerifyAccountNotifyAlertDialog());
+                          }
+                        },
+                  child: Container(
+                    margin: EdgeInsets.only(left: space_1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: space_1),
+                          child: Image(
+                            height: 16,
+                            width: 11,
+                            image: AssetImage(
+                              'assets/icons/callButtonIcon.png',
+                            ),
+                            color: black,
+                          ),
+                        ),
+                        Text(
+                          'call'.tr,
+                          // AppLocalizations.of(context)!.call,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            letterSpacing: 0.7,
+                            fontWeight: mediumBoldWeight,
+                            color: black,
+                            fontSize: size_7,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 31,
+            width: 80,
+            child: TextButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        side: BorderSide(color: darkBlueColor))),
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.white.withOpacity(0)),
+              ),
+              onPressed: directCall == true
+                  ? () async {
+                      if (sIdController.companyStatus.value == 'verified') {
+                        _makingPhoneCall();
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) =>
+                                VerifyAccountNotifyAlertDialog());
+                      }
+                    }
+                  : () async {
+                      if (sIdController.companyStatus.value == 'verified') {
+                        Get.defaultDialog(
+                          radius: 10,
+                          title: 'Who do you want to call?',
+                          titleStyle: TextStyle(
+                              fontSize: size_8,
+                              color: loadingPointTextColor,
+                              fontWeight: mediumBoldWeight),
+                          middleText: '',
+                          content: Center(
+                            child: Column(
+                              children: [
+                                ChooseReceiverButton(
+                                  label: (transporterName != null)
+                                      ? transporterName!
+                                      : "",
+                                  phoneNum: transporterPhoneNum,
+                                ),
+                                Container(
+                                  margin:
+                                      EdgeInsets.symmetric(vertical: space_2),
+                                  child: Text(
+                                    'or',
+                                    style: TextStyle(
+                                        fontSize: size_8,
+                                        fontWeight: mediumBoldWeight,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                                ChooseReceiverButton(
+                                  label:
+                                      (driverName != null) ? driverName! : "",
+                                  phoneNum: driverPhoneNum,
+                                )
+                              ],
                             ),
                           ),
-                          ChooseReceiverButton(
-                            label: (driverName != null) ? driverName! : "",
-                            phoneNum: driverPhoneNum,
-                          )
-                        ],
+                        );
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) =>
+                                VerifyAccountNotifyAlertDialog());
+                      }
+                    },
+              child: Container(
+                margin: EdgeInsets.only(left: space_1),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: space_1),
+                      child: Image(
+                        height: 16,
+                        width: 11,
+                        image: AssetImage(
+                          'assets/icons/callButtonIcon.png',
+                        ),
+                        color: black,
                       ),
                     ),
-                  );
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (context) => VerifyAccountNotifyAlertDialog());
-                }
-              },
-        child: Container(
-          margin: EdgeInsets.only(left: space_1),
-          child: Row(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: space_1),
-                child: Image(
-                  height: 16,
-                  width: 11,
-                  image: AssetImage(
-                    'assets/icons/callButtonIcon.png',
-                  ),
-                  color: black,
+                    Text(
+                      'call'.tr,
+                      // AppLocalizations.of(context)!.call,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        letterSpacing: 0.7,
+                        fontWeight: mediumBoldWeight,
+                        color: black,
+                        fontSize: size_7,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                'call'.tr,
-                // AppLocalizations.of(context)!.call,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: 0.7,
-                  fontWeight: mediumBoldWeight,
-                  color: black,
-                  fontSize: size_7,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

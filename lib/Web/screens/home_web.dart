@@ -22,6 +22,14 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   int _selectedIndex = 0;
   int _index = 0;
 
+  late LinearGradient dashboardSelectedTabGradientColor,
+      myLoadsSelectedTabGradientColor,
+      invoiceSelectedTabGradientColor,
+      accountSelectedTabGradientColor,
+      liveasySelectedTabGradientColor;
+  late bool expandMode;
+  late double widthOfSideBar;
+
   @override
   void initState() {
     super.initState();
@@ -33,44 +41,29 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         _selectedIndex = widget.selectedIndex!;
       });
     }
+    expandMode = true;
+    if (expandMode) {
+      widthOfSideBar = 220;
+    } else {
+      widthOfSideBar = 110;
+    }
+    dashboardSelectedTabGradientColor = LinearGradient(colors: [
+      Color.fromRGBO(9, 183, 120, 0.3),
+      Color.fromRGBO(241, 240, 240, 0)
+    ]);
+    myLoadsSelectedTabGradientColor =
+        LinearGradient(colors: [Colors.white, Colors.white]);
+    invoiceSelectedTabGradientColor =
+        LinearGradient(colors: [Colors.white, Colors.white]);
+    accountSelectedTabGradientColor =
+        LinearGradient(colors: [Colors.white, Colors.white]);
+    liveasySelectedTabGradientColor =
+        LinearGradient(colors: [Colors.white, Colors.white]);
+
     isolatedShipperGetData();
   }
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
-  List<NavigationRailDestination> destinations = [
-    const NavigationRailDestination(
-      icon: Icon(Icons.space_dashboard),
-      label: Text("Dashboard"),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.inventory_2_rounded),
-      label: Text("My Loads"),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.receipt_long),
-      label: Text("Invoice"),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.person_outline_outlined),
-      label: Text("Account"),
-    ),
-    // const NavigationRailDestination(
-    //   icon: Icon(Icons.supervised_user_circle_outlined),
-    //   label: Text("Add User"),
-    // ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.support_agent_outlined),
-      label: Text("Help and Support"),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.phone_in_talk_outlined),
-      label: Text("Contact Us"),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.logout_outlined),
-      label: Text("Logout"),
-    ),
-  ];
 
   //TODO : This is the list for Bottom Navigation Bar
   List<BottomNavigationBarItem> bottom_destinations = [
@@ -194,42 +187,287 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               ? const SizedBox(
                   width: 0.01,
                 )
-              : NavigationRail(
-                  extended: Responsive.isDesktop(context) ? true : false,
-                  selectedIconTheme: const IconThemeData(color: kLiveasyColor),
-                  unselectedLabelTextStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 3.6.sp,
-                      color: Colors.black),
-                  selectedLabelTextStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 3.9.sp,
-                      color: kLiveasyColor),
-                  indicatorColor: const Color(0xFFC4C4C4),
-                  labelType: Responsive.isDesktop(context)
-                      ? NavigationRailLabelType.none
-                      : NavigationRailLabelType.all,
-                  destinations: destinations,
-                  selectedIndex: _selectedIndex,
-                  onDestinationSelected: (index) {
-                    setState(() {
-                      _selectedIndex = index;
-                      _index = index;
-                    });
-                  },
-                  elevation: 20,
+              : Container(
+                  child: Stack(
+                    children: [
+                      Row(children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.zero)),
+                          elevation: 5,
+                          shadowColor: Colors.grey,
+                          child: Container(
+                            padding:
+                                EdgeInsets.only(left: 20, right: 20, top: 100),
+                            height: MediaQuery.of(context).size.height,
+                            width: widthOfSideBar,
+                            child: Column(
+                              children: [
+                                SideExpandedItem(
+                                    title: "Dashboard",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_dashboard.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "My Loads",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_my_loads.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "Invoice",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_invoice.png')),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SideExpandedItem(
+                                    title: "Account",
+                                    icon: AssetImage(
+                                        'assets/images/shipper_web_account.png')),
+                                Expanded(
+                                    child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 30),
+                                            child: SideExpandedItem(
+                                                title: "Liveasy",
+                                                icon: AssetImage(
+                                                    'assets/images/shipper_liveasy_logo.png'))))),
+                              ],
+                            ),
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        )
+                      ]),
+                      Positioned(
+                        left: widthOfSideBar - 10,
+                        top: (MediaQuery.of(context).size.height -
+                                AppBar().preferredSize.height) *
+                            0.45,
+                        height: 30,
+                        width: 30,
+                        child: Container(
+                          padding: EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white),
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (expandMode) {
+                                  expandMode = false;
+                                  widthOfSideBar = 110;
+                                } else {
+                                  expandMode = true;
+                                  widthOfSideBar = 220;
+                                }
+                              });
+                            },
+                            iconSize: 20,
+                            padding: EdgeInsets.zero,
+                            icon: Icon(
+                                (expandMode)
+                                    ? Icons.arrow_back_ios_rounded
+                                    : Icons.arrow_forward_ios_rounded,
+                                color: Color.fromRGBO(21, 41, 104, 1),
+                                size: 20),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll<Color>(Colors.white),
+                              side: MaterialStateProperty.all(
+                                BorderSide(width: 1, color: Colors.black),
+                              ),
+                            ),
+                            hoverColor: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-          const VerticalDivider(
-            thickness: 1,
-            width: 1,
-          ),
           Expanded(
-            child: Center(
-              child: screens[_index],
+            child: Container(
+              child: Center(
+                child: screens[_index],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
+  InkWell SideExpandedItem({required String title, required AssetImage icon}) {
+    return InkWell(
+        onTap: () {
+          setState(() {
+            if (title == "Dashboard") {
+              dashboardSelectedTabGradientColor = LinearGradient(colors: [
+                Color.fromRGBO(9, 183, 120, 0.3),
+                Color.fromRGBO(241, 240, 240, 0)
+              ]);
+              myLoadsSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              invoiceSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              accountSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              _selectedIndex = 0;
+              _index = 0;
+            } else if (title == "My Loads") {
+              dashboardSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+                Color.fromRGBO(9, 183, 120, 0.3),
+                Color.fromRGBO(241, 240, 240, 0)
+              ]);
+              invoiceSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              accountSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              _selectedIndex = 1;
+              _index = 1;
+            } else if (title == "Invoice") {
+              dashboardSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              myLoadsSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              invoiceSelectedTabGradientColor = LinearGradient(colors: [
+                Color.fromRGBO(9, 183, 120, 0.3),
+                Color.fromRGBO(241, 240, 240, 0)
+              ]);
+              accountSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              _selectedIndex = 2;
+              _index = 2;
+            } else if (title == "Account") {
+              dashboardSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              myLoadsSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              invoiceSelectedTabGradientColor =
+                  LinearGradient(colors: [Colors.white, Colors.white]);
+              accountSelectedTabGradientColor = LinearGradient(colors: [
+                Color.fromRGBO(9, 183, 120, 0.3),
+                Color.fromRGBO(241, 240, 240, 0)
+              ]);
+              _selectedIndex = 3;
+              _index = 3;
+            }
+          });
+        },
+        child: Container(
+            height: 60,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                gradient: (title == "Liveasy")
+                    ? liveasySelectedTabGradientColor
+                    : (title == "Dashboard")
+                        ? dashboardSelectedTabGradientColor
+                        : (title == "My Loads")
+                            ? myLoadsSelectedTabGradientColor
+                            : (title == "Invoice")
+                                ? invoiceSelectedTabGradientColor
+                                : accountSelectedTabGradientColor),
+            child: Row(
+              children: [
+                Image(image: icon, filterQuality: FilterQuality.high),
+                SizedBox(
+                  width: 10,
+                ),
+                Visibility(
+                    visible: expandMode,
+                    child: (title == "Liveasy")
+                        ? Text(
+                            title,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Montserrat Bold",
+                                color: Color.fromRGBO(21, 41, 104, 1)),
+                          )
+                        : Text(
+                            title,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "Montserrat",
+                                color: Color.fromRGBO(21, 41, 104, 1)),
+                          ))
+              ],
+            )));
+  }
 }
+
+// List<NavigationRailDestination> destinations = [
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.space_dashboard),
+//     label: Text("Dashboard"),
+//   ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.inventory_2_rounded),
+//     label: Text("My Loads"),
+//   ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.receipt_long),
+//     label: Text("Invoice"),
+//   ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.person_outline_outlined),
+//     label: Text("Account"),
+//   ),
+//   // const NavigationRailDestination(
+//   //   icon: Icon(Icons.supervised_user_circle_outlined),
+//   //   label: Text("Add User"),
+//   // ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.support_agent_outlined),
+//     label: Text("Help and Support"),
+//   ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.phone_in_talk_outlined),
+//     label: Text("Contact Us"),
+//   ),
+//   const NavigationRailDestination(
+//     icon: Icon(Icons.logout_outlined),
+//     label: Text("Logout"),
+//   ),
+// ];
+
+// NavigationRail(
+// extended: Responsive.isDesktop(context) ? true : false,
+// selectedIconTheme: const IconThemeData(color: kLiveasyColor),
+// unselectedLabelTextStyle: TextStyle(
+// fontWeight: FontWeight.bold,
+// fontSize: 3.6.sp,
+// color: Colors.black),
+// selectedLabelTextStyle: TextStyle(
+// fontWeight: FontWeight.bold,
+// fontSize: 3.9.sp,
+// color: kLiveasyColor),
+// indicatorColor: const Color(0xFFC4C4C4),
+// labelType: Responsive.isDesktop(context)
+// ? NavigationRailLabelType.none
+//     : NavigationRailLabelType.all,
+// destinations: destinations,
+// selectedIndex: _selectedIndex,
+// onDestinationSelected: (index) {
+// setState(() {
+// _selectedIndex = index;
+// _index = index;
+// });
+// },
+// elevation: 20,
+// ),
+// const VerticalDivider(
+// thickness: 1,
+// width: 1,
+// ),
