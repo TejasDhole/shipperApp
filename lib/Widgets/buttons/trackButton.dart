@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/responsive.dart';
 import '../../functions/shipperApis/shipperApiCalls.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -76,57 +79,114 @@ class _TrackButtonState extends State<TrackButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 31,
-      width: 90,
-      child: TextButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          )),
-          backgroundColor: MaterialStateProperty.all<Color>(darkBlueColor),
-        ),
-        onPressed: () async {
-          Get.to(
-            TrackScreen(
-              deviceId: widget.gpsData.deviceId,
-              gpsData: widget.gpsData,
-              truckNo: widget.TruckNo,
-              totalDistance: widget.totalDistance,
-              imei: widget.imei,
-              // online: widget.device.status == "online" ? true : false,
-              online:true,
-              active: true,
-            ),
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.only(left: space_2),
-          child: Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(right: space_1),
-                child: widget.truckApproved
-                    ? Container()
-                    : Image(
-                        height: 16,
-                        width: 11,
-                        image: AssetImage('assets/icons/lockIcon.png')),
-              ),
-              Text(
-                'Track'.tr,
-                style: TextStyle(
-                  letterSpacing: 0.7,
-                  fontWeight: normalWeight,
-                  color: white,
-                  fontSize: size_7,
+    return (kIsWeb && Responsive.isDesktop(context))
+        ? Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Container(
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.only(left: 5, right: 10)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(darkBlueColor),
+                  ),
+                  onPressed: () async {
+                    Get.to(
+                      TrackScreen(
+                        deviceId: widget.gpsData.deviceId,
+                        gpsData: widget.gpsData,
+                        truckNo: widget.TruckNo,
+                        totalDistance: widget.totalDistance,
+                        imei: widget.imei,
+                        // online: widget.device.status == "online" ? true : false,
+                        online: true,
+                        active: true,
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: space_1),
+                        child: widget.truckApproved
+                            ? Container()
+                            : Image(
+                                height: 16,
+                                width: 11,
+                                image: AssetImage('assets/icons/lockIcon.png')),
+                      ),
+                      Text(
+                        'Track'.tr,
+                        style: TextStyle(
+                          letterSpacing: 0.7,
+                          fontWeight: normalWeight,
+                          color: white,
+                          fontSize: size_7,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          )
+        : Container(
+            height: 31,
+            width: 90,
+            child: TextButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                )),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(darkBlueColor),
+              ),
+              onPressed: () async {
+                Get.to(
+                  TrackScreen(
+                    deviceId: widget.gpsData.deviceId,
+                    gpsData: widget.gpsData,
+                    truckNo: widget.TruckNo,
+                    totalDistance: widget.totalDistance,
+                    imei: widget.imei,
+                    // online: widget.device.status == "online" ? true : false,
+                    online: true,
+                    active: true,
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(left: space_2),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: space_1),
+                      child: widget.truckApproved
+                          ? Container()
+                          : Image(
+                              height: 16,
+                              width: 11,
+                              image: AssetImage('assets/icons/lockIcon.png')),
+                    ),
+                    Text(
+                      'Track'.tr,
+                      style: TextStyle(
+                        letterSpacing: 0.7,
+                        fontWeight: normalWeight,
+                        color: white,
+                        fontSize: size_7,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }
