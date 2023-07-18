@@ -57,6 +57,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           //toolbarHeight: 50,
@@ -92,6 +93,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
         ),
         body: SafeArea(
             child: SingleChildScrollView(
+                reverse: true,
                 physics: NeverScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,40 +190,43 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
                           ),
-                          Container(
-                            height: screenHeight * 0.056,
-                            child: TextFormField(
-                              controller: emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                hintText: "joshua07@gmail.com",
-                                filled: true,
-                                contentPadding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.04),
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 192, 192, 192)),
-                                    borderRadius:
-                                        BorderRadius.circular(radius_1)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 192, 192, 192)),
-                                    borderRadius:
-                                        BorderRadius.circular(radius_1)),
-                                hintStyle: GoogleFonts.montserrat(
-                                  color: Color.fromARGB(255, 197, 195, 195),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: screenHeight * 0.016,
+                          Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.007),
+                            child: Container(
+                              height: screenHeight * 0.056,
+                              child: TextFormField(
+                                controller: emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  hintText: "joshua07@gmail.com",
+                                  filled: true,
+                                  contentPadding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.04),
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 192, 192, 192)),
+                                      borderRadius:
+                                          BorderRadius.circular(radius_1)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 192, 192, 192)),
+                                      borderRadius:
+                                          BorderRadius.circular(radius_1)),
+                                  hintStyle: GoogleFonts.montserrat(
+                                    color: Color.fromARGB(255, 197, 195, 195),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: screenHeight * 0.016,
+                                  ),
+                                  border: InputBorder.none,
                                 ),
-                                border: InputBorder.none,
-                              ),
-                              style: GoogleFonts.montserrat(
-                                fontSize: screenHeight * 0.019,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: screenHeight * 0.019,
+                                ),
                               ),
                             ),
                           ),
@@ -364,7 +369,8 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                                           NavigationScreen()));
                             }
                           } on FirebaseAuthException catch (e) {
-                            alertDialog("Error", '$e', context);
+                            alertDialog(
+                                "Error ", 'Select an Email Account', context);
                           }
                         },
                       ),

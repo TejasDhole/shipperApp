@@ -68,6 +68,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         //toolbarHeight: 50,
@@ -111,6 +112,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       ),
       body: SafeArea(
           child: SingleChildScrollView(
+        reverse: true,
         physics: NeverScrollableScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

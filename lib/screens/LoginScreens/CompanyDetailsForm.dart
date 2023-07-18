@@ -63,17 +63,6 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
           backgroundColor: Color.fromARGB(255, 0, 0, 102),
           elevation: 0,
 
-          // leading: IconButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => LoginScreenUsingMail()),
-          //     );
-          //   },
-          //   iconSize: 35,
-          //   icon: const Icon(Icons.arrow_back_ios_new),
-          //   color: white,
-          // ),
           title: Align(
             alignment: Alignment.center,
             child: Row(
@@ -82,17 +71,17 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
               children: [
                 Image(
                   width: MediaQuery.of(context).size.width * 0.07,
-                  height: screenHeight * 0.025,
+                  height: screenHeight * 0.032,
                   fit: BoxFit.fill,
                   image: AssetImage("assets/icons/logoCompanyDetails.png"),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.01),
+                      left: MediaQuery.of(context).size.width * 0.02),
                   child: Text(
                     'Liveasy',
                     style: GoogleFonts.montserrat(
-                      fontSize: screenHeight * 0.026,
+                      fontSize: screenHeight * 0.027,
                       fontWeight: FontWeight.w700,
                       color: white,
                     ),
@@ -104,7 +93,8 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
         ),
         body: SafeArea(
             child: SingleChildScrollView(
-          //physics: NeverScrollableScrollPhysics(),
+          reverse: true,
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +103,7 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                 alignment: Alignment.center,
                 child: Image(
                     fit: BoxFit.fill,
-                    height: screenHeight * 0.44,
+                    height: screenHeight * 0.42,
                     image: const AssetImage(
                         'assets/images/CompanyDetailsImage.png')),
               ),
@@ -134,7 +124,7 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.002),
+                          top: MediaQuery.of(context).size.height * 0.001),
                       child: Text("Company Details",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.montserrat(
@@ -152,7 +142,6 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Padding(
                       padding: EdgeInsets.only(left: space_1, right: space_3),
-
                       child: SizedBox(
                         height: 46,
                         child: TextFormField(
@@ -180,31 +169,22 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                                 borderRadius: BorderRadius.circular(radius_1)),
                             hintText: "Name",
                             hintStyle: GoogleFonts.montserrat(
-                              color: Color.fromARGB(255, 197, 195, 195),
+                              color: black,
                               fontWeight: FontWeight.w500,
                               fontSize: screenHeight * 0.019,
                             ),
                             border: InputBorder.none,
                           ),
                           style: TextStyle(
-                            color: Color.fromARGB(255, 217, 217, 217),
+                            color: black,
                             fontWeight: FontWeight.w400,
                             fontFamily: "Poppins",
                             fontSize: size_10,
                           ),
                         ),
                       ),
-                      // Align(
-                      //   alignment: Alignment.centerRight,
-                      //   child: Image(
-                      //       // width: 130,
-                      //       height: screenHeight * 0.022,
-                      //       //alignment: Alignment.topLeft,
-                      //       image: AssetImage(
-                      //           "assets/images/UserRounded.png")),
-                      //),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 28),
                     Padding(
                       padding: EdgeInsets.only(left: space_1, right: space_3),
                       child: SizedBox(
@@ -238,21 +218,21 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                                 borderRadius: BorderRadius.circular(radius_1)),
                             hintText: "PhoneNumber",
                             hintStyle: GoogleFonts.montserrat(
-                              color: Color.fromARGB(255, 197, 195, 195),
+                              color: black,
                               fontWeight: FontWeight.w500,
                               fontSize: screenHeight * 0.019,
                             ),
                             border: InputBorder.none,
                           ),
                           style: GoogleFonts.montserrat(
-                            color: Color.fromARGB(255, 217, 217, 217),
+                            color: black,
                             fontWeight: FontWeight.w500,
                             fontSize: screenHeight * 0.019,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 28),
                     Padding(
                       padding: EdgeInsets.only(left: space_1, right: space_3),
                       child: SizedBox(
@@ -281,14 +261,14 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                                 borderRadius: BorderRadius.circular(radius_1)),
                             hintText: "Company Name",
                             hintStyle: GoogleFonts.montserrat(
-                              color: Color.fromARGB(255, 197, 195, 195),
+                              color: black,
                               fontWeight: FontWeight.w500,
                               fontSize: screenHeight * 0.019,
                             ),
                             border: InputBorder.none,
                           ),
                           style: GoogleFonts.montserrat(
-                            color: Color.fromARGB(255, 197, 195, 195),
+                            color: black,
                             fontWeight: FontWeight.w500,
                             fontSize: screenHeight * 0.019,
                           ),

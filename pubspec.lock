@@ -21,10 +21,10 @@ packages:
     dependency: "direct main"
     description:
       name: app_settings
-      sha256: "34c6b7dbf493d486b082f9538ea11b2ee665e7125618660555d5415592e78667"
+      sha256: "67ca58aba6ec311d89597c2716d2e37da54b8c7cef28b7749e6551c57f88c1f4"
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.0"
+    version: "5.0.0"
   args:
     dependency: transitive
     description:
@@ -466,10 +466,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: aea96b3b78556c97607d9bee59fcec515bc3ec1b6e905f14d72906ae055033fa
+      sha256: "3cc40fe8c50ab8383f3e053a499f00f975636622ecdc8e20a77418ece3b1e975"
       url: "https://pub.dev"
     source: hosted
-    version: "14.1.2"
+    version: "15.1.0+1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -745,7 +745,7 @@ packages:
     source: hosted
     version: "2.4.1"
   google_sign_in_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in_web
       sha256: "69b9ce0e760945ff52337921a8b5871592b74c92f85e7632293310701eea68cc"
@@ -1032,6 +1032,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  pagination_flutter:
+    dependency: "direct main"
+    description:
+      name: pagination_flutter
+      sha256: "98422b16402f9f407bf4e1ac04e3e933f2440d07aa73d960556118ae832ebe19"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
   path:
     dependency: transitive
     description:
