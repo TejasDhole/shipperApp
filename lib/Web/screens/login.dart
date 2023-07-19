@@ -28,7 +28,7 @@ class _LoginWebState extends State<LoginWeb> {
   bool passwordVisible = true;
   bool isChecked = false;
   bool isError = false;
-  Iterable<String>? autofillHints = {'@gmail.com','@outlook.in','@yahoo.com'};
+  Iterable<String>? autofillHints = {'@gmail.com', '@outlook.in', '@yahoo.com'};
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,6 @@ class _LoginWebState extends State<LoginWeb> {
                           label: const Text(
                             "Keep me logged in",
                             style: TextStyle(
-                              
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -204,19 +203,37 @@ class _LoginWebState extends State<LoginWeb> {
                               try {
                                 UserCredential firebaseUser =
                                     await signIn(email, password, context);
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                if(isChecked){
-                                  prefs.setString('uid', firebaseUser.user!.uid);
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                if (isChecked) {
+                                  prefs.setString(
+                                      'uid', firebaseUser.user!.uid);
                                 }
                                 if (firebaseUser.user!.phoneNumber == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
-                                } else if (firebaseUser.user!.displayName == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginWebPhone()));
+                                } else if (firebaseUser.user!.displayName ==
+                                    null) {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CompanyDetails()));
                                 } else if (firebaseUser.user!.emailVerified) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreenWeb()));
                                 } else {
-                                  alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
-                                 // firebaseUser.user!.sendEmailVerification();
+                                  alertDialog(
+                                      "Verify Your Mail",
+                                      "Please verify your \n mail id to continue",
+                                      context);
+                                  // firebaseUser.user!.sendEmailVerification();
                                 }
                               } catch (e) {
                                 log('in sign in button catch--->$e');
@@ -235,7 +252,7 @@ class _LoginWebState extends State<LoginWeb> {
                       ),
                       Padding(
                         padding:
-                        EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
+                            EdgeInsets.only(left: 3.w, top: 5.h, right: 1.w),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -245,24 +262,42 @@ class _LoginWebState extends State<LoginWeb> {
                             fixedSize: Size(28.w, 7.h),
                           ),
                           onPressed: () async {
-                              try {
-                                UserCredential firebaseUser = await signInWithGoogle();
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                prefs.setString('uid', firebaseUser.user!.uid);
-                                getShipperIdFromCompanyDatabase();
-                                if (firebaseUser.user!.phoneNumber == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginWebPhone()));
-                                } else if (firebaseUser.user!.displayName == null) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CompanyDetails()));
-                                } else if (firebaseUser.user!.emailVerified) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
-                                } else {
-                                  alertDialog("Verify Your Mail", "Please verify your \n mail id to continue", context);
-                                  // firebaseUser.user!.sendEmailVerification();
-                                }
-                              } catch (e) {
-                                log('in sign in button catch--->$e');
+                            try {
+                              UserCredential firebaseUser =
+                                  await signInWithGoogle();
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString('uid', firebaseUser.user!.uid);
+                              getShipperIdFromCompanyDatabase();
+                              if (firebaseUser.user!.phoneNumber == null) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginWebPhone()));
+                              } else if (firebaseUser.user!.displayName ==
+                                  null) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CompanyDetails()));
+                              } else if (firebaseUser.user!.emailVerified) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreenWeb()));
+                              } else {
+                                alertDialog(
+                                    "Verify Your Mail",
+                                    "Please verify your \n mail id to continue",
+                                    context);
+                                // firebaseUser.user!.sendEmailVerification();
                               }
+                            } catch (e) {
+                              log('in sign in button catch--->$e');
+                            }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -271,9 +306,9 @@ class _LoginWebState extends State<LoginWeb> {
                                   height: 5.h,
                                   width: 5.w,
                                   child: const Image(
-                                    image: AssetImage("assets/icons/google_icon.png"),
-                                  )
-                              ),
+                                    image: AssetImage(
+                                        "assets/icons/google_icon.png"),
+                                  )),
                               Text(
                                 'Sign in Using Google',
                                 style: TextStyle(

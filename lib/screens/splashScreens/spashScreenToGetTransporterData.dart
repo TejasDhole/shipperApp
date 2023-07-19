@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/controller/shipperIdController.dart';
@@ -74,8 +75,9 @@ class _SplashScreenToGetTransporterDataState
         shipperIdController.updateCompanyName(companyName!);
         shipperIdController.updateCompanyName(companyStatus!);
         print("transporterID is $transporterId");
-        
-        Timer(const Duration(milliseconds: 1200), () => Get.off(() => NavigationScreen()));
+
+        Timer(const Duration(milliseconds: 1200),
+            () => Get.off(() => NavigationScreen()));
       }
       //Timer(Duration(milliseconds: 1), () => Get.off(() => NavigationScreen()));
     }
@@ -83,40 +85,44 @@ class _SplashScreenToGetTransporterDataState
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: statusBarColor,
       body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [shadowGrey, white])),
-          padding: EdgeInsets.only(right: space_2, top: space_35),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(image: AssetImage("assets/images/liveasyTruck.png")),
-              SizedBox(
-                height: space_2,
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    Image(
-                      image: const AssetImage("assets/images/logoSplashScreen.png"),
-                      height: space_12,
-                    ),
-                    SizedBox(
-                      height: space_3,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          child: Container(
+        height: screenHeight,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/SplashImage.png"),
+            fit: BoxFit.fill,
           ),
         ),
-      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image(
+              width: screenWidth * 0.14,
+              height: screenHeight * 0.069,
+              fit: BoxFit.fill,
+              image: AssetImage("assets/icons/logoCompanyDetails.png"),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.05),
+              child: Text(
+                'Liveasy',
+                style: GoogleFonts.montserrat(
+                  fontSize: screenHeight * 0.070,
+                  fontWeight: FontWeight.w700,
+                  color: white,
+                ),
+              ),
+            )
+          ],
+        ),
+      )),
     );
   }
 }
