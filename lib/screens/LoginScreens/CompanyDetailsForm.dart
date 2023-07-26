@@ -83,7 +83,7 @@ class _CompanyDetailsFormState extends State<CompanyDetailsForm> {
                     style: GoogleFonts.montserrat(
                       fontSize: screenHeight * 0.027,
                       fontWeight: FontWeight.w700,
-                      color: white,
+                      color: Color.fromARGB(255, 21, 41, 104),
                     ),
                   ),
                 )

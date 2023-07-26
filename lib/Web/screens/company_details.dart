@@ -1,8 +1,21 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
+import '../../constants/colors.dart';
+import '../../constants/colors.dart';
+import '../../constants/elevation.dart';
+import '../../constants/fontSize.dart';
+import '../../constants/radius.dart';
+import '../../constants/spaces.dart';
+import '../../controller/shipperIdController.dart';
 import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'package:sizer/sizer.dart';
@@ -17,270 +30,422 @@ class CompanyDetails extends StatefulWidget {
 class _CompanyDetailsState extends State<CompanyDetails> {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String companyName;
-  late String name;
-  late String gstNumber;
-  late String address;
+  // late String companyName;
+  // late String name;
+  // late String phoneNumber;
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
+  String? shipperId;
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  // late String address;
   bool isError = false;
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              const LiveasyIcon(),
-              Form(
-                key: _formKey,
-                child: Container(
-                  width: 60.w,
-                  height: isError?68.h:62.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: screenWidth * 0.05,
+                    height: screenHeight,
+                    // padding: EdgeInsets.symmetric(
+                    //     vertical: MediaQuery.of(context).size.height * 0.02),
+                    //color: Colors.blueGrey,
+                    decoration: const BoxDecoration(
+                        color: white,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(
+                                "assets/images/WebCompanyDetails.png"))), // Replace with your desired color or widget
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 5.h),
-                        child: Text("Company Details",
-                          style: TextStyle(
-                            
-                            fontWeight: FontWeight.bold,
-                            fontSize: 6.sp
-                          ),
-                        ),
-                      ),//Company Details
-                      SizedBox(height: 2.h,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 5.h,right: 3.w),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex:3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Company name",
-                                    style: TextStyle(
-                                        
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 4.5.sp
+                ),
+                Expanded(
+                  child: Container(
+                    color: Color.fromARGB(255, 245, 246, 250),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Form(
+                          key: _formKey,
+                          child: Container(
+                            width: kIsWeb ? 55.w : 40.w,
+                            height: isError
+                                ? 50.h
+                                : MediaQuery.of(context).size.height * 1,
+                            // decoration: BoxDecoration(
+                            //   border: Border.all(),
+                            //   borderRadius:
+                            //       const BorderRadius.all(Radius.circular(30)),
+                            // ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // TODO: Liveasy Logo
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 7.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.02,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.02,
+                                            image: AssetImage(
+                                                "assets/images/logoWebLogin.png")),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 1.w),
+                                          child: Text(
+                                            "Liveasy",
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 28,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color.fromARGB(
+                                                  255, 21, 41, 104),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(height: 1.9.h,),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter Company Name',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 7.h),
+                                  child: Text("Company Details",
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: screenHeight * 0.027,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromARGB(255, 21, 41, 104),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 1.5.h),
+                                  child: Text(
+                                      "Enter the company details to land into\nhomepage",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color.fromARGB(
+                                              255, 197, 195, 195))),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.w, top: 7.h, right: 7.w),
+                                  child: Container(
+                                    color: white,
+                                    child: TextFormField(
+                                      controller: nameController,
+                                      autofocus: true,
+                                      // autofillHints: ,
+                                      decoration: InputDecoration(
+                                        suffixIcon: Transform.scale(
+                                          scale: 1.5,
+                                          child: const Image(
+                                              image: AssetImage(
+                                                  "assets/images/UserRounded.png")),
+                                        ),
+                                        hintStyle: TextStyle(
+                                            decorationColor: Color.fromARGB(
+                                                255, 197, 195, 195),
+                                            fontSize: 2.h,
+                                            color: Color.fromARGB(
+                                                255, 217, 217, 217)),
+                                        hintText: 'Name',
+                                        //labelText: 'Email Id',
+                                        contentPadding:
+                                            EdgeInsets.only(left: 3.h),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                        ),
                                       ),
-                                    ),
-                                    validator: (value){
-                                      if(value.toString().isEmpty){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Enter your Company Name";
-                                      }
-                                      setState(() {
-                                        isError = false;
-                                      });
-                                      return null;
-                                    },
-                                    onSaved: (value){
-                                      companyName = value.toString();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),//Company Name
-                            SizedBox(width: 2.w,),
-                            Expanded(
-                              flex:3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Name",
-                                    style: TextStyle(
-                                        
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 4.5.sp
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.9.h,),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter Your Name',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                                      ),
-                                    ),
-                                    validator: (value){
-                                      if(value.toString().isEmpty){
-                                        setState(() {
-                                          isError = true;
-                                        });
-                                        return "Enter Your Name";
-                                      }
-                                      setState(() {
-                                        isError = false;
-                                      });
-                                      return null;
-                                    },
-                                    onSaved: (value){
-                                      name = value.toString();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),//Email Id
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 2.h,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 3.w,top: 5.h,right: 3.w),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex:3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("GST Number (optional)",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 4.5.sp
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.9.h,),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter GST Number',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                                      ),
-                                    ),
-                                    validator: (value){
-                                      // if(value.toString().isEmpty){
+                                      style: GoogleFonts.montserrat(
+                                          color: black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: screenHeight * 0.019),
+                                      // validator: (value) {
+                                      //   if (value.toString().isEmpty) {
+                                      //     setState(() {
+                                      //       isError = true;
+                                      //     });
+                                      //     return "Enter Your Name";
+                                      //   }
                                       //   setState(() {
-                                      //     isError = true;
+                                      //     isError = false;
                                       //   });
-                                      //   return "Enter your GST Number";
-                                      // }
-                                      // if(value.toString().length!=15){
-                                      //   setState(() {
-                                      //     isError = true;
-                                      //   });
-                                      //   return "Invalid GST Number";
-                                      // }
-                                      setState(() {
-                                        isError = false;
-                                      });
-                                      return null;
-                                    },
-                                    onSaved: (value){
-                                      gstNumber = value.toString();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),//GST Number
-                            SizedBox(width: 2.w,),
-                            Expanded(
-                              flex:3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Address (optional)",
-                                    style: TextStyle(
-                                        
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 4.5.sp
+                                      //   return null;
+                                      // },
+                                      // onSaved: (value) {
+                                      //   name = value.toString();
+                                      // },
                                     ),
                                   ),
-                                  SizedBox(height: 1.9.h,),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Company Address',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                                ),
+                                //Phone Field
+
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.w, top: 6.h, right: 7.w),
+                                  child: Container(
+                                    color: white,
+                                    child: TextFormField(
+                                      controller: phoneController,
+                                      keyboardType: TextInputType.phone,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(10)
+                                      ],
+                                      autofocus: true,
+                                      decoration: InputDecoration(
+                                        suffixIcon: Transform.scale(
+                                          scale: 1.5,
+                                          child: const Image(
+                                              image: AssetImage(
+                                                  "assets/images/PhoneRounded.png")),
+                                        ),
+                                        hintStyle: TextStyle(
+                                            decorationColor: Color.fromARGB(
+                                                255, 197, 195, 195),
+                                            fontSize: 2.h,
+                                            color: Color.fromARGB(
+                                                255, 217, 217, 217)),
+                                        hintText: 'Phone Number',
+                                        contentPadding:
+                                            EdgeInsets.only(left: 3.h),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                        ),
+                                      ),
+                                      style: GoogleFonts.montserrat(
+                                        color: black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: screenHeight * 0.019,
+                                      ),
+                                      // validator: (value) {
+                                      //   if (value.toString().isEmpty) {
+                                      //     setState(() {
+                                      //       isError = true;
+                                      //     });
+                                      //     return "Enter Your Phone Number";
+                                      //   }
+                                      //   setState(() {
+                                      //     isError = false;
+                                      //   });
+                                      //   return null;
+                                      // },
+                                      // onSaved: (value) {
+                                      //   phoneNumber = value.toString();
+                                      // },
+                                    ),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.w, top: 6.h, right: 7.w),
+                                  child: Container(
+                                    color: white,
+                                    child: TextFormField(
+                                      controller: companyNameController,
+                                      autofocus: true,
+                                      decoration: InputDecoration(
+                                        suffixIcon: Transform.scale(
+                                          scale: 1.5,
+                                          child: const Image(
+                                              image: AssetImage(
+                                                  "assets/images/Buildings.png")),
+                                        ),
+                                        hintStyle: TextStyle(
+                                            decorationColor: Color.fromARGB(
+                                                255, 197, 195, 195),
+                                            fontSize: 2.h,
+                                            color: Color.fromARGB(
+                                                255, 217, 217, 217)),
+                                        hintText: 'Company Details',
+                                        contentPadding:
+                                            EdgeInsets.only(left: 3.h),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                        ),
+                                      ),
+                                      style: GoogleFonts.montserrat(
+                                        color: black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: screenHeight * 0.019,
+                                      ),
+                                      // validator: (value) {
+                                      //   if (value.toString().isEmpty) {
+                                      //     setState(() {
+                                      //       isError = true;
+                                      //     });
+                                      //     return "Enter Your Company Name";
+                                      //   }
+                                      //   setState(() {
+                                      //     isError = false;
+                                      //   });
+                                      //   return null;
+                                      // },
+                                      // onSaved: (value) {
+                                      //   companyName = value.toString();
+                                      // },
+                                    ),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.w, top: 6.h, right: 7.w),
+                                  child: Container(
+                                    // height: MediaQuery.of(context).size.height *
+                                    //     0.053,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 21, 41, 104),
+                                      borderRadius:
+                                          BorderRadius.circular(radius_1),
+                                    ),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        //           elevation: MaterialStateProperty.resolveWith(
+                                        //     (states) => elevation_0),
+                                        // backgroundColor: MaterialStateColor.resolveWith(
+                                        //     (states) => Colors.black.withOpacity(0.01)),
+                                        backgroundColor:
+                                            const Color(0xFF000066),
+                                        fixedSize: Size(33.w, 7.h),
+                                      ),
+                                      onPressed: () async {
+                                        // if (_formKey.currentState!.validate()) {
+                                        //   _formKey.currentState!.save();
+                                        //   if (firebaseAuth
+                                        //       .currentUser!.emailVerified) {
+                                        //     firebaseAuth.currentUser!
+                                        //         .updateDisplayName(name);
+                                        //     String? id =
+                                        //         await runShipperApiPost(
+                                        //       emailId: firebaseAuth
+                                        //           .currentUser!.email
+                                        //           .toString(),
+
+                                        //       shipperName: name,
+                                        //       phoneNo: phoneNumber,
+                                        //       // phoneNo: firebaseAuth
+                                        //       //     .currentUser!.phoneNumber
+                                        //       //     .toString()
+                                        //       //     .replaceFirst("+91", ""),
+                                        //       companyName: companyName,
+                                        //     );
+                                        //     if (id != null) {
+                                        //       log('Shipper id--->$id');
+                                        //       if (!mounted) {
+                                        //         log('In not mounted');
+                                        //         return;
+                                        //       }
+                                        //       Navigator.pushReplacement(
+                                        //           context,
+                                        //           MaterialPageRoute(
+                                        //               builder: (context) =>
+                                        //                   const HomeScreenWeb()));
+                                        //     }
+                                        //   } else {
+                                        //     alertDialog(
+                                        //         "Verify Email",
+                                        //         "Verify your mail id to continue",
+                                        //         context);
+                                        //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
+                                        //   }
+                                        // }
+                                        if (companyNameController.text
+                                                .toString()
+                                                .isNotEmpty &&
+                                            nameController.text
+                                                .toString()
+                                                .isNotEmpty) {
+                                          updateDetails();
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  'Enter details (Company Name and Name)',
+                                              fontSize: size_8,
+                                              backgroundColor: Colors.white,
+                                              textColor: Colors.black);
+                                        }
+                                      },
+                                      child: Text(
+                                        "Confirm",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: screenHeight * 0.022,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
-                                    validator: (value){
-                                      // if(value.toString().isEmpty){
-                                      //   setState(() {
-                                      //     isError = true;
-                                      //   });
-                                      //   return "Enter your Company Address";
-                                      // }
-                                      setState(() {
-                                        isError = false;
-                                      });
-                                      return null;
-                                    },
-                                    onSaved: (value){
-                                      address = value.toString();
-                                    },
                                   ),
-                                ],
-                              ),
-                            ),//Address
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 50,),
-                      Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25),),
-                            backgroundColor: const Color(0xFF000066),
-                            fixedSize: Size(28.w, 7.h),
-                          ),
-                          onPressed: ()async{
-                            if(_formKey.currentState!.validate()){
-                              _formKey.currentState!.save();
-                              if(firebaseAuth.currentUser!.emailVerified){
-                                firebaseAuth.currentUser!.updateDisplayName(name);
-                                String? id = await runShipperApiPost(
-                                  emailId:firebaseAuth.currentUser!.email.toString(),
-                                  phoneNo: firebaseAuth.currentUser!.phoneNumber.toString().replaceFirst("+91", ""),
-                                  shipperName: name,
-                                  companyName: companyName,
-                                  gst: gstNumber,
-                                  address: address,
-                                );
-                                if(id!=null) {
-                                  log('Shipper id--->$id');
-                                  if(!mounted){ log('In not mounted');return ;}
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
-                                }
-                              }else{
-                                alertDialog("Verify Email", "Verify your mail id to continue", context);
-                               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
-                              }
-                            }
-                          },
-                          child: Text('Continue',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 4.3.sp,
-                              fontWeight: FontWeight.bold,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  updateDetails() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    if (firebaseAuth.currentUser!.emailVerified) {
+      firebaseAuth.currentUser!
+          .updateDisplayName(nameController.text.toString());
+      String? id = await runShipperApiPost(
+        emailId: firebaseAuth.currentUser!.email.toString(),
+        shipperName: nameController.text.toString(),
+        companyName: companyNameController.text.toString(),
+        phoneNo: phoneController.text.toString(),
+      );
+      if (id != null) {
+        log('Shipper id--->$id');
+        if (!mounted) {
+          log('In not mounted');
+          return;
+        }
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreenWeb()));
+      }
+    } else {
+      alertDialog("Verify Email", "Verify your mail id to continue", context);
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
+    }
   }
 }
