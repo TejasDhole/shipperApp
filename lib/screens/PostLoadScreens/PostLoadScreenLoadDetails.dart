@@ -1,6 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/Widgets/loadDetailsCommentWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingDateWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingTimeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/productTypeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/truckTypeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/tyresWebWidget.dart';
+import 'package:shipper_app/responsive.dart';
+import '../../Widgets/loadDetailsWebWidgets/loadPublishMethodWebWidget.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/providerClass/providerData.dart';
@@ -45,7 +54,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.fromLTRB(space_2, space_4, space_2, space_0),
+                      EdgeInsets.fromLTRB(space_4, space_4, space_2, space_0),
                   child: AddPostLoadHeader(
                     reset: true,
                     resetFunction: () {
@@ -64,7 +73,8 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                     },
                   ),
                 ),
-                SingleChildScrollView(
+                (Responsive.isMobile(context) || Responsive.isTablet(context))?
+                  SingleChildScrollView(
                   child: Padding(
                     padding:
                         EdgeInsets.fromLTRB(space_4, space_4, space_4, space_4),
@@ -164,9 +174,35 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                         SizedBox(height: space_3),
                         PriceTextFieldWidget(),
                         SizedBox(height: space_3),
-                        // SizedBox(height: space_18),
+                        LoadDetailsCommentWidget(),
+                        SizedBox(height: space_3),
                         ApplyButton(),
                         SizedBox(height: space_18),
+                      ],
+                    ),
+                  ),
+                )
+                  :SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TruckTypeWebWidget(),
+                        SizedBox(height:40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [ProductTypeWebWidget(),SizedBox(width:40,),TyresWebWidget()],
+                        ),
+                        SizedBox(height:40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [LoadingDateWebWidget(),SizedBox(width: 40,) ,LoadingTimeWebWidget()],
+                        ),
+                        SizedBox(height:40),
+                        LoadPublishMethodWebWidget(),
+                        SizedBox(height:40),
+                        LoadDetailsCommentWidget(),
                       ],
                     ),
                   ),

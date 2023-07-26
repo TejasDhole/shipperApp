@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:js_util';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -154,9 +155,13 @@ class ProviderData extends ChangeNotifier {
   String controller2 = "";
   bool PER_TRUCK = false;
   bool PER_TON = false;
+  String comment = "";
+  String scheduleLoadingDate = '';
   bool otpIsValid = true;
   String hintText = "enter price";
   Color borderColor = darkBlueColor;
+
+  String scheduleLoadingTime ='';
 
   String truckId = '';
 
@@ -265,6 +270,11 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateComment(value){
+    comment = value;
+    notifyListeners();
+  }
+
   void updateHintText(String value) {
     hintText = value;
     notifyListeners();
@@ -272,6 +282,16 @@ class ProviderData extends ChangeNotifier {
 
   void updateBorderColor(Color value) {
     borderColor = value;
+    notifyListeners();
+  }
+
+  void updateScheduleLoadingDate(value){
+    scheduleLoadingDate = value;
+    notifyListeners();
+  }
+
+  void updateScheduleLoadingTime(value){
+    scheduleLoadingTime = value;
     notifyListeners();
   }
 
@@ -491,6 +511,7 @@ class ProviderData extends ChangeNotifier {
     truckLengthValue = 0;
     // price = 0;
     driverIdValue = '';
+    comment = '';
     // unitValue = "";
     // resetUnitValue();
     notifyListeners();
@@ -503,6 +524,7 @@ class ProviderData extends ChangeNotifier {
     totalTyresValue = 0;
     truckNumber = 0;
     truckLengthValue = 0;
+    comment = '';
     price = 0;
     driverIdValue = '';
     unitValue = "";

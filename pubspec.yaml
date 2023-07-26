@@ -126,6 +126,8 @@ dependencies:
   image_gallery_saver: ^2.0.2 # alternative of gallery_saver
   dio: ^5.2.1+1
   webview_flutter: ^4.2.2
+  dropdown_search: ^5.0.6
+  table_calendar: ^3.0.9
 #  carp_background_location: ^3.0.1
 
   ## End of packages supported by only "Android"##
@@ -157,6 +159,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
+    - assets/images/truckTypeImage/
     - assets/background/
     - assets/icons/navigationIcons/
     - .env

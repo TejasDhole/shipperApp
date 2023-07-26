@@ -47,16 +47,51 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     } else {
       widthOfSideBar = 110;
     }
-    dashboardSelectedTabGradientColor = LinearGradient(colors: [
-      Color.fromRGBO(9, 183, 120, 0.3),
-      Color.fromRGBO(241, 240, 240, 0)
-    ]);
-    myLoadsSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
-    invoiceSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
-    accountSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
+    if(_selectedIndex==0){
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+        Color.fromRGBO(9, 183, 120, 0.3),
+        Color.fromRGBO(241, 240, 240, 0)
+      ]);
+    }
+    else{
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+    if(_selectedIndex == 1){
+      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+        Color.fromRGBO(9, 183, 120, 0.3),
+        Color.fromRGBO(241, 240, 240, 0)
+      ]);
+    }
+    else{
+      myLoadsSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+    if(_selectedIndex == 2){
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [
+            Color.fromRGBO(9, 183, 120, 0.3),
+            Color.fromRGBO(241, 240, 240, 0)
+          ]);
+    }
+    else{
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+    if(_selectedIndex ==3){
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [
+            Color.fromRGBO(9, 183, 120, 0.3),
+            Color.fromRGBO(241, 240, 240, 0)
+          ]);
+    }
+    else{
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+
     liveasySelectedTabGradientColor =
         LinearGradient(colors: [Colors.white, Colors.white]);
 
@@ -307,6 +342,55 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   }
 
   InkWell SideExpandedItem({required String title, required AssetImage icon}) {
+
+    if(_selectedIndex==0){
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+        Color.fromRGBO(9, 183, 120, 0.3),
+        Color.fromRGBO(241, 240, 240, 0)
+      ]);
+    }
+    else{
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+    if(_selectedIndex == 1){
+      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+        Color.fromRGBO(9, 183, 120, 0.3),
+        Color.fromRGBO(241, 240, 240, 0)
+      ]);
+    }
+    else{
+      myLoadsSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+    if(_selectedIndex == 2){
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [
+            Color.fromRGBO(9, 183, 120, 0.3),
+            Color.fromRGBO(241, 240, 240, 0)
+          ]);
+    }
+    else{
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+    if(_selectedIndex ==3){
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [
+            Color.fromRGBO(9, 183, 120, 0.3),
+            Color.fromRGBO(241, 240, 240, 0)
+          ]);
+    }
+    else{
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [Colors.white, Colors.white]);
+    }
+
+
+    liveasySelectedTabGradientColor =
+        LinearGradient(colors: [Colors.white, Colors.white]);
+
     return InkWell(
         onTap: () {
           setState(() {
