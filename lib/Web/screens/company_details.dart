@@ -31,7 +31,6 @@ class CompanyDetails extends StatefulWidget {
 }
 
 class _CompanyDetailsState extends State<CompanyDetails> {
-  
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? company;
@@ -81,297 +80,301 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       children: [
                         Form(
                           key: _formKey,
-                          child: Container(
-                            width: kIsWeb ? 55.w : 40.w,
-                            height: isError
-                                ? 50.h
-                                : MediaQuery.of(context).size.height * 1,
-                            
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                // TODO: Liveasy Logo
-                                Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: 7.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            image: AssetImage(
-                                                "assets/images/logoWebLogin.png")),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 1.w),
-                                          child: Text(
-                                            "Liveasy",
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 28,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color.fromARGB(
-                                                  255, 21, 41, 104),
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            // Here you can access the updated constraints
+                            // and adjust your widget sizes accordingly.
+
+                            double maxWidth = kIsWeb ? 55.w : 40.w;
+                            double containerHeight =
+                                isError ? 50.h : screenHeight * 1;
+
+                            return Container(
+                              width: maxWidth,
+                              height: containerHeight,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // TODO: Liveasy Logo
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 7.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.02,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.02,
+                                              image: AssetImage(
+                                                  "assets/images/logoWebLogin.png")),
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 1.w),
+                                            child: Text(
+                                              "Liveasy",
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color.fromARGB(
+                                                    255, 21, 41, 104),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 7.h),
-                                  child: Text("Company Details",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: screenHeight * 0.027,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color.fromARGB(255, 21, 41, 104),
-                                      )),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 1.5.h),
-                                  child: Text(
-                                      "Enter the company details to land into\nhomepage",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromARGB(
-                                              255, 197, 195, 195))),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 10.w, top: 7.h, right: 7.w),
-                                  child: Container(
-                                    color: white,
-                                    child: TextFormField(
-                                      controller: nameController,
-                                      autofocus: true,
-                                      // autofillHints: ,
-                                      decoration: InputDecoration(
-                                        suffixIcon: Transform.scale(
-                                          scale: 1.5,
-                                          child: const Image(
-                                              image: AssetImage(
-                                                  "assets/images/UserRounded.png")),
-                                        ),
-                                        hintStyle: TextStyle(
-                                            decorationColor: Color.fromARGB(
-                                                255, 197, 195, 195),
-                                            fontSize: 2.h,
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 7.h),
+                                    child: Text("Company Details",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: screenHeight * 0.027,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              Color.fromARGB(255, 21, 41, 104),
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 1.5.h),
+                                    child: Text(
+                                        "Enter the company details to land into\nhomepage",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
                                             color: Color.fromARGB(
-                                                255, 217, 217, 217)),
-                                        hintText: 'Name',
-                                        //labelText: 'Email Id',
-                                        contentPadding:
-                                            EdgeInsets.only(left: 3.h),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
+                                                255, 197, 195, 195))),
+                                  ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 10.w, top: 7.h, right: 7.w),
+                                    child: Container(
+                                      color: white,
+                                      child: TextFormField(
+                                        controller: nameController,
+                                        autofocus: true,
+                                        // autofillHints: ,
+                                        decoration: InputDecoration(
+                                          suffixIcon: Transform.scale(
+                                            scale: 1.5,
+                                            child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/UserRounded.png")),
+                                          ),
+                                          hintStyle: TextStyle(
+                                              decorationColor: Color.fromARGB(
+                                                  255, 197, 195, 195),
+                                              fontSize: 2.h,
+                                              color: Color.fromARGB(
+                                                  255, 217, 217, 217)),
+                                          hintText: 'Name',
+                                          //labelText: 'Email Id',
+                                          contentPadding:
+                                              EdgeInsets.only(left: 3.h),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                          ),
                                         ),
+
+                                        style: GoogleFonts.montserrat(
+                                            color: black,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: screenHeight * 0.019),
                                       ),
-                                      
-                                      style: GoogleFonts.montserrat(
+                                    ),
+                                  ),
+                                  //Phone Field
+
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 10.w, top: 6.h, right: 7.w),
+                                    child: Container(
+                                      color: white,
+                                      child: TextFormField(
+                                        controller: phoneController,
+                                        keyboardType: TextInputType.phone,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(10)
+                                        ],
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          suffixIcon: Transform.scale(
+                                            scale: 1.5,
+                                            child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/PhoneRounded.png")),
+                                          ),
+                                          hintStyle: TextStyle(
+                                              decorationColor: Color.fromARGB(
+                                                  255, 197, 195, 195),
+                                              fontSize: 2.h,
+                                              color: Color.fromARGB(
+                                                  255, 217, 217, 217)),
+                                          hintText: 'Phone Number',
+                                          contentPadding:
+                                              EdgeInsets.only(left: 3.h),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                          ),
+                                        ),
+                                        style: GoogleFonts.montserrat(
                                           color: black,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: screenHeight * 0.019),
-                                    ),
-                                  ),
-                                ),
-                                //Phone Field
-
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 10.w, top: 6.h, right: 7.w),
-                                  child: Container(
-                                    color: white,
-                                    child: TextFormField(
-                                      controller: phoneController,
-                                      keyboardType: TextInputType.phone,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(10)
-                                      ],
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-                                        suffixIcon: Transform.scale(
-                                          scale: 1.5,
-                                          child: const Image(
-                                              image: AssetImage(
-                                                  "assets/images/PhoneRounded.png")),
+                                          fontSize: screenHeight * 0.019,
                                         ),
-                                        hintStyle: TextStyle(
-                                            decorationColor: Color.fromARGB(
-                                                255, 197, 195, 195),
-                                            fontSize: 2.h,
-                                            color: Color.fromARGB(
-                                                255, 217, 217, 217)),
-                                        hintText: 'Phone Number',
-                                        contentPadding:
-                                            EdgeInsets.only(left: 3.h),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
-                                        ),
-                                      ),
-                                      
-                                      style: GoogleFonts.montserrat(
-                                        color: black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: screenHeight * 0.019,
                                       ),
                                     ),
                                   ),
-                                ),
 
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 10.w, top: 6.h, right: 7.w),
-                                  child: Container(
-                                    color: white,
-                                    child: TextFormField(
-                                      controller: companyNameController,
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-                                        suffixIcon: Transform.scale(
-                                          scale: 1.5,
-                                          child: const Image(
-                                              image: AssetImage(
-                                                  "assets/images/Buildings.png")),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 10.w, top: 6.h, right: 7.w),
+                                    child: Container(
+                                      color: white,
+                                      child: TextFormField(
+                                        controller: companyNameController,
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          suffixIcon: Transform.scale(
+                                            scale: 1.5,
+                                            child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/Buildings.png")),
+                                          ),
+                                          hintStyle: TextStyle(
+                                              decorationColor: Color.fromARGB(
+                                                  255, 197, 195, 195),
+                                              fontSize: 2.h,
+                                              color: Color.fromARGB(
+                                                  255, 217, 217, 217)),
+                                          hintText: 'Company Details',
+                                          contentPadding:
+                                              EdgeInsets.only(left: 3.h),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                          ),
                                         ),
-                                        hintStyle: TextStyle(
-                                            decorationColor: Color.fromARGB(
-                                                255, 197, 195, 195),
-                                            fontSize: 2.h,
-                                            color: Color.fromARGB(
-                                                255, 217, 217, 217)),
-                                        hintText: 'Company Details',
-                                        contentPadding:
-                                            EdgeInsets.only(left: 3.h),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
-                                        ),
-                                      ),
-                                    
-                                      
-                                      style: GoogleFonts.montserrat(
-                                        color: black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: screenHeight * 0.019,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 10.w, top: 6.h, right: 7.w),
-                                  child: Container(
-                                    // height: MediaQuery.of(context).size.height *
-                                    //     0.053,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 21, 41, 104),
-                                      borderRadius:
-                                          BorderRadius.circular(radius_1),
-                                    ),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        
-                                        backgroundColor:
-                                            const Color(0xFF000066),
-                                        fixedSize: Size(33.w, 7.h),
-                                      ),
-                                      onPressed: () async {
-                                        // if (_formKey.currentState!.validate()) {
-                                        //   _formKey.currentState!.save();
-                                        //   if (firebaseAuth
-                                        //       .currentUser!.emailVerified) {
-                                        //     firebaseAuth.currentUser!
-                                        //         .updateDisplayName(name);
-                                        //         print(name);
-                                        //     String? id =
-                                        //         await runShipperApiPost(
-
-                                        //       emailId: firebaseAuth
-                                        //           .currentUser!.email
-                                        //           .toString(),
-                                        //       shipperName: name,
-                                        //       //phoneNo: phoneNumber,
-                                        //       phoneNo: firebaseAuth
-                                        //           .currentUser!.phoneNumber
-                                        //           .toString()
-                                        //           .replaceFirst("+91", ""),
-                                        //       companyName: companyName,
-
-                                        //     );
-                                        //     if (id != null) {
-                                        //       log('Shipper id--->$id');
-                                        //       if (!mounted) {
-                                        //         log('In not mounted');
-                                        //         return;
-                                        //       }
-                                        //       Navigator.pushReplacement(
-                                        //           context,
-                                        //           MaterialPageRoute(
-                                        //               builder: (context) =>
-                                        //                   const HomeScreenWeb()));
-                                        //     }
-                                        //   } else {
-                                        //     alertDialog(
-                                        //         "Verify Email",
-                                        //         "Verify your mail id to continue",
-                                        //         context);
-                                        //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
-                                        //   }
-                                        // }
-                                        try {
-                                          if (companyNameController.text
-                                                  .toString()
-                                                  .isNotEmpty &&
-                                              nameController.text
-                                                  .toString()
-                                                  .isNotEmpty) {
-                                            updateDetails();
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Enter details (Company Name and Name)',
-                                                fontSize: size_8,
-                                                backgroundColor: Colors.white,
-                                                textColor: Colors.black);
-                                          }
-                                        } catch (e) {
-                                          log('Not updating--->$e');
-                                        }
-                                      },
-                                      child: Text(
-                                        "Confirm",
                                         style: GoogleFonts.montserrat(
-                                            fontSize: screenHeight * 0.022,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
+                                          color: black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: screenHeight * 0.019,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 10.w, top: 6.h, right: 7.w),
+                                    child: Container(
+                                      // height: MediaQuery.of(context).size.height *
+                                      //     0.053,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        color: Color.fromARGB(255, 21, 41, 104),
+                                        borderRadius:
+                                            BorderRadius.circular(radius_1),
+                                      ),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          backgroundColor:
+                                              const Color(0xFF000066),
+                                          fixedSize: Size(33.w, 7.h),
+                                        ),
+                                        onPressed: () async {
+                                          // if (_formKey.currentState!.validate()) {
+                                          //   _formKey.currentState!.save();
+                                          //   if (firebaseAuth
+                                          //       .currentUser!.emailVerified) {
+                                          //     firebaseAuth.currentUser!
+                                          //         .updateDisplayName(name);
+                                          //         print(name);
+                                          //     String? id =
+                                          //         await runShipperApiPost(
+
+                                          //       emailId: firebaseAuth
+                                          //           .currentUser!.email
+                                          //           .toString(),
+                                          //       shipperName: name,
+                                          //       //phoneNo: phoneNumber,
+                                          //       phoneNo: firebaseAuth
+                                          //           .currentUser!.phoneNumber
+                                          //           .toString()
+                                          //           .replaceFirst("+91", ""),
+                                          //       companyName: companyName,
+
+                                          //     );
+                                          //     if (id != null) {
+                                          //       log('Shipper id--->$id');
+                                          //       if (!mounted) {
+                                          //         log('In not mounted');
+                                          //         return;
+                                          //       }
+                                          //       Navigator.pushReplacement(
+                                          //           context,
+                                          //           MaterialPageRoute(
+                                          //               builder: (context) =>
+                                          //                   const HomeScreenWeb()));
+                                          //     }
+                                          //   } else {
+                                          //     alertDialog(
+                                          //         "Verify Email",
+                                          //         "Verify your mail id to continue",
+                                          //         context);
+                                          //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
+                                          //   }
+                                          // }
+                                          try {
+                                            if (companyNameController.text
+                                                    .toString()
+                                                    .isNotEmpty &&
+                                                nameController.text
+                                                    .toString()
+                                                    .isNotEmpty) {
+                                              updateDetails();
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Enter details (Company Name and Name)',
+                                                  fontSize: size_8,
+                                                  backgroundColor: Colors.white,
+                                                  textColor: Colors.black);
+                                            }
+                                          } catch (e) {
+                                            log('Not updating--->$e');
+                                          }
+                                        },
+                                        child: Text(
+                                          "Confirm",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: screenHeight * 0.022,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                         ),
                       ],
                     ),
