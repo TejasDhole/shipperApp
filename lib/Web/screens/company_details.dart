@@ -9,13 +9,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
-import '../../constants/colors.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/elevation.dart';
 import '../../constants/fontSize.dart';
 import '../../constants/radius.dart';
 import '../../constants/spaces.dart';
+import '../../controller/hudController.dart';
+import '../../controller/isOtpInvalidController.dart';
 import '../../controller/shipperIdController.dart';
+import '../../controller/timerController.dart';
 import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'package:sizer/sizer.dart';
@@ -28,17 +31,18 @@ class CompanyDetails extends StatefulWidget {
 }
 
 class _CompanyDetailsState extends State<CompanyDetails> {
+  
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // late String companyName;
-  // late String name;
-  // late String phoneNumber;
+  String? company;
+  String? name;
+  String? phone;
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   String? shipperId;
   TextEditingController companyNameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  // late String address;
+
   bool isError = false;
 
   @override
@@ -82,11 +86,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             height: isError
                                 ? 50.h
                                 : MediaQuery.of(context).size.height * 1,
-                            // decoration: BoxDecoration(
-                            //   border: Border.all(),
-                            //   borderRadius:
-                            //       const BorderRadius.all(Radius.circular(30)),
-                            // ),
+                            
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -179,25 +179,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                               Radius.circular(5)),
                                         ),
                                       ),
+                                      
                                       style: GoogleFonts.montserrat(
                                           color: black,
                                           fontWeight: FontWeight.w400,
                                           fontSize: screenHeight * 0.019),
-                                      // validator: (value) {
-                                      //   if (value.toString().isEmpty) {
-                                      //     setState(() {
-                                      //       isError = true;
-                                      //     });
-                                      //     return "Enter Your Name";
-                                      //   }
-                                      //   setState(() {
-                                      //     isError = false;
-                                      //   });
-                                      //   return null;
-                                      // },
-                                      // onSaved: (value) {
-                                      //   name = value.toString();
-                                      // },
                                     ),
                                   ),
                                 ),
@@ -237,26 +223,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                               Radius.circular(5)),
                                         ),
                                       ),
+                                      
                                       style: GoogleFonts.montserrat(
                                         color: black,
                                         fontWeight: FontWeight.w400,
                                         fontSize: screenHeight * 0.019,
                                       ),
-                                      // validator: (value) {
-                                      //   if (value.toString().isEmpty) {
-                                      //     setState(() {
-                                      //       isError = true;
-                                      //     });
-                                      //     return "Enter Your Phone Number";
-                                      //   }
-                                      //   setState(() {
-                                      //     isError = false;
-                                      //   });
-                                      //   return null;
-                                      // },
-                                      // onSaved: (value) {
-                                      //   phoneNumber = value.toString();
-                                      // },
                                     ),
                                   ),
                                 ),
@@ -290,26 +262,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                               Radius.circular(5)),
                                         ),
                                       ),
+                                    
+                                      
                                       style: GoogleFonts.montserrat(
                                         color: black,
                                         fontWeight: FontWeight.w400,
                                         fontSize: screenHeight * 0.019,
                                       ),
-                                      // validator: (value) {
-                                      //   if (value.toString().isEmpty) {
-                                      //     setState(() {
-                                      //       isError = true;
-                                      //     });
-                                      //     return "Enter Your Company Name";
-                                      //   }
-                                      //   setState(() {
-                                      //     isError = false;
-                                      //   });
-                                      //   return null;
-                                      // },
-                                      // onSaved: (value) {
-                                      //   companyName = value.toString();
-                                      // },
                                     ),
                                   ),
                                 ),
@@ -332,10 +291,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
-                                        //           elevation: MaterialStateProperty.resolveWith(
-                                        //     (states) => elevation_0),
-                                        // backgroundColor: MaterialStateColor.resolveWith(
-                                        //     (states) => Colors.black.withOpacity(0.01)),
+                                        
                                         backgroundColor:
                                             const Color(0xFF000066),
                                         fixedSize: Size(33.w, 7.h),
@@ -347,19 +303,21 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         //       .currentUser!.emailVerified) {
                                         //     firebaseAuth.currentUser!
                                         //         .updateDisplayName(name);
+                                        //         print(name);
                                         //     String? id =
                                         //         await runShipperApiPost(
+
                                         //       emailId: firebaseAuth
                                         //           .currentUser!.email
                                         //           .toString(),
-
                                         //       shipperName: name,
-                                        //       phoneNo: phoneNumber,
-                                        //       // phoneNo: firebaseAuth
-                                        //       //     .currentUser!.phoneNumber
-                                        //       //     .toString()
-                                        //       //     .replaceFirst("+91", ""),
+                                        //       //phoneNo: phoneNumber,
+                                        //       phoneNo: firebaseAuth
+                                        //           .currentUser!.phoneNumber
+                                        //           .toString()
+                                        //           .replaceFirst("+91", ""),
                                         //       companyName: companyName,
+
                                         //     );
                                         //     if (id != null) {
                                         //       log('Shipper id--->$id');
@@ -381,20 +339,24 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
                                         //   }
                                         // }
-                                        if (companyNameController.text
-                                                .toString()
-                                                .isNotEmpty &&
-                                            nameController.text
-                                                .toString()
-                                                .isNotEmpty) {
-                                          updateDetails();
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  'Enter details (Company Name and Name)',
-                                              fontSize: size_8,
-                                              backgroundColor: Colors.white,
-                                              textColor: Colors.black);
+                                        try {
+                                          if (companyNameController.text
+                                                  .toString()
+                                                  .isNotEmpty &&
+                                              nameController.text
+                                                  .toString()
+                                                  .isNotEmpty) {
+                                            updateDetails();
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    'Enter details (Company Name and Name)',
+                                                fontSize: size_8,
+                                                backgroundColor: Colors.white,
+                                                textColor: Colors.black);
+                                          }
+                                        } catch (e) {
+                                          log('Not updating--->$e');
                                         }
                                       },
                                       child: Text(
@@ -428,20 +390,27 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     if (firebaseAuth.currentUser!.emailVerified) {
       firebaseAuth.currentUser!
           .updateDisplayName(nameController.text.toString());
-      String? id = await runShipperApiPost(
-        emailId: firebaseAuth.currentUser!.email.toString(),
-        shipperName: nameController.text.toString(),
-        companyName: companyNameController.text.toString(),
-        phoneNo: phoneController.text.toString(),
-      );
-      if (id != null) {
-        log('Shipper id--->$id');
-        if (!mounted) {
-          log('In not mounted');
-          return;
+      name = nameController.text.toString();
+      company = companyNameController.text.toString();
+      phone = phoneController.text.toString();
+      try {
+        String? id = await runShipperApiPost(
+          emailId: firebaseAuth.currentUser!.email.toString(),
+          shipperName: name,
+          companyName: company,
+          phoneNo: phone,
+        );
+        if (id != null) {
+          log('Shipper id--->$id');
+          if (!mounted) {
+            log('In not mounted');
+            return;
+          }
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => HomeScreenWeb()));
         }
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeScreenWeb()));
+      } catch (e) {
+        log('Not updating--->$e');
       }
     } else {
       alertDialog("Verify Email", "Verify your mail id to continue", context);
