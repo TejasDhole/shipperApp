@@ -7,12 +7,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //TODO:all details not fetched
 Future<String> updateShipperApi(
-    {required String comapnyStatus,
-    required String transporterId}) async {
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+    {required String comapnyStatus, required String transporterId}) async {
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   final String transporterApiUrl = dotenv.get('shipperApiUrl');
-
 
   Map data = {"companyStatus": comapnyStatus};
   String body = json.encode(data);
@@ -28,9 +25,11 @@ Future<String> updateShipperApi(
     String shipperId = decodedResponse["shipperId"];
     bool transporterApproved =
         decodedResponse["transporterApproved"].toString() == "true";
-    bool companyApproved = decodedResponse["companyApproved"].toString() == "true";
+    bool companyApproved =
+        decodedResponse["companyApproved"].toString() == "true";
     String companyStatus = decodedResponse["companyStatus"];
-    bool accountVerificationInProgress = decodedResponse["accountVerificationInProgress"].toString() == "true";
+    bool accountVerificationInProgress =
+        decodedResponse["accountVerificationInProgress"].toString() == "true";
     String mobileNum = decodedResponse["phoneNo"] != null
         ? decodedResponse["phoneNo"].toString()
         : "";

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kLiveasyColor = Color(0xFF000066);
-const Color statusBarColor = Color(0xFFFFFFFF);
+const Color statusBarColor = Color.fromARGB(255, 8, 25, 70);
 const Color darkBlueColor = Color(0xFF152968);
 const Color lineGreyColor = Color(0xFFA6A6A6);
 const Color shareImageTextColor = Color(0xFF3A3A3A);
@@ -32,6 +32,13 @@ const Color black_87 = Colors.black87;
 const Color loadingWidgetColor = Colors.lightBlueAccent;
 const Color inactiveBidding = Color(0xffC4C9D9);
 const Color cancelledBiddingBackground = Color(0xffD0D4E1);
+const Color greyShade = Color.fromARGB(255, 197, 195, 195);
+const Color hintTextColor = Color.fromARGB(255, 217, 217, 217);
+const Color darkGreyish = Color.fromARGB(255, 160, 160, 160);
+const Color textGreyColor = Color.fromARGB(255, 211, 202, 202);
+//const Color 
+const Color darkBlueTextColor = Color.fromARGB(255, 21, 41, 104);
+const Color formBackground = Color.fromARGB(255, 245, 246, 250);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 
@@ -52,9 +59,10 @@ Color veryDarkGrey = const Color(0xFF555454);
 Color shareButtonColor = const Color(0xFF09B778);
 
 //dont make this const
-dynamic activeButtonColor = MaterialStateProperty.all<Color>(const Color(0xff152968));
+dynamic activeButtonColor =
+    MaterialStateProperty.all<Color>(const Color(0xff152968));
 dynamic deactiveButtonColor =
-MaterialStateProperty.all<Color>(const Color(0xFFC4C9D9));
+    MaterialStateProperty.all<Color>(const Color(0xFFC4C9D9));
 
 Color borderLightColor = const Color(0xFF878787);
 Color textLightColor = const Color(0xFF979797);
@@ -64,7 +72,7 @@ Color truckGreen = const Color(0xFF09B778);
 Color blueTitleColor = const Color(0xFF152968);
 Color unactiveReset = const Color(0xffC4C9D9);
 dynamic greyishWhiteColorM =
-MaterialStateProperty.all<Color>(greyishWhiteColor);
+    MaterialStateProperty.all<Color>(greyishWhiteColor);
 
 Color darkCharcoal = const Color(0xFF333333);
 const Color red = Colors.red;

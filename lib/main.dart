@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  getSharedPrefs() async{
+  getSharedPrefs() async {
     prefs = await SharedPreferences.getInstance();
   }
 
@@ -143,6 +143,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //     statusBarColor: Colors.transparent,
+    //     statusBarIconBrightness: Brightness.dark));
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -154,15 +157,18 @@ class _MyAppState extends State<MyApp> {
             return Sizer(builder: (context, orientation, deviceType) {
               return kIsWeb
                   ? GetMaterialApp(
+                    
                       debugShowCheckedModeBanner: false,
                       builder: EasyLoading.init(),
                       theme: ThemeData(fontFamily: "Montserrat"),
                       translations: LocalizationService(),
                       locale: LocalizationService().getCurrentLocale(),
                       fallbackLocale: const Locale('en', 'US'),
-                //TODO: for home screen in web app we are looking whether used is checked for "Keep me logged in" while logging in.
-                //TODO: so according if user enabled that we are navigating directly to HomeScreen of web, else user is asked for login
-                      home: prefs.containsKey('uid')?const HomeScreenWeb():const LoginWeb(),
+                      //TODO: for home screen in web app we are looking whether used is checked for "Keep me logged in" while logging in.
+                      //TODO: so according if user enabled that we are navigating directly to HomeScreen of web, else user is asked for login
+                      home: prefs.containsKey('uid')
+                          ? const HomeScreenWeb()
+                          : const LoginWeb(),
                     )
                   : FutureBuilder(
                       future: firebase,
