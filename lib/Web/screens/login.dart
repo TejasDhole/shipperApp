@@ -2,26 +2,29 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Web/screens/login_phone_no.dart';
+import 'package:shipper_app/Widgets/buttons/ConfirmButton.dart';
+import 'package:shipper_app/Widgets/webHeader.dart';
+import 'package:shipper_app/Widgets/webLoginLeftPart.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/radius.dart';
 import 'package:shipper_app/constants/spaces.dart';
+import 'package:shipper_app/functions/alert_dialog.dart';
+import 'package:shipper_app/functions/firebaseAuthentication/signIn.dart';
+import 'package:shipper_app/functions/firebaseAuthentication/signInWithGoogle.dart';
+import 'package:shipper_app/functions/loadOnGoingData.dart';
+import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import 'package:shipper_app/models/shipperModel.dart';
-import '../../Widgets/buttons/signUpWithGoogleButton.dart';
-import '../../functions/firebaseAuthentication/signIn.dart';
-import '../../functions/firebaseAuthentication/signInWithGoogle.dart';
-import '../../functions/loadOnGoingData.dart';
-import '../../functions/shipperApis/runShipperApiPost.dart';
-import '../../screens/LoginScreens/CompanyDetailsForm.dart';
-import '../../screens/navigationScreen.dart';
+import 'package:shipper_app/widgets/buttons/signUpWithGoogleButton.dart';
+//import '../../screens/LoginScreens/CompanyDetailsForm.dart';
+//import '../../screens/navigationScreen.dart';
 import '/Web/screens/home_web.dart';
-import '/Widgets/liveasy_Icon_Widgets.dart';
+//import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'company_details.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '/../functions/alert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginWeb extends StatefulWidget {
@@ -48,113 +51,18 @@ class _LoginWebState extends State<LoginWeb> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Center(
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Row(
               children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    double maxContainerWidth = screenWidth * 0.5;
-
-                    // constraints to dynamically adjust the widget sizes.
-                    double containerWidth =
-                        constraints.maxWidth < maxContainerWidth
-                            ? constraints.maxWidth
-                            : maxContainerWidth;
-                    return Container(
-                      width: containerWidth,
-                      height: screenHeight,
-
-                      decoration: const BoxDecoration(
-                          color: white,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: AssetImage(
-                                  "assets/images/WebLoginImage.png"))), // Replace with your desired color or widget
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height *
-                                          0.04),
-                                  child: Text("Welcome to Liveasy",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.03,
-                                          color: white,
-                                          fontWeight: FontWeight.w500)),
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.004),
-                                Text(
-                                    "One-stop solution for all your logistics operations.\nSign in to unlock new levels of efficiency, transparency, and success.",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w400,
-                                        color: white,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.01))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height * 0.1),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      "Elevate your business to new heights of success!",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.02,
-                                          color: white,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.01),
-                                  Text("Quality experience on all device",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w400,
-                                          color: white,
-                                          fontSize: 13))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
+                const WebLoginLeftPart(),
                 Expanded(
                   child: Container(
-                    color: Color.fromARGB(255, 245, 246, 250),
-                    // color: Colors
-                    //     .blue, // Replace with your desired color or widget
+                    color: formBackground,
+                   
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,8 +71,7 @@ class _LoginWebState extends State<LoginWeb> {
                           key: _formKey,
                           child: LayoutBuilder(builder: (context, constraints) {
                             double maxWidth = kIsWeb ? 55.w : 40.w;
-                            double containerHeight =
-                                isError ? 50.h : screenHeight * 1;
+                            double containerHeight = isError ? 50.h : screenHeight * 1;
                             return Container(
                               //width: MediaQuery.of(context).size.width,
                               width: maxWidth,
@@ -172,40 +79,7 @@ class _LoginWebState extends State<LoginWeb> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 5.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.02,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.02,
-                                              image: AssetImage(
-                                                  "assets/images/logoWebLogin.png")),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 1.w),
-                                            child: Text("Liveasy",
-                                                style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Color.fromARGB(
-                                                        255, 21, 41, 104),
-                                                    fontSize: 28)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
+                                  const WebHeader(),
                                   Center(
                                     child: Padding(
                                       padding: EdgeInsets.only(top: 2.h),
@@ -213,8 +87,7 @@ class _LoginWebState extends State<LoginWeb> {
                                           "Efficiency at your finger tips",
                                           style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w400,
-                                              color: Color.fromARGB(
-                                                  255, 21, 41, 104),
+                                              color: darkBlueTextColor,
                                               fontSize: 15)),
                                     ),
                                   ),
@@ -222,14 +95,12 @@ class _LoginWebState extends State<LoginWeb> {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 10.w, top: 5.h),
+                                        padding: EdgeInsets.only(left: 10.w, top: 5.h),
                                         child: Text(
                                           'Email Address',
                                           style: GoogleFonts.montserrat(
                                             fontSize: 20,
-                                            color: Color.fromARGB(
-                                                255, 21, 41, 104),
+                                            color: darkBlueTextColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -247,18 +118,14 @@ class _LoginWebState extends State<LoginWeb> {
                                         autofillHints: autofillHints,
                                         decoration: InputDecoration(
                                           hintStyle: TextStyle(
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor: Color.fromARGB(
-                                                  255, 197, 195, 195),
+                                              decoration: TextDecoration.underline,
+                                              decorationColor: greyShade,
                                               fontSize: 2.h,
-                                              color: Color.fromARGB(
-                                                  255, 217, 217, 217)),
+                                              color: hintTextColor),
                                           hintText: 'joshua07@gmail.com',
-                                          //labelText: 'Email Id',
                                           contentPadding:
                                               EdgeInsets.only(left: 3.h),
-                                          border: OutlineInputBorder(
+                                          border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(5)),
                                           ),
@@ -291,16 +158,13 @@ class _LoginWebState extends State<LoginWeb> {
                                   Row(
                                     children: [
                                       Padding(
-                                        // padding: EdgeInsets.only(
-                                        //     left: kIsWeb ? 3.w : 10, top: 3.h),
                                         padding: EdgeInsets.only(
                                             left: 10.w, top: 3.h),
                                         child: Text(
                                           'Password',
                                           style: GoogleFonts.montserrat(
                                             fontSize: 20,
-                                            color: Color.fromARGB(
-                                                255, 21, 41, 104),
+                                            color: darkBlueTextColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -315,33 +179,22 @@ class _LoginWebState extends State<LoginWeb> {
                                       color: white,
                                       child: TextFormField(
                                         obscureText: passwordVisible,
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
+                                        textAlignVertical: TextAlignVertical.center,
                                         decoration: InputDecoration(
                                           hintStyle: GoogleFonts.roboto(
                                               fontSize: 2.h,
                                               fontWeight: FontWeight.w600,
-                                              color: Color.fromARGB(
-                                                  255, 197, 195, 195)),
-                                          // prefixIcon: Icon(Icons.lock),
-                                          // prefixIconColor: Colors.grey[350],
+                                              color: greyShade),
                                           hintText: '***********',
-                                          contentPadding:
-                                              EdgeInsets.only(left: 3.h),
+                                          contentPadding: EdgeInsets.only(left: 3.h),
                                           border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5)),
-                                          ),
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),),
                                           suffixIcon: IconButton(
-                                            color: Color.fromARGB(
-                                                255, 197, 195, 195),
-                                            icon: Icon(passwordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
+                                            color: greyShade,
+                                            icon: Icon(passwordVisible ? Icons.visibility_off : Icons.visibility),
                                             onPressed: () {
                                               setState(() {
-                                                passwordVisible =
-                                                    !passwordVisible;
+                                                passwordVisible = !passwordVisible;
                                               });
                                             },
                                           ),
@@ -370,80 +223,28 @@ class _LoginWebState extends State<LoginWeb> {
                                       ),
                                     ),
                                   ),
-                                  //TODO : check box for keep me logged in
-                                  // Padding(
-                                  //   padding: EdgeInsets.only(left: 3.w, top: 1.h),
-                                  //   child: TextButton.icon(
-                                  //     onPressed: () {
-                                  //       setState(() {
-                                  //         isChecked = !isChecked;
-                                  //       });
-                                  //     },
-                                  //     icon: isChecked
-                                  //         ? const Icon(
-                                  //             Icons.check_box,
-                                  //           )
-                                  //         : const Icon(
-                                  //             Icons.check_box_outline_blank,
-                                  //             color: Colors.black,
-                                  //           ),
-                                  //     label: const Text(
-                                  //       "Keep me logged in",
-                                  //       style: TextStyle(
-                                  //         fontSize: 16,
-                                  //         fontWeight: FontWeight.bold,
-                                  //         color: Colors.black,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-
+                                  
                                   //TODO : Sign In button
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: 7.w, top: 5.h, right: 4.w),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        backgroundColor:
-                                            const Color(0xFF000066),
-                                        fixedSize: Size(33.w, 7.h),
-                                      ),
-                                      onPressed: () async {
+                                    child: ConfirmButton(text: 'Sign in', 
+                                    onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
                                           try {
-                                            UserCredential firebaseUser =
-                                                await signIn(
-                                                    email, password, context);
-                                            SharedPreferences prefs =
-                                                await SharedPreferences
-                                                    .getInstance();
+                                            UserCredential firebaseUser = await signIn(email, password, context);
+                                            SharedPreferences prefs = await SharedPreferences.getInstance();
                                             if (isChecked) {
-                                              prefs.setString('uid',
-                                                  firebaseUser.user!.uid);
+                                              prefs.setString('uid',firebaseUser.user!.uid);
                                             }
-                                            // if (firebaseUser.user!.phoneNumber ==
-                                            //     null) {
-                                            //   Navigator.pushReplacement(
-                                            //       context,
-                                            //       MaterialPageRoute(
-                                            //           builder: (context) =>
-                                            //               const LoginWebPhone()));
-                                            // }
-                                            if (firebaseUser
-                                                    .user!.displayName ==
-                                                null) {
+                                            if (firebaseUser.user!.displayName == null) {
                                               Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           const CompanyDetails()));
-                                            } else if (firebaseUser
-                                                .user!.emailVerified) {
+                                            } else if (firebaseUser.user!.emailVerified) {
                                               Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
@@ -451,9 +252,7 @@ class _LoginWebState extends State<LoginWeb> {
                                                           const HomeScreenWeb()));
                                             } else {
                                               alertDialog(
-                                                  "Verify Your Mail",
-                                                  "Please verify your \n mail id to continue",
-                                                  context);
+                                                  "Verify Your Mail", "Please verify your \n mail id to continue", context);
                                               // firebaseUser.user!.sendEmailVerification();
                                             }
                                           } catch (e) {
@@ -461,15 +260,7 @@ class _LoginWebState extends State<LoginWeb> {
                                           }
                                         }
                                       },
-                                      child: Text(
-                                        'Sign in',
-                                        style: GoogleFonts.montserrat(
-                                          color: Colors.white,
-                                          fontSize: 4.sp,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
+                                    )
                                   ),
 
                                   //Forget Password
@@ -482,8 +273,7 @@ class _LoginWebState extends State<LoginWeb> {
                                           style: GoogleFonts.montserrat(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w400,
-                                              color: Color.fromARGB(
-                                                  255, 197, 195, 195))),
+                                              color: greyShade)),
                                     ),
                                   ),
 
@@ -491,21 +281,13 @@ class _LoginWebState extends State<LoginWeb> {
                                     height: space_4,
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(
-                                      left: 140,
-                                      right: 100,
-                                    ),
-                                    //width: 2000,
+                                    padding: const EdgeInsets.only(left: 140, right: 100),
                                     child: Row(
                                       children: [
                                         Expanded(
                                             child: Container(
-                                          // width:
-                                          //     MediaQuery.of(context).size.width *
-                                          //         0.4,
                                           height: 1,
-                                          color: Color.fromARGB(
-                                              255, 160, 160, 160),
+                                          color: darkGreyish,
                                         )),
                                         SizedBox(
                                           width: space_5,
@@ -516,8 +298,7 @@ class _LoginWebState extends State<LoginWeb> {
                                             decoration: TextDecoration.none,
                                             fontSize: size_10,
                                             fontWeight: FontWeight.w600,
-                                            color: const Color.fromARGB(
-                                                255, 211, 202, 202),
+                                            color: textGreyColor,
                                           ),
                                         ),
                                         SizedBox(
@@ -525,11 +306,8 @@ class _LoginWebState extends State<LoginWeb> {
                                         ),
                                         Expanded(
                                             child: Container(
-                                          // width:
-                                          //     MediaQuery.of(context).size.width,
                                           height: 1,
-                                          color: Color.fromARGB(
-                                              255, 160, 160, 160),
+                                          color: darkGreyish,
                                         )),
                                       ],
                                     ),
@@ -539,32 +317,22 @@ class _LoginWebState extends State<LoginWeb> {
                                         left: 10.w, right: 7.w, top: 6.h),
                                     decoration: BoxDecoration(
                                       color: widgetBackGroundColor,
-                                      borderRadius:
-                                          BorderRadius.circular(radius_1),
+                                      borderRadius: BorderRadius.circular(radius_1),
                                     ),
                                     child: SignUpWithGoogleButton(
                                       onPressed: () async {
                                         try {
-                                          UserCredential firebaseUser =
-                                              await signInWithGoogle();
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.setString(
-                                              'uid', firebaseUser.user!.uid);
+                                          UserCredential firebaseUser = await signInWithGoogle();
+                                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                                          prefs.setString('uid', firebaseUser.user!.uid);
                                           prefs.setBool('isGoogleLogin', true);
                                           getShipperIdFromCompanyDatabase();
                                           if (!mounted) return;
-                                          ShipperModel shipperModel =
-                                              await shipperApiCalls
-                                                  .getShipperCompanyDetailsByEmail(
-                                                      firebaseUser.user!.email
-                                                          .toString());
+                                          ShipperModel shipperModel = await shipperApiCalls
+                                                  .getShipperCompanyDetailsByEmail(firebaseUser.user!.email.toString());
 
-                                          if (shipperModel.companyName ==
-                                                  "Na" &&
-                                              shipperModel.shipperName ==
-                                                  "Na") {
+                                          if (shipperModel.companyName == "Na" &&
+                                              shipperModel.shipperName == "Na") {
                                             //firebaseUser.user!.displayName == null --> previous condition
                                             Navigator.pushReplacement(
                                                 context,
@@ -573,9 +341,7 @@ class _LoginWebState extends State<LoginWeb> {
                                                         const CompanyDetails()));
                                           } else {
                                             runShipperApiPost(
-                                                emailId: firebaseUser
-                                                    .user!.email
-                                                    .toString());
+                                                emailId: firebaseUser.user!.email.toString());
                                             Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(

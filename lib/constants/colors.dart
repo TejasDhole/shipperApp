@@ -32,6 +32,13 @@ const Color black_87 = Colors.black87;
 const Color loadingWidgetColor = Colors.lightBlueAccent;
 const Color inactiveBidding = Color(0xffC4C9D9);
 const Color cancelledBiddingBackground = Color(0xffD0D4E1);
+const Color greyShade = Color.fromARGB(255, 197, 195, 195);
+const Color hintTextColor = Color.fromARGB(255, 217, 217, 217);
+const Color darkGreyish = Color.fromARGB(255, 160, 160, 160);
+const Color textGreyColor = Color.fromARGB(255, 211, 202, 202);
+//const Color 
+const Color darkBlueTextColor = Color.fromARGB(255, 21, 41, 104);
+const Color formBackground = Color.fromARGB(255, 245, 246, 250);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 

@@ -7,20 +7,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/Widgets/buttons/ConfirmButton.dart';
+import 'package:shipper_app/Widgets/webHeader.dart';
 import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/radius.dart';
+import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
-
-import '../../constants/colors.dart';
-import '../../constants/elevation.dart';
-import '../../constants/fontSize.dart';
-import '../../constants/radius.dart';
-import '../../constants/spaces.dart';
-import '../../controller/hudController.dart';
-import '../../controller/isOtpInvalidController.dart';
-import '../../controller/shipperIdController.dart';
-import '../../controller/timerController.dart';
-import '../../functions/shipperApis/runShipperApiPost.dart';
-import '/Widgets/liveasy_Icon_Widgets.dart';
+import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import 'package:sizer/sizer.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -60,9 +54,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   child: Container(
                     width: screenWidth * 0.05,
                     height: screenHeight,
-                    // padding: EdgeInsets.symmetric(
-                    //     vertical: MediaQuery.of(context).size.height * 0.02),
-                    //color: Colors.blueGrey,
                     decoration: const BoxDecoration(
                         color: white,
                         image: DecorationImage(
@@ -73,7 +64,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 ),
                 Expanded(
                   child: Container(
-                    color: Color.fromARGB(255, 245, 246, 250),
+                    color: formBackground,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,8 +76,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             // and adjust your widget sizes accordingly.
 
                             double maxWidth = kIsWeb ? 55.w : 40.w;
-                            double containerHeight =
-                                isError ? 50.h : screenHeight * 1;
+                            double containerHeight = isError ? 50.h : screenHeight * 1;
 
                             return Container(
                               width: maxWidth,
@@ -95,50 +85,14 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   // TODO: Liveasy Logo
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 7.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.02,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.02,
-                                              image: AssetImage(
-                                                  "assets/images/logoWebLogin.png")),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 1.w),
-                                            child: Text(
-                                              "Liveasy",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.w700,
-                                                color: Color.fromARGB(
-                                                    255, 21, 41, 104),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  const WebHeader(),
                                   Padding(
                                     padding: EdgeInsets.only(top: 7.h),
                                     child: Text("Company Details",
                                         style: GoogleFonts.montserrat(
                                           fontSize: screenHeight * 0.027,
                                           fontWeight: FontWeight.w500,
-                                          color:
-                                              Color.fromARGB(255, 21, 41, 104),
+                                          color:darkBlueTextColor,
                                         )),
                                   ),
                                   Padding(
@@ -149,8 +103,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         style: GoogleFonts.montserrat(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w400,
-                                            color: Color.fromARGB(
-                                                255, 197, 195, 195))),
+                                            color: greyShade)),
                                   ),
 
                                   Padding(
@@ -161,25 +114,20 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       child: TextFormField(
                                         controller: nameController,
                                         autofocus: true,
-                                        // autofillHints: ,
                                         decoration: InputDecoration(
                                           suffixIcon: Transform.scale(
                                             scale: 1.5,
                                             child: const Image(
-                                                image: AssetImage(
-                                                    "assets/images/UserRounded.png")),
+                                                image: AssetImage( "assets/images/UserRounded.png")),
                                           ),
                                           hintStyle: TextStyle(
-                                              decorationColor: Color.fromARGB(
-                                                  255, 197, 195, 195),
+                                              decorationColor: greyShade,
                                               fontSize: 2.h,
-                                              color: Color.fromARGB(
-                                                  255, 217, 217, 217)),
+                                              color: hintTextColor),
                                           hintText: 'Name',
-                                          //labelText: 'Email Id',
                                           contentPadding:
                                               EdgeInsets.only(left: 3.h),
-                                          border: OutlineInputBorder(
+                                          border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(5)),
                                           ),
@@ -202,29 +150,23 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       child: TextFormField(
                                         controller: phoneController,
                                         keyboardType: TextInputType.phone,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                          LengthLimitingTextInputFormatter(10)
+                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)
                                         ],
                                         autofocus: true,
                                         decoration: InputDecoration(
                                           suffixIcon: Transform.scale(
                                             scale: 1.5,
                                             child: const Image(
-                                                image: AssetImage(
-                                                    "assets/images/PhoneRounded.png")),
+                                                image: AssetImage( "assets/images/PhoneRounded.png")),
                                           ),
                                           hintStyle: TextStyle(
-                                              decorationColor: Color.fromARGB(
-                                                  255, 197, 195, 195),
+                                              decorationColor: greyShade,
                                               fontSize: 2.h,
-                                              color: Color.fromARGB(
-                                                  255, 217, 217, 217)),
+                                              color: hintTextColor),
                                           hintText: 'Phone Number',
                                           contentPadding:
                                               EdgeInsets.only(left: 3.h),
-                                          border: OutlineInputBorder(
+                                          border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(5)),
                                           ),
@@ -254,15 +196,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                                     "assets/images/Buildings.png")),
                                           ),
                                           hintStyle: TextStyle(
-                                              decorationColor: Color.fromARGB(
-                                                  255, 197, 195, 195),
+                                              decorationColor: greyShade,
                                               fontSize: 2.h,
-                                              color: Color.fromARGB(
-                                                  255, 217, 217, 217)),
+                                              color: hintTextColor),
                                           hintText: 'Company Details',
                                           contentPadding:
                                               EdgeInsets.only(left: 3.h),
-                                          border: OutlineInputBorder(
+                                          border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(5)),
                                           ),
@@ -280,79 +220,21 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                     padding: EdgeInsets.only(
                                         left: 10.w, top: 6.h, right: 7.w),
                                     child: Container(
-                                      // height: MediaQuery.of(context).size.height *
-                                      //     0.053,
+                                     
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
-                                        color: Color.fromARGB(255, 21, 41, 104),
+                                        color: darkBlueTextColor,
                                         borderRadius:
                                             BorderRadius.circular(radius_1),
                                       ),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          backgroundColor:
-                                              const Color(0xFF000066),
-                                          fixedSize: Size(33.w, 7.h),
-                                        ),
-                                        onPressed: () async {
-                                          // if (_formKey.currentState!.validate()) {
-                                          //   _formKey.currentState!.save();
-                                          //   if (firebaseAuth
-                                          //       .currentUser!.emailVerified) {
-                                          //     firebaseAuth.currentUser!
-                                          //         .updateDisplayName(name);
-                                          //         print(name);
-                                          //     String? id =
-                                          //         await runShipperApiPost(
-
-                                          //       emailId: firebaseAuth
-                                          //           .currentUser!.email
-                                          //           .toString(),
-                                          //       shipperName: name,
-                                          //       //phoneNo: phoneNumber,
-                                          //       phoneNo: firebaseAuth
-                                          //           .currentUser!.phoneNumber
-                                          //           .toString()
-                                          //           .replaceFirst("+91", ""),
-                                          //       companyName: companyName,
-
-                                          //     );
-                                          //     if (id != null) {
-                                          //       log('Shipper id--->$id');
-                                          //       if (!mounted) {
-                                          //         log('In not mounted');
-                                          //         return;
-                                          //       }
-                                          //       Navigator.pushReplacement(
-                                          //           context,
-                                          //           MaterialPageRoute(
-                                          //               builder: (context) =>
-                                          //                   const HomeScreenWeb()));
-                                          //     }
-                                          //   } else {
-                                          //     alertDialog(
-                                          //         "Verify Email",
-                                          //         "Verify your mail id to continue",
-                                          //         context);
-                                          //     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb()));
-                                          //   }
-                                          // }
+                                      child: ConfirmButton(text: 'Confirm', 
+                                      onPressed: () async {
                                           try {
-                                            if (companyNameController.text
-                                                    .toString()
-                                                    .isNotEmpty &&
-                                                nameController.text
-                                                    .toString()
-                                                    .isNotEmpty) {
+                                            if (companyNameController.text.toString().isNotEmpty && nameController.text.toString().isNotEmpty) {
                                               updateDetails();
                                             } else {
                                               Fluttertoast.showToast(
-                                                  msg:
-                                                      'Enter details (Company Name and Name)',
+                                                  msg: 'Enter details (Company Name and Name)',
                                                   fontSize: size_8,
                                                   backgroundColor: Colors.white,
                                                   textColor: Colors.black);
@@ -361,14 +243,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                             log('Not updating--->$e');
                                           }
                                         },
-                                        child: Text(
-                                          "Confirm",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: screenHeight * 0.022,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
+                                      )
                                     ),
                                   ),
                                 ],
@@ -410,7 +285,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             return;
           }
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => HomeScreenWeb()));
+              MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
         }
       } catch (e) {
         log('Not updating--->$e');
