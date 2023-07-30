@@ -156,6 +156,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/icons/KmTravelled.png
     - assets/images/
     - assets/background/
     - assets/icons/navigationIcons/

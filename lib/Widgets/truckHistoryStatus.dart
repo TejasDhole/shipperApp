@@ -51,6 +51,7 @@ class _TruckStatusState extends State<TruckStatus> {
         ? Container(
             //  color: backgroundColor,
             height: 132,
+            width: MediaQuery.of(context).size.width / 4 - 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +80,7 @@ class _TruckStatusState extends State<TruckStatus> {
                                 color: const Color(0xFFB60000)),
                           ),
                         ]),
-                     /*   DottedLine(
+                        /*   DottedLine(
                           direction: Axis.vertical,
                           lineLength: 108,
                           lineThickness: 1.0,
@@ -87,10 +88,9 @@ class _TruckStatusState extends State<TruckStatus> {
                           dashColor: Colors.black,
                         )*/
                         Container(
-                          height: 108,
-                          width: 2,
-                          color: const Color.fromRGBO(21, 41, 104, 0.2)
-                        )
+                            height: 108,
+                            width: 2,
+                            color: const Color.fromRGBO(21, 41, 104, 0.2))
                       ]),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
@@ -99,13 +99,15 @@ class _TruckStatusState extends State<TruckStatus> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                width: MediaQuery.of(context).size.width - 74,
+                                width:
+                                    MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_2),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "${widget.truckHistory[1]} - ${widget.truckHistory[2]}",
                                   maxLines: 3,
+                                  softWrap: true,
                                   style: TextStyle(
                                     color: black,
                                     fontSize: size_7,
@@ -124,7 +126,7 @@ class _TruckStatusState extends State<TruckStatus> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "stoppedFor".tr +"  ",
+                                      "stoppedFor".tr + "  ",
                                       maxLines: 2,
                                       style: TextStyle(
                                         color: const Color(0xff333333),
@@ -148,13 +150,15 @@ class _TruckStatusState extends State<TruckStatus> {
                               ),
                             ),
                             Container(
-                                width: MediaQuery.of(context).size.width - 74,
+                                width:
+                                    MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_1),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "$address",
                                   maxLines: 3,
+                                  softWrap: true,
                                   style: TextStyle(
                                     color: const Color(0xff333333),
                                     fontSize: size_6,
@@ -203,7 +207,7 @@ class _TruckStatusState extends State<TruckStatus> {
                             ),
                           ),
                         ]),
-                   /*     DottedLine(
+                        /*     DottedLine(
                           direction: Axis.vertical,
                           lineLength: 108,
                           lineThickness: 1.0,
@@ -211,10 +215,9 @@ class _TruckStatusState extends State<TruckStatus> {
                           dashColor: Colors.black,
                         )*/
                         Container(
-                          height: 76,
-                          width: 2,
-                          color: const Color.fromRGBO(21, 41, 104, 0.2)
-                        )
+                            height: 76,
+                            width: 2,
+                            color: const Color.fromRGBO(21, 41, 104, 0.2))
                       ]),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
@@ -223,7 +226,8 @@ class _TruckStatusState extends State<TruckStatus> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                width: MediaQuery.of(context).size.width - 74,
+                                width:
+                                    MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_2),
                                 alignment: Alignment.centerLeft,
@@ -247,7 +251,7 @@ class _TruckStatusState extends State<TruckStatus> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "travelledFor".tr +"   ",
+                                      "travelledFor".tr + "   ",
                                       maxLines: 2,
                                       style: TextStyle(
                                         color: const Color(0xff333333),
@@ -273,12 +277,14 @@ class _TruckStatusState extends State<TruckStatus> {
                               ),
                             ),
                             Container(
-                                width: MediaQuery.of(context).size.width - 74,
+                                width:
+                                    MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_1),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "travelled".tr +"  ${(widget.truckHistory.distance / 1000).toStringAsFixed(2)} kms",
+                                  "travelled".tr +
+                                      "  ${(widget.truckHistory.distance / 1000).toStringAsFixed(2)} kms",
                                   maxLines: 3,
                                   style: TextStyle(
                                     color: const Color(0xff333333),
