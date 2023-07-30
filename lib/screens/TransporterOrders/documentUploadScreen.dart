@@ -39,6 +39,9 @@ class documentUploadScreen extends StatefulWidget {
   var gpsDataList;
   String? totalDistance;
   var device;
+  String? productType;
+  String? truckType;
+  String? unitValue;
 
   documentUploadScreen({
     Key? key,
@@ -54,6 +57,9 @@ class documentUploadScreen extends StatefulWidget {
     this.gpsDataList,
     this.totalDistance,
     this.device,
+    this.productType,
+    this.truckType,
+    this.unitValue,
   }) : super(key: key);
 
   @override
@@ -80,7 +86,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
 
     //Pod :-
 
-    late Map datanew;// this map will contain the data to be posted using the post document api.
+    late Map
+        datanew; // this map will contain the data to be posted using the post document api.
     datanew = {
       "entityId": widget.bookingId.toString(),
       "documents": [
@@ -167,7 +174,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
       await uploadDocumentApiCall();
     }
 
-    uploadedCheckPod() async {// to check already uploaded pod documents .
+    uploadedCheckPod() async {
+      // to check already uploaded pod documents .
       docLinks = [];
       docLinks = await getDocumentApiCall(widget.bookingId.toString(), "P");
       setState(() {
@@ -447,8 +455,9 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
     // }
 
     return WillPopScope(
-      onWillPop: () async {// to null the provider data of the documents variables after clicking the back button of the android device.
-       
+      onWillPop: () async {
+        // to null the provider data of the documents variables after clicking the back button of the android device.
+
         print("After clicking the Android Back Button");
         // var providerData = Provider.of<ProviderData>(context);
         providerData.LrPhotoFile = null;
@@ -465,9 +474,10 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: white,
+        backgroundColor: const Color.fromRGBO(245, 246, 250, 1),
         body: Container(
-          child: (providerData.LrPhotoFile != null)// to display the document upload screen only if the lr photo is selected by the user.
+          child: (providerData.LrPhotoFile !=
+                  null) // to display the document upload screen only if the lr photo is selected by the user.
               ? SafeArea(
                   child: Scaffold(
                     body: Column(
@@ -504,7 +514,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                             providerData.PodPhoto64 = null;
                                           });
                                         },
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.arrow_back_ios,
                                           color: darkBlueColor,
                                         ),
@@ -537,8 +547,10 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 0, left: 10, right: 10),
-                                    child:
-                                        kIsWeb ? Image.network(providerData.LrPhotoFile!.path) : Image.file(providerData.LrPhotoFile!),
+                                    child: kIsWeb
+                                        ? Image.network(
+                                            providerData.LrPhotoFile!.path)
+                                        : Image.file(providerData.LrPhotoFile!),
                                   ),
                                 ),
                               )
@@ -560,8 +572,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  color: Color(0xFFE75347),
-                                  child: Container(
+                                  color: const Color(0xFFE75347),
+                                  child: SizedBox(
                                     height: space_10,
                                     child: Center(
                                       child: Text(
@@ -588,12 +600,18 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
+                                      onTapUp: (value) {
+                                        setState(() {
+                                          progressBar = true;
+                                        });
+                                      },
+                                      onTap: uploadedCheckLr,
                                       child: Container(
-                                        color: Color(0xFF09B778),
+                                        color: const Color(0xFF09B778),
                                         height: space_10,
                                         child: Center(
                                           child: progressBar
-                                              ? CircularProgressIndicator(
+                                              ? const CircularProgressIndicator(
                                                   color: white,
                                                 )
                                               : Text(
@@ -605,13 +623,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                           FontWeight.bold),
                                                 ),
                                         ),
-                                      ),
-                                      onTapUp: (value) {
-                                        setState(() {
-                                          progressBar = true;
-                                        });
-                                      },
-                                      onTap: uploadedCheckLr),
+                                      )),
                                 )),
                           ),
                         ]),
@@ -662,7 +674,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                 providerData.PodPhoto64 = null;
                                               });
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.arrow_back_ios,
                                               color: darkBlueColor,
                                             ),
@@ -695,8 +707,11 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 0, left: 10, right: 10),
-                                        child: kIsWeb ? Image.network(providerData.EwayBillPhotoFile!.path) : Image.file(
-                                            providerData.EwayBillPhotoFile!),
+                                        child: kIsWeb
+                                            ? Image.network(providerData
+                                                .EwayBillPhotoFile!.path)
+                                            : Image.file(providerData
+                                                .EwayBillPhotoFile!),
                                       ),
                                     ),
                                   )
@@ -713,8 +728,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      color: Color(0xFFE75347),
-                                      child: Container(
+                                      color: const Color(0xFFE75347),
+                                      child: SizedBox(
                                         height: space_10,
                                         child: Center(
                                           child: Text(
@@ -744,12 +759,18 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
                                       child: InkWell(
+                                          onTapUp: (value) {
+                                            setState(() {
+                                              progressBar = true;
+                                            });
+                                          },
+                                          onTap: uploadedCheckEwayBill,
                                           child: Container(
-                                            color: Color(0xFF09B778),
+                                            color: const Color(0xFF09B778),
                                             height: space_10,
                                             child: Center(
                                               child: progressBar
-                                                  ? CircularProgressIndicator(
+                                                  ? const CircularProgressIndicator(
                                                       color: white,
                                                     )
                                                   : Text(
@@ -761,13 +782,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                               FontWeight.bold),
                                                     ),
                                             ),
-                                          ),
-                                          onTapUp: (value) {
-                                            setState(() {
-                                              progressBar = true;
-                                            });
-                                          },
-                                          onTap: uploadedCheckEwayBill),
+                                          )),
                                     )),
                               ),
                             ]),
@@ -822,7 +837,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                         null;
                                                   });
                                                 },
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.arrow_back_ios,
                                                   color: darkBlueColor,
                                                 ),
@@ -855,9 +870,12 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 0, left: 10, right: 10),
-                                            child: kIsWeb ?
-                                            Image.network(providerData.WeightReceiptPhotoFile!.path) :
-                                            Image.file(providerData.WeightReceiptPhotoFile!),
+                                            child: kIsWeb
+                                                ? Image.network(providerData
+                                                    .WeightReceiptPhotoFile!
+                                                    .path)
+                                                : Image.file(providerData
+                                                    .WeightReceiptPhotoFile!),
                                           ),
                                         ),
                                       )
@@ -875,8 +893,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                           ),
-                                          color: Color(0xFFE75347),
-                                          child: Container(
+                                          color: const Color(0xFFE75347),
+                                          child: SizedBox(
                                             height: space_10,
                                             child: Center(
                                               child: Text(
@@ -911,12 +929,18 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                           borderRadius:
                                               BorderRadius.circular(12),
                                           child: InkWell(
+                                              onTapUp: (value) {
+                                                setState(() {
+                                                  progressBar = true;
+                                                });
+                                              },
+                                              onTap: uploadedCheckWeightReceipt,
                                               child: Container(
-                                                color: Color(0xFF09B778),
+                                                color: const Color(0xFF09B778),
                                                 height: space_10,
                                                 child: Center(
                                                   child: progressBar
-                                                      ? CircularProgressIndicator(
+                                                      ? const CircularProgressIndicator(
                                                           color: white,
                                                         )
                                                       : Text(
@@ -929,14 +953,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                                       .bold),
                                                         ),
                                                 ),
-                                              ),
-                                              onTapUp: (value) {
-                                                setState(() {
-                                                  progressBar = true;
-                                                });
-                                              },
-                                              onTap:
-                                                  uploadedCheckWeightReceipt),
+                                              )),
                                         )),
                                   ),
                                 ]),
@@ -994,7 +1011,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                             .PodPhoto64 = null;
                                                       });
                                                     },
-                                                    child: Icon(
+                                                    child: const Icon(
                                                       Icons.arrow_back_ios,
                                                       color: darkBlueColor,
                                                     ),
@@ -1029,7 +1046,11 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                     top: 0,
                                                     left: 10,
                                                     right: 10),
-                                                child: kIsWeb ? Image.network(providerData.PodPhotoFile!.path) : Image.file(providerData.PodPhotoFile!),
+                                                child: kIsWeb
+                                                    ? Image.network(providerData
+                                                        .PodPhotoFile!.path)
+                                                    : Image.file(providerData
+                                                        .PodPhotoFile!),
                                               ),
                                             ),
                                           )
@@ -1047,8 +1068,8 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(12),
                                               ),
-                                              color: Color(0xFFE75347),
-                                              child: Container(
+                                              color: const Color(0xFFE75347),
+                                              child: SizedBox(
                                                 height: space_10,
                                                 child: Center(
                                                   child: Text(
@@ -1082,13 +1103,20 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                               child: InkWell(
+                                                  onTapUp: (value) {
+                                                    setState(() {
+                                                      progressBar = true;
+                                                    });
+                                                  },
+                                                  onTap: uploadedCheckPod,
                                                   child: Container(
-                                                    color: Color(0xFF09B778),
+                                                    color:
+                                                        const Color(0xFF09B778),
                                                     height: space_10,
                                                     // width: space_30,
                                                     child: Center(
                                                       child: progressBar
-                                                          ? CircularProgressIndicator(
+                                                          ? const CircularProgressIndicator(
                                                               color: white,
                                                             )
                                                           : Text(
@@ -1103,13 +1131,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                                             ),
                                                       // ),
                                                     ),
-                                                  ),
-                                                  onTapUp: (value) {
-                                                    setState(() {
-                                                      progressBar = true;
-                                                    });
-                                                  },
-                                                  onTap: uploadedCheckPod),
+                                                  )),
                                             )),
                                       ),
                                     ]),
@@ -1117,405 +1139,953 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                 ),
                               ),
                             )
-                          : SingleChildScrollView(// this will be displayed if any document is not selected for uploading.
+                          : SingleChildScrollView(
+                              // this will be displayed if any document is not selected for uploading.
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
+                                    height: 100,
                                     child: Container(
-                                      color: white,
-                                    ),
-                                    height: 38,
-                                  ),
-                                  Container(
-                                    height: size_15 + 30,
-                                    color: white,
-                                    child: Row(
-                                      children: [
-                                        Flexible(
-                                          flex: 3,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    Get.back();
-                                                    providerData.LrPhotoFile =
-                                                        null;
-                                                    providerData.LrPhoto64 =
-                                                        null;
-
-                                                    providerData
-                                                            .EwayBillPhotoFile =
-                                                        null;
-                                                    providerData
-                                                        .EwayBillPhoto64 = null;
-
-                                                    providerData
-                                                            .WeightReceiptPhotoFile =
-                                                        null;
-                                                    providerData
-                                                            .WeightReceiptPhoto64 =
-                                                        null;
-
-                                                    providerData.PodPhotoFile =
-                                                        null;
-                                                    providerData.PodPhoto64 =
-                                                        null;
-                                                  },
-                                                  child: Icon(
-                                                    Icons.arrow_back_ios,
-                                                    color: darkBlueColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: space_1,
-                                              ),
-                                              Text(
-                                                "${widget.truckNo}",
-                                                // widget.truckNo.toString(),
-                                                // "TN 09 JP 1234",
-                                                style: TextStyle(
-                                                    fontSize: size_10 - 1,
-                                                    fontWeight: boldWeight,
-                                                    color: darkBlueColor,
-                                                    letterSpacing: -0.408),
-                                              ),
-                                            ],
-                                          ),
+                                      // alignment: Alignment.topLeft,
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(32.0),
+                                        child: Text(
+                                          "Loads",
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  21, 41, 104, 1),
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w600),
                                         ),
-                                        Flexible(
-                                          flex: 1,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HelpScreen()),
-                                              );
-                                            },
+                                      ),
+                                    ),
+                                  ),
+                                  //header
+                                  Material(
+                                    elevation: 5,
+                                    child: Container(
+                                      height: size_15 + 50,
+                                      color: white,
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            flex: 3,
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
-                                                Container(
-                                                  height: space_5,
-                                                  width: space_5,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              "assets/icons/help_ic.png"))),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Get.back();
+                                                      providerData.LrPhotoFile =
+                                                          null;
+                                                      providerData.LrPhoto64 =
+                                                          null;
+
+                                                      providerData
+                                                              .EwayBillPhotoFile =
+                                                          null;
+                                                      providerData
+                                                              .EwayBillPhoto64 =
+                                                          null;
+
+                                                      providerData
+                                                              .WeightReceiptPhotoFile =
+                                                          null;
+                                                      providerData
+                                                              .WeightReceiptPhoto64 =
+                                                          null;
+
+                                                      providerData
+                                                          .PodPhotoFile = null;
+                                                      providerData.PodPhoto64 =
+                                                          null;
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.arrow_back_ios,
+                                                      color: darkBlueColor,
+                                                    ),
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   width: space_1,
                                                 ),
-                                                Text(
-                                                  'help'.tr,
-                                                  // AppLocalizations.of(context)!.help,
-                                                  style: TextStyle(
-                                                      fontSize: size_10,
-                                                      color: darkBlueColor,
-                                                      fontWeight: boldWeight),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Loads Details",
+                                                      // widget.truckNo.toString(),
+                                                      // "TN 09 JP 1234",
+                                                      style: TextStyle(
+                                                          fontSize: size_10 - 1,
+                                                          fontWeight:
+                                                              boldWeight,
+                                                          color: darkBlueColor,
+                                                          letterSpacing:
+                                                              -0.408),
+                                                    ),
+                                                    Text(
+                                                      "On Going load details",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              size_10 - 10,
+                                                          color: Colors.grey),
+                                                    )
+                                                  ],
                                                 ),
                                               ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  //For Track button
+                                  // navigateToTrackScreen(
+                                  //   truckApproved: true,
+                                  //   bookingDate: widget.bookingDate,
+                                  //   bookingId: widget.bookingId,
+                                  //   loadingPoint: widget.loadingPoint,
+                                  //   unloadingPoint: widget.unloadingPoint,
+                                  //   gpsData: widget.gpsDataList[0],
+                                  //   TruckNo: widget.truckNo,
+                                  //   totalDistance: widget.totalDistance,
+                                  //   // device: widget.device,
+                                  // ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  //from to widget
+                                  Padding(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              10,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    90,
+                                                right: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    90),
+                                            child: Container(
+                                              color: Colors.white,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20.0),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Text(
+                                                        "${widget.loadingPoint}",
+                                                        style: const TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              9, 183, 120, 1),
+                                                          fontSize: 20,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        // rectangle429199w (1:2)
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            2,
+                                                        height: 7,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          gradient:
+                                                              LinearGradient(
+                                                            begin: Alignment(
+                                                                -1, -1),
+                                                            end: Alignment(
+                                                                1, -1),
+                                                            colors: <Color>[
+                                                              Color(0xff09b778),
+                                                              Color(0xffec4a4a)
+                                                            ],
+                                                            stops: <double>[
+                                                              0,
+                                                              1
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${widget.unloadingPoint}",
+                                                        style: const TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              237, 74, 74, 1),
+                                                          fontSize: 20,
+                                                        ),
+                                                      ),
+                                                    ]),
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  //BOXXX
+                                  Padding(
+                                    padding: const EdgeInsets.all(30),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: Container(
+                                          color: Colors.white,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              3,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Truck\nNumber",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.truckNo}")),
+                                                    ),
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "LR Number",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Hm98765432110112",
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Driver Name",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.driverName}")),
+                                                    ),
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Product Type",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                        "${widget.productType}",
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Driver\nMobile No.",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.driverPhoneNum}")),
+                                                    ),
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Truck Type",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                        "${widget.truckType}",
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Booking\nDate",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.bookingDate}")),
+                                                    ),
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "weight",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: Center(
+                                                          child: Text(
+                                                        "${widget.unitValue}",
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Transpoter",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: const Center(
+                                                          child: Text(
+                                                              "LivEasy Logistics")),
+                                                    ),
+                                                    Container(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Fright",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: (MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              60) *
+                                                          2 /
+                                                          6,
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "17,000",
+                                                      )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Divider(
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        space_4, space_4, space_4, 0),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Upload Documents",
+                                        style: TextStyle(
+                                            color: const Color.fromRGBO(
+                                                21, 41, 104, 1),
+                                            fontWeight: boldWeight,
+                                            fontSize: size_10),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 50.0, right: 50),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            "Lorry Recipt",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
                                         ),
-
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            "EWAY Bill",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            "Weight Recipt",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            "POD (Pahoch)",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  navigateToTrackScreen(
-                                    truckApproved: true,
-                                    bookingDate: widget.bookingDate,
-                                    bookingId: widget.bookingId,
-                                    loadingPoint: widget.loadingPoint,
-                                    unloadingPoint: widget.unloadingPoint,
-                                    gpsData: widget.gpsDataList[0],
-                                    TruckNo: widget.truckNo,
-                                    totalDistance: widget.totalDistance,
-                                    // device: widget.device,
-                                  ),
-
-
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Transporter Contact".tr,
-                                        style: TextStyle(
-                                            color: grey,
-                                            fontWeight: boldWeight,
-                                            fontSize: size_10),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Container(
-                                      height: 70,
-                                      color: darkBlueColor,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Image(
-                                                image: AssetImage(
-                                                    "assets/icons/MaleUser.png")),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 16),
-                                            child: Text(
-                                              widget.transporterName.toString(),
-                                              style: TextStyle(
-                                                  color: white,
-                                                  fontSize: size_8,
-                                                  fontWeight: mediumBoldWeight),
-                                            ),
-                                          ),
-                                          // Flexible(
-                                          //   flex: 2,
-                                          //   child: Align(
-                                          //     alignment: Alignment.centerRight,
-                                          //     child: Padding(
-                                          //       padding: EdgeInsets.only(
-                                          //           left: 55,
-                                          //           right: 15,
-                                          //           top: 10,
-                                          //           bottom: 10),
-                                          //       child:
-                                          //       callBtn(
-                                          //         directCall: true,
-                                          //         name: widget.transporterName
-                                          //             .toString(),
-                                          //         phoneNum: widget
-                                          //             .transporterPhoneNum
-                                          //             .toString(),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
-
-                                          // Expanded(
-                                          //   child: Container(
-                                          //       child: Column
-                                          //     )
-                                          // )
-
-
-                                          Expanded(
-                                              child: Container(
-                                                // color: Colors.deepOrange,
-                                                  margin: EdgeInsets.only(
-                                                    top: 10,
-                                                    bottom: 10,
-                                                    right: 15,
-                                                  ),
-                                                  child: Column(
-                                                    // mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        Container(
-                                                          alignment: Alignment.centerRight,
-                                                          child:
-                                                          callBtn(
-                                                            directCall: true,
-                                                            name: widget.transporterName
-                                                                .toString(),
-                                                            phoneNum: widget
-                                                                .transporterPhoneNum
-                                                                .toString(),
-                                                          ),
-                                                        )
-                                                      ]
-                                                  )
-                                              )
-                                          )
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size_2,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Truck & Driver".tr,
-                                        style: TextStyle(
-                                            color: grey,
-                                            fontWeight: boldWeight,
-                                            fontSize: size_10),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: space_5,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, 0, space_4, 0),
-                                    child: Container(
-                                      height: 70,
-                                      color: darkBlueColor,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Image(
-                                                image: AssetImage(
-                                                    "assets/icons/deliveryTruck.png")),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 16),
-                                            child: Text(
-                                              widget.truckNo.toString(),
-                                              // "TN 09 JP 1234",
-                                              style: TextStyle(
-                                                  color: white,
-                                                  fontSize: size_8,
-                                                  fontWeight: mediumBoldWeight),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size_2,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, 0, space_4, 0),
-                                    child: Container(
-                                      color: darkBlueColor,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 11, left: 15),
-                                            child: Image(
-                                                image: AssetImage(
-                                                    "assets/icons/MaleUser.png")),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 11, top: 5, bottom: 5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: Text(
-                                                    widget.driverName
-                                                        .toString(),
-                                                    // "Rajpal Sharma",
-                                                    style: TextStyle(
-                                                        color: white,
-                                                        fontSize: size_8,
-                                                        fontWeight:
-                                                            mediumBoldWeight),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: Text(
-                                                    widget.driverPhoneNum
-                                                        .toString(),
-                                                    // "7894561230",
-                                                    style: TextStyle(
-                                                        color: white,
-                                                        fontSize: size_8),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          // Flexible(
-                                          //   flex: 2,
-                                          //   child: Align(
-                                          //     alignment: Alignment.centerRight,
-                                          //     child: Padding(
-                                          //       padding: EdgeInsets.only(
-                                          //           left: 35,
-                                          //           right: 15,
-                                          //           top: 10,
-                                          //           bottom: 10),
-                                          //       child:
-                                          //     ),
-                                          //   ),
-                                          // ),
-
-                                          // Container(
-                                          //   // alignment: Alignment.centerRight,
-                                          //   // color: Colors.deepOrange,
-                                          //   child:
-                                          //   callBtn(
-                                          //     directCall: true,
-                                          //     name: widget.driverName
-                                          //         .toString(),
-                                          //     phoneNum: widget
-                                          //         .driverPhoneNum
-                                          //         .toString(),
-                                          //   ),
-                                          // )
-
-                                          Expanded(
-                                              child: Container(
-                                              // color: Colors.deepOrange,
-                                              margin: EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                                right: 15,
-                                              ),
-                                              child: Column(
-                                                  // mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                      alignment: Alignment.centerRight,
-                                                      child: callBtn(
-                                                        directCall: true,
-                                                        name: widget.driverName
-                                                            .toString(),
-                                                        phoneNum: widget
-                                                            .driverPhoneNum
-                                                            .toString(),
-                                                      ),
-                                                    )
-                                                  ]
-                                              )
-                                          )
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
+//Might Be usefull
+                                  // Padding(
+                                  //   padding: EdgeInsets.fromLTRB(
+                                  //       space_4, space_4, space_4, 0),
+                                  //   child: Container(
+                                  //     height: 70,
+                                  //     color: darkBlueColor,
+                                  //     width: MediaQuery.of(context).size.width,
+                                  //     child: Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.start,
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.center,
+                                  //       children: [
+                                  //         const Padding(
+                                  //           padding: EdgeInsets.only(left: 15),
+                                  //           child: Image(
+                                  //               image: AssetImage(
+                                  //                   "assets/icons/MaleUser.png")),
+                                  //         ),
+                                  //         Padding(
+                                  //           padding:
+                                  //               const EdgeInsets.only(left: 16),
+                                  //           child: Text(
+                                  //             widget.transporterName.toString(),
+                                  //             style: TextStyle(
+                                  //                 color: white,
+                                  //                 fontSize: size_8,
+                                  //                 fontWeight: mediumBoldWeight),
+                                  //           ),
+                                  //         ),
+                                  //         // Flexible(
+                                  //         //   flex: 2,
+                                  //         //   child: Align(
+                                  //         //     alignment: Alignment.centerRight,
+                                  //         //     child: Padding(
+                                  //         //       padding: EdgeInsets.only(
+                                  //         //           left: 55,
+                                  //         //           right: 15,
+                                  //         //           top: 10,
+                                  //         //           bottom: 10),
+                                  //         //       child:
+                                  //         //       callBtn(
+                                  //         //         directCall: true,
+                                  //         //         name: widget.transporterName
+                                  //         //             .toString(),
+                                  //         //         phoneNum: widget
+                                  //         //             .transporterPhoneNum
+                                  //         //             .toString(),
+                                  //         //       ),
+                                  //         //     ),
+                                  //         //   ),
+                                  //         // ),
+                                  //         // Expanded(
+                                  //         //   child: Container(
+                                  //         //       child: Column
+                                  //         //     )
+                                  //         // )
+                                  //         Expanded(
+                                  //             child: Container(
+                                  //                 // color: Colors.deepOrange,
+                                  //                 margin: const EdgeInsets.only(
+                                  //                   top: 10,
+                                  //                   bottom: 10,
+                                  //                   right: 15,
+                                  //                 ),
+                                  //                 child: Column(
+                                  //                     // mainAxisAlignment: MainAxisAlignment.end,
+                                  //                     children: [
+                                  //                       Container(
+                                  //                         alignment: Alignment
+                                  //                             .centerRight,
+                                  //                         child: callBtn(
+                                  //                           directCall: true,
+                                  //                           name: widget
+                                  //                               .transporterName
+                                  //                               .toString(),
+                                  //                           phoneNum: widget
+                                  //                               .transporterPhoneNum
+                                  //                               .toString(),
+                                  //                         ),
+                                  //                       )
+                                  //                     ])))
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: size_2,
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.fromLTRB(
+                                  //       space_4, space_4, space_4, 0),
+                                  //   child: Align(
+                                  //     alignment: Alignment.centerLeft,
+                                  //     child: Text(
+                                  //       "Truck & Driver".tr,
+                                  //       style: TextStyle(
+                                  //           color: grey,
+                                  //           fontWeight: boldWeight,
+                                  //           fontSize: size_10),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: space_5,
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.fromLTRB(
+                                  //       space_4, 0, space_4, 0),
+                                  //   child: Container(
+                                  //     height: 70,
+                                  //     color: darkBlueColor,
+                                  //     width: MediaQuery.of(context).size.width,
+                                  //     child: Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.start,
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.center,
+                                  //       children: [
+                                  //         const Padding(
+                                  //           padding: EdgeInsets.only(left: 15),
+                                  //           child: Image(
+                                  //               image: AssetImage(
+                                  //                   "assets/icons/deliveryTruck.png")),
+                                  //         ),
+                                  //         Padding(
+                                  //           padding:
+                                  //               const EdgeInsets.only(left: 16),
+                                  //           child: Text(
+                                  //             widget.truckNo.toString(),
+                                  //             // "TN 09 JP 1234",
+                                  //             style: TextStyle(
+                                  //                 color: white,
+                                  //                 fontSize: size_8,
+                                  //                 fontWeight: mediumBoldWeight),
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: size_2,
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.fromLTRB(
+                                  //       space_4, 0, space_4, 0),
+                                  //   child: Container(
+                                  //     color: darkBlueColor,
+                                  //     width: MediaQuery.of(context).size.width,
+                                  //     child: Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.start,
+                                  //       crossAxisAlignment:
+                                  //           CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         const Padding(
+                                  //           padding: EdgeInsets.only(
+                                  //               top: 11, left: 15),
+                                  //           child: Image(
+                                  //               image: AssetImage(
+                                  //                   "assets/icons/MaleUser.png")),
+                                  //         ),
+                                  //         Padding(
+                                  //           padding: const EdgeInsets.only(
+                                  //               left: 11, top: 5, bottom: 5),
+                                  //           child: Column(
+                                  //             crossAxisAlignment:
+                                  //                 CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               Padding(
+                                  //                 padding:
+                                  //                     const EdgeInsets.all(5),
+                                  //                 child: Text(
+                                  //                   widget.driverName
+                                  //                       .toString(),
+                                  //                   // "Rajpal Sharma",
+                                  //                   style: TextStyle(
+                                  //                       color: white,
+                                  //                       fontSize: size_8,
+                                  //                       fontWeight:
+                                  //                           mediumBoldWeight),
+                                  //                 ),
+                                  //               ),
+                                  //               Padding(
+                                  //                 padding:
+                                  //                     const EdgeInsets.all(5),
+                                  //                 child: Text(
+                                  //                   widget.driverPhoneNum
+                                  //                       .toString(),
+                                  //                   // "7894561230",
+                                  //                   style: TextStyle(
+                                  //                       color: white,
+                                  //                       fontSize: size_8),
+                                  //                 ),
+                                  //               ),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //         // Flexible(
+                                  //         //   flex: 2,
+                                  //         //   child: Align(
+                                  //         //     alignment: Alignment.centerRight,
+                                  //         //     child: Padding(
+                                  //         //       padding: EdgeInsets.only(
+                                  //         //           left: 35,
+                                  //         //           right: 15,
+                                  //         //           top: 10,
+                                  //         //           bottom: 10),
+                                  //         //       child:
+                                  //         //     ),
+                                  //         //   ),
+                                  //         // ),
+                                  //         // Container(
+                                  //         //   // alignment: Alignment.centerRight,
+                                  //         //   // color: Colors.deepOrange,
+                                  //         //   child:
+                                  //         //   callBtn(
+                                  //         //     directCall: true,
+                                  //         //     name: widget.driverName
+                                  //         //         .toString(),
+                                  //         //     phoneNum: widget
+                                  //         //         .driverPhoneNum
+                                  //         //         .toString(),
+                                  //         //   ),
+                                  //         // )
+                                  //         Expanded(
+                                  //             child: Container(
+                                  //                 // color: Colors.deepOrange,
+                                  //                 margin: const EdgeInsets.only(
+                                  //                   top: 10,
+                                  //                   bottom: 10,
+                                  //                   right: 15,
+                                  //                 ),
+                                  //                 child: Column(
+                                  //                     // mainAxisAlignment: MainAxisAlignment.end,
+                                  //                     children: [
+                                  //                       Container(
+                                  //                         alignment: Alignment
+                                  //                             .centerRight,
+                                  //                         child: callBtn(
+                                  //                           directCall: true,
+                                  //                           name: widget
+                                  //                               .driverName
+                                  //                               .toString(),
+                                  //                           phoneNum: widget
+                                  //                               .driverPhoneNum
+                                  //                               .toString(),
+                                  //                         ),
+                                  //                       )
+                                  //                     ])))
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  const SizedBox(height: 30),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         space_4, space_4, space_4, 0),
@@ -1551,7 +2121,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                     child: Text(
                                       "Upload Loadoing document photos for advanced payment"
                                           .tr,
-                                      style: TextStyle(color: grey),
+                                      style: const TextStyle(color: grey),
                                     ),
                                   ),
 
@@ -1561,7 +2131,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       child: docInputLr(
                                           providerData: providerData,
                                           bookingId: widget.bookingId)),
-
 
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
@@ -1599,7 +2168,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                     child: Text(
                                       "Upload unloadoing document photos for final payment"
                                           .tr,
-                                      style: TextStyle(color: grey),
+                                      style: const TextStyle(color: grey),
                                     ),
                                   ),
 
@@ -1612,7 +2181,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 40,
                                   )
                                 ],
@@ -1623,3 +2192,41 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
     );
   }
 }
+
+//help button
+// Flexible(
+//                                           flex: 1,
+//                                           child: GestureDetector(
+//                                             onTap: () {
+//                                               Navigator.push(
+//                                                 context,
+//                                                 MaterialPageRoute(
+//                                                     builder: (context) =>
+//                                                         const HelpScreen()),
+//                                               );
+//                                             },
+//                                             child: Row(
+//                                               children: [
+//                                                 Container(
+//                                                   height: space_5,
+//                                                   width: space_5,
+//                                                   decoration: const BoxDecoration(
+//                                                       image: DecorationImage(
+//                                                           image: AssetImage(
+//                                                               "assets/icons/help_ic.png"))),
+//                                                 ),
+//                                                 SizedBox(
+//                                                   width: space_1,
+//                                                 ),
+//                                                 Text(
+//                                                   'help'.tr,
+//                                                   // AppLocalizations.of(context)!.help,
+//                                                   style: TextStyle(
+//                                                       fontSize: size_10,
+//                                                       color: darkBlueColor,
+//                                                       fontWeight: boldWeight),
+//                                                 ),
+//                                               ],
+//                                             ),
+//                                           ),
+//                                         ),

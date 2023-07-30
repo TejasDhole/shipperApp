@@ -19,10 +19,9 @@ import 'package:flutter/foundation.dart';
 String traccarPass = dotenv.get('traccarPass');
 
 String? current_lang;
-ShipperIdController shipperIdController =
-    Get.put(ShipperIdController());
+ShipperIdController shipperIdController = Get.put(ShipperIdController());
 //String traccarUser = shipperIdController.mobileNum.value;
-String traccarUser = "8688474404";
+String traccarUser = dotenv.get('traccarUser');
 
 class MapUtil {
   String gpsApiUrl = dotenv.get("gpsApiUrl");
@@ -48,6 +47,7 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
+      print("1");
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print(response.body);
@@ -84,6 +84,8 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
+      print("2");
+
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print("Positions BODY IS${response.body}");
@@ -174,7 +176,7 @@ class MapUtil {
     }
   }
 
-    getTraccarPositionforAllCustomized() async {
+  getTraccarPositionforAllCustomized() async {
     try {
       print(traccarUser);
       http.Response response = await http
@@ -183,6 +185,8 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
+      print("3");
+
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print("Positions BODY IS${response.body}");
@@ -199,7 +203,7 @@ class MapUtil {
       return null;
     }
   }
-    
+
   getTraccarPosition({int? deviceId}) async {
     try {
       http.Response response = await http.get(
@@ -257,15 +261,15 @@ class MapUtil {
               json["longitude"] != null ? json["longitude"] : 0;
           String? addressstring;
           try {
-            if(kIsWeb){
+            if (kIsWeb) {
               final apiKey = dotenv.get('mapKey');
-              http.Response addressResponse = await http.get(
-                  Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
-              );
+              http.Response addressResponse = await http.get(Uri.parse(
+                  "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey"));
               var addressJSONData = await jsonDecode(addressResponse.body);
               if (addressResponse.statusCode == 200) {
-                if(addressJSONData['results'].isNotEmpty){
-                  String? address = addressJSONData['results'][0]['formatted_address'];
+                if (addressJSONData['results'].isNotEmpty) {
+                  String? address =
+                      addressJSONData['results'][0]['formatted_address'];
                   addressstring = address;
                 }
               }
@@ -283,16 +287,16 @@ class MapUtil {
 
               if (first.subLocality == "")
                 addressstring =
-                "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                    "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
               else if (first.locality == "")
                 addressstring =
-                "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                    "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
               else if (first.administrativeArea == "")
                 addressstring =
-                "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
+                    "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
               else
                 addressstring =
-                "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                    "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
               // print("ADD $addressstring");
             }
           } catch (e) {
@@ -377,6 +381,9 @@ class MapUtil {
   }) async {
     print("FROM : $from");
     print("TO : $to");
+    print("$deviceId");
+    print(
+        "$traccarApi/reports/stops?deviceId=$deviceId&from=${from}Z&to=${to}Z");
 
     try {
       http.Response response = await http.get(
@@ -387,6 +394,8 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
+      print("4");
+
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print(response.body);
@@ -439,6 +448,8 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
+      print("5");
+
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print(response.body);
@@ -496,6 +507,8 @@ class MapUtil {
               "$traccarApi/reports/summary?deviceId=$deviceId&from=${from}Z&to=${to}Z"),
           headers: <String, String>{'authorization': basicAuth});
       print(response.statusCode);
+      print("6");
+
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print(response.body);

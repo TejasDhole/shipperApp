@@ -16,7 +16,11 @@ class Header extends StatefulWidget {
   bool backButton = true;
   final text;
 
-  Header({this.resetFunction, required this.reset, required this.text , required this.backButton});
+  Header(
+      {this.resetFunction,
+      required this.reset,
+      required this.text,
+      required this.backButton});
 
   @override
   _HeaderState createState() => _HeaderState();
@@ -34,10 +38,16 @@ class _HeaderState extends State<Header> {
           children: [
             Container(
                 margin: EdgeInsets.only(right: space_2),
-                child: widget.backButton ? BackButtonWidget() : SizedBox()),
-            Text('${widget.text}',
+                child:
+                    widget.backButton ? BackButtonWidget() : const SizedBox()),
+            Text('Track  ',
                 style: TextStyle(
-                  fontSize: size_10,
+                    fontSize: size_10,
+                    fontWeight: mediumBoldWeight,
+                    color: const Color.fromRGBO(21, 41, 104, 1))),
+            Text(' ${widget.text}',
+                style: TextStyle(
+                  fontSize: size_10 - 1,
                   fontWeight: mediumBoldWeight,
                 )),
           ],
@@ -54,7 +64,7 @@ class _HeaderState extends State<Header> {
                       fontSize: size_10,
                       fontWeight: regularWeight,
                     )))
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }
