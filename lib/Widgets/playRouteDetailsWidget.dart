@@ -36,8 +36,7 @@ class PlayRouteDetailsWidget extends StatefulWidget {
 
 class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
   DateTimeRange selectedDate = DateTimeRange(
-      start: DateTime.now().subtract(const Duration(days: 1)),
-      end: DateTime.now());
+      start: DateTime.now().subtract(Duration(days: 1)), end: DateTime.now());
   var selectedDateString = [];
   var gpsStoppageHistory = [];
   var gpsTruckHistory = [];
@@ -105,8 +104,7 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
                   onSecondary: darkBlueColor,
                   onSurface: Colors.black,
                   onBackground: white),
-              buttonTheme:
-                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
@@ -130,10 +128,10 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
         selectedDateString = selectedDate.toString().split(" - ");
         istDate1 = new DateFormat("yyyy-MM-dd hh:mm:ss")
             .parse(selectedDateString[0])
-            .subtract(const Duration(hours: 5, minutes: 30));
+            .subtract(Duration(hours: 5, minutes: 30));
         istDate2 = new DateFormat("yyyy-MM-dd hh:mm:ss")
             .parse(selectedDateString[1])
-            .subtract(const Duration(hours: 5, minutes: 30));
+            .subtract(Duration(hours: 5, minutes: 30));
         print(
             "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
       });
@@ -221,16 +219,14 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
 
 //CUSTOM SELECTION allows user to select date range like 2 days, 4 days...
   customSelection(String? choice) async {
-    String startTime =
-        DateTime.now().subtract(const Duration(days: 1)).toString();
+    String startTime = DateTime.now().subtract(Duration(days: 1)).toString();
     String endTime = DateTime.now().toString();
     switch (choice) {
       case '48 hours':
         print("48");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 2)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 2)).toString();
           print("NEW start $startTime and $endTime");
         });
         break;
@@ -238,8 +234,7 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
         print("7");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 7)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 7)).toString();
           print("NEW start $startTime and $endTime");
         });
         break;
@@ -247,8 +242,7 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
         print("14");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 14)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 14)).toString();
           print("NEW start $startTime and $endTime");
         });
         break;
@@ -256,8 +250,7 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
         print("30");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 30)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 30)).toString();
           print("NEW start $startTime and $endTime");
         });
         break;
@@ -268,10 +261,10 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
       // bookingDateList[3] = (nextDay.MMMEd);
       istDate1 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(startTime)
-          .subtract(const Duration(hours: 5, minutes: 30));
+          .subtract(Duration(hours: 5, minutes: 30));
       istDate2 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(endTime)
-          .subtract(const Duration(hours: 5, minutes: 30));
+          .subtract(Duration(hours: 5, minutes: 30));
       print(
           "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
     });
@@ -364,53 +357,183 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
 
     //add Ui
     return Container(
-        color: white,
-        width: width / 3,
-        height: height,
+        // color: white,
+        width: width,
+        height: height * .5,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: darkShadow,
+                offset: const Offset(
+                  0,
+                  -5.0,
+                ),
+                blurRadius: 15.0,
+                spreadRadius: 10.0,
+              ),
+              BoxShadow(
+                color: white,
+                offset: const Offset(0, 1.0),
+                blurRadius: 0.0,
+                spreadRadius: 2.0,
+              ),
+            ]),
         child: Column(children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              20,
-              0,
-              20,
-              20,
+          Container(
+            // color: grey,
+            width: space_10,
+            height: space_1,
+            margin: EdgeInsets.only(top: space_3),
+            decoration: BoxDecoration(
+              color: grey,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
-                ),
-                Center(
-                  child: Container(
-                    height: 51,
-                    width: 186,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(9, 183, 120, 0.2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${widget.truckNo}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    child: const Center(
+                    Icon(Icons.fire_truck_outlined)
+                  ],
+                ),
+                Divider(color: Colors.grey, endIndent: 120, thickness: 2),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Icon(Icons.location_on_sharp, color: Colors.grey),
+                    SizedBox(width: 10),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "In Transit",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Color.fromRGBO(9, 183, 120, 1)),
+                        "${widget.address}",
+                        maxLines: 2,
                       ),
                     ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, left: 40, right: 120),
+                  child: Container(
+                    // width: MediaQuery.of(context).size.width * .5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    padding: EdgeInsets.only(
+                        top: 15, bottom: 15, left: 15, right: 25),
+                    child: Row(children: [
+                      Image.asset(
+                        'assets/icons/circle-outline-with-a-central-dot.png',
+                        color: Colors.blue,
+                        width: 18,
+                        height: 18,
+                      ),
+                      SizedBox(width: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text('ignition'.tr,
+                            softWrap: true,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 15,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: regularWeight)),
+                      ),
+                      (widget.gpsData.last.ignition)
+                          ? Container(
+                              alignment: Alignment.centerLeft,
+                              //    width: 217,
+
+                              child: Text('on'.tr,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 15,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          : Container(
+                              alignment: Alignment.centerLeft,
+                              //    width: 217,
+
+                              child: Text("off".tr,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 15,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                    ]),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 30,
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Image(
+                          image: AssetImage('assets/icons/distanceCovered.png'),
+                          height: 23,
+                        ),
+                        SizedBox(width: 10),
+                        Text("Kms Travelled:".tr + " ",
+                            softWrap: true,
+                            style: TextStyle(
+                                color: black,
+                                fontSize: size_7,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: regularWeight)),
+                        Text("${widget.finalDistance} km",
+                            softWrap: true,
+                            style: TextStyle(
+                                color: liveasyGreen,
+                                fontSize: size_7,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: regularWeight)),
+                      ],
+                    ),
+                  ],
                 ),
-                const Divider(
-                  color: Color.fromRGBO(9, 183, 20, 1),
-                  // height: size_3,
-                  thickness: 5,
-                  indent: 10,
-                  endIndent: 10,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 10,
-                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Icon(Icons.pause, size: size_11),
+                    SizedBox(width: 10),
+                    Row(
+                      children: [
+                        Text("Stops:".tr,
+                            softWrap: true,
+                            style: TextStyle(
+                                color: black,
+                                fontSize: size_8,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: regularWeight)),
+                        Text(" ${widget.totalStop} stops ",
+                            softWrap: true,
+                            style: TextStyle(
+                                color: red,
+                                fontSize: size_8,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: regularWeight)),
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
           ),

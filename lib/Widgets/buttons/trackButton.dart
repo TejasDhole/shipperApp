@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'dart:developer' as devtools show log;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -81,9 +79,6 @@ class _TrackButtonState extends State<TrackButton> {
 
   @override
   Widget build(BuildContext context) {
-    // devtools.log("1");
-    //                 devtools.log("${widget.gpsData.deviceId}");
-    //                 devtools.log("2");
     return (kIsWeb && Responsive.isDesktop(context))
         ? Expanded(
             child: FittedBox(
@@ -100,13 +95,10 @@ class _TrackButtonState extends State<TrackButton> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(darkBlueColor),
                   ),
-                  onPressed: () {
-                    // devtools.log("1");
-                    // devtools.log("${widget.gpsData.deviceId}");
-                    // devtools.log("2");
+                  onPressed: () async {
                     Get.to(
                       TrackScreen(
-                        deviceId: 10,
+                        deviceId: widget.gpsData.deviceId,
                         gpsData: widget.gpsData,
                         truckNo: widget.TruckNo,
                         totalDistance: widget.totalDistance,

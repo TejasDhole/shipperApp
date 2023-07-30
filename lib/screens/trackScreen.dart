@@ -27,6 +27,7 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+
 class TrackScreen extends StatefulWidget {
   final GpsDataModel gpsData;
   final String? truckNo;
@@ -36,7 +37,7 @@ class TrackScreen extends StatefulWidget {
   bool active;
   bool? online;
 
-  TrackScreen(
+    TrackScreen(
       {required this.gpsData,
       required this.truckNo,
       required this.deviceId,
@@ -128,15 +129,15 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   var deviceId;
   bool loading = false;
   DateTime yesterday =
-      DateTime.now().subtract(const Duration(days: 1, hours: 5, minutes: 30));
+      DateTime.now().subtract(Duration(days: 1, hours: 5, minutes: 30));
   late String from;
   late String to;
-  DateTime now = DateTime.now().subtract(const Duration(hours: 5, minutes: 30));
+  DateTime now = DateTime.now().subtract(Duration(hours: 5, minutes: 30));
 
   final lockStorage = GetStorage();
   var lockState;
-  var col1 = const Color(0xff878787);
-  var col2 = const Color(0xffFF5C00);
+  var col1 = Color(0xff878787);
+  var col2 = Color(0xffFF5C00);
 
   //variable for show running / stop status
   var totalStatus = "";
@@ -312,20 +313,17 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
     // for(int i=0; i<stoplatlong.length; i++){
     markerIcon = await getBytesFromCanvas(i + 1, 100, 100);
-    String snippet =
-        "$duration  ------------  $stoppageTime  -----------  $stopAddress";
+    String snippet = "$duration  ------------  $stoppageTime  -----------  $stopAddress";
     logger.i(snippet);
     setState(() {
       // logger.i("getStoppage called");
       customMarkers.add(Marker(
         markerId: MarkerId("Stop Mark $i"),
         position: stoplatlong,
-        icon: kIsWeb
-            ? BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40))
-            : BitmapDescriptor.fromBytes(markerIcon),
+        icon: kIsWeb ? BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40)) : BitmapDescriptor.fromBytes(markerIcon),
         infoWindow: InfoWindow(
           snippet: snippet,
-          anchor: Offset(50, 50),
+          anchor: Offset(50,50),
         ),
         onTap: () async {
           stopAddress = await getStoppageAddress(gpsStoppage);
@@ -342,7 +340,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   }
 
   _addPolyLine() {
-    PolylineId id = const PolylineId("poly");
+    PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
       polylineId: id,
       color: Colors.blue,
@@ -360,7 +358,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   _getPolyline(List<LatLng> polylineCoordinates) async {
     var logger = Logger();
     logger.i("in polyline function");
-    PolylineId id = const PolylineId('poly');
+    PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,
       color: loadingWidgetColor,
@@ -379,7 +377,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     // print("------------ calling gettotaldistance ---------");
     var gpsRoute1 =
         await mapUtil.getTraccarSummary(deviceId: ab, from: from, to: to);
-    print("------------$mapUtil---------------");
     setState(() {
       widget.totalDistance = (gpsRoute1[0].distance / 1000).toStringAsFixed(2);
       finalDistance = widget.totalDistance;
@@ -500,8 +497,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 
   void iconthenmarker() {
     logger.i("in Icon maker function");
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(devicePixelRatio: 2.5),
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(devicePixelRatio: 2.5),
             'assets/icons/truckPin.png')
         .then((value) => {
               setState(() {
@@ -527,9 +523,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   //function used to change the speed of truck after 10 seconds and to make the truck look running
   void onActivityExecuted2() async {
     // logger.i("It is in Activity2 Executed function");
-    print("erroe1");
     var gpsData = await mapUtil.getTraccarPosition(deviceId: widget.deviceId);
-    print("erroe2");
     setState(() {
       newGPSData = gpsData;
     });
@@ -592,21 +586,19 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         ),
       ));*/
     } catch (e) {
-      print("Hello56");
+      // print("Exceptionis $e");
     }
   }
 
   customSelection(String? choice) async {
-    String startTime =
-        DateTime.now().subtract(const Duration(days: 1)).toString();
+    String startTime = DateTime.now().subtract(Duration(days: 1)).toString();
     String endTime = DateTime.now().toString();
     switch (choice) {
       case '48 hours':
         // print("48");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 2)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 2)).toString();
           // print("NEW start $startTime and $endTime");
         });
         break;
@@ -614,8 +606,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         // print("7");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 7)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 7)).toString();
           // print("NEW start $startTime and $endTime");
         });
         break;
@@ -623,8 +614,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         // print("14");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 14)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 14)).toString();
           // print("NEW start $startTime and $endTime");
         });
         break;
@@ -632,8 +622,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         // print("30");
         setState(() {
           endTime = DateTime.now().toString();
-          startTime =
-              DateTime.now().subtract(const Duration(days: 30)).toString();
+          startTime = DateTime.now().subtract(Duration(days: 30)).toString();
           // print("NEW start $startTime and $endTime");
         });
         break;
@@ -644,10 +633,10 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       loading = false;
       istDate1 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(startTime)
-          .subtract(const Duration(hours: 5, minutes: 30));
+          .subtract(Duration(hours: 5, minutes: 30));
       istDate2 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(endTime)
-          .subtract(const Duration(hours: 5, minutes: 30));
+          .subtract(Duration(hours: 5, minutes: 30));
       // print(
       //     "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
     });
@@ -709,15 +698,13 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
           },
           child: Stack(
             children: <Widget>[
-              // Mapp
               Positioned(
-                right: 0,
-                top: space_13,
-                // bottom: 0,
+                left: 0,
+                top: -250,
+                bottom: 0,
                 child: Container(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    // height: height,
-                    height: MediaQuery.of(context).size.height-space_13,
+                    width: MediaQuery.of(context).size.width,
+                    height: height,
                     child: Stack(children: <Widget>[
                       loading_map && loadmap2 && loadmap3 ||
                               !(widget.online!) &&
@@ -727,7 +714,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                               child: Container(
                                 height: 50,
                                 width: 50,
-                                child: const CircularProgressIndicator(
+                                child: CircularProgressIndicator(
                                   color: darkBlueColor,
                                 ),
                               ),
@@ -780,7 +767,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                   child: Container(
                                     height: 50,
                                     width: 50,
-                                    child: const CircularProgressIndicator(
+                                    child: CircularProgressIndicator(
                                       color: darkBlueColor,
                                     ),
                                   ),
@@ -799,10 +786,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                         width: 300,
                         offset: 0,
                       ),
-                      // Map Button
                       Positioned(
-                        left: 20,
-                        top: 20,
+                        left: 10,
+                        top: 325,
                         child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -817,13 +803,13 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                   height: 40,
                                   decoration: BoxDecoration(
                                       color: col2,
-                                      borderRadius:
-                                          const BorderRadius.horizontal(
-                                              left: Radius.circular(5)),
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(5)),
                                       boxShadow: [
-                                        const BoxShadow(
-                                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                                          offset: Offset(
+                                        BoxShadow(
+                                          color: const Color.fromRGBO(
+                                              0, 0, 0, 0.25),
+                                          offset: const Offset(
                                             0,
                                             4,
                                           ),
@@ -835,11 +821,11 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                       onPressed: () {
                                         setState(() {
                                           this.maptype = MapType.normal;
-                                          col1 = const Color(0xff878787);
-                                          col2 = const Color(0xffFF5C00);
+                                          col1 = Color(0xff878787);
+                                          col2 = Color(0xffFF5C00);
                                         });
                                       },
-                                      child: const Text(
+                                      child: Text(
                                         'Map',
                                         style: TextStyle(
                                           color: Colors.white,
@@ -850,7 +836,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                   height: 40,
                                   decoration: BoxDecoration(
                                     color: col1,
-                                    borderRadius: const BorderRadius.horizontal(
+                                    borderRadius: BorderRadius.horizontal(
                                         right: Radius.circular(5)),
                                     //  border: Border.all(color: Colors.black),
                                   ),
@@ -858,11 +844,11 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                       onPressed: () {
                                         setState(() {
                                           this.maptype = MapType.satellite;
-                                          col2 = const Color(0xff878787);
-                                          col1 = const Color(0xffFF5C00);
+                                          col2 = Color(0xff878787);
+                                          col1 = Color(0xffFF5C00);
                                         });
                                       },
-                                      child: const Text('Satellite',
+                                      child: Text('Satellite',
                                           style: TextStyle(
                                             color: Colors.black,
                                           ))),
@@ -883,13 +869,12 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                               });
                             },
                           ),
-                            */
+                   */
                             ),
                       ),
-                      // Zoom In Button
                       Positioned(
                         right: 10,
-                        bottom: 100,
+                        bottom: height / 2 + 90,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -915,10 +900,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // Zoom out Button
                       Positioned(
                         right: 10,
-                        bottom: 50,
+                        bottom: height / 2 + 40,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -944,10 +928,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // stack button
                       Positioned(
                         right: 10,
-                        bottom: 150,
+                        bottom: height / 2 + 150,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -995,36 +978,85 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // Positioned(
-                      //   right: 10,
-                      //   top: 325,
-                      //   child: Container(
-                      //     height: 40,
-                      //     width: 110,
-                      //     alignment: Alignment.centerRight,
-                      //     //   padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
-                      //     //   margin: EdgeInsets.fromLTRB(0, 14, 0, 10),
-                      //     decoration: const BoxDecoration(
-                      //         color: white,
-                      //         borderRadius: BorderRadius.all(
-                      //           Radius.circular(8),
-                      //         ),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //             color: Color.fromRGBO(0, 0, 0, 0.19),
-                      //             offset: Offset(
-                      //               0,
-                      //               5.33,
-                      //             ),
-                      //             blurRadius: 9.33,
-                      //             spreadRadius: 0.0,
-                      //           ),
-                      //         ]),
-                      //   ),
-                      // ),
+                      Positioned(
+                        right: 10,
+                        top: 325,
+                        child: Container(
+                          height: 40,
+                          width: 110,
+                          alignment: Alignment.centerRight,
+                          //   padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
+                          //   margin: EdgeInsets.fromLTRB(0, 14, 0, 10),
+                          decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.19),
+                                  offset: const Offset(
+                                    0,
+                                    5.33,
+                                  ),
+                                  blurRadius: 9.33,
+                                  spreadRadius: 0.0,
+                                ),
+                              ]),
+
+                          child: DropdownButton(
+                            underline: Container(),
+                            hint: Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: Text('24 hours'),
+                            ),
+                            icon: Container(
+                              width: 36,
+                              child: Row(children: [
+                                Expanded(
+                                  child: Container(
+                                    width: 36,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff152968),
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(8),
+                                        bottomRight: Radius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Icon(Icons.keyboard_arrow_down,
+                                        size: 15, color: white),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            style: TextStyle(
+                                color: const Color(0xff3A3A3A),
+                                fontSize: size_6,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400),
+                            // Not necessary for Option 1
+                            value: _selectedLocation,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedLocation = newValue.toString();
+                              });
+                              customSelection(_selectedLocation);
+                            },
+                            items: _locations.map((location) {
+                              return DropdownMenuItem(
+                                child: Container(
+                                    //  width: 74,
+                                    child: new Text(location.tr)),
+                                value: location,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ])),
               ),
-              //Header
+
               Positioned(
                   top: 0,
                   child: Container(
@@ -1036,103 +1068,40 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           width: MediaQuery.of(context).size.width,
                           height: space_13,
                           color: white,
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 margin: EdgeInsets.fromLTRB(
-                                    space_3, 10, space_3, 0),
+                                    space_3, 0, space_3, 0),
                                 child: Header(
                                     reset: false,
                                     // add variable for check status time or device
                                     text: "${widget.truckNo} ",
                                     backButton: true),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: DropdownButton(
-                                  underline: Container(),
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            bottomLeft: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: const Text('24 hours')),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 45),
+                                child: Container(
+                                  child: Text(
+                                    "( $totalStatus )",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  icon: Container(
-                                    width: 36,
-                                    child: Row(children: [
-                                      Expanded(
-                                        child: Container(
-                                          width: 36,
-                                          height: 40,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xff152968),
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(8),
-                                              bottomRight: Radius.circular(8),
-                                            ),
-                                          ),
-                                          child: const Icon(
-                                              Icons.keyboard_arrow_down,
-                                              size: 15,
-                                              color: white),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                  style: TextStyle(
-                                      color: const Color(0xff3A3A3A),
-                                      fontSize: size_6,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400),
-                                  // Not necessary for Option 1
-                                  value: _selectedLocation,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _selectedLocation = newValue.toString();
-                                    });
-                                    customSelection(_selectedLocation);
-                                  },
-                                  items: _locations.map((location) {
-                                    return DropdownMenuItem(
-                                      child: Container(
-                                          //  width: 74,
-                                          child: new Text(location.tr)),
-                                      value: location,
-                                    );
-                                  }).toList(),
                                 ),
                               ),
-                              // status read for reaming time
-                              // Padding(
-                              //   padding: const EdgeInsets.only(left: 45),
-                              //   child: Container(
-                              //     child: Text(
-                              //       "( $totalStatus )",
-                              //       style: TextStyle(
-                              //           fontSize: 13,
-                              //           fontWeight: FontWeight.bold),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
                       ]))),
-              //Details
+              //   loading?
               AnimatedPositioned(
                 curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 200),
-                top: space_13,
+                duration: Duration(milliseconds: 200),
                 left: 0,
-                // bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
+                bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
                 child: TrackScreenDetails(
                   finalDistance: widget.totalDistance,
                   gpsData: newGPSData,
@@ -1156,24 +1125,3 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     );
   }
 }
-
-
-
-
-                                // decoration: const BoxDecoration(boxShadow: [
-                                //   BoxShadow(
-                                //     color: darkShadow,
-                                //     offset: Offset(
-                                //       0,
-                                //       -5.0,
-                                //     ),
-                                //     blurRadius: 5.0,
-                                //     spreadRadius: 3.33,
-                                //   ),
-                                //   BoxShadow(
-                                //     color: white,
-                                //     offset: Offset(0, 1.0),
-                                //     blurRadius: 0.0,
-                                //     spreadRadius: 0.66,
-                                //   ),
-                                // ]),
