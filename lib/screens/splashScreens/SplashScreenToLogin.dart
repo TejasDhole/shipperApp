@@ -30,7 +30,7 @@ class _SplashScreenToLoginScreenState extends State<SplashScreenToLoginScreen> {
     //   SystemUiOverlay.top,
     // ]);
     getData();
-    Timer(const Duration(seconds: 2),
+    Timer(const Duration(seconds: 1),
         () => Get.off(() => const LoginScreenUsingMail()));
   }
 

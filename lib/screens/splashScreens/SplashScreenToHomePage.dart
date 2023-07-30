@@ -27,7 +27,7 @@ class _SplashScreenToHomePageState extends State<SplashScreenToHomePage> {
   void initState() {
     super.initState();
     getData();
-    Timer(Duration(seconds: 3), () => Get.off(() => NavigationScreen()));
+    Timer(Duration(seconds: 1), () => Get.off(() => NavigationScreen()));
   }
 
   getData() async {

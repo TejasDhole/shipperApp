@@ -47,7 +47,7 @@ class _SplashScreenToGetTransporterDataState
     // runTransporterApiPost(mobileNum: widget.mobileNum);
 
     if (transporterId != null) {
-      Timer(const Duration(milliseconds: 1200),
+      Timer(const Duration(milliseconds: 120),
           () => Get.off(() => NavigationScreen()));
     } else {
       setState(() {
@@ -76,7 +76,7 @@ class _SplashScreenToGetTransporterDataState
         shipperIdController.updateCompanyName(companyStatus!);
         print("transporterID is $transporterId");
 
-        Timer(const Duration(milliseconds: 1200),
+        Timer(const Duration(milliseconds: 120),
             () => Get.off(() => NavigationScreen()));
       }
       //Timer(Duration(milliseconds: 1), () => Get.off(() => NavigationScreen()));
