@@ -152,19 +152,14 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      // height: height / 3 + 106,
-      // width: width,
       height: height,
       width: width / 3,
       padding: EdgeInsets.fromLTRB(0, 0, 0, space_3),
       decoration: const BoxDecoration(
         color: white,
-        // borderRadius: BorderRadius.only(
-        //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
       ),
       child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
+         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height / 25,

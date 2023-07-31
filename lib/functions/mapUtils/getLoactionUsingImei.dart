@@ -47,7 +47,6 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
-      print("1");
       print(response.body);
       var jsonData = await jsonDecode(response.body);
       print(response.body);
@@ -84,7 +83,7 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
-      print("2");
+      
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);
@@ -185,7 +184,7 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
-      print("3");
+
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);
@@ -394,7 +393,6 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
-      print("4");
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);
@@ -448,7 +446,6 @@ class MapUtil {
             'Accept': 'application/json'
           });
       print(response.statusCode);
-      print("5");
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);
@@ -507,7 +504,6 @@ class MapUtil {
               "$traccarApi/reports/summary?deviceId=$deviceId&from=${from}Z&to=${to}Z"),
           headers: <String, String>{'authorization': basicAuth});
       print(response.statusCode);
-      print("6");
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);

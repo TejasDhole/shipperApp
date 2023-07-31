@@ -713,10 +713,8 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
               Positioned(
                 right: 0,
                 top: space_13,
-                // bottom: 0,
                 child: Container(
                     width: MediaQuery.of(context).size.width / 1.5,
-                    // height: height,
                     height: MediaQuery.of(context).size.height-space_13,
                     child: Stack(children: <Widget>[
                       loading_map && loadmap2 && loadmap3 ||
@@ -1132,7 +1130,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                 duration: const Duration(milliseconds: 200),
                 top: space_13,
                 left: 0,
-                // bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
                 child: TrackScreenDetails(
                   finalDistance: widget.totalDistance,
                   gpsData: newGPSData,
@@ -1158,22 +1155,3 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
 }
 
 
-
-
-                                // decoration: const BoxDecoration(boxShadow: [
-                                //   BoxShadow(
-                                //     color: darkShadow,
-                                //     offset: Offset(
-                                //       0,
-                                //       -5.0,
-                                //     ),
-                                //     blurRadius: 5.0,
-                                //     spreadRadius: 3.33,
-                                //   ),
-                                //   BoxShadow(
-                                //     color: white,
-                                //     offset: Offset(0, 1.0),
-                                //     blurRadius: 0.0,
-                                //     spreadRadius: 0.66,
-                                //   ),
-                                // ]),

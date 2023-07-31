@@ -543,8 +543,6 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
         children: <Widget>[
           Positioned(
             right: 0,
-            // top: space_13,
-            // bottom: 0,
             child: Container(
                 width: MediaQuery.of(context).size.width / 1.5,
                 height: height - space_13,
@@ -583,7 +581,6 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                   Positioned(
                     left: 20,
                     top: 20,
-                    // top: MediaQuery.of(context).size.height / 4 + 20,
                     child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -591,7 +588,6 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             width: 0.25,
                           ),
                         ),
-                        //  height: 40,
                         child: Row(
                           children: [
                             Container(
