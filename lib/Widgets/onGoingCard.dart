@@ -50,10 +50,10 @@ class _OngoingCardState extends State<OngoingCard> {
     super.initState();
 
     DateTime yesterday = DateTime.now()
-        .subtract(Duration(days: 1, hours: 5, minutes: 30)); //from param
+        .subtract(const Duration(days: 1, hours: 5, minutes: 30)); //from param
     from = yesterday.toIso8601String();
-    DateTime now =
-        DateTime.now().subtract(Duration(hours: 5, minutes: 30)); //to param
+    DateTime now = DateTime.now()
+        .subtract(const Duration(hours: 5, minutes: 30)); //to param
     to = now.toIso8601String();
 
     getMyTruckPosition();
@@ -76,6 +76,10 @@ class _OngoingCardState extends State<OngoingCard> {
       textFontSize = 16;
     }
 
+    widget.loadAllDataModel.truckType;
+    widget.loadAllDataModel.productType;
+    widget.loadAllDataModel.unitValue;
+    //widget.loadAllDataModel.noOfTrucks;
     widget.loadAllDataModel.driverName ??= "NA";
     widget.loadAllDataModel.driverName =
         widget.loadAllDataModel.driverName!.length >= 20
@@ -95,13 +99,40 @@ class _OngoingCardState extends State<OngoingCard> {
     return gpsDataList.isNotEmpty
         ? (kIsWeb && Responsive.isDesktop(context))
             ? Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(documentUploadScreen(
+                      bookingId: widget.loadAllDataModel.bookingId.toString(),
+                      truckNo: widget.loadAllDataModel.truckNo,
+                      loadingPoint: widget.loadAllDataModel.loadingPointCity,
+                      unloadingPoint:
+                          widget.loadAllDataModel.unloadingPointCity,
+                      transporterName: widget.loadAllDataModel.shipperName,
+                      transporterPhoneNum:
+                          widget.loadAllDataModel.shipperPhoneNum,
+                      driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
+                      driverName: widget.loadAllDataModel.driverName,
+                      bookingDate: widget.loadAllDataModel.bookingDate,
+                      // trackApproved: true,
+                      gpsDataList: gpsDataList,
+                      // widget.gpsDataList,
+                      totalDistance: totalDistance,
+                      //  widget.totalDistance,
+                      // device: gpsData.deviceId,
+                      // gpsData!.deviceId
+                      // widget.device,
+                      truckType: widget.loadAllDataModel.truckType,
+                      productType: widget.loadAllDataModel.productType,
+                      unitValue: widget.loadAllDataModel.unitValue,
+                    ));
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
                         flex: 3,
                         child: Center(
                             child: Container(
-                                padding: EdgeInsets.only(left: 8),
+                                padding: const EdgeInsets.only(left: 8),
                                 child: Text(
                                   widget.loadAllDataModel.bookingDate ?? 'Null',
                                   textAlign: TextAlign.center,
@@ -109,11 +140,12 @@ class _OngoingCardState extends State<OngoingCard> {
                                       color: kLiveasyColor,
                                       fontSize: textFontSize,
                                       fontFamily: 'Montserrat'),
-                                )))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
+                                ))),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
                         flex: 5,
                         child: Center(
                             child: Text(
@@ -123,11 +155,12 @@ class _OngoingCardState extends State<OngoingCard> {
                               color: kLiveasyColor,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                        ))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
+                        )),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
                         flex: 5,
                         child: Center(
                             child: Text(
@@ -137,11 +170,12 @@ class _OngoingCardState extends State<OngoingCard> {
                               color: kLiveasyColor,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                        ))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
+                        )),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
                         flex: 3,
                         child: Center(
                             child: Text(
@@ -151,11 +185,12 @@ class _OngoingCardState extends State<OngoingCard> {
                               color: kLiveasyColor,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                        ))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
+                        )),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
                         flex: 4,
                         child: Center(
                             child: Text(
@@ -165,26 +200,27 @@ class _OngoingCardState extends State<OngoingCard> {
                               color: kLiveasyColor,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                        ))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Center(
-                          child: Text(
-                        '${widget.loadAllDataModel.truckType}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: kLiveasyColor,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      )),
-                    ),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
+                        )),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Center(
+                            child: Text(
+                          '${widget.loadAllDataModel.truckType}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                        )),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
                         flex: 3,
                         child: Center(
                             child: Flex(
@@ -201,94 +237,102 @@ class _OngoingCardState extends State<OngoingCard> {
                                     fontSize: textFontSize,
                                     fontFamily: 'Montserrat'),
                               ))
-                            ]))),
-                    VerticalDivider(
-                      color: Colors.grey,
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IntrinsicHeight(
-                            child: Column(
-                              children: [
-                                TrackButton(
-                                  gpsData: gpsDataList[0],
-                                  truckApproved: true,
-                                  TruckNo: widget.loadAllDataModel.truckNo,
-                                  totalDistance: totalDistance,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                CallButton(
-                                  directCall: false,
-                                  transporterPhoneNum:
-                                      widget.loadAllDataModel.shipperPhoneNum,
-                                  driverPhoneNum:
-                                      widget.loadAllDataModel.driverPhoneNum,
-                                  driverName:
-                                      widget.loadAllDataModel.driverName,
-                                  transporterName:
-                                      widget.loadAllDataModel.companyName,
-                                ),
-                                Container()
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: IconButton(
-                              onPressed: () {
-                                Get.to(documentUploadScreen(
-                                  bookingId: widget.loadAllDataModel.bookingId
-                                      .toString(),
-                                  truckNo: widget.loadAllDataModel.truckNo,
-                                  loadingPoint:
-                                      widget.loadAllDataModel.loadingPointCity,
-                                  unloadingPoint: widget
-                                      .loadAllDataModel.unloadingPointCity,
-                                  transporterName:
-                                      widget.loadAllDataModel.shipperName,
-                                  transporterPhoneNum:
-                                      widget.loadAllDataModel.shipperPhoneNum,
-                                  driverPhoneNum:
-                                      widget.loadAllDataModel.driverPhoneNum,
-                                  driverName:
-                                      widget.loadAllDataModel.driverName,
-                                  bookingDate:
-                                      widget.loadAllDataModel.bookingDate,
-                                  // trackApproved: true,
-                                  gpsDataList: gpsDataList,
-                                  // widget.gpsDataList,
-                                  totalDistance: totalDistance,
-                                  //  widget.totalDistance,
-                                  // device: gpsData.deviceId,
-                                  // gpsData!.deviceId
-                                  // widget.device,
-                                ));
-                              },
-                              icon: Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                color: kLiveasyColor,
-                                size: 15,
-                                weight: 700,
-                              ),
-                              padding: EdgeInsets.zero,
-                              iconSize: 15,
-                              style: ButtonStyle(
-                                padding: MaterialStatePropertyAll<EdgeInsets>(
-                                    EdgeInsets.zero),
-                              ),
-                            ),
-                          ),
-                        ],
+                            ])),
                       ),
-                    ),
-                  ],
+                      const VerticalDivider(
+                        color: Colors.grey,
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IntrinsicHeight(
+                              child: Column(
+                                children: [
+                                  TrackButton(
+                                    gpsData: gpsDataList[0],
+                                    truckApproved: true,
+                                    TruckNo: widget.loadAllDataModel.truckNo,
+                                    totalDistance: totalDistance,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  CallButton(
+                                    directCall: false,
+                                    transporterPhoneNum:
+                                        widget.loadAllDataModel.shipperPhoneNum,
+                                    driverPhoneNum:
+                                        widget.loadAllDataModel.driverPhoneNum,
+                                    driverName:
+                                        widget.loadAllDataModel.driverName,
+                                    transporterName:
+                                        widget.loadAllDataModel.companyName,
+                                  ),
+                                  Container()
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: IconButton(
+                                onPressed: () {
+                                  Get.to(documentUploadScreen(
+                                    bookingId: widget.loadAllDataModel.bookingId
+                                        .toString(),
+                                    truckNo: widget.loadAllDataModel.truckNo,
+                                    loadingPoint: widget
+                                        .loadAllDataModel.loadingPointCity,
+                                    unloadingPoint: widget
+                                        .loadAllDataModel.unloadingPointCity,
+                                    transporterName:
+                                        widget.loadAllDataModel.shipperName,
+                                    transporterPhoneNum:
+                                        widget.loadAllDataModel.shipperPhoneNum,
+                                    driverPhoneNum:
+                                        widget.loadAllDataModel.driverPhoneNum,
+                                    driverName:
+                                        widget.loadAllDataModel.driverName,
+                                    bookingDate:
+                                        widget.loadAllDataModel.bookingDate,
+                                    // trackApproved: true,
+                                    gpsDataList: gpsDataList,
+                                    // widget.gpsDataList,
+                                    totalDistance: totalDistance,
+                                    //  widget.totalDistance,
+                                    // device: gpsData.deviceId,
+                                    // gpsData!.deviceId
+                                    // widget.device,
+                                    truckType:
+                                        widget.loadAllDataModel.truckType,
+                                    productType:
+                                        widget.loadAllDataModel.productType,
+                                    unitValue:
+                                        widget.loadAllDataModel.unitValue,
+                                  ));
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  color: kLiveasyColor,
+                                  size: 15,
+                                  weight: 700,
+                                ),
+                                padding: EdgeInsets.zero,
+                                iconSize: 15,
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll<EdgeInsets>(
+                                      EdgeInsets.zero),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
             : GestureDetector(
@@ -445,10 +489,11 @@ class _OngoingCardState extends State<OngoingCard> {
   void getMyTruckPosition() async {
     var devices =
         await getDeviceByDeviceId(widget.loadAllDataModel.deviceId.toString());
+
     var gpsDataAll = await getPositionByDeviceId(
         widget.loadAllDataModel.deviceId.toString());
 
-    deviceList.clear();
+    deviceList = [];
 
     if (devices != null) {
       for (var device in devices) {

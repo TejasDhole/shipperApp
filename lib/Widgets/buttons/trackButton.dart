@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -95,7 +96,7 @@ class _TrackButtonState extends State<TrackButton> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(darkBlueColor),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
                     Get.to(
                       TrackScreen(
                         deviceId: widget.gpsData.deviceId,

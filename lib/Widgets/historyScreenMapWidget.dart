@@ -8,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/constants/spaces.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 // import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -61,7 +62,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
   late BitmapDescriptor pinLocationIcon;
   late BitmapDescriptor pinLocationIconTruck;
   late CameraPosition camPosition =
-  CameraPosition(target: lastlatLngMarker, zoom: 8);
+      CameraPosition(target: lastlatLngMarker, zoom: 8);
   var logger = Logger();
   late Marker markernew;
   List<Marker> customMarkers = [];
@@ -107,7 +108,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
   late Uint8List markerIcon;
   var markerslist;
   CustomInfoWindowController _customInfoWindowController =
-  CustomInfoWindowController();
+      CustomInfoWindowController();
   bool isAnimation = false;
   double mapHeight = 600;
   DateTimeRange selectedDate = DateTimeRange(
@@ -124,7 +125,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
   var col1 = Color(0xff878787);
   var col2 = Color(0xffFF5C00);
   DateTime yesterday =
-  DateTime.now().subtract(Duration(days: 1, hours: 5, minutes: 30));
+      DateTime.now().subtract(Duration(days: 1, hours: 5, minutes: 30));
   late String from;
   late String to;
   DateTime now = DateTime.now().subtract(Duration(hours: 5, minutes: 30));
@@ -499,20 +500,20 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
     Get.back();
     EasyLoading.dismiss();
     Get.to(() => TruckHistoryScreen(
-      truckNo: widget.truckNo,
-      //   gpsTruckRoute: newRouteHistory,
-      dateRange: selectedDate.toString(),
-      deviceId: widget.deviceId,
-      istDate1: istDate1,
-      istDate2: istDate2,
-      //   gpsDataHistory: gpsHistory,
-      selectedLocation: _selectedLocation,
-      totalDistance: totalDistance,
-      gpsDataHistory: gpsDataHistory,
-      gpsStoppageHistory: gpsStoppageHistory,
-      //    latitude: widget.latitude,
-      //    longitude: widget.longitude
-    ));
+          truckNo: widget.truckNo,
+          //   gpsTruckRoute: newRouteHistory,
+          dateRange: selectedDate.toString(),
+          deviceId: widget.deviceId,
+          istDate1: istDate1,
+          istDate2: istDate2,
+          //   gpsDataHistory: gpsHistory,
+          selectedLocation: _selectedLocation,
+          totalDistance: totalDistance,
+          gpsDataHistory: gpsDataHistory,
+          gpsStoppageHistory: gpsStoppageHistory,
+          //    latitude: widget.latitude,
+          //    longitude: widget.longitude
+        ));
   }
 
   distancecalculation(String from, String to) async {
@@ -536,17 +537,15 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
     double width = MediaQuery.of(context).size.width;
     double threshold = 100;
     return Container(
-      height: height,
-      width: width,
+      height: height - space_13,
+      width: width / 1.5,
       child: Stack(
         children: <Widget>[
           Positioned(
-            left: 0,
-            top: -100,
-            bottom: 0,
+            right: 0,
             child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: height,
+                width: MediaQuery.of(context).size.width / 1.5,
+                height: height - space_13,
                 child: Stack(children: <Widget>[
                   GoogleMap(
                     onTap: (position) {
@@ -569,7 +568,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                     },
                     gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
                       new Factory<OneSequenceGestureRecognizer>(
-                            () => new EagerGestureRecognizer(),
+                        () => new EagerGestureRecognizer(),
                       ),
                     ].toSet(),
                   ),
@@ -580,9 +579,8 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                     offset: 30,
                   ),
                   Positioned(
-                    left: 10,
-                    top: 175,
-                    // top: MediaQuery.of(context).size.height / 4 + 20,
+                    left: 20,
+                    top: 20,
                     child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -590,7 +588,6 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             width: 0.25,
                           ),
                         ),
-                        //  height: 40,
                         child: Row(
                           children: [
                             Container(
@@ -602,7 +599,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                                   boxShadow: [
                                     BoxShadow(
                                       color:
-                                      const Color.fromRGBO(0, 0, 0, 0.25),
+                                          const Color.fromRGBO(0, 0, 0, 0.25),
                                       offset: const Offset(
                                         0,
                                         4,
@@ -649,7 +646,7 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             )
                           ],
                         )
-                      /*        FloatingActionButton(
+                        /*        FloatingActionButton(
                             heroTag: "btn1",
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
@@ -664,11 +661,11 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             },
                           ),
                    */
-                    ),
+                        ),
                   ),
                   Positioned(
                     right: 10,
-                    bottom: height / 2 + 100,
+                    bottom: 100,
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
@@ -684,19 +681,19 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                           this
                               ._googleMapController
                               .animateCamera(CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                              bearing: 0,
-                              target: lastlatLngMarker,
-                              zoom: this.zoom,
-                            ),
-                          ));
+                                CameraPosition(
+                                  bearing: 0,
+                                  target: lastlatLngMarker,
+                                  zoom: this.zoom,
+                                ),
+                              ));
                         },
                       ),
                     ),
                   ),
                   Positioned(
                     right: 10,
-                    bottom: height / 2 + 50,
+                    bottom: 50,
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
@@ -712,19 +709,19 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                           this
                               ._googleMapController
                               .animateCamera(CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                              bearing: 0,
-                              target: lastlatLngMarker,
-                              zoom: this.zoom,
-                            ),
-                          ));
+                                CameraPosition(
+                                  bearing: 0,
+                                  target: lastlatLngMarker,
+                                  zoom: this.zoom,
+                                ),
+                              ));
                         },
                       ),
                     ),
                   ),
                   Positioned(
                     right: 10,
-                    bottom: height / 2 + 150,
+                    bottom: 150,
                     child: SizedBox(
                       height: 40,
                       child: FloatingActionButton(
@@ -733,13 +730,13 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                         foregroundColor: Colors.black,
                         child: Container(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                'assets/icons/layers.png',
-                                width: 20,
-                                height: 20,
-                              ),
-                            )),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'assets/icons/layers.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                        )),
                         onPressed: () {
                           if (zoombutton) {
                             setState(() {
@@ -749,12 +746,12 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             this
                                 ._googleMapController
                                 .animateCamera(CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                bearing: 0,
-                                target: lastlatLngMarker,
-                                zoom: this.zoom,
-                              ),
-                            ));
+                                  CameraPosition(
+                                    bearing: 0,
+                                    target: lastlatLngMarker,
+                                    zoom: this.zoom,
+                                  ),
+                                ));
                           } else {
                             setState(() {
                               this.zoom = 12;
@@ -763,93 +760,93 @@ class _HistoryScreenMapWidgetState extends State<HistoryScreenMapWidget>
                             this
                                 ._googleMapController
                                 .animateCamera(CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                bearing: 0,
-                                target: LatLng(averagelat, averagelon),
-                                zoom: this.zoom,
-                              ),
-                            ));
+                                  CameraPosition(
+                                    bearing: 0,
+                                    target: LatLng(averagelat, averagelon),
+                                    zoom: this.zoom,
+                                  ),
+                                ));
                           }
                         },
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 10,
-                    top: 175,
-                    child: Container(
-                      height: 40,
-                      width: 110,
-                      alignment: Alignment.centerRight,
-                      //   padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
-                      //   margin: EdgeInsets.fromLTRB(0, 14, 0, 10),
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color.fromRGBO(0, 0, 0, 0.19),
-                              offset: const Offset(
-                                0,
-                                5.33,
-                              ),
-                              blurRadius: 9.33,
-                              spreadRadius: 0.0,
-                            ),
-                          ]),
+                  // Positioned(
+                  //   right: 10,
+                  //   top: 175,
+                  //   child: Container(
+                  //     height: 40,
+                  //     width: 110,
+                  //     alignment: Alignment.centerRight,
+                  //     //   padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
+                  //     //   margin: EdgeInsets.fromLTRB(0, 14, 0, 10),
+                  //     decoration: BoxDecoration(
+                  //         color: white,
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(8),
+                  //         ),
+                  //         boxShadow: [
+                  //           BoxShadow(
+                  //             color: const Color.fromRGBO(0, 0, 0, 0.19),
+                  //             offset: const Offset(
+                  //               0,
+                  //               5.33,
+                  //             ),
+                  //             blurRadius: 9.33,
+                  //             spreadRadius: 0.0,
+                  //           ),
+                  //         ]),
 
-                      child: DropdownButton(
-                        underline: Container(),
-                        hint: Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: Text('24 hours'),
-                        ),
-                        icon: Container(
-                          width: 36,
-                          child: Row(children: [
-                            Expanded(
-                              child: Container(
-                                width: 36,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xff152968),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8),
-                                    bottomRight: Radius.circular(8),
-                                  ),
-                                ),
-                                child: const Icon(Icons.keyboard_arrow_down,
-                                    size: 20, color: white),
-                              ),
-                            ),
-                          ]),
-                        ),
-                        style: TextStyle(
-                            color: const Color(0xff3A3A3A),
-                            fontSize: size_6,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400),
-                        // Not necessary for Option 1
-                        value: _selectedLocation,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedLocation = newValue.toString();
-                          });
-                          customSelection(_selectedLocation);
-                        },
-                        items: _locations.map((location) {
-                          return DropdownMenuItem(
-                            child: Container(
-                              //  width: 74,
-                                child: new Text(location)),
-                            value: location,
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
+                  //     child: DropdownButton(
+                  //       underline: Container(),
+                  //       hint: Padding(
+                  //         padding: const EdgeInsets.only(right: 12.0),
+                  //         child: Text('24 hours'),
+                  //       ),
+                  //       icon: Container(
+                  //         width: 36,
+                  //         child: Row(children: [
+                  //           Expanded(
+                  //             child: Container(
+                  //               width: 36,
+                  //               height: 40,
+                  //               decoration: BoxDecoration(
+                  //                 color: const Color(0xff152968),
+                  //                 borderRadius: BorderRadius.only(
+                  //                   topRight: Radius.circular(8),
+                  //                   bottomRight: Radius.circular(8),
+                  //                 ),
+                  //               ),
+                  //               child: const Icon(Icons.keyboard_arrow_down,
+                  //                   size: 20, color: white),
+                  //             ),
+                  //           ),
+                  //         ]),
+                  //       ),
+                  //       style: TextStyle(
+                  //           color: const Color(0xff3A3A3A),
+                  //           fontSize: size_6,
+                  //           fontStyle: FontStyle.normal,
+                  //           fontWeight: FontWeight.w400),
+                  //       // Not necessary for Option 1
+                  //       value: _selectedLocation,
+                  //       onChanged: (newValue) {
+                  //         setState(() {
+                  //           _selectedLocation = newValue.toString();
+                  //         });
+                  //         customSelection(_selectedLocation);
+                  //       },
+                  //       items: _locations.map((location) {
+                  //         return DropdownMenuItem(
+                  //           child: Container(
+                  //               //  width: 74,
+                  //               child: new Text(location)),
+                  //           value: location,
+                  //         );
+                  //       }).toList(),
+                  //     ),
+                  //   ),
+                  // ),
                 ])),
           ),
 
