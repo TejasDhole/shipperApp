@@ -37,6 +37,8 @@ class TransporterApiCalls {
     transporterModel.accountVerificationInProgress =
         jsonData['accountVerificationInProgress'] != null ? jsonData['accountVerificationInProgress'] : false;
 
+    transporterModel.transporterEmail = jsonData['emailId'] != null ? jsonData['companyName'] : 'Na';
+
 
     return transporterModel;
   }

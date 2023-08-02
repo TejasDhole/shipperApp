@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -57,11 +59,25 @@ class ViewBidsButton extends StatelessWidget {
               ),
               onPressed: () {
                 // print(loadId);
-                Get.to(() => BiddingScreens(
-                      loadId: loadId,
-                      loadingPointCity: loadingPointCity,
-                      unloadingPointCity: unloadingPointCity,
-                    ));
+                ((kIsWeb)
+                    ? Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreenWeb(
+                                  visibleWidget: BiddingScreens(
+                                    loadId: loadId,
+                                    loadingPointCity: loadingPointCity,
+                                    unloadingPointCity: unloadingPointCity,
+                                  ),
+                                  index: 1000,
+                                  selectedIndex:
+                                      screens.indexOf(postLoadScreen),
+                                )))
+                    : Get.to(() => BiddingScreens(
+                          loadId: loadId,
+                          loadingPointCity: loadingPointCity,
+                          unloadingPointCity: unloadingPointCity,
+                        )));
               },
             ),
           ),
