@@ -30,6 +30,7 @@ const Color shadowGrey = Color(0xffBDBDBD);
 const Color shadowGrey2 = Color(0xffd7d7d7);
 const Color flagOrange = Color(0xffFF9933);
 const Color flagGreen = Color(0xff39B82D);
+const Color sideNavItemSelectedColor = Color.fromRGBO(9, 183, 120, 0.3);
 const Color backgroundGrey = Color(0xffECEEF1);
 const Color black_87 = Colors.black87;
 const Color loadingWidgetColor = Colors.lightBlueAccent;
