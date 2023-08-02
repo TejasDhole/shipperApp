@@ -1,0 +1,43 @@
+import 'dart:convert';
+import 'dart:html';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shipper_app/controller/shipperIdController.dart';
+import 'package:http/http.dart' as http;
+
+class TransporterListFromShipperApi {
+  final String shipperApiUrl = dotenv.get('shipperApiUrl');
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
+
+  Future getTransporterListFromShipperApi() async {
+    try {
+      String shipperId = shipperIdController.shipperId.value;
+
+      // print('$shipperApiUrl/$shipperId');
+
+      final response = await http.get(
+        Uri.parse('$shipperApiUrl/$shipperId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == HttpStatus.ok) {
+        var body = jsonDecode(response.body);
+        var transporterList = body['transporterList'];
+        print('hello $transporterList');
+        return transporterList;
+      } else {
+        print("wrong here");
+        // print(response.body);
+        return [];
+      }
+    } catch (e) {
+      print("wrong here 2");
+      print(e);
+      return [];
+    }
+  }
+}

@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/providerClass/providerData.dart';
+import 'package:shipper_app/variables/truckFilterVariablesForPostLoad.dart';
 
-import '../../Web/screens/LoadTruckWeightSelectScreenWeb.dart';
-import '../../Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
+import 'package:shipper_app/Web/screens/LoadTruckWeightSelectScreenWeb.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 
 class TruckTypePostLoadDetailsScreen extends StatefulWidget {
   @override
@@ -15,7 +18,6 @@ class TruckTypePostLoadDetailsScreen extends StatefulWidget {
 
 class _TruckTypePostLoadDetailsScreenState
     extends State<TruckTypePostLoadDetailsScreen> {
-
   //always check variable truckName, truckImage, loadWeightTons, truckTypeDescription while inserting, deleting or updating any truck
 
   List<String> truckName = [
@@ -51,8 +53,12 @@ class _TruckTypePostLoadDetailsScreenState
     'Trucks with high-cube Container'
   ];
 
+  TruckFilterVariablesForPostLoad truckFilterVariables =
+      TruckFilterVariablesForPostLoad();
+
   @override
   Widget build(BuildContext context) {
+    ProviderData providerData = Provider.of<ProviderData>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -71,10 +77,10 @@ class _TruckTypePostLoadDetailsScreenState
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Colors.grey, width: 1),
-                    top: BorderSide(color: Colors.grey, width: 1),
-                    left: BorderSide(color: Colors.grey, width: 1),
-                    right: BorderSide(color: Colors.grey, width: 1))),
+                    bottom: BorderSide(color: unselectedGrey, width: 1),
+                    top: BorderSide(color: unselectedGrey, width: 1),
+                    left: BorderSide(color: unselectedGrey, width: 1),
+                    right: BorderSide(color: unselectedGrey, width: 1))),
             child: Row(
               children: [
                 Expanded(
@@ -85,7 +91,7 @@ class _TruckTypePostLoadDetailsScreenState
                 VerticalDivider(
                   thickness: 1,
                   width: 0,
-                  color: Colors.grey,
+                  color: unselectedGrey,
                 ),
                 Expanded(
                     flex: 4,
@@ -96,7 +102,7 @@ class _TruckTypePostLoadDetailsScreenState
                           child: Text('Truck Type',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.grey,
+                                  color: unselectedGrey,
                                   fontSize: size_9,
                                   fontFamily: 'Montserrat')),
                         ),
@@ -105,7 +111,7 @@ class _TruckTypePostLoadDetailsScreenState
                 VerticalDivider(
                   thickness: 1,
                   width: 0,
-                  color: Colors.grey,
+                  color: unselectedGrey,
                 ),
                 Expanded(
                     flex: 3,
@@ -116,7 +122,7 @@ class _TruckTypePostLoadDetailsScreenState
                           child: Text('Tons',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.grey,
+                                  color: unselectedGrey,
                                   fontSize: size_9,
                                   fontFamily: 'Montserrat')),
                         ),
@@ -125,7 +131,7 @@ class _TruckTypePostLoadDetailsScreenState
                 VerticalDivider(
                   thickness: 1,
                   width: 0,
-                  color: Colors.grey,
+                  color: unselectedGrey,
                 ),
                 Expanded(
                     flex: 6,
@@ -136,7 +142,7 @@ class _TruckTypePostLoadDetailsScreenState
                           child: Text('Description',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.grey,
+                                  color: unselectedGrey,
                                   fontSize: size_9,
                                   fontFamily: 'Montserrat')),
                         ),
@@ -145,7 +151,7 @@ class _TruckTypePostLoadDetailsScreenState
                 VerticalDivider(
                   thickness: 1,
                   width: 0,
-                  color: Colors.grey,
+                  color: unselectedGrey,
                 ),
                 Expanded(
                     flex: 1,
@@ -164,101 +170,124 @@ class _TruckTypePostLoadDetailsScreenState
               return InkWell(
                 onTap: () {
                   print(loadWeightTons[index]);
+                  if (providerData.truckTypeValue !=
+                      truckFilterVariables.truckTypeValueList[index]) {
+                    String emp = '';
+                    List<String> empList = [];
+                    providerData.updateResetActive(true);
+                    providerData.updateTruckTypeValue(emp);
+                    providerData.resetOnNewType();
+                    providerData.updatePassingWeightMultipleValue(empList);
+                  }
                   Get.to(() => LoadTruckWeightSelectScreenWeb(
+                        truckTypeName: truckName[index],
                         minWeight: loadWeightTons[index][0],
                         maxWeight: loadWeightTons[index][1],
+                        truckTypeValue:
+                            truckFilterVariables.truckTypeValueList[index],
                       ));
                 },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Center(
-                        child: Container(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Image.asset(
-                            truckImage[index],
-                            fit: BoxFit.contain,
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: (providerData.truckTypeValue != null &&
+                              providerData.truckTypeValue ==
+                                  truckFilterVariables
+                                      .truckTypeValueList[index])
+                          ? LinearGradient(
+                              colors: [gradientGreyColor, Colors.white])
+                          : LinearGradient(
+                              colors: [Colors.white, Colors.white])),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Center(
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Image.asset(
+                              truckImage[index],
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    VerticalDivider(width: 0),
-                    Expanded(
-                        flex: 4,
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(truckName[index],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kLiveasyColor,
-                                      fontSize: size_8,
-                                      fontFamily: 'Montserrat')),
-                            ),
-                          ),
-                        )),
-                    VerticalDivider(width: 0),
-                    Expanded(
-                        flex: 3,
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(
-                                  '${loadWeightTons[index][0]} - ${loadWeightTons[index][1]} tons',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kLiveasyColor,
-                                      fontSize: size_8,
-                                      fontFamily: 'Montserrat')),
-                            ),
-                          ),
-                        )),
-                    VerticalDivider(width: 0),
-                    Expanded(
-                        flex: 6,
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(truckTypeDescription[index],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kLiveasyColor,
-                                      fontSize: size_8,
-                                      fontFamily: 'Montserrat')),
-                            ),
-                          ),
-                        )),
-                    VerticalDivider(width: 0),
-                    Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                size: 20,
-                                color: truckGreen,
+                      VerticalDivider(width: 0),
+                      Expanded(
+                          flex: 4,
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Container(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Text(truckName[index],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: size_8,
+                                        fontFamily: 'Montserrat')),
                               ),
                             ),
-                          ),
-                        )),
-                  ],
+                          )),
+                      VerticalDivider(width: 0),
+                      Expanded(
+                          flex: 3,
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Container(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Text(
+                                    '${loadWeightTons[index][0]} - ${loadWeightTons[index][1]} tons',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: size_8,
+                                        fontFamily: 'Montserrat')),
+                              ),
+                            ),
+                          )),
+                      VerticalDivider(width: 0),
+                      Expanded(
+                          flex: 6,
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Container(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Text(truckTypeDescription[index],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: size_8,
+                                        fontFamily: 'Montserrat')),
+                              ),
+                            ),
+                          )),
+                      VerticalDivider(width: 0),
+                      Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Container(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  size: 20,
+                                  color: truckGreen,
+                                ),
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
               );
             },
             itemCount: truckName.length,
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
-                color: Colors.grey,
+                color: unselectedGrey,
                 thickness: 1,
                 height: 0,
               );

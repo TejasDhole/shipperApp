@@ -8,20 +8,23 @@ import '../constants/colors.dart';
 import '../constants/fontSize.dart';
 import '../providerClass/providerData.dart';
 
-class LoadDetailsCommentWidget extends StatefulWidget{
+class LoadDetailsCommentWidget extends StatefulWidget {
   @override
-  State<LoadDetailsCommentWidget> createState() => _LoadDetailsCommentWidgetState();
+  State<LoadDetailsCommentWidget> createState() =>
+      _LoadDetailsCommentWidgetState();
 }
 
 class _LoadDetailsCommentWidgetState extends State<LoadDetailsCommentWidget> {
   TextEditingController txtController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    if(providerData.comment != ''){
+    if (providerData.comment != '') {
       txtController.text = providerData.comment;
     }
-    txtController.moveCursorToEnd(); // without this text will be inserted in backwardW
+    txtController
+        .moveCursorToEnd(); // without this text will be inserted in backward
 
     return Container(
       child: TextField(
@@ -35,23 +38,30 @@ class _LoadDetailsCommentWidgetState extends State<LoadDetailsCommentWidget> {
           providerData.updateComment(value);
           print("comment:  ${providerData.comment}");
         },
-        style: TextStyle(color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
+        style: TextStyle(
+            color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
         minLines: 5,
         maxLength: 500,
         decoration: InputDecoration(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: borderLightColor,width: 1.5)
-            ),
+                borderSide: BorderSide(color: borderLightColor, width: 1.5)),
             hintText: 'Enter your comment',
-            hintStyle: TextStyle(color: borderLightColor,fontFamily: 'Montserrat', fontSize: size_8),
-            label: Text('Comment',style: TextStyle(color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_10, fontWeight: FontWeight.w600),selectionColor: kLiveasyColor),
+            hintStyle: TextStyle(
+                color: borderLightColor,
+                fontFamily: 'Montserrat',
+                fontSize: size_8),
+            label: Text('Comment',
+                style: TextStyle(
+                    color: kLiveasyColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: size_10,
+                    fontWeight: FontWeight.w600),
+                selectionColor: kLiveasyColor),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: truckGreen,width: 1.5)
-            )
-        ),
+                borderSide: BorderSide(color: truckGreen, width: 1.5))),
       ),
     );
   }

@@ -1,13 +1,29 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/spaces.dart';
+import 'package:shipper_app/providerClass/providerData.dart';
+import 'package:shipper_app/responsive.dart';
 
-import '../../Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
+import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
+import 'home_web.dart';
 
 class LoadTruckWeightSelectScreenWeb extends StatefulWidget {
   final minWeight, maxWeight;
+  final String truckTypeName, truckTypeValue;
+
   const LoadTruckWeightSelectScreenWeb(
-      {super.key, required this.minWeight, required this.maxWeight});
+      {super.key,
+      required this.minWeight,
+      required this.maxWeight,
+      required this.truckTypeName,
+      required this.truckTypeValue});
 
   @override
   State<LoadTruckWeightSelectScreenWeb> createState() =>
@@ -16,12 +32,14 @@ class LoadTruckWeightSelectScreenWeb extends StatefulWidget {
 
 class _LoadTruckWeightSelectScreenWebState
     extends State<LoadTruckWeightSelectScreenWeb> {
+  List<String> selectedWeight = [];
+  dynamic providerFunctionWeight = () {};
   List<List<double>> weightSlots = [
     [0, 0]
   ];
 
   var controller = PageController();
-
+  bool check = false;
 
   @override
   void initState() {
@@ -82,41 +100,77 @@ class _LoadTruckWeightSelectScreenWebState
     print(weightSlots);
   }
 
-  getLoadWeight(){
+  getLoadWeight() {
     return weightSlots.map<Widget>((e) {
-        return Container(
-        padding: EdgeInsets.only(top: 10,bottom: 10),
+      return Container(
+        padding: EdgeInsets.only(top: 10, bottom: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(key: GlobalObjectKey(e),'${e[0]} - ${e[1]} tons',style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: truckGreen,
-                fontSize: size_9),
+            Text(
+              key: GlobalObjectKey(e),
+              '${e[0]} - ${e[1]} tons',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: truckGreen,
+                  fontSize: size_9),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, iterator) {
                   return Container(
-                    padding: EdgeInsets.only(top: 5,bottom: 5),
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('${e[0]+iterator} tons',style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: kLiveasyColor,
-                            fontSize: size_9),),
+                        Checkbox(
+                          value: (selectedWeight.contains('${e[0] + iterator}')
+                              ? true
+                              : false),
+                          onChanged: (value) {
+                            setState(() {
+                              if ((value ?? false) &&
+                                  selectedWeight.length < 5) {
+                                selectedWeight.add('${e[0] + iterator}');
+                              } else {
+                                selectedWeight.remove('${e[0] + iterator}');
+                              }
+                              // check = value ?? false;
+                            });
+                          },
+                          side: BorderSide(width: 2, color: truckGreen),
+                          mouseCursor: SystemMouseCursors.click,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
+                          fillColor:
+                              MaterialStatePropertyAll<Color>(truckGreen),
+                        ),
+                        Text(
+                          '${e[0] + iterator} tons',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: kLiveasyColor,
+                              fontSize: size_9),
+                        ),
                         Expanded(child: Container()),
                         Image.asset('assets/images/load_weight_boxes.png')
                       ],
                     ),
                   );
-                }, separatorBuilder: (context, index) {
-              return Divider(thickness: 1, height: 0,);
-            }, itemCount: ((e[1] - e[0])+1).toInt())
+                },
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    thickness: 1,
+                    height: 0,
+                  );
+                },
+                itemCount: ((e[1] - e[0]) + 1).toInt())
           ],
         ),
       );
@@ -125,7 +179,61 @@ class _LoadTruckWeightSelectScreenWebState
 
   @override
   Widget build(BuildContext context) {
+    ProviderData providerData = Provider.of<ProviderData>(context);
+    selectedWeight = providerData.passingWeightMultipleValue;
+    print(selectedWeight);
+    providerFunctionWeight = providerData.updatePassingWeightMultipleValue;
     return Scaffold(
+      floatingActionButton: SizedBox(
+        height: space_8,
+        width: space_33,
+        child: TextButton(
+          style: ButtonStyle(
+            mouseCursor: MaterialStatePropertyAll((selectedWeight.isNotEmpty)
+                ? SystemMouseCursors.click
+                : SystemMouseCursors.basic),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: (Responsive.isMobile(context))
+                  ? BorderRadius.circular(50)
+                  : BorderRadius.all(Radius.zero),
+            )),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                (selectedWeight.isNotEmpty) ? truckGreen : disableButtonColor),
+          ),
+          onPressed: () {
+            if (selectedWeight.isNotEmpty) {
+              List<int> sortedNumbers = selectedWeight.map(int.parse).toList()
+                ..sort();
+              selectedWeight =
+                  sortedNumbers.map((number) => number.toString()).toList();
+              providerData.updateResetActive(true);
+              providerData.updateTruckTypeValue(widget.truckTypeValue);
+              providerData.resetOnNewType();
+              providerFunctionWeight(selectedWeight);
+              ((kIsWeb)
+                  ? Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreenWeb(
+                                index: screens.indexOf(postLoadScreenTwo),
+                                selectedIndex: screens.indexOf(postLoadScreen),
+                              )))
+                  : Get.to(() => PostLoadScreenTwo()));
+            }
+          },
+          child: Text(
+            'Finish', // AppLocalizations.of(context)!.postLoad,
+            style: TextStyle(
+                fontWeight: mediumBoldWeight,
+                color: white,
+                fontSize: size_8,
+                fontFamily: 'Montserrat'),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,9 +252,14 @@ class _LoadTruckWeightSelectScreenWebState
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            if(index < weightSlots.length){
-                              WidgetsBinding.instance.addPostFrameCallback((_) => Scrollable.ensureVisible(GlobalObjectKey(weightSlots[index]).currentContext!,curve: Curves.easeOut,
-                                  duration: const Duration(milliseconds: 250)));
+                            if (index < weightSlots.length) {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => Scrollable.ensureVisible(
+                                      GlobalObjectKey(weightSlots[index])
+                                          .currentContext!,
+                                      curve: Curves.easeOut,
+                                      duration:
+                                          const Duration(milliseconds: 250)));
                             }
                           },
                           child: Container(
@@ -154,9 +267,9 @@ class _LoadTruckWeightSelectScreenWebState
                                 top: 20, bottom: 20, left: 10, right: 10),
                             child: Center(
                                 child: Text(
-                                  (index < weightSlots.length)?
-                              '${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
-                              :'Other',
+                              (index < weightSlots.length)
+                                  ? '${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
+                                  : 'Other',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: truckGreen,
@@ -171,21 +284,21 @@ class _LoadTruckWeightSelectScreenWebState
                           height: 0,
                         );
                       },
-                      itemCount: weightSlots.length+1,
+                      itemCount: weightSlots.length + 1,
                     ),
                   ),
                 ),
-                Expanded(flex:3,
+                Expanded(
+                    flex: 3,
                     child: Align(
                       alignment: Alignment.center,
                       child: Container(
-                        width: MediaQuery.of(context).size.width*0.6,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: getLoadWeight(),
-                          ),
-                        )
-                      ),
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: getLoadWeight(),
+                            ),
+                          )),
                     ))
               ],
             ),
