@@ -58,7 +58,6 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    late String value;
     ProviderData providerData = Provider.of<ProviderData>(context);
     // return Container(
     //   decoration: BoxDecoration(
@@ -115,7 +114,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
           if (hasPermission){
           providerData.updateResetActive(true);
           FocusScope.of(context).requestFocus(FocusNode());
-          value = await Get.to(
+          Get.to(
               () => CityNameInputScreen(widget.page, widget.hintText)); // for MapMyIndia api
         }},
         controller: widget.controller,

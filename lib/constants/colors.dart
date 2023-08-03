@@ -4,6 +4,8 @@ const Color kLiveasyColor = Color(0xFF000066);
 const Color statusBarColor = Color.fromARGB(255, 8, 25, 70);
 const Color darkBlueColor = Color(0xFF152968);
 const Color lineGreyColor = Color(0xFFA6A6A6);
+const Color lineDividerColor = Color.fromRGBO(241, 240, 240, 0.8);
+const Color gradientGreyColor = Color.fromRGBO(135, 135, 135, 0.3);
 const Color shareImageTextColor = Color(0xFF3A3A3A);
 const Color updateAvailableBackgroundColor = Color(0xFFF5F5F5);
 const Color grey = Color(0xFF828282);
@@ -22,11 +24,13 @@ const Color greyBorderColor = Color(0xFFC4C4C4);
 const Color lightGreyishBlueColor = Color(0xFFCEC8EC);
 const Color darkGreyColor = Color(0xFF878787);
 const Color lightNavyBlue = Color(0xff33364D);
+const Color headerLightBlueColor = Color.fromRGBO(245, 246, 250, 1);
 const Color navygreen = Color(0xff109E92);
 const Color shadowGrey = Color(0xffBDBDBD);
 const Color shadowGrey2 = Color(0xffd7d7d7);
 const Color flagOrange = Color(0xffFF9933);
 const Color flagGreen = Color(0xff39B82D);
+const Color sideNavItemSelectedColor = Color.fromRGBO(9, 183, 120, 0.3);
 const Color backgroundGrey = Color(0xffECEEF1);
 const Color black_87 = Colors.black87;
 const Color loadingWidgetColor = Colors.lightBlueAccent;
@@ -57,7 +61,7 @@ Color lightYellow = const Color(0xFFFFF6E7);
 Color darkYellow = const Color(0xFFE5A744);
 Color veryDarkGrey = const Color(0xFF555454);
 Color shareButtonColor = const Color(0xFF09B778);
-
+Color disableButtonColor = const Color.fromRGBO(9, 183, 120, 0.5);
 //dont make this const
 dynamic activeButtonColor =
     MaterialStateProperty.all<Color>(const Color(0xff152968));
@@ -77,6 +81,7 @@ dynamic greyishWhiteColorM =
 Color darkCharcoal = const Color(0xFF333333);
 const Color red = Colors.red;
 const Color navy = Color(0xff000066);
+const Color transparent = Colors.transparent;
 
 const Color fadeGrey = Color(0xFFF1F1F1);
 const Color lightGrey = Color(0xffDADADA);

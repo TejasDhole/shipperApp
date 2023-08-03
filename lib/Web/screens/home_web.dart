@@ -10,10 +10,14 @@ import 'package:sizer/sizer.dart';
 import '../logo.dart';
 
 class HomeScreenWeb extends StatefulWidget {
+  final Widget? visibleWidget;
   final int? index;
   final int? selectedIndex;
-  const HomeScreenWeb({Key? key, this.index, this.selectedIndex})
+
+  const HomeScreenWeb(
+      {Key? key, this.index, this.selectedIndex, this.visibleWidget})
       : super(key: key);
+
   @override
   State<HomeScreenWeb> createState() => _HomeScreenWebState();
 }
@@ -21,7 +25,6 @@ class HomeScreenWeb extends StatefulWidget {
 class _HomeScreenWebState extends State<HomeScreenWeb> {
   int _selectedIndex = 0;
   int _index = 0;
-
   late LinearGradient dashboardSelectedTabGradientColor,
       myLoadsSelectedTabGradientColor,
       invoiceSelectedTabGradientColor,
@@ -47,18 +50,47 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     } else {
       widthOfSideBar = 110;
     }
-    dashboardSelectedTabGradientColor = LinearGradient(colors: [
-      Color.fromRGBO(9, 183, 120, 0.3),
-      Color.fromRGBO(241, 240, 240, 0)
-    ]);
-    myLoadsSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
-    invoiceSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
-    accountSelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
+    if (_selectedIndex == 0) {
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      dashboardSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
+    if (_selectedIndex == 1) {
+      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      myLoadsSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
+    if (_selectedIndex == 2) {
+      invoiceSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 3) {
+      accountSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
     liveasySelectedTabGradientColor =
-        LinearGradient(colors: [Colors.white, Colors.white]);
+        LinearGradient(colors: [white, white]);
 
     isolatedShipperGetData();
   }
@@ -121,7 +153,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: Responsive.isMobile(context) ? 4.5.sp : 5.sp,
-                      color: Colors.white),
+                      color: white),
                 ),
               ],
             ),
@@ -139,7 +171,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               },
               icon: const Icon(
                 Icons.notifications_none_outlined,
-                color: Colors.white,
+                color: white,
               ),
               label: const Text(''),
             ),
@@ -155,7 +187,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               },
               icon: const Icon(
                 Icons.search_outlined,
-                color: Colors.white,
+                color: white,
               ),
               label: const Text(''),
             ),
@@ -173,7 +205,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   },
                   icon: const Icon(
                     Icons.account_circle_rounded,
-                    color: Colors.white,
+                    color: white,
                   ),
                   label: const Text('')),
             ),
@@ -240,7 +272,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                                     'assets/images/shipper_liveasy_logo.png'))))),
                               ],
                             ),
-                            color: Colors.white,
+                            color: white,
                           ),
                         ),
                         SizedBox(
@@ -259,7 +291,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black, width: 1),
                               borderRadius: BorderRadius.circular(50),
-                              color: Colors.white),
+                              color: white),
                           child: IconButton(
                             onPressed: () {
                               setState(() {
@@ -282,7 +314,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                 size: 20),
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll<Color>(Colors.white),
+                                  MaterialStatePropertyAll<Color>(white),
                               side: MaterialStateProperty.all(
                                 BorderSide(width: 1, color: Colors.black),
                               ),
@@ -297,7 +329,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
           Expanded(
             child: Container(
               child: Center(
-                child: screens[_index],
+                child:
+                    (_index == 1000) ? widget.visibleWidget : screens[_index],
               ),
             ),
           ),
@@ -307,58 +340,100 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   }
 
   InkWell SideExpandedItem({required String title, required AssetImage icon}) {
+    if (_selectedIndex == 0) {
+      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else{
+      dashboardSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
+    if (_selectedIndex == 1) {
+      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      myLoadsSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
+    if (_selectedIndex == 2) {
+      invoiceSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      invoiceSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 3) {
+      accountSelectedTabGradientColor = LinearGradient(colors: [
+        sideNavItemSelectedColor,
+        transparent
+      ]);
+    } else {
+      accountSelectedTabGradientColor =
+          LinearGradient(colors: [white, white]);
+    }
+
+    liveasySelectedTabGradientColor =
+        LinearGradient(colors: [white, white]);
+
     return InkWell(
         onTap: () {
           setState(() {
             if (title == "Dashboard") {
               dashboardSelectedTabGradientColor = LinearGradient(colors: [
-                Color.fromRGBO(9, 183, 120, 0.3),
-                Color.fromRGBO(241, 240, 240, 0)
+                sideNavItemSelectedColor,
+                transparent
               ]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               _selectedIndex = 0;
               _index = 0;
             } else if (title == "My Loads") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor = LinearGradient(colors: [
-                Color.fromRGBO(9, 183, 120, 0.3),
-                Color.fromRGBO(241, 240, 240, 0)
+                sideNavItemSelectedColor,
+                transparent
               ]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               _selectedIndex = 1;
               _index = 1;
             } else if (title == "Invoice") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor = LinearGradient(colors: [
-                Color.fromRGBO(9, 183, 120, 0.3),
-                Color.fromRGBO(241, 240, 240, 0)
+                sideNavItemSelectedColor,
+                transparent
               ]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               _selectedIndex = 2;
               _index = 2;
             } else if (title == "Account") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [Colors.white, Colors.white]);
+                  LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor = LinearGradient(colors: [
-                Color.fromRGBO(9, 183, 120, 0.3),
-                Color.fromRGBO(241, 240, 240, 0)
+                sideNavItemSelectedColor,
+                transparent
               ]);
               _selectedIndex = 3;
               _index = 3;
@@ -406,68 +481,3 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
             )));
   }
 }
-
-// List<NavigationRailDestination> destinations = [
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.space_dashboard),
-//     label: Text("Dashboard"),
-//   ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.inventory_2_rounded),
-//     label: Text("My Loads"),
-//   ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.receipt_long),
-//     label: Text("Invoice"),
-//   ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.person_outline_outlined),
-//     label: Text("Account"),
-//   ),
-//   // const NavigationRailDestination(
-//   //   icon: Icon(Icons.supervised_user_circle_outlined),
-//   //   label: Text("Add User"),
-//   // ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.support_agent_outlined),
-//     label: Text("Help and Support"),
-//   ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.phone_in_talk_outlined),
-//     label: Text("Contact Us"),
-//   ),
-//   const NavigationRailDestination(
-//     icon: Icon(Icons.logout_outlined),
-//     label: Text("Logout"),
-//   ),
-// ];
-
-// NavigationRail(
-// extended: Responsive.isDesktop(context) ? true : false,
-// selectedIconTheme: const IconThemeData(color: kLiveasyColor),
-// unselectedLabelTextStyle: TextStyle(
-// fontWeight: FontWeight.bold,
-// fontSize: 3.6.sp,
-// color: Colors.black),
-// selectedLabelTextStyle: TextStyle(
-// fontWeight: FontWeight.bold,
-// fontSize: 3.9.sp,
-// color: kLiveasyColor),
-// indicatorColor: const Color(0xFFC4C4C4),
-// labelType: Responsive.isDesktop(context)
-// ? NavigationRailLabelType.none
-//     : NavigationRailLabelType.all,
-// destinations: destinations,
-// selectedIndex: _selectedIndex,
-// onDestinationSelected: (index) {
-// setState(() {
-// _selectedIndex = index;
-// _index = index;
-// });
-// },
-// elevation: 20,
-// ),
-// const VerticalDivider(
-// thickness: 1,
-// width: 1,
-// ),

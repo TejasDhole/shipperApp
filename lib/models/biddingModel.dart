@@ -17,6 +17,7 @@ class BiddingModel{
   String? loadPosterCompanyName;
   String? loadPosterPhoneNo;
   String? loadPosterLocation;
+  String? loadPosterEmail;
   String? loadPosterName;
   bool? loadPosterCompanyApproved;
 

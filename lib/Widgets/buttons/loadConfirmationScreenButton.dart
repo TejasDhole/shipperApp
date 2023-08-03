@@ -38,13 +38,17 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         Get.put(PostLoadErrorController());
     NavigationIndexController navigationIndexController =
         Get.put(NavigationIndexController());
-    ShipperIdController shipperIdController =
-        Get.put(ShipperIdController());
+    ShipperIdController shipperIdController = Get.put(ShipperIdController());
     ProviderData providerData = Provider.of<ProviderData>(context);
     PostLoadVariablesController postLoadVariables =
         Get.put(PostLoadVariablesController());
+
+    String multipleWeight = providerData.passingWeightMultipleValue
+        .toString()
+        .substring(
+            1, providerData.passingWeightMultipleValue.toString().length - 1);
+
     getData() async {
-      // print(shipperIdController.transporterId.value);
       String? loadId = '';
       if (loadId == '') {
         showDialog(
@@ -61,21 +65,39 @@ class LoadConfirmationScreenButton extends StatelessWidget {
             providerData.loadingPointPostLoad,
             providerData.loadingPointCityPostLoad,
             providerData.loadingPointStatePostLoad,
-            providerData.loadingPointPostLoad2 ==""?null:providerData.loadingPointPostLoad2,
-            providerData.loadingPointCityPostLoad2 ==""?null:providerData.loadingPointCityPostLoad2,
-            providerData.loadingPointStatePostLoad2 ==""?null:providerData.loadingPointStatePostLoad2,
+            providerData.loadingPointPostLoad2 == ""
+                ? null
+                : providerData.loadingPointPostLoad2,
+            providerData.loadingPointCityPostLoad2 == ""
+                ? null
+                : providerData.loadingPointCityPostLoad2,
+            providerData.loadingPointStatePostLoad2 == ""
+                ? null
+                : providerData.loadingPointStatePostLoad2,
             providerData.totalTyresValue,
             providerData.productType,
             providerData.truckTypeValue,
             providerData.unloadingPointPostLoad,
             providerData.unloadingPointCityPostLoad,
             providerData.unloadingPointStatePostLoad,
-            providerData.unloadingPointPostLoad2 ==""?null:providerData.unloadingPointPostLoad2,
-            providerData.unloadingPointCityPostLoad2 ==""?null:providerData.unloadingPointCityPostLoad2,
-            providerData.unloadingPointStatePostLoad2 == ""?null:providerData.unloadingPointStatePostLoad2,
-            providerData.passingWeightValue,
+            providerData.unloadingPointPostLoad2 == ""
+                ? null
+                : providerData.unloadingPointPostLoad2,
+            providerData.unloadingPointCityPostLoad2 == ""
+                ? null
+                : providerData.unloadingPointCityPostLoad2,
+            providerData.unloadingPointStatePostLoad2 == ""
+                ? null
+                : providerData.unloadingPointStatePostLoad2,
+            (providerData.passingWeightValue == 0)
+                ? multipleWeight
+                : providerData.passingWeightValue,
             providerData.unitValue == "" ? null : providerData.unitValue,
-            providerData.price == 0 ? null : providerData.price);
+            providerData.price == 0 ? null : providerData.price,
+            providerData.scheduleLoadingDate,
+            providerData.scheduleLoadingTime,
+            providerData.publishMethod,
+            providerData.comment);
 
         print("loadId $loadId");
         if (loadId != null) {
@@ -94,7 +116,8 @@ class LoadConfirmationScreenButton extends StatelessWidget {
               Duration(seconds: 3),
               () => {
                     navigationIndexController.updateIndex(0),
-                    Get.offAll(() => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
+                    Get.offAll(
+                        () => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
                     providerData.resetPostLoadFilters(),
                     providerData.resetPostLoadScreenOne(),
                     providerData.resetPostLoadScreenMultiple(),
@@ -122,16 +145,28 @@ class LoadConfirmationScreenButton extends StatelessWidget {
             "${providerData.loadingPointCityPostLoad}, ${providerData.loadingPointStatePostLoad}",
             providerData.loadingPointCityPostLoad,
             providerData.loadingPointStatePostLoad,
-            providerData.loadingPointCityPostLoad2==""?null:"${providerData.loadingPointCityPostLoad2}, ${providerData.loadingPointStatePostLoad2}",
-            providerData.loadingPointCityPostLoad2 ==""?null:providerData.loadingPointCityPostLoad2,
-            providerData.loadingPointStatePostLoad2 ==""?null:providerData.loadingPointStatePostLoad2,
+            providerData.loadingPointCityPostLoad2 == ""
+                ? null
+                : "${providerData.loadingPointCityPostLoad2}, ${providerData.loadingPointStatePostLoad2}",
+            providerData.loadingPointCityPostLoad2 == ""
+                ? null
+                : providerData.loadingPointCityPostLoad2,
+            providerData.loadingPointStatePostLoad2 == ""
+                ? null
+                : providerData.loadingPointStatePostLoad2,
             providerData.totalTyresValue,
             providerData.productType,
             providerData.truckTypeValue,
             "${providerData.unloadingPointCityPostLoad}, ${providerData.unloadingPointStatePostLoad}",
-            providerData.unloadingPointCityPostLoad2==""?null:"${providerData.unloadingPointCityPostLoad2}, ${providerData.unloadingPointStatePostLoad2}",
-            providerData.unloadingPointCityPostLoad2 ==""?null:providerData.unloadingPointCityPostLoad2,
-            providerData.unloadingPointStatePostLoad2 == ""?null:providerData.unloadingPointStatePostLoad2,
+            providerData.unloadingPointCityPostLoad2 == ""
+                ? null
+                : "${providerData.unloadingPointCityPostLoad2}, ${providerData.unloadingPointStatePostLoad2}",
+            providerData.unloadingPointCityPostLoad2 == ""
+                ? null
+                : providerData.unloadingPointCityPostLoad2,
+            providerData.unloadingPointStatePostLoad2 == ""
+                ? null
+                : providerData.unloadingPointStatePostLoad2,
             providerData.unloadingPointCityPostLoad,
             providerData.unloadingPointStatePostLoad,
             providerData.passingWeightValue,
@@ -153,7 +188,8 @@ class LoadConfirmationScreenButton extends StatelessWidget {
           Timer(
               Duration(seconds: 3),
               () => {
-                    Get.offAll(() => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
+                    Get.offAll(
+                        () => kIsWeb ? HomeScreenWeb() : NavigationScreen()),
                     navigationIndexController.updateIndex(0),
                     providerData.resetPostLoadFilters(),
                     providerData.resetPostLoadScreenOne(),
@@ -187,14 +223,18 @@ class LoadConfirmationScreenButton extends StatelessWidget {
       },
       child: Container(
         height: space_8,
+        padding: EdgeInsets.only(left: 40, right: 40),
         decoration: BoxDecoration(
-            color: darkBlueColor,
-            borderRadius: BorderRadius.circular(radius_6)),
+            color: (title == 'Confirm') ? truckGreen : darkBlueColor,
+            borderRadius: BorderRadius.all(Radius.circular(0))),
         child: Center(
           child: Text(
             title,
             style: TextStyle(
-                color: white, fontWeight: mediumBoldWeight, fontSize: size_8),
+                color: white,
+                fontWeight: mediumBoldWeight,
+                fontSize: size_8,
+                fontFamily: 'Montserrat'),
           ),
         ),
       ),

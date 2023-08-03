@@ -1,6 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/Widgets/loadDetailsCommentWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingDateWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingTimeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/moveLoadConfirmationScreenButtonWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/productTypeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/truckTypeWebWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/tyresWebWidget.dart';
+import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/responsive.dart';
+import '../../Widgets/loadDetailsWebWidgets/loadPublishMethodWebWidget.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/providerClass/providerData.dart';
@@ -45,7 +59,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.fromLTRB(space_2, space_4, space_2, space_0),
+                      EdgeInsets.fromLTRB(space_4, space_4, space_2, space_0),
                   child: AddPostLoadHeader(
                     reset: true,
                     resetFunction: () {
@@ -64,113 +78,167 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                     },
                   ),
                 ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding:
-                        EdgeInsets.fromLTRB(space_4, space_4, space_4, space_4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AddTruckSubtitleText(text: 'truckType'.tr
-                            // "Truck Type"
-                            ),
-                        SizedBox(height: space_2),
-                        GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          childAspectRatio: 4,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          padding: EdgeInsets.all(10.0),
-                          crossAxisCount: kIsWeb ? 7 : 2,
-                          children: truckFilterVariables.truckTypeValueList
-                              .map((e) => AddTruckRectangularButtonTemplate(
-                                  value: e,
-                                  text: truckFilterVariables.truckTypeTextList[
-                                      truckFilterVariables.truckTypeValueList
-                                          .indexOf(e)]))
-                              .toList(),
-                        ),
-                        SizedBox(height: space_3),
-                        AddTruckSubtitleText(text: 'tyres'.tr
-                            // "Tyres(chakka)"
-                            ),
-                        SizedBox(height: space_2),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: space_2,
-                            right: space_2,
-                          ),
-                          child: Container(
-                            child: GridView.count(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              crossAxisCount: kIsWeb ? 18 : 6,
-                              children: numberOfTyresList
-                                  .map((e) => Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: AddTruckCircularButtonTemplate(
-                                          value: e,
-                                          text: e != 0 ? e.toString() : "+",
-                                          category: 'tyres',
-                                        ),
-                                      ))
-                                  .toList(),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: space_2),
-                        AddTruckSubtitleText(text: 'productType'.tr
-                            // "Product Type"
-                            ),
-                        SizedBox(height: space_2),
-                        PostLoadScreenTwoSearch(hintText: 'chooseproductType'.tr
-                            // "Choose Product Type"
-                            ),
-                        SizedBox(height: space_3),
-                        AddTruckSubtitleText(text: 'weights'.tr
-                            // "Weight(in tons)"
-                            ),
-                        SizedBox(height: space_2),
-                        providerData.truckTypeValue == ''
-                            ? SizedBox()
-                            : Container(
-                                child: GridView.count(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  crossAxisCount: kIsWeb ? 18 : 6 ,
-                                  children: truckFilterVariables
-                                      .passingWeightList[
-                                          providerData.truckTypeValue]!
-                                      .map((e) => Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child:
-                                                AddTruckCircularButtonTemplate(
-                                              value: e,
-                                              text: e != 0 ? e.toString() : "+",
-                                              category: 'weight',
-                                            ),
-                                          ))
-                                      .toList(),
+                (Responsive.isMobile(context) || Responsive.isTablet(context))
+                    ? SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              space_4, space_4, space_4, space_4),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AddTruckSubtitleText(text: 'truckType'.tr
+                                  // "Truck Type"
+                                  ),
+                              SizedBox(height: space_2),
+                              GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                childAspectRatio: 4,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                padding: EdgeInsets.all(10.0),
+                                crossAxisCount: kIsWeb ? 7 : 2,
+                                children: truckFilterVariables
+                                    .truckTypeValueList
+                                    .map((e) =>
+                                        AddTruckRectangularButtonTemplate(
+                                            value: e,
+                                            text: truckFilterVariables
+                                                    .truckTypeTextList[
+                                                truckFilterVariables
+                                                    .truckTypeValueList
+                                                    .indexOf(e)]))
+                                    .toList(),
+                              ),
+                              SizedBox(height: space_3),
+                              AddTruckSubtitleText(text: 'tyres'.tr
+                                  // "Tyres(chakka)"
+                                  ),
+                              SizedBox(height: space_2),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: space_2,
+                                  right: space_2,
+                                ),
+                                child: Container(
+                                  child: GridView.count(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    crossAxisCount: kIsWeb ? 18 : 6,
+                                    children: numberOfTyresList
+                                        .map((e) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child:
+                                                  AddTruckCircularButtonTemplate(
+                                                value: e,
+                                                text:
+                                                    e != 0 ? e.toString() : "+",
+                                                category: 'tyres',
+                                              ),
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
                               ),
-                        SizedBox(height: space_3),
-                        AddTruckSubtitleText(
-                            text: 'priceoptional'.tr
-                            // text: "Freight(Optional)"
-                            ),
-                        SizedBox(height: space_2),
-                        UnitValueWidget(),
-                        SizedBox(height: space_3),
-                        PriceTextFieldWidget(),
-                        SizedBox(height: space_3),
-                        // SizedBox(height: space_18),
-                        ApplyButton(),
-                        SizedBox(height: space_18),
-                      ],
-                    ),
-                  ),
-                ),
+                              SizedBox(height: space_2),
+                              AddTruckSubtitleText(text: 'productType'.tr
+                                  // "Product Type"
+                                  ),
+                              SizedBox(height: space_2),
+                              PostLoadScreenTwoSearch(
+                                  hintText: 'chooseproductType'.tr
+                                  // "Choose Product Type"
+                                  ),
+                              SizedBox(height: space_3),
+                              AddTruckSubtitleText(text: 'weights'.tr
+                                  // "Weight(in tons)"
+                                  ),
+                              SizedBox(height: space_2),
+                              providerData.truckTypeValue == ''
+                                  ? SizedBox()
+                                  : Container(
+                                      child: GridView.count(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        crossAxisCount: kIsWeb ? 18 : 6,
+                                        children: truckFilterVariables
+                                            .passingWeightList[
+                                                providerData.truckTypeValue]!
+                                            .map((e) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child:
+                                                      AddTruckCircularButtonTemplate(
+                                                    value: e,
+                                                    text: e != 0
+                                                        ? e.toString()
+                                                        : "+",
+                                                    category: 'weight',
+                                                  ),
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                              SizedBox(height: space_3),
+                              AddTruckSubtitleText(text: 'priceoptional'.tr
+                                  // text: "Freight(Optional)"
+                                  ),
+                              SizedBox(height: space_2),
+                              UnitValueWidget(),
+                              SizedBox(height: space_3),
+                              PriceTextFieldWidget(),
+                              SizedBox(height: space_3),
+                              LoadDetailsCommentWidget(),
+                              SizedBox(height: space_3),
+                              ApplyButton(),
+                              SizedBox(height: space_18),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TruckTypeWebWidget(),
+                              SizedBox(height: 40),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ProductTypeWebWidget(),
+                                  SizedBox(
+                                    width: 40,
+                                  ),
+                                  TyresWebWidget()
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  LoadingDateWebWidget(),
+                                  SizedBox(
+                                    width: 40,
+                                  ),
+                                  LoadingTimeWebWidget()
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              LoadPublishMethodWebWidget(),
+                              SizedBox(height: 40),
+                              LoadDetailsCommentWidget(),
+                              SizedBox(height: 40),
+                              moveLoadConfirmationScreenButtonWidget(),
+                              SizedBox(height: 40),
+                            ],
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
