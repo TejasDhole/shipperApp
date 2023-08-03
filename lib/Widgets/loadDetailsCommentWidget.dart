@@ -36,7 +36,6 @@ class _LoadDetailsCommentWidgetState extends State<LoadDetailsCommentWidget> {
         onChanged: (value) {
           providerData.updateResetActive(false);
           providerData.updateComment(value);
-          print("comment:  ${providerData.comment}");
         },
         style: TextStyle(
             color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),

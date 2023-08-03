@@ -16,6 +16,7 @@ import '/controller/navigationIndexController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/models/popupModelForMyLoads.dart';
 import '/providerClass/providerData.dart';
+
 // import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 import '/screens/navigationScreen.dart';
 import '/variables/truckFilterVariables.dart';
@@ -98,11 +99,15 @@ class MyLoadsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Image(
-                              image: AssetImage((loadDetailsScreenModel.loadingPointCity2 != 'NA')?'assets/icons/green_white_outline_circle.png':'icons/greenFilledCircleIcon.png'),
+                              image: AssetImage((loadDetailsScreenModel
+                                          .loadingPointCity2 !=
+                                      'NA')
+                                  ? 'assets/icons/green_white_outline_circle.png'
+                                  : 'icons/greenFilledCircleIcon.png'),
                               height: 11,
                               width: 11,
                               fit: BoxFit.contain,
@@ -122,35 +127,54 @@ class MyLoadsCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')?
-                          Container(padding: EdgeInsets.only(left: 4.5),height: 15,child: DottedLine(alignment:WrapAlignment.center,direction: Axis.vertical,dashColor: kLiveasyColor,dashGapColor: Colors.white,lineThickness: 1.5,dashLength: 3.5,dashGapLength: 2.25,lineLength: 15,dashGapRadius: 0,))
-                          :SizedBox(height: 0,),
-                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')?
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image(
-                              image: AssetImage('icons/greenFilledCircleIcon.png'),
-                              height: 10,
-                              width: 10,
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.high,
-                              alignment: Alignment.center,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              loadDetailsScreenModel.loadingPointCity2 ?? 'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          ],
-                        )
-                          :SizedBox(height: 0,)
+                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                            ? Container(
+                                padding: EdgeInsets.only(left: 4.5),
+                                height: 15,
+                                child: DottedLine(
+                                  alignment: WrapAlignment.center,
+                                  direction: Axis.vertical,
+                                  dashColor: kLiveasyColor,
+                                  dashGapColor: Colors.white,
+                                  lineThickness: 1.5,
+                                  dashLength: 3.5,
+                                  dashGapLength: 2.25,
+                                  lineLength: 15,
+                                  dashGapRadius: 0,
+                                ))
+                            : SizedBox(
+                                height: 0,
+                              ),
+                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image(
+                                    image: AssetImage(
+                                        'icons/greenFilledCircleIcon.png'),
+                                    height: 10,
+                                    width: 10,
+                                    fit: BoxFit.contain,
+                                    filterQuality: FilterQuality.high,
+                                    alignment: Alignment.center,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    loadDetailsScreenModel.loadingPointCity2 ??
+                                        'Null',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: textFontSize,
+                                        fontFamily: 'Montserrat'),
+                                  )
+                                ],
+                              )
+                            : SizedBox(
+                                height: 0,
+                              )
                       ],
                     ),
                   ),
@@ -172,7 +196,11 @@ class MyLoadsCard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Image(
-                              image: AssetImage((loadDetailsScreenModel.unloadingPointCity2 != 'NA')?'assets/icons/red_white_outline_circle.png':'icons/red_circle.png'),
+                              image: AssetImage((loadDetailsScreenModel
+                                          .unloadingPointCity2 !=
+                                      'NA')
+                                  ? 'assets/icons/red_white_outline_circle.png'
+                                  : 'icons/red_circle.png'),
                               height: 11,
                               width: 11,
                               fit: BoxFit.contain,
@@ -183,7 +211,8 @@ class MyLoadsCard extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              loadDetailsScreenModel.unloadingPointCity ?? 'Null',
+                              loadDetailsScreenModel.unloadingPointCity ??
+                                  'Null',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: kLiveasyColor,
@@ -192,35 +221,54 @@ class MyLoadsCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')?
-                        Container(padding: EdgeInsets.only(left: 5),height: 15,child: DottedLine(alignment:WrapAlignment.center,direction: Axis.vertical,dashColor: kLiveasyColor,dashGapColor: Colors.white,lineThickness: 1.5,dashLength: 3.5,dashGapLength: 2.25,lineLength: 15,dashGapRadius: 0,))
-                            :SizedBox(height: 0,),
-                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')?
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image(
-                              image: AssetImage('icons/red_circle.png'),
-                              height: 10,
-                              width: 10,
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.high,
-                              alignment: Alignment.center,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              loadDetailsScreenModel.unloadingPointCity2 ?? 'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          ],
-                        )
-                            :SizedBox(height: 0,)
+                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                            ? Container(
+                                padding: EdgeInsets.only(left: 5),
+                                height: 15,
+                                child: DottedLine(
+                                  alignment: WrapAlignment.center,
+                                  direction: Axis.vertical,
+                                  dashColor: kLiveasyColor,
+                                  dashGapColor: Colors.white,
+                                  lineThickness: 1.5,
+                                  dashLength: 3.5,
+                                  dashGapLength: 2.25,
+                                  lineLength: 15,
+                                  dashGapRadius: 0,
+                                ))
+                            : SizedBox(
+                                height: 0,
+                              ),
+                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image(
+                                    image: AssetImage('icons/red_circle.png'),
+                                    height: 10,
+                                    width: 10,
+                                    fit: BoxFit.contain,
+                                    filterQuality: FilterQuality.high,
+                                    alignment: Alignment.center,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    loadDetailsScreenModel
+                                            .unloadingPointCity2 ??
+                                        'Null',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: textFontSize,
+                                        fontFamily: 'Montserrat'),
+                                  )
+                                ],
+                              )
+                            : SizedBox(
+                                height: 0,
+                              )
                       ],
                     ),
                   ),

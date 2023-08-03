@@ -15,8 +15,6 @@ class TransporterListFromShipperApi {
     try {
       String shipperId = shipperIdController.shipperId.value;
 
-      // print('$shipperApiUrl/$shipperId');
-
       final response = await http.get(
         Uri.parse('$shipperApiUrl/$shipperId'),
         headers: <String, String>{
@@ -27,15 +25,11 @@ class TransporterListFromShipperApi {
       if (response.statusCode == HttpStatus.ok) {
         var body = jsonDecode(response.body);
         var transporterList = body['transporterList'];
-        print('hello $transporterList');
         return transporterList;
       } else {
-        print("wrong here");
-        // print(response.body);
         return [];
       }
     } catch (e) {
-      print("wrong here 2");
       print(e);
       return [];
     }

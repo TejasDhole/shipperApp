@@ -96,8 +96,6 @@ class _LoadTruckWeightSelectScreenWebState
         slotFirstWeight = true;
       }
     }
-
-    print(weightSlots);
   }
 
   getLoadWeight() {
@@ -181,7 +179,6 @@ class _LoadTruckWeightSelectScreenWebState
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
     selectedWeight = providerData.passingWeightMultipleValue;
-    print(selectedWeight);
     providerFunctionWeight = providerData.updatePassingWeightMultipleValue;
     return Scaffold(
       floatingActionButton: SizedBox(

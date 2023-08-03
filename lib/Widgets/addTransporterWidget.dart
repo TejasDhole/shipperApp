@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/status/http_status.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
-import 'package:shipper_app/controller/shipperIdController.dart';
+import 'package:shipper_app/functions/shipperApis/updateShipperTransporterList.dart';
+import 'package:shipper_app/functions/transporterApis/getTransporterIdByPhone.dart';
 
 Widget addTransporter(diaLogContext, transporterList) {
   TextEditingController txtEdtNameController = TextEditingController(),
@@ -219,55 +215,4 @@ Widget addTransporter(diaLogContext, transporterList) {
       ],
     ),
   );
-}
-
-void updateShipperTransporterList(transporterList, diaLogContext) async {
-  try {
-    ShipperIdController shipperIdController = Get.put(ShipperIdController());
-    String shipperId = shipperIdController.shipperId.value;
-    Map<String, dynamic> data = {
-      "transporterList": transporterList,
-    };
-    String body = json.encode(data);
-    print(transporterList);
-    final String shipperApiUrl = dotenv.get("shipperApiUrl");
-    http.Response response = await http.put(
-      Uri.parse('$shipperApiUrl/$shipperId'),
-      body: body,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-    if (response.statusCode == HttpStatus.ok) {
-      print("Transporter added successfully");
-      Navigator.of(diaLogContext).pop();
-    }
-  } catch (e) {
-    print('1 $e');
-  }
-}
-
-Future<String> getTransporterIdByPhone(String phoneNo) async {
-  try {
-    Map<String, dynamic> data = {
-      "phoneNo": phoneNo,
-    };
-    String body = json.encode(data);
-
-    final String transporterApiUrl = dotenv.get("transporterApiUrl");
-    http.Response response = await http.post(
-      Uri.parse('$transporterApiUrl'),
-      body: body,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-    var jsonData = json.decode(response.body);
-    print(
-        "id -->> ${jsonData['transporterId'] != null ? jsonData['transporterId'] : 'Na'}");
-    return jsonData['transporterId'] != null ? jsonData['transporterId'] : 'Na';
-  } catch (e) {
-    print('2 $e');
-    return "";
-  }
 }

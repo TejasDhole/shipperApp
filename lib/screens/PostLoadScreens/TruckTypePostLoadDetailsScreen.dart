@@ -169,7 +169,6 @@ class _TruckTypePostLoadDetailsScreenState
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  print(loadWeightTons[index]);
                   if (providerData.truckTypeValue !=
                       truckFilterVariables.truckTypeValueList[index]) {
                     String emp = '';

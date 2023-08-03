@@ -21,17 +21,6 @@ class _moveLoadConfirmationScreenButtonWidgetState
   Widget build(BuildContext context) {
     bool enable = false;
     ProviderData providerData = Provider.of<ProviderData>(context);
-    print(providerData.truckTypeValue);
-    print(providerData.passingWeightMultipleValue);
-    print(providerData.productType);
-    print(providerData.totalTyresValue);
-    print(providerData.scheduleLoadingDate);
-    print(providerData.scheduleLoadingTime);
-    print(providerData.biddingEndTime ?? 'NUll');
-    print(providerData.biddingEndDate ?? 'NULL');
-    print(providerData.loadTransporterList);
-    print(providerData.publishMethod);
-    print(providerData.comment);
 
     if (providerData.truckTypeValue != '' &&
         providerData.passingWeightMultipleValue != [] &&

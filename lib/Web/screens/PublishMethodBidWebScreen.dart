@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/Widgets/addTransporterWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/BiddingDateTime.dart';
 import 'package:shipper_app/constants/colors.dart';
@@ -36,7 +37,6 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("inti");
     getTransporterListFromShipperApi();
   }
 
@@ -46,7 +46,6 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
         .then((value) {
       setState(() {
         transporterList = [...value];
-        print("Oye -------> $transporterList");
         setSelectedTransporterList = true;
       });
     });
@@ -86,7 +85,6 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
       }
       setSelectedTransporterList = false;
     }
-    print("ok -------> $selectedTransporterList");
     return Scaffold(
       floatingActionButton: SizedBox(
         height: space_8,
@@ -110,7 +108,6 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
           ),
           onPressed: () {
             if (selectedTransporterList.isNotEmpty) {
-              //selectedTransporterList.sort();
               providerData.updateLoadTransporterList(selectedTransporterList);
               providerData.updatePublishMethod(widget.publishMethod);
               ((kIsWeb)
@@ -149,38 +146,7 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                       SizedBox(
                         width: 40,
                       ),
-                      Expanded(
-                          flex: 4,
-                          child: Container(
-                            child: TextField(
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: size_8),
-                              textAlign: TextAlign.center,
-                              cursorColor: kLiveasyColor,
-                              cursorWidth: 1,
-                              mouseCursor: SystemMouseCursors.click,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide: BorderSide(
-                                          color: borderLightColor, width: 1.5)),
-                                  hintText: 'Search Transporter',
-                                  hintStyle: TextStyle(
-                                      color: borderLightColor,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: size_8),
-                                  suffixIcon: Icon(
-                                    Icons.search,
-                                    color: borderLightColor,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.zero,
-                                      borderSide: BorderSide(
-                                          color: truckGreen, width: 1.5))),
-                            ),
-                          )),
+                      PublishBidSearchTextFieldWidget(),
                       SizedBox(
                         width: 40,
                       ),
@@ -339,12 +305,5 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty<bool>('firstLoad', setSelectedTransporterList));
   }
 }

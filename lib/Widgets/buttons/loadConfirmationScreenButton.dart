@@ -49,7 +49,6 @@ class LoadConfirmationScreenButton extends StatelessWidget {
             1, providerData.passingWeightMultipleValue.toString().length - 1);
 
     getData() async {
-      // print(shipperIdController.transporterId.value);
       String? loadId = '';
       if (loadId == '') {
         showDialog(
