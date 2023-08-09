@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
@@ -45,6 +46,14 @@ TruckFilterVariablesForPostLoad truckFilterVariables =
     TruckFilterVariablesForPostLoad();
 
 class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
+  refresh(bool allowToRefresh) {
+    if (allowToRefresh) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool visible = false;
@@ -229,7 +238,8 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                                 ],
                               ),
                               SizedBox(height: 40),
-                              LoadPublishMethodWebWidget(),
+                              LoadPublishMethodWebWidget(
+                                  refreshParent: refresh),
                               SizedBox(height: 40),
                               LoadDetailsCommentWidget(),
                               SizedBox(height: 40),

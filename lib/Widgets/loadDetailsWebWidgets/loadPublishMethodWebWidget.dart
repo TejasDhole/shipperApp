@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/constants/colors.dart';
@@ -11,6 +12,10 @@ import 'package:shipper_app/providerClass/providerData.dart';
 import '../../Web/screens/PublishMethodBidWebScreen.dart';
 
 class LoadPublishMethodWebWidget extends StatefulWidget {
+  final Function(bool) refreshParent;
+
+  const LoadPublishMethodWebWidget({super.key, required this.refreshParent});
+
   @override
   State<LoadPublishMethodWebWidget> createState() =>
       _LoadPublishMethodWebWidgetState();
@@ -37,11 +42,13 @@ class _LoadPublishMethodWebWidgetState
                 ));
           } else if (value == publishMethods[1]) {
             providerData.updatePublishMethod(value);
+            setState(() {});
           } else if (value == publishMethods[2]) {
             Get.to(() => PublishMethodBidWebScreen(
                   publishMethod: value,
                 ));
           }
+          widget.refreshParent(true);
         },
         selectedItem: (providerData.publishMethod != '')
             ? providerData.publishMethod
