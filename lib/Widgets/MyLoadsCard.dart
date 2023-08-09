@@ -73,19 +73,45 @@ class MyLoadsCard extends StatelessWidget {
       return Expanded(
         child: Row(
           children: [
+            SizedBox(
+              width: 5,
+            ),
             Expanded(
-                flex: 2,
+                flex: 3,
                 child: Center(
-                    child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          loadDetailsScreenModel.postLoadDate ?? 'Null',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kLiveasyColor,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
-                        )))),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Text(
+                        '${loadDetailsScreenModel.scheduleLoadDate}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kLiveasyColor,
+                            fontSize: textFontSize,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                          ? SizedBox(
+                              height: 5,
+                            )
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                          ? Text(
+                              '${loadDetailsScreenModel.scheduleLoadTime}' ??
+                                  'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: truckGreen,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          : SizedBox(
+                              height: 0,
+                            )
+                    ]))),
             VerticalDivider(
               color: Colors.grey,
             ),
@@ -110,7 +136,7 @@ class MyLoadsCard extends StatelessWidget {
                                   : 'icons/greenFilledCircleIcon.png'),
                               height: 11,
                               width: 11,
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                               filterQuality: FilterQuality.high,
                               alignment: Alignment.center,
                             ),
@@ -154,7 +180,7 @@ class MyLoadsCard extends StatelessWidget {
                                         'icons/greenFilledCircleIcon.png'),
                                     height: 10,
                                     width: 10,
-                                    fit: BoxFit.contain,
+                                    fit: BoxFit.cover,
                                     filterQuality: FilterQuality.high,
                                     alignment: Alignment.center,
                                   ),
@@ -203,7 +229,7 @@ class MyLoadsCard extends StatelessWidget {
                                   : 'icons/red_circle.png'),
                               height: 11,
                               width: 11,
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                               filterQuality: FilterQuality.high,
                               alignment: Alignment.center,
                             ),
@@ -247,7 +273,7 @@ class MyLoadsCard extends StatelessWidget {
                                     image: AssetImage('icons/red_circle.png'),
                                     height: 10,
                                     width: 10,
-                                    fit: BoxFit.contain,
+                                    fit: BoxFit.cover,
                                     filterQuality: FilterQuality.high,
                                     alignment: Alignment.center,
                                   ),
@@ -294,11 +320,11 @@ class MyLoadsCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '${loadDetailsScreenModel.noOfTyres}' ?? 'Null',
+                        '${loadDetailsScreenModel.noOfTyres} tyres' ?? 'Null',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: truckGreen,
-                            fontSize: 16,
+                            fontSize: textFontSize,
                             fontFamily: 'Montserrat'),
                       )
                     ]))),
@@ -323,11 +349,11 @@ class MyLoadsCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '${loadDetailsScreenModel.weight}' ?? 'Null',
+                        '${loadDetailsScreenModel.weight} tons' ?? 'Null',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: truckGreen,
-                            fontSize: 16,
+                            fontSize: textFontSize,
                             fontFamily: 'Montserrat'),
                       )
                     ]))),
@@ -339,18 +365,28 @@ class MyLoadsCard extends StatelessWidget {
               child: Center(
                   child: (loadDetailsScreenModel.status == 'EXPIRED')
                       ? null
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                              ViewBidsButton(
-                                loadId: loadDetailsScreenModel.loadId,
-                                loadingPointCity:
-                                    loadDetailsScreenModel.loadingPointCity,
-                                unloadingPointCity:
-                                    loadDetailsScreenModel.unloadingPointCity,
-                                screenSmall: small,
-                              ),
-                            ])),
+                      : (loadDetailsScreenModel.publishMethod != 'Bid')
+                          ? Text(
+                              '${loadDetailsScreenModel.publishMethod}' ??
+                                  'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kLiveasyColor,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  ViewBidsButton(
+                                    loadId: loadDetailsScreenModel.loadId,
+                                    loadingPointCity:
+                                        loadDetailsScreenModel.loadingPointCity,
+                                    unloadingPointCity: loadDetailsScreenModel
+                                        .unloadingPointCity,
+                                    screenSmall: small,
+                                  ),
+                                ])),
             ),
             VerticalDivider(
               color: Colors.grey,
@@ -570,7 +606,7 @@ class MyLoadsCard extends StatelessWidget {
         loadDetailsScreenModel.rate == "NA"
             ? providerData.updatePrice(0)
             : providerData.updatePrice(int.parse(loadDetailsScreenModel.rate!));
-        providerData.updateBookingDate(loadDetailsScreenModel.loadDate);
+        providerData.updateBookingDate(loadDetailsScreenModel.scheduleLoadDate);
 
         providerData.postLoadScreenOneButton();
         providerData.updateResetActive(true);

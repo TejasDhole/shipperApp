@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import '/models/loadDetailsScreenModel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 getLoadDetailsFromLoadId(loadId) async {
   //canm be deleted later
   var jsonData;
@@ -35,7 +34,7 @@ getLoadDetailsFromLoadId(loadId) async {
     loadDetailsScreenModel.weight = jsonData["weight"].toString();
     loadDetailsScreenModel.comment = jsonData["comment"].toString();
     loadDetailsScreenModel.status = jsonData["status"].toString();
-    loadDetailsScreenModel.loadDate = jsonData["loadDate"].toString();
+    loadDetailsScreenModel.scheduleLoadDate = jsonData["loadDate"].toString();
     loadDetailsScreenModel.rate = jsonData["rate"];
     loadDetailsScreenModel.unitValue = jsonData["unitValue"].toString();
     return loadDetailsScreenModel;
