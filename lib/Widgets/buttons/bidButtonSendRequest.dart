@@ -48,7 +48,7 @@ class BidButtonSendRequest extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return LoadingAlertDialog();
+            return LoadingAlertDialog('');
           },
         );
       }
