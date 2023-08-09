@@ -5,19 +5,28 @@ import 'package:shipper_app/Widgets/Header.dart';
 import 'package:shipper_app/Widgets/buttons/backButtonWidget.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/screens/myLoadPages/biddingScreen.dart';
 
 class biddingTrasnporterDetails extends StatelessWidget {
   final String? transporterName;
   final String? transporterCompanyName;
   final String? transporterPhoneNo;
   final String? transporterEmail;
+  final String? loadId;
+  final String? loadingPointCity;
+  final String? unloadingPointCity;
 
   biddingTrasnporterDetails(
       {super.key,
       this.transporterName,
       this.transporterPhoneNo,
       this.transporterEmail,
-      this.transporterCompanyName});
+      this.transporterCompanyName,
+      required this.loadId,
+      required this.loadingPointCity,
+      required this.unloadingPointCity});
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +47,26 @@ class biddingTrasnporterDetails extends StatelessWidget {
             decoration: BoxDecoration(
               color: headerLightBlueColor,
             ),
-            child: Header(
-                reset: false,
-                text: 'Transporter Details',
-                // 'Biddings',
-                backButton: false),
+            child: Row(
+              children: [
+                Text('Transporter Details',
+                    style: TextStyle(
+                      fontSize: size_10 - 1,
+                      fontWeight: mediumBoldWeight,
+                    )),
+              ],
+            ),
           ),
           Container(
             padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Row(
               children: [
-                BackButtonWidget(),
+                BackButtonWidget(
+                    previousPage: BiddingScreens(
+                        loadId: loadId,
+                        loadingPointCity: loadingPointCity,
+                        unloadingPointCity: unloadingPointCity),
+                    selectedIndex: screens.indexOf(postLoadScreen)),
                 SizedBox(
                   width: 20,
                 ),

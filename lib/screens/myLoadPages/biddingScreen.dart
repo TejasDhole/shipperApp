@@ -5,7 +5,10 @@ import 'package:shipper_app/Widgets/biddingScreenWidget/biddingScreenTableHeader
 import 'package:shipper_app/Widgets/buttons/backButtonWidget.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/PostLoadScreens/postLoadScreen.dart';
 import '../../functions/transporterApis/transporterApiCalls.dart';
 import '../../models/transporterModel.dart';
 import '/constants/spaces.dart';
@@ -40,7 +43,6 @@ class _BiddingScreensState extends State<BiddingScreens> {
   final String biddingApiUrl = dotenv.get('biddingApiUrl');
 
   int i = 0;
-
   late List jsonData;
 
   bool loading = false;
@@ -90,17 +92,13 @@ class _BiddingScreensState extends State<BiddingScreens> {
         biddingModelList.add(biddingModel);
       });
     }
-
-    // print("transporterModelList.length ${transporterModelList.length}");
     loading = false;
   }
 
   @override
   void initState() {
     super.initState();
-
     loading = true;
-
     getBidDataByLoadId(i);
 
     scrollController.addListener(() {
@@ -132,17 +130,23 @@ class _BiddingScreensState extends State<BiddingScreens> {
           decoration: BoxDecoration(
             color: headerLightBlueColor,
           ),
-          child: Header(
-              reset: false,
-              text: 'bids'.tr,
-              // 'Biddings',
-              backButton: false),
+          child: Row(
+            children: [
+              Text('bids'.tr,
+                  style: TextStyle(
+                    fontSize: size_10 - 1,
+                    fontWeight: mediumBoldWeight,
+                  )),
+            ],
+          ),
         ),
         Container(
           padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
           child: Row(
             children: [
-              BackButtonWidget(),
+              BackButtonWidget(
+                  previousPage: PostLoadScreen(),
+                  selectedIndex: screens.indexOf(postLoadScreen)),
               SizedBox(
                 width: 20,
               ),

@@ -122,6 +122,11 @@ class BiddingsCardShipperSide extends StatelessWidget {
                                         builder: (context) => HomeScreenWeb(
                                               visibleWidget:
                                                   biddingTrasnporterDetails(
+                                                loadId: loadId,
+                                                loadingPointCity:
+                                                    loadingPointCity,
+                                                unloadingPointCity:
+                                                    unloadingPointCity,
                                                 transporterName:
                                                     transporterName,
                                                 transporterPhoneNo:
@@ -138,6 +143,9 @@ class BiddingsCardShipperSide extends StatelessWidget {
                                 : Get.to(() => HomeScreenWeb(
                                         visibleWidget:
                                             biddingTrasnporterDetails(
+                                      loadId: loadId,
+                                      loadingPointCity: loadingPointCity,
+                                      unloadingPointCity: unloadingPointCity,
                                       transporterName: transporterName,
                                       transporterPhoneNo: transporterPhoneNum,
                                       transporterCompanyName: companyName,
