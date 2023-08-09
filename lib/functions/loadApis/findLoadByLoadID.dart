@@ -57,7 +57,7 @@ Future findLoadByLoadID(String loadId) async {
       jsonData["comment"] != null ? jsonData['comment'] : 'NA';
   loadDetailsScreenModel.status =
       jsonData["status"] != null ? jsonData['status'] : 'NA';
-  loadDetailsScreenModel.loadDate =
+  loadDetailsScreenModel.scheduleLoadDate =
       jsonData["loadDate"] != null ? jsonData['loadDate'] : 'NA';
   loadDetailsScreenModel.rate =
       jsonData["rate"] != null ? jsonData['rate'].toString() : 'NA';
