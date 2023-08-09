@@ -8,6 +8,10 @@ import 'package:shipper_app/providerClass/providerData.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BiddingDateTime extends StatefulWidget {
+  final Function(bool) refreshParent;
+
+  const BiddingDateTime({super.key, required this.refreshParent});
+
   @override
   State<BiddingDateTime> createState() => _BiddingDateTimeState();
 }
@@ -122,19 +126,13 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
           : picked!.minute.toString();
       Time_Day = '$dayHour : $dayMinute $dayPeriod';
       _textEditingController.text = '$Date_Time ; $Time_Day';
+      widget.refreshParent(true);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    if (Date_Time != null &&
-        Time_Day != null &&
-        Date_Time!.isNotEmpty &&
-        Time_Day!.isNotEmpty) {
-      providerData.updateBiddingEndDateTime(
-          Date_Time, '${picked!.hour}:${picked!.minute}');
-    }
     if (providerData.biddingEndDate != null &&
         providerData.biddingEndTime != null) {
       //for convert string into DateTime
@@ -203,7 +201,16 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
                                         .toString();
                                     if (Date_Time != null) {
                                       Navigator.of(context).pop();
-                                      timePicker();
+                                      timePicker().then((value) {
+                                        if (Date_Time != null &&
+                                            Time_Day != null &&
+                                            Date_Time!.isNotEmpty &&
+                                            Time_Day!.isNotEmpty) {
+                                          providerData.updateBiddingEndDateTime(
+                                              Date_Time,
+                                              '${picked!.hour}:${picked!.minute}');
+                                        }
+                                      });
                                     }
                                   });
                                 }

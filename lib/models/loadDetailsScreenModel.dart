@@ -19,7 +19,9 @@ class LoadDetailsScreenModel {
   String? weight;
   String? comment;
   String? status;
-  String? loadDate;
+  String? scheduleLoadDate;
+  String? scheduleLoadTime;
+  String? publishMethod;
   String? rate;
   String? unitValue;
   String? loadPosterId;
@@ -34,38 +36,37 @@ class LoadDetailsScreenModel {
   String? postLoadDate;
 
   LoadDetailsScreenModel(
-      {
-        this.loadId,
-        this.loadingPoint,
-        this.loadingPointCity,
-        this.loadingPointState,
-        this.loadingPoint2,
-        this.loadingPointCity2,
-        this.loadingPointState2,
-        this.postLoadId,
-        this.unloadingPoint,
-        this.unloadingPointCity,
-        this.unloadingPointState,
-        this.unloadingPoint2,
-        this.unloadingPointCity2,
-        this.unloadingPointState2,
-        this.productType,
-        this.truckType,
-        this.noOfTyres,
-        this.weight,
-        this.comment,
-        this.status,
-        this.loadDate,
-        this.rate,
-        this.unitValue,
-        this.loadPosterId,
-        this.phoneNo,
-        this.loadPosterLocation,
-        this.loadPosterName,
-        this.loadPosterCompanyName,
-        this.loadPosterKyc,
-        this.loadPosterCompanyApproved,
-        this.loadPosterApproved,
-        this.loadPosterAccountVerificationInProgress,
-        this.postLoadDate});
+      {this.loadId,
+      this.loadingPoint,
+      this.loadingPointCity,
+      this.loadingPointState,
+      this.loadingPoint2,
+      this.loadingPointCity2,
+      this.loadingPointState2,
+      this.postLoadId,
+      this.unloadingPoint,
+      this.unloadingPointCity,
+      this.unloadingPointState,
+      this.unloadingPoint2,
+      this.unloadingPointCity2,
+      this.unloadingPointState2,
+      this.productType,
+      this.truckType,
+      this.noOfTyres,
+      this.weight,
+      this.comment,
+      this.status,
+      this.scheduleLoadDate,
+      this.rate,
+      this.unitValue,
+      this.loadPosterId,
+      this.phoneNo,
+      this.loadPosterLocation,
+      this.loadPosterName,
+      this.loadPosterCompanyName,
+      this.loadPosterKyc,
+      this.loadPosterCompanyApproved,
+      this.loadPosterApproved,
+      this.loadPosterAccountVerificationInProgress,
+      this.postLoadDate});
 }

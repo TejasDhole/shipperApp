@@ -30,7 +30,8 @@ Future<String?> postLoadAPi(
     scheduleLoadingTime,
     scheduleLoadingDate,
     publishMethod,
-    comment) async {
+    comment,
+    loadTransporterList) async {
   PostLoadErrorController postLoadErrorController =
       Get.put(PostLoadErrorController());
   try {
@@ -58,17 +59,14 @@ Future<String?> postLoadAPi(
       "loadingDate": scheduleLoadingDate,
       "loadingTime": scheduleLoadingTime,
       "publishMethod": publishMethod,
-      "comment": comment
+      "comment": comment,
+      "transporterList": loadTransporterList
     };
 
-    // print(data);
     String body = json.encode(data);
     var jsonData;
 
-    // final String loadApiUrl = FlutterConfig.get('loadApiUrl').toString();
     final String loadApiUrl = dotenv.get('loadApiUrl');
-
-    // print("loadApiUrl $loadApiUrl");
 
     final response = await http.post(Uri.parse(loadApiUrl),
         headers: <String, String>{

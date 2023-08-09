@@ -14,6 +14,8 @@ class ProductTypeSelection extends StatefulWidget {
 }
 
 class _ProductTypeSelectionState extends State<ProductTypeSelection> {
+  TextEditingController txtProductTypeController = TextEditingController();
+
   List<String> productType = [
     'Agriculture and Food',
     'Alcoholic Beverage',
@@ -44,7 +46,7 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LoadDetailsHeader(
-              title: 'Select Trailer Body Type',
+              title: 'Select Product Type',
               subTitle: 'We need some details from you.'),
           Container(
             height: 10,
@@ -101,12 +103,162 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
                   children: [
                     InkWell(
                       onTap: () {
-                        if (productType[index] != 'Other') {
+                        if (productType[index] != 'Others') {
                           setState(() {
                             Get.back();
                             providerData.updateProductType(productType[index]);
-                            providerData.updateResetActive(true);
+                            // providerData.updateResetActive(true);
                           });
+                        } else if (productType[index] == 'Others') {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  contentPadding: EdgeInsets.only(
+                                      left: 20, right: 20, top: 40, bottom: 40),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Enter Product Type',
+                                        style: TextStyle(
+                                            color: kLiveasyColor,
+                                            fontSize: size_10,
+                                            fontFamily: 'Montserrat'),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      TextField(
+                                        controller: txtProductTypeController,
+                                        style: TextStyle(
+                                            color: kLiveasyColor,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: size_8),
+                                        textAlign: TextAlign.center,
+                                        cursorColor: kLiveasyColor,
+                                        cursorWidth: 1,
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.zero,
+                                                borderSide: BorderSide(
+                                                    color: borderLightColor,
+                                                    width: 1.5)),
+                                            hintText: 'Enter Product Type',
+                                            hintStyle: TextStyle(
+                                                color: borderLightColor,
+                                                fontFamily: 'Montserrat',
+                                                fontSize: size_8),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.zero,
+                                                borderSide: BorderSide(
+                                                    color: truckGreen,
+                                                    width: 1.5))),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              String otherProductType =
+                                                  txtProductTypeController.text;
+
+                                              if (otherProductType.isNotEmpty &&
+                                                  otherProductType != null) {
+                                                setState(() {
+                                                  providerData
+                                                      .updateProductType(
+                                                          otherProductType);
+                                                  Navigator.of(context).pop();
+                                                  Get.back();
+                                                });
+                                              }
+                                            },
+                                            child: Text(
+                                              'Ok',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  color: Colors.white),
+                                            ),
+                                            style: ButtonStyle(
+                                                mouseCursor:
+                                                    MaterialStatePropertyAll(
+                                                        SystemMouseCursors
+                                                            .click),
+                                                shape: MaterialStatePropertyAll(
+                                                    RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                          color: truckGreen,
+                                                          width: 2,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5)))),
+                                                padding:
+                                                    MaterialStatePropertyAll(
+                                                        EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            top: 5,
+                                                            bottom: 8)),
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        truckGreen)),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                    fontFamily: 'Montserrat',
+                                                    color: Colors.white),
+                                              ),
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        red),
+                                                mouseCursor:
+                                                    MaterialStatePropertyAll(
+                                                        SystemMouseCursors
+                                                            .click),
+                                                shape: MaterialStatePropertyAll(
+                                                    RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                          color: red,
+                                                          width: 2,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5)))),
+                                                padding:
+                                                    MaterialStatePropertyAll(
+                                                        EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            top: 5,
+                                                            bottom: 8)),
+                                              )),
+                                        ],
+                                      )
+                                    ],
+                                  ));
+                            },
+                          );
                         }
                       },
                       child: Container(
@@ -116,8 +268,7 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
                                       productType[index])
                               ? LinearGradient(
                                   colors: [gradientGreyColor, white])
-                              : LinearGradient(
-                                  colors: [Colors.white, white]),
+                              : LinearGradient(colors: [Colors.white, white]),
                         ),
                         padding: EdgeInsets.only(
                             left: 40, right: 40, top: 10, bottom: 10),

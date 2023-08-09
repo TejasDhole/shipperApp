@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
@@ -32,12 +33,21 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
   var transporterList = [];
   var selectedTransporterList = [];
   bool setSelectedTransporterList = true;
+  bool enableFinishButton = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getTransporterListFromShipperApi();
+  }
+
+  refresh(bool allowToRefresh) {
+    if (allowToRefresh) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+    }
   }
 
   getTransporterListFromShipperApi() async {
@@ -85,16 +95,34 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
       }
       setSelectedTransporterList = false;
     }
+
+    if (widget.publishMethod == 'Bid') {
+      if (selectedTransporterList.isNotEmpty &&
+          providerData.biddingEndTime != null &&
+          providerData.biddingEndDate != null &&
+          providerData.biddingEndDate != '' &&
+          providerData.biddingEndTime != '') {
+        enableFinishButton = true;
+      } else {
+        enableFinishButton = false;
+      }
+    } else {
+      if (selectedTransporterList.isNotEmpty) {
+        enableFinishButton = true;
+      } else {
+        enableFinishButton = false;
+      }
+    }
+
     return Scaffold(
       floatingActionButton: SizedBox(
         height: space_8,
         width: space_33,
         child: TextButton(
           style: ButtonStyle(
-            mouseCursor: MaterialStatePropertyAll(
-                (selectedTransporterList.isNotEmpty)
-                    ? SystemMouseCursors.click
-                    : SystemMouseCursors.basic),
+            mouseCursor: MaterialStatePropertyAll((enableFinishButton)
+                ? SystemMouseCursors.click
+                : SystemMouseCursors.basic),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: (Responsive.isMobile(context))
@@ -102,12 +130,10 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                   : BorderRadius.all(Radius.zero),
             )),
             backgroundColor: MaterialStateProperty.all<Color>(
-                (selectedTransporterList.isNotEmpty)
-                    ? truckGreen
-                    : disableButtonColor),
+                (enableFinishButton) ? truckGreen : disableButtonColor),
           ),
           onPressed: () {
-            if (selectedTransporterList.isNotEmpty) {
+            if (enableFinishButton) {
               providerData.updateLoadTransporterList(selectedTransporterList);
               providerData.updatePublishMethod(widget.publishMethod);
               ((kIsWeb)
@@ -142,7 +168,9 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
             (widget.publishMethod == 'Bid')
                 ? Row(
                     children: [
-                      BiddingDateTime(),
+                      BiddingDateTime(
+                        refreshParent: refresh,
+                      ),
                       SizedBox(
                         width: 40,
                       ),
@@ -253,49 +281,40 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                         ),
                       )),
                   child: ListView.builder(
-                    padding: EdgeInsets.only(left: 20),
                     itemBuilder: (context, index) {
                       return (transporterList.isEmpty)
                           ? Container()
-                          : Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              height: 40,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Checkbox(
-                                    value: selectedTransporterList
-                                        .contains(transporterList[index]),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        if (value!) {
-                                          selectedTransporterList
-                                              .add(transporterList[index]);
-                                        } else {
-                                          selectedTransporterList
-                                              .remove(transporterList[index]);
-                                        }
-                                      });
-                                    },
-                                    side:
-                                        BorderSide(width: 2, color: truckGreen),
-                                    mouseCursor: SystemMouseCursors.click,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(2))),
-                                    fillColor: MaterialStatePropertyAll<Color>(
-                                        truckGreen),
-                                  ),
-                                  Text(
-                                    transporterList[index][1],
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Montserrat',
-                                        fontSize: size_10),
-                                  ),
-                                ],
+                          : CheckboxListTile(
+                              contentPadding:
+                                  EdgeInsets.only(left: 40, right: 20),
+                              value: selectedTransporterList
+                                  .contains(transporterList[index]),
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value!) {
+                                    selectedTransporterList
+                                        .add(transporterList[index]);
+                                  } else {
+                                    selectedTransporterList
+                                        .remove(transporterList[index]);
+                                  }
+                                });
+                              },
+                              side: BorderSide(width: 2, color: truckGreen),
+                              mouseCursor: SystemMouseCursors.click,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(2))),
+                              fillColor:
+                                  MaterialStatePropertyAll<Color>(truckGreen),
+                              title: Text(
+                                transporterList[index][1],
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: size_10),
                               ),
+                              controlAffinity: ListTileControlAffinity.leading,
                             );
                     },
                     itemCount: transporterList.length,

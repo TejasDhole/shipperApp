@@ -64,7 +64,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                 Text(
                   'postedon'.tr +
                       ' : ' +
-                      '${loadDetailsScreenModel.loadDate}'.tr,
+                      '${loadDetailsScreenModel.scheduleLoadDate}'.tr,
                   style: TextStyle(
                       fontSize: size_6,
                       color: veryDarkGrey,
@@ -86,9 +86,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                                   .tr
                               : loadDetailsScreenModel.loadingPointCity!.tr,
                           style: TextStyle(
-                              
-                              fontWeight: FontWeight.bold,
-                              fontSize: size_7),
+                              fontWeight: FontWeight.bold, fontSize: size_7),
                         ),
                       ],
                     ),
@@ -106,7 +104,6 @@ class HomeScreenLoadsCard extends StatelessWidget {
                             "${loadDetailsScreenModel.weight} $tonnes",
                             // "${AppLocalizations.of(context)!.tonnes}",
                             style: TextStyle(
-                                
                                 color: bidBackground,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size_5),
@@ -139,9 +136,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                                   .tr
                               : loadDetailsScreenModel.unloadingPointCity!.tr,
                           style: TextStyle(
-                              
-                              fontWeight: FontWeight.bold,
-                              fontSize: size_7),
+                              fontWeight: FontWeight.bold, fontSize: size_7),
                         ),
                       ],
                     ),
@@ -158,7 +153,6 @@ class HomeScreenLoadsCard extends StatelessWidget {
                           child: Text(
                             rateInTonnes,
                             style: TextStyle(
-                                
                                 color: bidBackground,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size_5),

@@ -563,6 +563,12 @@ class ProviderData extends ChangeNotifier {
     price = 0;
     driverIdValue = '';
     unitValue = "";
+    scheduleLoadingTime = '';
+    scheduleLoadingDate = '';
+    biddingEndDate = null;
+    biddingEndTime = null;
+    loadTransporterList = [];
+    publishMethod = '';
     resetUnitValue();
     notifyListeners();
   }
@@ -587,7 +593,6 @@ class ProviderData extends ChangeNotifier {
   void resetOnNewType() {
     passingWeightValue = 0;
     passingWeightMultipleValue = [];
-    totalTyresValue = 0;
     truckLengthValue = 0;
     driverIdValue = '';
     truckNumber = 0;

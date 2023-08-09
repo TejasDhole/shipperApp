@@ -120,46 +120,39 @@ class _LoadTruckWeightSelectScreenWebState
             ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, iterator) {
-                  return Container(
-                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: (selectedWeight.contains('${e[0] + iterator}')
-                              ? true
-                              : false),
-                          onChanged: (value) {
-                            setState(() {
-                              if ((value ?? false) &&
-                                  selectedWeight.length < 5) {
-                                selectedWeight.add('${e[0] + iterator}');
-                              } else {
-                                selectedWeight.remove('${e[0] + iterator}');
-                              }
-                              // check = value ?? false;
-                            });
-                          },
-                          side: BorderSide(width: 2, color: truckGreen),
-                          mouseCursor: SystemMouseCursors.click,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2))),
-                          fillColor:
-                              MaterialStatePropertyAll<Color>(truckGreen),
-                        ),
-                        Text(
-                          '${e[0] + iterator} tons',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: kLiveasyColor,
-                              fontSize: size_9),
-                        ),
-                        Expanded(child: Container()),
-                        Image.asset('assets/images/load_weight_boxes.png')
-                      ],
+                  return CheckboxListTile(
+                    contentPadding:
+                        EdgeInsets.only(top: 5, bottom: 5, right: 10),
+                    value: (selectedWeight.contains('${e[0] + iterator}')
+                        ? true
+                        : false),
+                    onChanged: (value) {
+                      setState(() {
+                        if ((value ?? false) && selectedWeight.length < 5) {
+                          selectedWeight.add('${e[0] + iterator}');
+                        } else {
+                          selectedWeight.remove('${e[0] + iterator}');
+                        }
+                        // check = value ?? false;
+                      });
+                    },
+                    mouseCursor: SystemMouseCursors.click,
+                    title: Text(
+                      '${e[0] + iterator} tons',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: kLiveasyColor,
+                          fontSize: size_9),
                     ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2))),
+                    fillColor: MaterialStatePropertyAll<Color>(truckGreen),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    secondary: Image.asset(
+                        'assets/images/load_weight_boxes.png',
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.contain),
                   );
                 },
                 separatorBuilder: (context, index) {

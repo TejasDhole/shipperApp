@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shipper_app/screens/PostLoadScreens/postLoadScreen.dart';
 import '/constants/colors.dart';
 import '/constants/fontWeights.dart';
 import '/providerClass/providerData.dart';
@@ -9,7 +10,8 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
   final int value;
   final PageController pageController;
 
-  OrderScreenNavigationBarButton({required this.text, required this.value , required this.pageController});
+  OrderScreenNavigationBarButton(
+      {required this.text, required this.value, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,27 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         providerData.updateUpperNavigatorIndex(value);
-        pageController.jumpToPage(value);
+        if (pageController.page == value) {
+          if (pageController.page == 0) {
+            pageController
+                .nextPage(
+                    duration: const Duration(milliseconds: 40),
+                    curve: Curves.easeIn)
+                .whenComplete(() => pageController.previousPage(
+                    duration: const Duration(milliseconds: 1),
+                    curve: Curves.easeIn));
+          } else {
+            pageController
+                .previousPage(
+                    duration: const Duration(milliseconds: 40),
+                    curve: Curves.easeIn)
+                .whenComplete(() => pageController.nextPage(
+                    duration: const Duration(milliseconds: 1),
+                    curve: Curves.easeIn));
+          }
+        } else {
+          pageController.jumpToPage(value);
+        }
       },
       child: Text(
         text,
@@ -26,7 +48,7 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
           color: providerData.upperNavigatorIndex == value
               ? loadingPointTextColor
               : locationLineColor,
-          fontWeight:  FontWeight.w600,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
