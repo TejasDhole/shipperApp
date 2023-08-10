@@ -67,7 +67,7 @@ Future<List<LoadDetailsScreenModel>> runFindLoadApiGet(
         json["comment"] != null ? json['comment'] : 'NA';
     loadDetailsScreenModel.status =
         json["status"] != null ? json['status'] : 'NA';
-    loadDetailsScreenModel.loadDate =
+    loadDetailsScreenModel.scheduleLoadDate =
         json["loadDate"] != null ? json['loadDate'] : 'NA';
     loadDetailsScreenModel.rate =
         json["rate"] != null ? json['rate'].toString() : 'NA';

@@ -14,11 +14,11 @@ Container LoadsTableHeader(
 
   if (small) {
     leftRightPadding = 0;
-    textFontSize = 12;
+    textFontSize = 10;
     containerWidth = 56;
   } else {
     leftRightPadding = 20;
-    textFontSize = 16;
+    textFontSize = 14;
     containerWidth = 100;
   }
 
@@ -35,13 +35,13 @@ Container LoadsTableHeader(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-            flex: (loadingStatus == 'MyLoads') ? 2 : 3,
+            flex: 3,
             child: Center(
                 child: Container(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(
                       (loadingStatus == 'MyLoads')
-                          ? "Posted\nOn"
+                          ? "Scheduled\nDate & Time"
                           : "Booking\nOn",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -146,7 +146,8 @@ Container LoadsTableHeader(
             flex: 3,
             child: Center(
                 child: Text(
-              (loadingStatus == 'MyLoads') ? "Bids" : "Freight",
+              (loadingStatus == 'MyLoads') ? "Publishing\nMethod" : "Freight",
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: textFontSize,

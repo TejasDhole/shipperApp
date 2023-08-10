@@ -27,8 +27,8 @@ class _completedDialogState extends State<completedDialog> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.network(
-                "https://cdn.dribbble.com/users/2185205/screenshots/7886140/02-lottie-tick-01-instant-2.gif",
+              Image.asset(
+                "assets/icons/complete_alert_animation.gif",
                 width: space_22,
                 height: space_22,
               ),

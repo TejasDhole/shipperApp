@@ -22,6 +22,7 @@ class BiddingDetails extends StatelessWidget {
   final String? biddingDate;
   final String? transporterPhoneNum;
   final String? transporterName;
+  final String? transporterEmail;
   final String? transporterLocation;
   final bool? shipperApproved;
   final bool? transporterApproved;
@@ -35,6 +36,7 @@ class BiddingDetails extends StatelessWidget {
     required this.unitValue,
     required this.rate,
     required this.companyName,
+    required this.transporterEmail,
     required this.transporterPhoneNum,
     required this.bidId,
     required this.transporterName,

@@ -5,6 +5,7 @@ class TransporterModel {
   String? transporterLocation;
   String? transporterName;
   String? companyName;
+  String? transporterEmail;
   String? kyc;
   bool? transporterApproved;
   bool? companyApproved;

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import '/controller/postLoadErrorController.dart';
+
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 Future<String?> postLoadAPi(
     loadDate,
@@ -26,7 +26,12 @@ Future<String?> postLoadAPi(
     unloadingPointState2,
     weight,
     unitValue,
-    rate) async {
+    rate,
+    scheduleLoadingTime,
+    scheduleLoadingDate,
+    publishMethod,
+    comment,
+    loadTransporterList) async {
   PostLoadErrorController postLoadErrorController =
       Get.put(PostLoadErrorController());
   try {
@@ -37,31 +42,31 @@ Future<String?> postLoadAPi(
       "loadingPointCity": loadingPointCity,
       "loadingPointState": loadingPointState,
       "loadingPoint2": loadingPoint2,
-      "loadingPointCity2":loadingPointCity2,
-      "loadingPointState2":loadingPointState2,
+      "loadingPointCity2": loadingPointCity2,
+      "loadingPointState2": loadingPointState2,
       "noOfTyres": noOfTyre,
       "productType": productType,
       "truckType": truckType,
       "unloadingPoint": unloadingPoint,
       "unloadingPointCity": unloadingPointCity,
       "unloadingPointState": unloadingPointState,
-      "unloadingPoint2":unloadingPoint2,
-      "unloadingPointCity2":unloadingPointCity2,
-      "unloadingPointState2":unloadingPointState2,
+      "unloadingPoint2": unloadingPoint2,
+      "unloadingPointCity2": unloadingPointCity2,
+      "unloadingPointState2": unloadingPointState2,
       "weight": weight,
       "unitValue": unitValue,
-      "rate": rate
+      "rate": rate,
+      "loadingDate": scheduleLoadingDate,
+      "loadingTime": scheduleLoadingTime,
+      "publishMethod": publishMethod,
+      "comment": comment,
+      "transporterList": loadTransporterList
     };
 
-    // print(data);
     String body = json.encode(data);
     var jsonData;
 
-    // final String loadApiUrl = FlutterConfig.get('loadApiUrl').toString();
     final String loadApiUrl = dotenv.get('loadApiUrl');
-
-
-    // print("loadApiUrl $loadApiUrl");
 
     final response = await http.post(Uri.parse(loadApiUrl),
         headers: <String, String>{

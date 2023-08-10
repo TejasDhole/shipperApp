@@ -45,13 +45,15 @@ runSuggestedLoadApiWithPageNo(int i) async {
             ? json['unloadingPointState']
             : 'NA';
     loadDetailsScreenModel.unloadingPoint2 =
-    json["unloadingPoint2"] != null ? json['unloadingPoint2'] : 'NA';
+        json["unloadingPoint2"] != null ? json['unloadingPoint2'] : 'NA';
     loadDetailsScreenModel.unloadingPointCity =
-    json["unloadingPointCity2"] != null ? json['unloadingPointCity2'] : 'NA';
+        json["unloadingPointCity2"] != null
+            ? json['unloadingPointCity2']
+            : 'NA';
     loadDetailsScreenModel.unloadingPointState =
-    json["unloadingPointState2"] != null
-        ? json['unloadingPointState2']
-        : 'NA';
+        json["unloadingPointState2"] != null
+            ? json['unloadingPointState2']
+            : 'NA';
     loadDetailsScreenModel.productType =
         json["productType"] != null ? json['productType'] : 'NA';
     loadDetailsScreenModel.truckType =
@@ -64,7 +66,7 @@ runSuggestedLoadApiWithPageNo(int i) async {
         json["comment"] != null ? json['comment'] : 'NA';
     loadDetailsScreenModel.status =
         json["status"] != null ? json['status'] : 'NA';
-    loadDetailsScreenModel.loadDate =
+    loadDetailsScreenModel.scheduleLoadDate =
         json["loadDate"] != null ? json['loadDate'] : 'NA';
     loadDetailsScreenModel.rate =
         json["rate"] != null ? json['rate'].toString() : 'NA';
@@ -127,11 +129,11 @@ runWidgetSuggestedLoadApiWithPageNo(int i) async {
     loadDetailsScreenModel.loadingPointState =
         json["loadingPointState"] != null ? json['loadingPointState'] : 'NA';
     loadDetailsScreenModel.loadingPoint2 =
-    json["loadingPoint2"] != null ? json['loadingPoint2'] : 'NA';
+        json["loadingPoint2"] != null ? json['loadingPoint2'] : 'NA';
     loadDetailsScreenModel.loadingPointCity2 =
-    json["loadingPointCity2"] != null ? json['loadingPointCity2'] : 'NA';
+        json["loadingPointCity2"] != null ? json['loadingPointCity2'] : 'NA';
     loadDetailsScreenModel.loadingPointState2 =
-    json["loadingPointState2"] != null ? json['loadingPointState2'] : 'NA';
+        json["loadingPointState2"] != null ? json['loadingPointState2'] : 'NA';
     loadDetailsScreenModel.postLoadId =
         json["postLoadId"] != null ? json['postLoadId'] : 'NA';
     print("Post load ID is ${loadDetailsScreenModel.postLoadId}");
@@ -144,13 +146,15 @@ runWidgetSuggestedLoadApiWithPageNo(int i) async {
             ? json['unloadingPointState']
             : 'NA';
     loadDetailsScreenModel.unloadingPoint2 =
-    json["unloadingPoint2"] != null ? json['unloadingPoint2'] : 'NA';
+        json["unloadingPoint2"] != null ? json['unloadingPoint2'] : 'NA';
     loadDetailsScreenModel.unloadingPointCity2 =
-    json["unloadingPointCity2"] != null ? json['unloadingPointCity2'] : 'NA';
+        json["unloadingPointCity2"] != null
+            ? json['unloadingPointCity2']
+            : 'NA';
     loadDetailsScreenModel.unloadingPointState2 =
-    json["unloadingPointState2"] != null
-        ? json['unloadingPointState2']
-        : 'NA';
+        json["unloadingPointState2"] != null
+            ? json['unloadingPointState2']
+            : 'NA';
     loadDetailsScreenModel.productType =
         json["productType"] != null ? json['productType'] : 'NA';
     loadDetailsScreenModel.truckType =
@@ -163,7 +167,7 @@ runWidgetSuggestedLoadApiWithPageNo(int i) async {
         json["comment"] != null ? json['comment'] : 'NA';
     loadDetailsScreenModel.status =
         json["status"] != null ? json['status'] : 'NA';
-    loadDetailsScreenModel.loadDate =
+    loadDetailsScreenModel.scheduleLoadDate =
         json["loadDate"] != null ? json['loadDate'] : 'NA';
     loadDetailsScreenModel.rate =
         json["rate"] != null ? json['rate'].toString() : 'NA';

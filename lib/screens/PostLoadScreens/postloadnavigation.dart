@@ -33,7 +33,7 @@ class _PostLoadNavState extends State<PostLoadNav> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(space_4, space_2, space_4, space_0),
+                  padding: EdgeInsets.fromLTRB(space_4, space_4, space_4, space_2),
                   child: AddPostLoadHeader(
                       reset: true,
                       resetFunction: (){

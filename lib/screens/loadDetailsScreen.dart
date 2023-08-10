@@ -165,8 +165,8 @@ class _LoadDetailsScreenState extends State<LoadDetailsScreen> {
                                   margin: EdgeInsets.only(bottom: space_3),
                                   child: LocationDetailsLoadDetails(
                                     loadDetails: {
-                                      "loadDate": widget
-                                          .loadDetailsScreenModel.loadDate,
+                                      "loadDate": widget.loadDetailsScreenModel
+                                          .scheduleLoadDate,
                                       "loadingPoint": widget
                                           .loadDetailsScreenModel
                                           .loadingPoint

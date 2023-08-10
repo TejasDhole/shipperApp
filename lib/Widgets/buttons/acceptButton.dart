@@ -50,7 +50,7 @@ class AcceptButton extends StatelessWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.all(Radius.zero),
           )),
           backgroundColor: MaterialStateProperty.all<Color>(
               activeButtonCondition! ? liveasyGreen : inactiveBidding),
@@ -81,6 +81,7 @@ class AcceptButton extends StatelessWidget {
             "accept".tr,
             style: TextStyle(
               letterSpacing: 0.7,
+              fontFamily: 'Montserrat',
               fontWeight: mediumBoldWeight,
               color: white,
               fontSize: size_7,

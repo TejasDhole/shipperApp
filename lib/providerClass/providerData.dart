@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:js_util';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class ProviderData extends ChangeNotifier {
 
   bool editLoad = false;
   String? transporterLoadId;
+
   void updateEditLoad(bool value, String transporterloadId) {
     editLoad = value;
     transporterLoadId = transporterloadId;
@@ -102,7 +104,7 @@ class ProviderData extends ChangeNotifier {
   String loadingPointPostLoad = "";
   String loadingPointCityPostLoad2 = "";
   String loadingPointStatePostLoad2 = "";
-  String loadingPointPostLoad2="";
+  String loadingPointPostLoad2 = "";
 
   String unloadingPointCityPostLoad = "";
   String unloadingPointStatePostLoad = "";
@@ -110,6 +112,7 @@ class ProviderData extends ChangeNotifier {
   String unloadingPointCityPostLoad2 = "";
   String unloadingPointStatePostLoad2 = "";
   String unloadingPointPostLoad2 = "";
+
 //
 
   String bookingDate = "";
@@ -128,6 +131,11 @@ class ProviderData extends ChangeNotifier {
   String? panFrontPhoto64;
   String? companyIdProofPhoto64;
 
+  String? biddingEndDate;
+  String? biddingEndTime;
+
+  var loadTransporterList = [];
+
   // variables for login pages
 
   bool inputControllerLengthCheck = false;
@@ -141,6 +149,7 @@ class ProviderData extends ChangeNotifier {
 
   String truckTypeValue = '';
   int passingWeightValue = 0;
+  List<String> passingWeightMultipleValue = [];
   int totalTyresValue = 0;
   int truckLengthValue = 0;
   String driverIdValue = '';
@@ -154,9 +163,14 @@ class ProviderData extends ChangeNotifier {
   String controller2 = "";
   bool PER_TRUCK = false;
   bool PER_TON = false;
+  String comment = "";
+  String publishMethod = '';
+  String scheduleLoadingDate = '';
   bool otpIsValid = true;
   String hintText = "enter price";
   Color borderColor = darkBlueColor;
+
+  String scheduleLoadingTime = '';
 
   String truckId = '';
 
@@ -196,11 +210,21 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
+  updatePublishMethod(method) {
+    publishMethod = method;
+  }
+
+  updateBiddingEndDateTime(date, time) {
+    biddingEndDate = date;
+    biddingEndTime = time;
+  }
+
   void updateUpperNavigatorIndex(int value) {
     upperNavigatorIndex = value;
     notifyListeners();
   }
-  void updateUpperNavigatorIndex2(int value){
+
+  void updateUpperNavigatorIndex2(int value) {
     upperNavigatorIndex2 = value;
     notifyListeners();
   }
@@ -265,6 +289,11 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateComment(value) {
+    comment = value;
+    notifyListeners();
+  }
+
   void updateHintText(String value) {
     hintText = value;
     notifyListeners();
@@ -272,6 +301,21 @@ class ProviderData extends ChangeNotifier {
 
   void updateBorderColor(Color value) {
     borderColor = value;
+    notifyListeners();
+  }
+
+  void updateScheduleLoadingDate(value) {
+    scheduleLoadingDate = value;
+    notifyListeners();
+  }
+
+  void updateScheduleLoadingTime(value) {
+    scheduleLoadingTime = value;
+    notifyListeners();
+  }
+
+  void updateLoadTransporterList(value) {
+    loadTransporterList = value;
     notifyListeners();
   }
 
@@ -341,7 +385,8 @@ class ProviderData extends ChangeNotifier {
     loadingPointStatePostLoad = "";
     notifyListeners();
   }
-  void clearLoadingPointPostLoad2(){
+
+  void clearLoadingPointPostLoad2() {
     loadingPointPostLoad2 = "";
     loadingPointCityPostLoad2 = "";
     loadingPointStatePostLoad2 = "";
@@ -354,7 +399,8 @@ class ProviderData extends ChangeNotifier {
     unloadingPointStatePostLoad = "";
     notifyListeners();
   }
-  void clearUnloadingPointPostLoad2(){
+
+  void clearUnloadingPointPostLoad2() {
     unloadingPointPostLoad2 = "";
     unloadingPointCityPostLoad2 = "";
     unloadingPointStatePostLoad2 = "";
@@ -368,8 +414,9 @@ class ProviderData extends ChangeNotifier {
 
     notifyListeners();
   }
+
   void updateLoadingPointPostLoad2(
-  {required String place, required String city, required String state}){
+      {required String place, required String city, required String state}) {
     loadingPointPostLoad2 = place;
     loadingPointCityPostLoad2 = city;
     loadingPointStatePostLoad2 = state;
@@ -384,8 +431,9 @@ class ProviderData extends ChangeNotifier {
 
     notifyListeners();
   }
+
   void updateUnloadingPointPostLoad2(
-  {required String place, required String city, required String state}){
+      {required String place, required String city, required String state}) {
     unloadingPointPostLoad2 = place;
     unloadingPointCityPostLoad2 = city;
     unloadingPointStatePostLoad2 = state;
@@ -442,6 +490,11 @@ class ProviderData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updatePassingWeightMultipleValue(value) {
+    passingWeightMultipleValue = value;
+    notifyListeners();
+  }
+
   void updateTotalTyresValue(value) {
     totalTyresValue = value;
     notifyListeners();
@@ -486,11 +539,13 @@ class ProviderData extends ChangeNotifier {
     // productType = "Choose Product Type";
     truckTypeValue = '';
     passingWeightValue = 0;
+    passingWeightMultipleValue = [];
     totalTyresValue = 0;
     // truckNumber = 0;
     truckLengthValue = 0;
     // price = 0;
     driverIdValue = '';
+    comment = '';
     // unitValue = "";
     // resetUnitValue();
     notifyListeners();
@@ -500,12 +555,20 @@ class ProviderData extends ChangeNotifier {
     productType = "Choose Product Type";
     truckTypeValue = '';
     passingWeightValue = 0;
+    passingWeightMultipleValue = [];
     totalTyresValue = 0;
     truckNumber = 0;
     truckLengthValue = 0;
+    comment = '';
     price = 0;
     driverIdValue = '';
     unitValue = "";
+    scheduleLoadingTime = '';
+    scheduleLoadingDate = '';
+    biddingEndDate = null;
+    biddingEndTime = null;
+    loadTransporterList = [];
+    publishMethod = '';
     resetUnitValue();
     notifyListeners();
   }
@@ -517,7 +580,8 @@ class ProviderData extends ChangeNotifier {
     updateResetActive(false);
     notifyListeners();
   }
-  void resetPostLoadScreenMultiple(){
+
+  void resetPostLoadScreenMultiple() {
     clearLoadingPointPostLoad();
     clearUnloadingPointPostLoad();
     clearLoadingPointPostLoad2();
@@ -528,7 +592,7 @@ class ProviderData extends ChangeNotifier {
 
   void resetOnNewType() {
     passingWeightValue = 0;
-    totalTyresValue = 0;
+    passingWeightMultipleValue = [];
     truckLengthValue = 0;
     driverIdValue = '';
     truckNumber = 0;
@@ -747,12 +811,12 @@ class ProviderData extends ChangeNotifier {
 
   GoogleSignInAccount? get user => _user!;
 
-  Future googleLogin() async{
+  Future googleLogin() async {
     try {
       print("googleLogin called");
       final googleUser = await googleSignIn.signIn();
 
-      if(googleUser == null) return;
+      if (googleUser == null) return;
       _user = googleUser;
 
       final googleAuth = await googleUser.authentication;
@@ -765,7 +829,7 @@ class ProviderData extends ChangeNotifier {
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       notifyListeners();
-    } catch (e){
+    } catch (e) {
       print(e);
     }
   }

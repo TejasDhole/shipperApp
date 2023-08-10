@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -41,7 +43,7 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.fromLTRB(space_4, space_4, space_4, space_2),
+          padding: EdgeInsets.fromLTRB(0, space_4, space_4, space_2),
           child: Column(
             children: [
               (kIsWeb &&
@@ -100,37 +102,24 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                 padding: EdgeInsets.zero,
                 margin: EdgeInsets.only(top: 5, bottom: 5),
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                  Color.fromRGBO(21, 41, 104, 1),
-                  Color.fromRGBO(9, 183, 120, 1)
-                ])),
+                    gradient:
+                        LinearGradient(colors: [kLiveasyColor, truckGreen])),
               ),
-              Stack(
-                // alignment: Alignment.center,
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.75,
-                    child: PageView(
-                      controller: pageController,
-                      onPageChanged: (value) {
-                        setState(() {
-                          providerData.updateUpperNavigatorIndex(value);
-                        });
-                      },
-                      children: [
-                        MyLoadsScreen(),
-                        OngoingScreen(),
-                        DeliveredScreen(),
-                      ],
-                    ),
-                  ),
-                  // Positioned.fill(
-                  //   top: 550,
-                  //   child: Align(
-                  //       alignment: Alignment.center, child: PostButtonLoad()),
-                  // ),
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.75,
+                child: PageView(
+                  controller: pageController,
+                  onPageChanged: (value) {
+                    setState(() {
+                      providerData.updateUpperNavigatorIndex(value);
+                    });
+                  },
+                  children: [
+                    MyLoadsScreen(),
+                    OngoingScreen(),
+                    DeliveredScreen(),
+                  ],
+                ),
               ),
             ],
           ),

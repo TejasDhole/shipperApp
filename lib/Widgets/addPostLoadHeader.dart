@@ -38,13 +38,14 @@ class _AddPostLoadHeaderState extends State<AddPostLoadHeader> {
                     providerData.updateUpperNavigatorIndex2(0);
                   },
                   child: const Icon(Icons.arrow_back_ios_rounded),
-                )):const SizedBox(width: 0.5,),
+                )):const SizedBox(width: 2,),
             Text('postLoad'.tr,
                 // AppLocalizations.of(context)!.postLoad,
                 style: TextStyle(
-                  fontSize: size_10,
-                  fontWeight: mediumBoldWeight,
-                )),
+                    fontFamily: 'Montserrat',
+                    color: kLiveasyColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30),),
           ],
         ),
         widget.reset

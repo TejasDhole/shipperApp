@@ -20,7 +20,8 @@ import '../completedTextField.dart';
 class OkButtonCompletedDate extends StatelessWidget {
   CompletedDateController completedDateController =
       Get.put(CompletedDateController());
-  NavigationIndexController navigationIndexController = Get.put(NavigationIndexController());
+  NavigationIndexController navigationIndexController =
+      Get.put(NavigationIndexController());
   final String bookingId;
   OkButtonCompletedDate({Key? key, required this.bookingId}) : super(key: key);
   BookingApiCallsOrders bookingApiCallsOrders = BookingApiCallsOrders();
@@ -34,7 +35,7 @@ class OkButtonCompletedDate extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return LoadingAlertDialog();
+            return LoadingAlertDialog('');
           },
         );
       }

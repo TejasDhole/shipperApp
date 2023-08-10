@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
@@ -15,6 +16,7 @@ import '/controller/navigationIndexController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import '/models/popupModelForMyLoads.dart';
 import '/providerClass/providerData.dart';
+
 // import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 import '/screens/navigationScreen.dart';
 import '/variables/truckFilterVariables.dart';
@@ -71,47 +73,232 @@ class MyLoadsCard extends StatelessWidget {
       return Expanded(
         child: Row(
           children: [
+            SizedBox(
+              width: 5,
+            ),
             Expanded(
-                flex: 2,
+                flex: 3,
                 child: Center(
-                    child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          loadDetailsScreenModel.postLoadDate ?? 'Null',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: kLiveasyColor,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
-                        )))),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Text(
+                        '${loadDetailsScreenModel.scheduleLoadDate}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kLiveasyColor,
+                            fontSize: textFontSize,
+                            fontFamily: 'Montserrat'),
+                      ),
+                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                          ? SizedBox(
+                              height: 5,
+                            )
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                          ? Text(
+                              '${loadDetailsScreenModel.scheduleLoadTime}' ??
+                                  'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: truckGreen,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          : SizedBox(
+                              height: 0,
+                            )
+                    ]))),
             VerticalDivider(
               color: Colors.grey,
             ),
             Expanded(
                 flex: 5,
-                child: Center(
-                    child: Text(
-                  loadDetailsScreenModel.loadingPointCity ?? 'Null',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: kLiveasyColor,
-                      fontSize: textFontSize,
-                      fontFamily: 'Montserrat'),
-                ))),
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image(
+                              image: AssetImage((loadDetailsScreenModel
+                                          .loadingPointCity2 !=
+                                      'NA')
+                                  ? 'assets/icons/green_white_outline_circle.png'
+                                  : 'icons/greenFilledCircleIcon.png'),
+                              height: 11,
+                              width: 11,
+                              fit: BoxFit.cover,
+                              filterQuality: FilterQuality.high,
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              loadDetailsScreenModel.loadingPointCity ?? 'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kLiveasyColor,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          ],
+                        ),
+                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                            ? Container(
+                                padding: EdgeInsets.only(left: 4.5),
+                                height: 15,
+                                child: DottedLine(
+                                  alignment: WrapAlignment.center,
+                                  direction: Axis.vertical,
+                                  dashColor: kLiveasyColor,
+                                  dashGapColor: Colors.white,
+                                  lineThickness: 1.5,
+                                  dashLength: 3.5,
+                                  dashGapLength: 2.25,
+                                  lineLength: 15,
+                                  dashGapRadius: 0,
+                                ))
+                            : SizedBox(
+                                height: 0,
+                              ),
+                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image(
+                                    image: AssetImage(
+                                        'icons/greenFilledCircleIcon.png'),
+                                    height: 10,
+                                    width: 10,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                    alignment: Alignment.center,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    loadDetailsScreenModel.loadingPointCity2 ??
+                                        'Null',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: textFontSize,
+                                        fontFamily: 'Montserrat'),
+                                  )
+                                ],
+                              )
+                            : SizedBox(
+                                height: 0,
+                              )
+                      ],
+                    ),
+                  ),
+                )),
             VerticalDivider(
               color: Colors.grey,
             ),
             Expanded(
                 flex: 5,
-                child: Center(
-                    child: Text(
-                  loadDetailsScreenModel.unloadingPointCity ?? 'Null',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: kLiveasyColor,
-                      fontSize: textFontSize,
-                      fontFamily: 'Montserrat'),
-                ))),
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image(
+                              image: AssetImage((loadDetailsScreenModel
+                                          .unloadingPointCity2 !=
+                                      'NA')
+                                  ? 'assets/icons/red_white_outline_circle.png'
+                                  : 'icons/red_circle.png'),
+                              height: 11,
+                              width: 11,
+                              fit: BoxFit.cover,
+                              filterQuality: FilterQuality.high,
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              loadDetailsScreenModel.unloadingPointCity ??
+                                  'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kLiveasyColor,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          ],
+                        ),
+                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                            ? Container(
+                                padding: EdgeInsets.only(left: 5),
+                                height: 15,
+                                child: DottedLine(
+                                  alignment: WrapAlignment.center,
+                                  direction: Axis.vertical,
+                                  dashColor: kLiveasyColor,
+                                  dashGapColor: Colors.white,
+                                  lineThickness: 1.5,
+                                  dashLength: 3.5,
+                                  dashGapLength: 2.25,
+                                  lineLength: 15,
+                                  dashGapRadius: 0,
+                                ))
+                            : SizedBox(
+                                height: 0,
+                              ),
+                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image(
+                                    image: AssetImage('icons/red_circle.png'),
+                                    height: 10,
+                                    width: 10,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                    alignment: Alignment.center,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    loadDetailsScreenModel
+                                            .unloadingPointCity2 ??
+                                        'Null',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: textFontSize,
+                                        fontFamily: 'Montserrat'),
+                                  )
+                                ],
+                              )
+                            : SizedBox(
+                                height: 0,
+                              )
+                      ],
+                    ),
+                  ),
+                )),
             VerticalDivider(
               color: Colors.grey,
             ),
@@ -133,11 +320,11 @@ class MyLoadsCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '${loadDetailsScreenModel.noOfTyres}' ?? 'Null',
+                        '${loadDetailsScreenModel.noOfTyres} tyres' ?? 'Null',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: truckGreen,
-                            fontSize: 16,
+                            fontSize: textFontSize,
                             fontFamily: 'Montserrat'),
                       )
                     ]))),
@@ -162,11 +349,11 @@ class MyLoadsCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '${loadDetailsScreenModel.weight}' ?? 'Null',
+                        '${loadDetailsScreenModel.weight} tons' ?? 'Null',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: truckGreen,
-                            fontSize: 16,
+                            fontSize: textFontSize,
                             fontFamily: 'Montserrat'),
                       )
                     ]))),
@@ -178,18 +365,28 @@ class MyLoadsCard extends StatelessWidget {
               child: Center(
                   child: (loadDetailsScreenModel.status == 'EXPIRED')
                       ? null
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                              ViewBidsButton(
-                                loadId: loadDetailsScreenModel.loadId,
-                                loadingPointCity:
-                                    loadDetailsScreenModel.loadingPointCity,
-                                unloadingPointCity:
-                                    loadDetailsScreenModel.unloadingPointCity,
-                                screenSmall: small,
-                              ),
-                            ])),
+                      : (loadDetailsScreenModel.publishMethod != 'Bid')
+                          ? Text(
+                              '${loadDetailsScreenModel.publishMethod}' ??
+                                  'Null',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: kLiveasyColor,
+                                  fontSize: textFontSize,
+                                  fontFamily: 'Montserrat'),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  ViewBidsButton(
+                                    loadId: loadDetailsScreenModel.loadId,
+                                    loadingPointCity:
+                                        loadDetailsScreenModel.loadingPointCity,
+                                    unloadingPointCity: loadDetailsScreenModel
+                                        .unloadingPointCity,
+                                    screenSmall: small,
+                                  ),
+                                ])),
             ),
             VerticalDivider(
               color: Colors.grey,
@@ -409,7 +606,7 @@ class MyLoadsCard extends StatelessWidget {
         loadDetailsScreenModel.rate == "NA"
             ? providerData.updatePrice(0)
             : providerData.updatePrice(int.parse(loadDetailsScreenModel.rate!));
-        providerData.updateBookingDate(loadDetailsScreenModel.loadDate);
+        providerData.updateBookingDate(loadDetailsScreenModel.scheduleLoadDate);
 
         providerData.postLoadScreenOneButton();
         providerData.updateResetActive(true);

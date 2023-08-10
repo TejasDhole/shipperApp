@@ -8,7 +8,7 @@ class LoadingWidget extends StatelessWidget {
     return Container(
       child: Center(
           child: CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation<Color>(black),
+        valueColor: new AlwaysStoppedAnimation<Color>(kLiveasyColor),
       )),
     );
   }
