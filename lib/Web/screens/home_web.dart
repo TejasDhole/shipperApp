@@ -188,6 +188,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   width: 0.01,
                 )
               : Container(
+                
                   child: Stack(
                     children: [
                       Row(children: [
@@ -225,7 +226,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                   height: 20,
                                 ),
                                 SideExpandedItem(
-                                    title: "Account",
+                                    title: "Team",
                                     icon: AssetImage(
                                         'assets/images/shipper_web_account.png')),
                                 Expanded(
@@ -243,9 +244,9 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(
-                          width: 15,
-                        )
+                        // SizedBox(
+                        //   width: 5,
+                        // )
                       ]),
                       Positioned(
                         left: widthOfSideBar - 10,
@@ -255,7 +256,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                         height: 30,
                         width: 30,
                         child: Container(
-                          padding: EdgeInsets.all(0),
+                          //padding: EdgeInsets.all(0),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black, width: 1),
                               borderRadius: BorderRadius.circular(50),
@@ -294,7 +295,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     ],
                   ),
                 ),
+               
+                
           Expanded(
+            
             child: Container(
               child: Center(
                 child: screens[_index],
@@ -349,7 +353,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   LinearGradient(colors: [Colors.white, Colors.white]);
               _selectedIndex = 2;
               _index = 2;
-            } else if (title == "Account") {
+            } else if (title == "Team") {
               dashboardSelectedTabGradientColor =
                   LinearGradient(colors: [Colors.white, Colors.white]);
               myLoadsSelectedTabGradientColor =

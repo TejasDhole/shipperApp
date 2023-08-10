@@ -10,7 +10,8 @@ import '../../constants/screens.dart';
 //TODO: This is used to remove the employee/user from the company database.
 class RemoveEmployee extends StatefulWidget {
   final String employeeUid;
-  const RemoveEmployee({Key? key, required this.employeeUid}) : super(key: key);
+  final String employeeName;
+  const RemoveEmployee({Key? key, required this.employeeUid, required this.employeeName}) : super(key: key);
 
   @override
   State<RemoveEmployee> createState() => _RemoveEmployeeState();
@@ -21,7 +22,7 @@ class _RemoveEmployeeState extends State<RemoveEmployee> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text("Do you want to remove: ${widget.employeeUid}"),
+      content: Text("Do you want to remove ${widget.employeeName} ?"),
       actions: <Widget>[
         ElevatedButton(
           style: ElevatedButton.styleFrom(
