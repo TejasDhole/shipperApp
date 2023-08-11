@@ -133,7 +133,7 @@ class MyLoadsCard extends StatelessWidget {
                                           .loadingPointCity2 !=
                                       'NA')
                                   ? 'assets/icons/green_white_outline_circle.png'
-                                  : 'icons/greenFilledCircleIcon.png'),
+                                  : 'assets/icons/greenFilledCircleIcon.png'),
                               height: 11,
                               width: 11,
                               fit: BoxFit.cover,
@@ -177,7 +177,7 @@ class MyLoadsCard extends StatelessWidget {
                                 children: [
                                   Image(
                                     image: AssetImage(
-                                        'icons/greenFilledCircleIcon.png'),
+                                        'assets/icons/greenFilledCircleIcon.png'),
                                     height: 10,
                                     width: 10,
                                     fit: BoxFit.cover,
@@ -226,7 +226,7 @@ class MyLoadsCard extends StatelessWidget {
                                           .unloadingPointCity2 !=
                                       'NA')
                                   ? 'assets/icons/red_white_outline_circle.png'
-                                  : 'icons/red_circle.png'),
+                                  : 'assets/icons/red_circle.png'),
                               height: 11,
                               width: 11,
                               fit: BoxFit.cover,
@@ -270,7 +270,7 @@ class MyLoadsCard extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image(
-                                    image: AssetImage('icons/red_circle.png'),
+                                    image: AssetImage('assets/icons/red_circle.png'),
                                     height: 10,
                                     width: 10,
                                     fit: BoxFit.cover,
