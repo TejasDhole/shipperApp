@@ -58,7 +58,7 @@ Container LoadsTableHeader(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                   Image(
-                    image: AssetImage('icons/greenFilledCircleIcon.png'),
+                    image: AssetImage('assets/icons/greenFilledCircleIcon.png'),
                     height: 10,
                     width: 10,
                   ),
@@ -87,7 +87,7 @@ Container LoadsTableHeader(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                   Image(
-                    image: AssetImage('icons/red_circle.png'),
+                    image: AssetImage('assets/icons/red_circle.png'),
                     height: 10,
                     width: 10,
                   ),

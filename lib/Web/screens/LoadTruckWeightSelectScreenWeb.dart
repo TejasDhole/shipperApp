@@ -48,6 +48,9 @@ class _LoadTruckWeightSelectScreenWebState
 
     if (widget.maxWeight > widget.minWeight && widget.minWeight != 0.0) {
       createSlotFromWeightRange();
+      if(weightSlots[0][0] == 0 && weightSlots[0][1] == 0) {
+        weightSlots.removeAt(0);
+      }
     }
   }
 
@@ -103,12 +106,12 @@ class _LoadTruckWeightSelectScreenWebState
       return Container(
         padding: EdgeInsets.only(top: 10, bottom: 10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               key: GlobalObjectKey(e),
-              '${e[0]} - ${e[1]} tons',
+              (e.length == 1) ? '${e[0]} - ${e[0]} tons' : '${e[0]} - ${e[1]} tons',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: truckGreen,
@@ -123,22 +126,34 @@ class _LoadTruckWeightSelectScreenWebState
                   return CheckboxListTile(
                     contentPadding:
                         EdgeInsets.only(top: 5, bottom: 5, right: 10),
-                    value: (selectedWeight.contains('${e[0] + iterator}')
+                    value: (((e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator && selectedWeight.contains('${(e[0]+iterator).floor()}')))
                         ? true
-                        : false),
+                        : selectedWeight.contains('${e[0]+iterator}')?true:false),
                     onChanged: (value) {
                       setState(() {
                         if ((value ?? false) && selectedWeight.length < 5) {
-                          selectedWeight.add('${e[0] + iterator}');
+                          if( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator){
+                            selectedWeight.add('${(e[0]+iterator).floor()}');
+                          }
+                          else{
+                            selectedWeight.add('${e[0] + iterator}');
+                          }
                         } else {
-                          selectedWeight.remove('${e[0] + iterator}');
+                            if( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator){
+                              selectedWeight.remove('${(e[0]+iterator).floor()}');
+                            }
+                            else{
+                              selectedWeight.remove('${e[0] + iterator}');
+                            }
                         }
                         // check = value ?? false;
                       });
                     },
                     mouseCursor: SystemMouseCursors.click,
                     title: Text(
-                      '${e[0] + iterator} tons',
+                      ( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator)?
+                          '${e[1]} tons'
+                      :'${e[0] + iterator} tons',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           color: kLiveasyColor,
@@ -161,7 +176,7 @@ class _LoadTruckWeightSelectScreenWebState
                     height: 0,
                   );
                 },
-                itemCount: ((e[1] - e[0]) + 1).toInt())
+                itemCount: (e.length == 1)? (((e[0] - e[0]) + 1).toInt()):((e[1] - e[0]) + 1).ceil().toInt())
           ],
         ),
       );
@@ -193,7 +208,7 @@ class _LoadTruckWeightSelectScreenWebState
           ),
           onPressed: () {
             if (selectedWeight.isNotEmpty) {
-              List<int> sortedNumbers = selectedWeight.map(int.parse).toList()
+              List<double> sortedNumbers = selectedWeight.map(double.parse).toList()
                 ..sort();
               selectedWeight =
                   sortedNumbers.map((number) => number.toString()).toList();
@@ -258,7 +273,7 @@ class _LoadTruckWeightSelectScreenWebState
                             child: Center(
                                 child: Text(
                               (index < weightSlots.length)
-                                  ? '${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
+                                  ? (weightSlots[index].length == 1)?'${weightSlots[index][0]} - ${weightSlots[index][0]} tons':'${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
                                   : 'Other',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
@@ -286,6 +301,7 @@ class _LoadTruckWeightSelectScreenWebState
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: SingleChildScrollView(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: getLoadWeight(),
                             ),
                           )),

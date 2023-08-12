@@ -141,7 +141,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                 MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
           },
           child: SizedBox(
-            width: Responsive.isMobile(context) ? 10.w : 9.w,
             child: Row(
               children: [
                 const LiveasyLogoImage(),

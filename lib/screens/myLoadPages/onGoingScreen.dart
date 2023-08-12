@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
-import 'package:pagination_flutter/pagination.dart';
 import 'package:shipper_app/responsive.dart';
 import '../../Widgets/LoadsTableHeader.dart';
 import '/constants/colors.dart';
@@ -16,13 +15,14 @@ import '/widgets/onGoingCard.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class OngoingScreen extends StatefulWidget {
+  const OngoingScreen({super.key});
+
   @override
   _OngoingScreenState createState() => _OngoingScreenState();
 }
 
 class _OngoingScreenState extends State<OngoingScreen> {
   //Scroll Controller for Pagination
-  int selectedPage = 1;
   ScrollController scrollController = ScrollController();
 
   bool loading = true; //false
@@ -86,13 +86,13 @@ class _OngoingScreenState extends State<OngoingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height -
           kBottomNavigationBarHeight -
           space_8,
       child: loading
           ? OnGoingLoadingWidgets()
-          : modelList.length == 0
+          : modelList.isEmpty
               ? Container(
                   margin: EdgeInsets.only(top: 153),
                   child: Column(
@@ -111,8 +111,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
                     ],
                   ),
                 )
-              : modelList.length > 0
-                  ? RefreshIndicator(
+              : RefreshIndicator(
                       color: lightNavyBlue,
                       onRefresh: () {
                         setState(() {
@@ -122,121 +121,59 @@ class _OngoingScreenState extends State<OngoingScreen> {
                         return getDataByPostLoadIdOnGoing(0);
                       },
                       child: (kIsWeb && Responsive.isDesktop(context))
-                          ? Center(
-                              child: Card(
-                                margin: EdgeInsets.only(top: 20, bottom: 5),
-                                shadowColor: Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero),
-                                elevation: 10,
-                                child: Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      LoadsTableHeader(
-                                          loadingStatus: 'On-Going',
-                                          screenWidth: MediaQuery.of(context)
-                                              .size
-                                              .width),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Expanded(
-                                        flex: 4,
-                                        child: ListView.separated(
-                                          primary: false,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          // physics: const AlwaysScrollableScrollPhysics (),
-                                          scrollDirection: Axis.vertical,
-                                          padding:
-                                              EdgeInsets.only(bottom: space_15),
-                                          controller: scrollController,
-                                          itemCount: modelList.length,
-                                          itemBuilder: (context, index) => (index ==
-                                                  modelList
-                                                      .length) //removed -1 here
-                                              ? Visibility(
-                                                  visible: OngoingProgress,
-                                                  child:
-                                                      bottomProgressBarIndicatorWidget())
-                                              : Row(children: [
-                                                  OngoingCard(
-                                                    loadAllDataModel:
-                                                        modelList[index],
-                                                  ),
-                                                ]),
-                                          separatorBuilder: (context, index) =>
-                                              Divider(
-                                            thickness: 1,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            right: 10, top: 10, bottom: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Pagination(
-                                              numOfPages:
-                                                  (modelList.length / 15)
-                                                      .ceil(),
-                                              selectedPage: selectedPage,
-                                              pagesVisible: 1,
-                                              onPageChanged: (index) {
-                                                setState(() {
-                                                  selectedPage = index;
-                                                });
-                                              },
-                                              activeTextStyle: TextStyle(
-                                                  fontSize: 14,
-                                                  color: kLiveasyColor,
-                                                  fontFamily: 'Montserrat Bold',
-                                                  fontWeight: FontWeight.w700),
-                                              activeBtnStyle: ButtonStyle(
-                                                  iconColor:
-                                                      MaterialStatePropertyAll<
-                                                          Color>(kLiveasyColor),
-                                                  padding:
-                                                      MaterialStatePropertyAll<
-                                                              EdgeInsets>(
-                                                          EdgeInsets.all(10))),
-                                              nextIcon: Icon(
-                                                Icons.arrow_forward_ios_sharp,
-                                                weight: 100,
-                                                size: 25,
-                                              ),
-                                              previousIcon: Icon(
-                                                Icons.arrow_back_ios_sharp,
-                                                weight: 100,
-                                                size: 25,
-                                              ),
-                                              inactiveBtnStyle: ButtonStyle(
-                                                  iconColor:
-                                                      MaterialStatePropertyAll<
-                                                          Color>(Colors.grey),
-                                                  padding:
-                                                      MaterialStatePropertyAll<
-                                                              EdgeInsets>(
-                                                          EdgeInsets.all(10))),
-                                              inactiveTextStyle: TextStyle(
-                                                  fontSize: 14,
-                                                  color: kLiveasyColor,
-                                                  fontFamily: 'Montserrat Bold',
-                                                  fontWeight: FontWeight.w700),
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                          ? Card(
+                            margin: EdgeInsets.only(top: 20, bottom: 5),
+                            shadowColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero),
+                            elevation: 10,
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              children: [
+                                LoadsTableHeader(
+                                    loadingStatus: 'On-Going',
+                                    screenWidth: MediaQuery.of(context)
+                                        .size
+                                        .width),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: ListView.separated(
+                                    primary: false,
+                                    physics:
+                                        const BouncingScrollPhysics(),
+                                    // physics: const AlwaysScrollableScrollPhysics (),
+                                    scrollDirection: Axis.vertical,
+                                    padding:
+                                        EdgeInsets.only(bottom: space_15),
+                                    controller: scrollController,
+                                    itemCount: modelList.length,
+                                    itemBuilder: (context, index) => (index ==
+                                            modelList
+                                                .length) //removed -1 here
+                                        ? Visibility(
+                                            visible: OngoingProgress,
+                                            child:
+                                                bottomProgressBarIndicatorWidget())
+                                        : Row(children: [
+                                            OngoingCard(
+                                              loadAllDataModel:
+                                                  modelList[index],
+                                            ),
+                                          ]),
+                                    separatorBuilder: (context, index) =>
+                                        Divider(
+                                      thickness: 1,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
+                              ],
+                            ),
+                          )
                           : ListView.builder(
                               physics: BouncingScrollPhysics(),
                               padding: EdgeInsets.only(bottom: space_15),
@@ -254,7 +191,6 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                         : Container();
                               }),
                     )
-                  : Container(),
     );
   }
 } //class end
