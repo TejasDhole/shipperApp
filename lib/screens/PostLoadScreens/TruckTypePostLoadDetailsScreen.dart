@@ -25,14 +25,26 @@ class _TruckTypePostLoadDetailsScreenState
     'Flat Bed',
     'Trailer Body',
     'Standard Container',
-    'High-Cube Container'
+    'High-Cube Container',
+    'Tanker',
+    'Tipper',
+    'Bulker',
+    'LCV Open Body',
+    'LCV Container',
+    'Mini / Pickup Truck'
   ];
   List<String> truckImage = [
     'assets/images/truckTypeImage/open_body.png',
     'assets/images/truckTypeImage/flat_bed.png',
     'assets/images/truckTypeImage/trailer_body.png',
     'assets/images/truckTypeImage/standard_container.png',
-    'assets/images/truckTypeImage/high_cube_container.png'
+    'assets/images/truckTypeImage/high_cube_container.png',
+    'assets/images/truckTypeImage/tanker.png',
+    'assets/images/truckTypeImage/tipper.png',
+    'assets/images/truckTypeImage/bulker.png',
+    'assets/images/truckTypeImage/lcv_open_body.png',
+    'assets/images/truckTypeImage/lcv_open_container.png',
+    'assets/images/truckTypeImage/mini_pickup.png',
   ];
 
   //every inner list: 0th index is the minimum weight and 1th index is the max weight
@@ -42,7 +54,13 @@ class _TruckTypePostLoadDetailsScreenState
     [16, 43],
     [22, 43],
     [7.5, 30],
-    [7, 43]
+    [7, 43],
+    [8, 36],
+    [9, 30],
+    [21, 30],
+    [2.5, 7],
+    [6, 7],
+    [0.75, 2]
   ];
 
   List<String> truckTypeDescription = [
@@ -50,7 +68,13 @@ class _TruckTypePostLoadDetailsScreenState
     'Trucks with Flat bed',
     'Trailer Trucks with Open body',
     'Closed body Trucks',
-    'Trucks with high-cube Container'
+    'Trucks with high-cube Container',
+    'Truck with Tanker',
+    'Truck with Tipper',
+    'Truck with Bulker',
+    'Truck with LCV Open Body',
+    'Truck with LCV Container',
+    'Mine / Pickup Truck'
   ];
 
   TruckFilterVariablesForPostLoad truckFilterVariables =

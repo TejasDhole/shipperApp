@@ -20,7 +20,13 @@ class _TruckTypeWebWidgetState extends State<TruckTypeWebWidget> {
     'Flat Bed',
     'Trailer Body',
     'Standard Container',
-    'High-Cube Container'
+    'High-Cube Container',
+    'Tanker',
+    'Tipper',
+    'Bulker',
+    'LCV Open Body',
+    'LCV Container',
+    'Mini / Pickup Truck'
   ];
   String loadWeight = '';
   TextEditingController txtTruckTypeController = TextEditingController();
@@ -43,6 +49,7 @@ class _TruckTypeWebWidgetState extends State<TruckTypeWebWidget> {
     if (providerData.truckTypeValue != '' &&
         providerData.truckTypeValue != null &&
         loadWeight != '') {
+      print(providerData.truckTypeValue);
       txtTruckTypeController.text =
           '${truckName[truckFilterVariables.truckTypeValueList.indexOf(providerData.truckTypeValue)]} ; $loadWeight tons';
     }
