@@ -15,8 +15,6 @@ ShipperIdController shipperIdController = Get.put(ShipperIdController());
 class User {
   final String name;
   final String email;
-  // Add other properties as per your data model
-
   User({required this.name, required this.email});
 }
 
@@ -39,9 +37,6 @@ class User {
 //   }
 // }
 
-
-
-
 //TODO: This function is used to get the shipper Id of an employer from our firebase database
 //This function is called at the start of the application and also using isolated shipper id function.
 getRoleOfEmployee(String uid) async{
@@ -49,18 +44,10 @@ getRoleOfEmployee(String uid) async{
    // This is the path for owner's shipper ID
   if(snapshot.exists){
     shipperIdController.updateOwnerStatus(snapshot.value == 'owner');
-    print(snapshot.value);
+    //print(snapshot.value);
     
      // After getting the owner status we are updating the role status through out the app
   }else{
     debugPrint('Error in get role of employee function'); // If there is no data exist then we are using the user's shipper id only
   }
-
-  // final userData = await getUserData(uid);
-  // if(userData != null){
-  //   print('User Name: ${userData.name}');
-  //   print('User Email: ${userData.email}');
-  // }else{
-  //   print('User data not found in the databse.');
-  // }
 }

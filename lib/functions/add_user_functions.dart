@@ -59,14 +59,14 @@ class AddUserFunctions {
         .get(Uri.parse("$uidApiMail/$mail"), headers: <String, String>{
       'Content-Type': 'application/json; charset = UTF-8',
     });
-    print(mail);
-    print("API Response Body: ${response.body}");
+    debugPrint(mail);
+    debugPrint("API Response Body: ${response.body}");
 
     var jsonData;
 
     if (response.body.contains("{")) {
       jsonData = json.decode(response.body);
-      print("JSON Data: $jsonData");
+      debugPrint("JSON Data: $jsonData");
 
       if (jsonData != null && jsonData["transportererrorresponse"] != null) {
         var debugMessage = jsonData["transportererrorresponse"]["debugMessage"];
@@ -81,14 +81,8 @@ class AddUserFunctions {
       return "Invalid response from the API";
     }
     if (jsonData != null && jsonData["uid"] != null) {
-      // print(jsonData["uid"]);
-      // print(jsonData["name"]);
-      // print(jsonData["email"]);
-      // print(jsonData["status"]);
       return jsonData["uid"];
     }
-
-    // return null;
   }
 
   getUserByPhone(String phoneNumber) async {
@@ -108,30 +102,6 @@ class AddUserFunctions {
       return response.body;
     }
   }
-
-  // Future<void> addEmployeeToShipperApi(String email,Map<String, dynamic> employeeData) async {
-  //   try {
-  //     final String apiUrl = dotenv.get("shipperApiUrl");
-
-  //     final response = await http.post(Uri.parse(apiUrl),
-  //         headers: <String, String>{
-  //           'Content-Type': 'application/json; charset=UTF-8'
-  //         },
-  //         body: jsonEncode(<String, dynamic>{
-  //           'email': email,
-  //           'employeeData': employeeData,
-            
-  //         }));
-
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       print("Employee added to shipper API successfully");
-  //     } else {
-  //       print("Failed to add employee");
-  //     }
-  //   } catch (e) {
-  //     print("Error adding employee to Shipper API: $e");
-  //   }
-  // }
 
   //TODO: This function is called for adding the employee to the company's database so that he can use employer's shipper Id
   // addUser(String? phoneOrMail, String companyName, {required BuildContext context}) async {
@@ -204,99 +174,26 @@ class AddUserFunctions {
     } else if (phoneOrMail.toString().isEmail) {
       uid = await getUserByMail(phoneOrMail!);
       if (uid == null) {
-        print('data is not there');
+        debugPrint('data is not there');
       }
     }
 
     if (uid == null) {
       // Handle the case when the user is not found.
-      // try {
-      //   UserCredential userCredential =
-      //       await auth.createUserWithEmailAndPassword(
-      //     email: phoneOrMail!,
-      //     password: generateRandomPassword(), // Generate a random password
-      //   );
-      //   await auth.signOut();
-
-      //   String newUserUid = userCredential.user!.uid;
-      //   // User created successfully, proceed with adding the employee to the database.
-      //   final newEmployeeRef = ref.child(
-      //     "companies/${companyName.capitalizeFirst}/members",
-      //   ); // Database Path for Adding employee
-      //   await newEmployeeRef.update({
-      //     newUserUid: "employee",
-      //   });
-      //   print(newUserUid);
-      //   await addEmployeeToShipperApi(phoneOrMail);
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return completedDialog(
-      //         upperDialogText: 'congratulations'.tr,
-      //         lowerDialogText: 'You Have Successfully added employee',
-      //       );
-      //     },
-      //   );
-
-      //   Timer(
-      //     const Duration(seconds: 3),
-      //     () => {
-      //       kIsWeb
-      //           ? Navigator.pushReplacement(
-      //               context,
-      //               MaterialPageRoute(
-      //                 builder: (context) => HomeScreenWeb(
-      //                   index: screens.indexOf(employeeListScreen),
-      //                   selectedIndex:
-      //                       screens.indexOf(accountVerificationStatusScreen),
-      //                 ),
-      //               ),
-      //             )
-      //           : Get.offAll(() => NavigationScreen()),
-      //       navigationIndexController.updateIndex(2),
-      //     },
-      //   );
-      // } catch (e) {
-      //   print(e);
-      //   // Handle the error while signing in anonymously or adding the employee.
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return OrderFailedAlertDialog();
-      //     },
-      //   );
-      // }
-      //   //}
-      //   print(auth.currentUser!.displayName);
 
       alertDialog('Add Employee', 'Employee Not Found', context);
     }
     
     else {
-      //   if (uid == null) {
-      //   // Handle the case when uid is null
-      //   print('UID is null');
-      //   return;
-      // }
-      // Continue with the rest of the code as the uid is not null and not 'No user Found'.
-      // The user is found successfully, and you can proceed with the employee addition logic.
-      // For example, you can show the completedDialog and navigate to the appropriate screen.
+      
       final newEmployeeRef = ref.child(
           "companies/${companyName.capitalizeFirst}/members");
-          
-      //     Map<String, dynamic> employeeData = {
-      //   uid: {
-      //     "role": "employee", // Use the appropriate role value
-      //     "companyName": companyName,
-      //   }
-      // }; //Database Path for Adding employee
+
       newEmployeeRef.update({
         uid: "employee",
         companyName : ""
       }).then((value)
 
-      // await addEmployeeToShipperApi(phoneOrMail!, employeeData);
-      // newEmployeeRef.update(employeeData).then((value)
        {
         showDialog(
           context: context,
@@ -336,13 +233,4 @@ class AddUserFunctions {
       });
     }
   }
-
-  // String generateRandomPassword() {
-  //   const chars = "abcdefghijklmnopqrstuvwxyz0123456789_-&#@";
-  //   String password = "";
-  //   for (int i = 0; i < 12; i++) {
-  //     password += chars[Random().nextInt(chars.length)];
-  //   }
-  //   return password;
-  // }
 }

@@ -119,6 +119,7 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
                 //: Get.off(() => const EmployeeListRolesScreen())
               })
           .catchError((error) {
+            debugPrint("Error Occured");
             // Handle error if needed
           });
     }
