@@ -120,62 +120,6 @@ class EmployeeCard extends StatelessWidget {
             ],
             ),
             );
-
-          // Add the current employee data to the list
-         // addEmployee(employeeData);
-
-          // return Column(
-          //   children: [
-              
-          //    Container(
-          //     margin: EdgeInsets.only(bottom: space_2),
-              
-          //     child: Card(
-          //       color: Colors.white,
-          //       elevation: 3,
-          //       child: Container(
-          //         padding: EdgeInsets.only(
-          //             bottom: space_2, left: space_2, right: space_2),
-          //         child: DataTable(
-          //           columns: [],
-          //           rows: employeeDataList.map((data) {
-          //             return DataRow(cells: [
-          //               DataCell(Text(data['Name'],
-          //                   style: GoogleFonts.montserrat(
-          //                       color: darkBlueTextColor,
-          //                       fontWeight: FontWeight.w500))),
-          //               DataCell(Text(data['Email'],
-          //                   style: GoogleFonts.montserrat(
-          //                       color: darkBlueTextColor,
-          //                       fontWeight: FontWeight.w500))),
-          //               DataCell(
-          //                 CustomRole(
-          //                     selectedRole: data['Role'],
-          //                     roleChanged: (newRole) {
-          //                       Future.delayed(Duration.zero, () {
-          //                         updateUser(context, newRole);
-          //                       });
-          //                     }),
-          //               ),
-          //               DataCell(
-          //                 IconButton(
-          //                   icon: const Icon(Icons.delete),
-          //                   color: darkBlueTextColor,
-          //                   onPressed: () {
-          //                     // Call the delete function with employee data
-          //                     removeUser(context, data['Email']);
-          //                   },
-          //                 ),
-          //               ),
-          //             ]);
-          //           }).toList(),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          //   ]
-          // );
-          
         } else {
           return Container();
         }
@@ -242,11 +186,11 @@ class EmployeeCard extends StatelessWidget {
 
         return [name, email];
       } else {
-        print('Request failed with status: ${response.statusCode}.');
+        //print('Request failed with status: ${response.statusCode}.');
         return [];
       }
     } catch (e) {
-      print('Error fetching user data: $e');
+      //print('Error fetching user data: $e');
       return [];
     }
   }

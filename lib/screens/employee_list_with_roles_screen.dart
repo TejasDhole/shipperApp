@@ -106,7 +106,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                             children: [
                               
                               Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
+                                padding: const EdgeInsets.only(left: 1.0),
                                 child: Container(
                                     width: screenWidth * 0.3,
                                     

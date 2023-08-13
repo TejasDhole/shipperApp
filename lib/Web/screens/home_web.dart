@@ -276,7 +276,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                           ),
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 15,
                         )
                       ]),
                       Positioned(
