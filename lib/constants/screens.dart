@@ -31,14 +31,14 @@ List<Widget> screens = [
   webDashBoard,
   postLoadScreen,
   invoiceScreen,
-  accountVerificationStatusScreen,
+  employeeListScreen,
   helpScreen,
   contactUs,
   logoutDialogue,
 
   //
   postLoadNav,
-  employeeListScreen,
+  accountVerificationStatusScreen,
   addUser,
   postLoadScreenTwo,
   //

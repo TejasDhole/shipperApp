@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 
 Container AccountTableHeader(context) {
@@ -25,12 +26,12 @@ Container AccountTableHeader(context) {
 
   return Container(
     height: 50,
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         border: Border(
-            bottom: BorderSide(color: Color.fromARGB(255, 197, 195, 195), width: 1),
-            top: BorderSide(color: Color.fromARGB(255, 197, 195, 195), width: 1),
-            left: BorderSide(color: Color.fromARGB(255, 197, 195, 195), width: 1),
-            right: BorderSide(color: Color.fromARGB(255, 197, 195, 195), width: 1))),
+            bottom: BorderSide(color: greyShade, width: 1),
+            top: BorderSide(color: greyShade, width: 1),
+            left: BorderSide(color: greyShade, width: 1),
+            right: BorderSide(color: greyShade, width: 1))),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       //crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,11 +46,11 @@ Container AccountTableHeader(context) {
                           'Users',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Color.fromARGB(255, 135, 135, 135),
+                          color: sideBarTextColor,
                           fontSize: size_8,
                           fontFamily: 'Montserrat'),
                     )))),
-        VerticalDivider(color: Color.fromARGB(255, 197, 195, 195), thickness: 1),
+        const VerticalDivider(color: greyShade, thickness: 1),
 
         Expanded(
             flex: 5,
@@ -61,11 +62,11 @@ Container AccountTableHeader(context) {
                           'Email',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Color.fromARGB(255, 135, 135, 135),
+                          color: sideBarTextColor,
                           fontSize: size_8,
                           fontFamily: 'Montserrat'),
                     )))),
-        VerticalDivider(color: Color.fromARGB(255, 197, 195, 195), thickness: 1),
+        const VerticalDivider(color: greyShade, thickness: 1),
 
         Expanded(
             flex: 3,
@@ -77,13 +78,13 @@ Container AccountTableHeader(context) {
                           'Role',
                           
                       textAlign: TextAlign.center,
-                      selectionColor: Color.fromARGB(255, 135, 135, 135),
+                      selectionColor: sideBarTextColor,
                       style: TextStyle(
-                          color: Color.fromARGB(255, 135, 135, 135),
+                          color: sideBarTextColor,
                           fontSize: size_8,
                           fontFamily: 'Montserrat'),
                     )))),
-        VerticalDivider(color: Color.fromARGB(255, 197, 195, 195), thickness: 1),
+        const VerticalDivider(color: greyShade, thickness: 1),
 
         Expanded(
             flex: 3,

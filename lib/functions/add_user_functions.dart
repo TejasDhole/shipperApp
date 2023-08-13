@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shipper_app/functions/firebaseAuthentication/signIn.dart';
 import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/screens/accountScreens/accountVerificationStatusScreen.dart';
@@ -22,7 +24,7 @@ class AddUserFunctions {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
   NavigationIndexController navigationIndexController =
       Get.put(NavigationIndexController());
-      //bool isError = false; 
+  //bool isError = false;
 
   //TODO: The functions getUserByMail and getUserByPhone are used to get the uid of the required employee for adding him to the database.
   //TODO: These functions are called respectively whether employer given mailId or phone number of an employee.
@@ -52,43 +54,42 @@ class AddUserFunctions {
   // }
 
   getUserByMail(String mail) async {
-  final String uidApiMail = dotenv.get("getUidByMail");
-  http.Response response = await http.get(Uri.parse("$uidApiMail/$mail"), headers: <String, String>{
-      'Content-Type' : 'application/json; charset = UTF-8',
+    final String uidApiMail = dotenv.get("getUidByMail");
+    http.Response response = await http
+        .get(Uri.parse("$uidApiMail/$mail"), headers: <String, String>{
+      'Content-Type': 'application/json; charset = UTF-8',
     });
     print(mail);
-  print("API Response Body: ${response.body}");
+    print("API Response Body: ${response.body}");
 
-  var jsonData;
+    var jsonData;
 
-  if (response.body.contains("{")) {
-    jsonData = json.decode(response.body);
-    print("JSON Data: $jsonData");
+    if (response.body.contains("{")) {
+      jsonData = json.decode(response.body);
+      print("JSON Data: $jsonData");
 
-    if (jsonData != null && jsonData["transportererrorresponse"] != null) {
-      var debugMessage = jsonData["transportererrorresponse"]["debugMessage"];
-      if (debugMessage != null && debugMessage.contains("No user record found")) {
-        //isError = true;
-        return "No user Found";
+      if (jsonData != null && jsonData["transportererrorresponse"] != null) {
+        var debugMessage = jsonData["transportererrorresponse"]["debugMessage"];
+        if (debugMessage != null &&
+            debugMessage.contains("No user record found")) {
+          //isError = true;
+          return "No user Found";
+        }
       }
-      
+    } else {
+      //isError = true;
+      return "Invalid response from the API";
     }
-  } else {
-    //isError = true;
-    return "Invalid response from the API";
-  }
-  if (jsonData != null && jsonData["uid"] != null) {
-    print(jsonData["uid"]);
-    print(jsonData["name"]);
-    print(jsonData["email"]);
-    print(jsonData["status"]);
-    return jsonData["uid"];
-    
-  }
+    if (jsonData != null && jsonData["uid"] != null) {
+      // print(jsonData["uid"]);
+      // print(jsonData["name"]);
+      // print(jsonData["email"]);
+      // print(jsonData["status"]);
+      return jsonData["uid"];
+    }
 
-  // return null;
-}
-
+    // return null;
+  }
 
   getUserByPhone(String phoneNumber) async {
     final String uidApiPhone = dotenv.get("getUidByPhoneNumber");
@@ -99,7 +100,7 @@ class AddUserFunctions {
       if (jsonData["transportererrorresponse"]["debugMessage"]
           .toString()
           .contains("No user record found")) {
-            //isError = true;
+        //isError = true;
         return "No user Found";
       }
     } else {
@@ -107,6 +108,30 @@ class AddUserFunctions {
       return response.body;
     }
   }
+
+  // Future<void> addEmployeeToShipperApi(String email,Map<String, dynamic> employeeData) async {
+  //   try {
+  //     final String apiUrl = dotenv.get("shipperApiUrl");
+
+  //     final response = await http.post(Uri.parse(apiUrl),
+  //         headers: <String, String>{
+  //           'Content-Type': 'application/json; charset=UTF-8'
+  //         },
+  //         body: jsonEncode(<String, dynamic>{
+  //           'email': email,
+  //           'employeeData': employeeData,
+            
+  //         }));
+
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       print("Employee added to shipper API successfully");
+  //     } else {
+  //       print("Failed to add employee");
+  //     }
+  //   } catch (e) {
+  //     print("Error adding employee to Shipper API: $e");
+  //   }
+  // }
 
   //TODO: This function is called for adding the employee to the company's database so that he can use employer's shipper Id
   // addUser(String? phoneOrMail, String companyName, {required BuildContext context}) async {
@@ -168,128 +193,111 @@ class AddUserFunctions {
   //         });
   //   }
   // }
-  addUser(String? phoneOrMail, String companyName, {required BuildContext context, required String role}) async {
-  String? uid ; 
-  // Changed the type to String?
+  addUser(String? phoneOrMail, String companyName,
+      {required BuildContext context, required String role}) async {
+    String? uid;
+    // Changed the type to String?
 
-  if (phoneOrMail.toString().isNumericOnly && phoneOrMail.toString().length == 10) {
+    if (phoneOrMail.toString().isNumericOnly &&
+        phoneOrMail.toString().length == 10) {
       uid = await getUserByPhone(phoneOrMail!);
-    } else if(phoneOrMail.toString().isEmail){
+    } else if (phoneOrMail.toString().isEmail) {
       uid = await getUserByMail(phoneOrMail!);
-      if(uid==null){
+      if (uid == null) {
         print('data is not there');
-        
       }
     }
 
-  
+    if (uid == null) {
+      // Handle the case when the user is not found.
+      // try {
+      //   UserCredential userCredential =
+      //       await auth.createUserWithEmailAndPassword(
+      //     email: phoneOrMail!,
+      //     password: generateRandomPassword(), // Generate a random password
+      //   );
+      //   await auth.signOut();
 
-  if (uid == null ) {
-    // Handle the case when the user is not found.
+      //   String newUserUid = userCredential.user!.uid;
+      //   // User created successfully, proceed with adding the employee to the database.
+      //   final newEmployeeRef = ref.child(
+      //     "companies/${companyName.capitalizeFirst}/members",
+      //   ); // Database Path for Adding employee
+      //   await newEmployeeRef.update({
+      //     newUserUid: "employee",
+      //   });
+      //   print(newUserUid);
+      //   await addEmployeeToShipperApi(phoneOrMail);
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return completedDialog(
+      //         upperDialogText: 'congratulations'.tr,
+      //         lowerDialogText: 'You Have Successfully added employee',
+      //       );
+      //     },
+      //   );
 
-  //   FirebaseAuth auth = FirebaseAuth.instance;
+      //   Timer(
+      //     const Duration(seconds: 3),
+      //     () => {
+      //       kIsWeb
+      //           ? Navigator.pushReplacement(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) => HomeScreenWeb(
+      //                   index: screens.indexOf(employeeListScreen),
+      //                   selectedIndex:
+      //                       screens.indexOf(accountVerificationStatusScreen),
+      //                 ),
+      //               ),
+      //             )
+      //           : Get.offAll(() => NavigationScreen()),
+      //       navigationIndexController.updateIndex(2),
+      //     },
+      //   );
+      // } catch (e) {
+      //   print(e);
+      //   // Handle the error while signing in anonymously or adding the employee.
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return OrderFailedAlertDialog();
+      //     },
+      //   );
+      // }
+      //   //}
+      //   print(auth.currentUser!.displayName);
 
-  // // Check if user is already signed in anonymously
-  // //if (auth.currentUser == null || auth.currentUser!.isAnonymous) {
-  //   try {
-  //     // Sign in anonymously
-  //     UserCredential userCredential = await auth.signInAnonymously();
-  //     String uid = userCredential.user!.uid;
-  //     print('aayushi uid is there');
-  //     //print(auth.currentUser!.displayName);
-
-  //     // Add the employee to the database using newUserUid
-  //     final newEmployeeRef = ref.child(
-  //       "companies/${companyName.capitalizeFirst}/members",
-  //     ); // Database Path for Adding employee
-
-  //     await newEmployeeRef.update({
-  //       uid: "employee",
-  //     });
-
-  //     showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return completedDialog(
-  //           upperDialogText: 'congratulations'.tr,
-  //           lowerDialogText: 'You Have Successfully added employee',
-  //         );
-  //       },
-  //     );
-
-  //     Timer(
-  //       const Duration(seconds: 3),
-  //       () => {
-  //         kIsWeb
-  //           ? Navigator.pushReplacement(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => HomeScreenWeb(
-  //                   index: screens.indexOf(employeeListScreen),
-  //                   selectedIndex: screens.indexOf(accountVerificationStatusScreen),
-  //                 ),
-  //               ),
-  //             )
-  //           : Get.offAll(() => NavigationScreen()),
-  //         navigationIndexController.updateIndex(2),
-  //       },
-  //     );
-  //   } catch (e) {
-  //     print(e);
-  //     // Handle the error while signing in anonymously or adding the employee.
-  //     showDialog(
-        
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return OrderFailedAlertDialog();
-  //       },
-  //     );
-  //   }
-  //   //}
-  //   print(auth.currentUser!.displayName);
+      alertDialog('Add Employee', 'Employee Not Found', context);
+    }
     
-    alertDialog('Add Employee', 'Employee Not Found', context);
-  } 
-  // else if (uid == null ) {
-  //   // Handle the case when there's an issue with the API response or any other error.
-  //   print("API response issue or error occurred");
-  //   print("Response from getUserByMail: $uid");
-  //   // FirebaseAuth auth = FirebaseAuth.instance;
-  //   // try{
-  //   //   UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-  //   //     email: phoneOrMail, password: )
-  //   // }catch (e) {
-  //   // // Handle the error while creating the user or adding the employee.
-  //   // showDialog(
-  //   //   context: context,
-  //   //   builder: (BuildContext context) {
-  //   //     return OrderFailedAlertDialog();
-  //   //   },
-  //   // );
-
-  //   //print("Error creating user or updating employee: $e");
-
-    
-  
-  // } 
-  else {
-
-  //   if (uid == null) {
-  //   // Handle the case when uid is null
-  //   print('UID is null');
-  //   return;
-  // }
-    // Continue with the rest of the code as the uid is not null and not 'No user Found'.
-    // The user is found successfully, and you can proceed with the employee addition logic.
-    // For example, you can show the completedDialog and navigate to the appropriate screen.
-    final newEmployeeRef = ref.child(
-      "companies/${companyName.capitalizeFirst}/members"
-    ); //Database Path for Adding employee
-    newEmployeeRef
-      .update({
+    else {
+      //   if (uid == null) {
+      //   // Handle the case when uid is null
+      //   print('UID is null');
+      //   return;
+      // }
+      // Continue with the rest of the code as the uid is not null and not 'No user Found'.
+      // The user is found successfully, and you can proceed with the employee addition logic.
+      // For example, you can show the completedDialog and navigate to the appropriate screen.
+      final newEmployeeRef = ref.child(
+          "companies/${companyName.capitalizeFirst}/members");
+          
+      //     Map<String, dynamic> employeeData = {
+      //   uid: {
+      //     "role": "employee", // Use the appropriate role value
+      //     "companyName": companyName,
+      //   }
+      // }; //Database Path for Adding employee
+      newEmployeeRef.update({
         uid: "employee",
-      })
-      .then((value) {
+        companyName : ""
+      }).then((value)
+
+      // await addEmployeeToShipperApi(phoneOrMail!, employeeData);
+      // newEmployeeRef.update(employeeData).then((value)
+       {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -303,21 +311,21 @@ class AddUserFunctions {
           const Duration(seconds: 3),
           () => {
             kIsWeb
-              ? Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreenWeb(
-                      index: screens.indexOf(employeeListScreen),
-                      selectedIndex: screens.indexOf(accountVerificationStatusScreen),
+                ? Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreenWeb(
+                        index: screens.indexOf(employeeListScreen),
+                        selectedIndex:
+                            screens.indexOf(accountVerificationStatusScreen),
+                      ),
                     ),
-                  ),
-                )
-              : Get.offAll(() => NavigationScreen()),
+                  )
+                : Get.offAll(() => NavigationScreen()),
             navigationIndexController.updateIndex(2),
           },
         );
-      })
-      .catchError((error) {
+      }).catchError((error) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -326,7 +334,15 @@ class AddUserFunctions {
         );
         print("Error while updating employee: $error");
       });
+    }
   }
-}
 
+  // String generateRandomPassword() {
+  //   const chars = "abcdefghijklmnopqrstuvwxyz0123456789_-&#@";
+  //   String password = "";
+  //   for (int i = 0; i < 12; i++) {
+  //     password += chars[Random().nextInt(chars.length)];
+  //   }
+  //   return password;
+  // }
 }

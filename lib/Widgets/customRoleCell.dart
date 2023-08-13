@@ -21,7 +21,7 @@ class _CustomRoleState extends State<CustomRole> {
       alignment: Alignment.center,
       width: 250,
       decoration: BoxDecoration(
-      border: Border.all(color: Color.fromARGB(255, 197, 195, 195)),
+      border: Border.all(color: greyShade),
     ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(

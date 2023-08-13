@@ -32,23 +32,13 @@ class _AddUserState extends State<AddUser> {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      // title: Padding(
-      //   padding: const EdgeInsets.only(top: 16.0),
-      //   child: Text(
-      //     "Invite Member",
-      //     textAlign: TextAlign.center,
-      //     style: GoogleFonts.montserrat(
-      //         color: darkBlueTextColor,
-      //         fontWeight: FontWeight.w500,
-      //         fontSize: kIsWeb ? 4.75.sp : 16.sp),
-      //   ),
-      // ),
+      
       child: FractionallySizedBox(
         widthFactor: 0.5,
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.4,
+                maxHeight: MediaQuery.of(context).size.height * 0.45,
                 maxWidth: MediaQuery.of(context).size.width *
                     0.7 // Adjust the height as needed
                 ),
@@ -59,14 +49,7 @@ class _AddUserState extends State<AddUser> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   ListBody(
-                    children: <Widget>[
-                      // Text(
-                      //   "Invite Member",
-                      //   style: TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       color: darkBlueTextColor,
-                      //       fontSize: kIsWeb ? 3.5.sp : 12.5.sp),
-                      // ),
+                    children: <Widget>[  
                       Padding(
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
@@ -80,13 +63,13 @@ class _AddUserState extends State<AddUser> {
                       ),
 
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                            flex: 4,
+                            flex: 837,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 55.0, vertical: 30),
+                              padding: const EdgeInsets.only(
+                                  left: 54.0, top: 30,bottom:30),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: 'Email',
@@ -102,12 +85,7 @@ class _AddUserState extends State<AddUser> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  // if(value.toString().isEmpty){
-                                  //   setState(() {
-                                  //     isError = true;
-                                  //   });
-                                  //   return "Enter employee Mail Id";
-                                  // }
+                                  
                                   setState(() {
                                     isError = false;
                                   });
@@ -120,23 +98,25 @@ class _AddUserState extends State<AddUser> {
                             ),
                           ),
                           Expanded(
-                            flex: 1,
-                            child: Stack(children: [
+                            flex: 163,
+                            child:
                               Container(
+
+                                margin: EdgeInsets.only(left: 15,right:50.0),
                                   height: 50,
-                                  width: 50,
+                                  width: 30,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(2),
                                     color: darkBlueTextColor
                                   ),
-                                  ),
+                                  
                               // const Align(alignment: Alignment.center,
-                              //   child: 
-                              Padding(
+                                 child: 
+                              const Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Icon(size: 25,Icons.add, color: Colors.white),
-                              )
-                            ]),
+                              ),)
+                            
                           )
                         ],
                       ),
@@ -146,24 +126,6 @@ class _AddUserState extends State<AddUser> {
                       SizedBox(
                         height: 1.9.h,
                       ),
-                      // Text(
-                      //   "Role :",
-                      //   style: TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: kIsWeb ? 3.5.sp : 12.5.sp),
-                      // ),
-                      // SizedBox(
-                      //   width: 10.w,
-                      //   child: DropdownButton(
-                      //     value: selectedRole,
-                      //     items: _dropDownItem(),
-                      //     onChanged: (value) {
-                      //       setState(() {
-                      //         selectedRole = value!;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
 
                       Container(
                         height: 55,
@@ -208,54 +170,7 @@ class _AddUserState extends State<AddUser> {
           ),
         ),
       ),
-      //actions: <Widget>[
-      // Container(
-      //   width: 160,
-      //   child: ElevatedButton(
-      //     style: ElevatedButton.styleFrom(
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(5),
-      //       ),
-      //       backgroundColor: const Color(0xFF000066),
-      //     ),
-      //     onPressed: () async {
-      //       if (_formKey.currentState!.validate()) {
-      //         _formKey.currentState!.save();
-      //         await AddUserFunctions().addUser(
-      //             phoneOrMail, shipperIdController.companyName.value,
-      //             context: context, role: selectedRole);
-      //       }
-      //     },
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         Text('Send Invite',
-      //             style: GoogleFonts.montserrat(
-      //                 fontWeight: FontWeight.w600, fontSize: size_8)),
-      //         const Image(image: AssetImage('assets/icons/telegramicon.png')),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // ElevatedButton(
-      //     style: ElevatedButton.styleFrom(
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(25),
-      //       ),
-      //       backgroundColor: Colors.white,
-      //       // fixedSize: Size(28.w, 7.h),
-      //     ),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: const Text(
-      //       "Cancel",
-      //       style: TextStyle(
-      //         color: Color(0xFF000066),
-      //         fontWeight: FontWeight.bold,
-      //       ),
-      //     )),
-      //],
+      
     );
   }
 }

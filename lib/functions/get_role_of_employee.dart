@@ -41,18 +41,6 @@ class User {
 
 
 
-// void main() async {
-//   // Example usage: Fetch user data using UID
-//   const uid = 'http://13.235.32.114:9090/uid';
-//   final userData = await fetchUserData(uid);
-
-//   if (userData == null) {
-//     print('User data not found or error occurred.');
-//   }
-// }
-
-
-
 
 //TODO: This function is used to get the shipper Id of an employer from our firebase database
 //This function is called at the start of the application and also using isolated shipper id function.

@@ -172,28 +172,8 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                             ],
                           ),
                           AccountTableHeader(context),
-              //             ListView.builder(
-              //               shrinkWrap: true,
-              //               physics: const BouncingScrollPhysics(),
-              //               padding: EdgeInsets.only(bottom: space_15),
-              //               //controller: scrollController,
-              //               //itemCount: users.length,
-              //               itemCount: filteredUsers.length,
-              //               itemBuilder: (context, index) => (index ==
-              //                       filteredUsers.length) //removed -1 here
-              //                   ? Visibility(
-              //                       visible: bottomProgressLoad,
-              //                       child:
-              //                           const bottomProgressBarIndicatorWidget())
-              //                   : EmployeeCard(
-              //                       companyUsersModel: filteredUsers[index],
-              //                       name: filteredUsers[index].name, // Pass the name
-              // email: filteredUsers[index].email,
-              //                     ),
-              //             ),
 
               ListView.builder(
-
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
                           padding: EdgeInsets.only(bottom: space_15),
@@ -248,32 +228,5 @@ getCompanyEmployeeList() {
             }),
           });
 }
-
-
-  // Future<List<String?>> fetchUserData(String uid) async {
-  //   try {
-  //     final String uidApiEmail = dotenv.get("getUid");
-  //     final response = await http.get(
-  //       Uri.parse("$uidApiEmail/$uid"),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final jsonData = json.decode(response.body);
-  //       final email = jsonData['email'];
-  //       final name = jsonData['name'] ?? '';
-
-  //       return [name, email];
-  //     } else {
-  //       print('Request failed with status: ${response.statusCode}.');
-  //       return [];
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching user data: $e');
-  //     return [];
-  //   }
-  // }
 
 }
