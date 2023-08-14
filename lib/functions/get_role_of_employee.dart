@@ -1,8 +1,5 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -17,25 +14,6 @@ class User {
   final String email;
   User({required this.name, required this.email});
 }
-
-// Future<User?> getUserData(String uid) async  {
-//   try{
-//     final snapshot = await ref.child('users/$uid').get();
-//     if(snapshot.exists){
-//       final data = snapshot.value as Map<String, dynamic>;
-//       final user = User(
-//         name: data['name'] ?? '',
-//         email: data['email'] ?? '',
-//         );
-//         return user;
-//     }else{
-//       return null;
-//     }
-//   }catch (e) {
-//     print('Error fetching user data: $e');
-//     return null;
-//   }
-// }
 
 //TODO: This function is used to get the shipper Id of an employer from our firebase database
 //This function is called at the start of the application and also using isolated shipper id function.

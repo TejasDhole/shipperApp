@@ -29,30 +29,6 @@ class AddUserFunctions {
   //TODO: The functions getUserByMail and getUserByPhone are used to get the uid of the required employee for adding him to the database.
   //TODO: These functions are called respectively whether employer given mailId or phone number of an employee.
 
-  // getUserByMail(String mail) async {
-  //   final String uidApiMail = dotenv.get("getUidByMail");
-  //   http.Response response = await http.get(Uri.parse("$uidApiMail/$mail"));
-  //   if (response.body.contains("{")) {
-  //     var jsonData = json.decode(response.body);
-  //     print(jsonData);
-  //     // if (jsonData["transportererrorresponse"]["debugMessage"]
-  //     //     .toString()
-  //     //     .contains("No user record found")) {
-  //     //   return "No user Found";
-  //     // }
-  //     if (jsonData != null && jsonData["transportererrorresponse"] != null) {
-  //     var debugMessage = jsonData["transportererrorresponse"]["debugMessage"];
-  //     if (debugMessage != null && debugMessage.contains("No user record found")) {
-  //       return "No user Found";
-  //     }
-  //   }
-  //   } else {
-  //     //print('response.body');
-  //     return "Invalid response from the API";
-  //   }
-  //   return null;
-  // }
-
   getUserByMail(String mail) async {
     final String uidApiMail = dotenv.get("getUidByMail");
     http.Response response = await http
@@ -104,70 +80,10 @@ class AddUserFunctions {
   }
 
   //TODO: This function is called for adding the employee to the company's database so that he can use employer's shipper Id
-  // addUser(String? phoneOrMail, String companyName, {required BuildContext context}) async {
-  //   String uid = '';
-  //   //TODO: Before adding the user, we will look for him accordingly either by mail Id or mobile number of an employee
-  //   // And accordingly the functions are being called to get the uid for the required employee
-  //   if (phoneOrMail.toString().isNumericOnly && phoneOrMail.toString().length == 10) {
-  //     uid = await getUserByPhone(phoneOrMail!);
-  //   } else if(phoneOrMail.toString().isEmail){
-  //     uid = await getUserByMail(phoneOrMail!);
-  //   }
-  //   if (uid == "No user Found") {
-  //     alertDialog('Add Employee', 'Employee Not Found', context);
-  //   } else {
-  //     //TODO: When user is already log in, we can get his uid and we are adding it to the company's database
-  //     final newEmployeeRef = ref.child(
-  //         "companies/${companyName.capitalizeFirst}/members"); //Database Path for Adding employee
-  //     newEmployeeRef
-  //         .update({
-  //           uid: "employee",
-  //         })
-  //         .then((value) => {
-  //               showDialog(
-  //                 context: context,
-  //                 builder: (BuildContext context) {
-  //                   return completedDialog(
-  //                       upperDialogText: 'congratulations'.tr,
-  //                       lowerDialogText:
-  //                           'You Have Successfully added employee');
-  //                 },
-  //               ),
-  //               Timer(
-  //                   const Duration(seconds: 3),
-  //                   () => {
-  //                         kIsWeb
-  //                             ? Navigator.pushReplacement(
-  //                                 context,
-  //                                 MaterialPageRoute(
-  //                                     builder: (context) => HomeScreenWeb(
-  //                                           index: screens
-  //                                               .indexOf(employeeListScreen),
-  //                                           selectedIndex: screens.indexOf(
-  //                                               accountVerificationStatusScreen),
-  //                                         )))
-  //                             : Get.offAll(() => NavigationScreen()),
-  //                         navigationIndexController.updateIndex(2),
-  //                       }),
-  //               //  alertDialog("Added Employee","Employee Added Successfully",context)
-  //             })
-  //         .catchError((error) {
-  //           return showDialog(
-  //             context: context,
-  //             builder: (BuildContext context) {
-  //               return OrderFailedAlertDialog();
-  //             },
-  //           );
-  //           // return alertDialog("Error", "Try After Some Time", context);
-  //           // return alertDialog("Error", "$error", context);
-  //         });
-  //   }
-  // }
   addUser(String? phoneOrMail, String companyName,
       {required BuildContext context, required String role}) async {
     String? uid;
     // Changed the type to String?
-
     if (phoneOrMail.toString().isNumericOnly &&
         phoneOrMail.toString().length == 10) {
       uid = await getUserByPhone(phoneOrMail!);
@@ -180,20 +96,14 @@ class AddUserFunctions {
 
     if (uid == null) {
       // Handle the case when the user is not found.
-
       alertDialog('Add Employee', 'Employee Not Found', context);
-    }
-    
-    else {
-      
+    }else {  
       final newEmployeeRef = ref.child(
           "companies/${companyName.capitalizeFirst}/members");
-
       newEmployeeRef.update({
         uid: "employee",
         companyName : ""
       }).then((value)
-
        {
         showDialog(
           context: context,

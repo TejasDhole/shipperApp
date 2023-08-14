@@ -67,24 +67,20 @@ class _RemoveEmployeeState extends State<RemoveEmployee> {
               ),
                      ),
            ),
-        
-        
           Padding(
             padding: EdgeInsets.only(right: screenWidth*0.08,bottom: screenHeight * 0.09),
             child: Container(
               width : screenWidth*0.07,
-              
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     side: const BorderSide(
-                        color: okButtonColor, // Border color for Cancel button
-                        width: 2.0, // Border width
+                        color: okButtonColor, 
+                        width: 2.0, 
                       ),
                     backgroundColor: Colors.white,
-                    // fixedSize: Size(28.w, 7.h),
                   ),
                   onPressed: () {
                     Navigator.pop(context);

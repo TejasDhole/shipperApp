@@ -44,8 +44,11 @@ const Color textGreyColor = Color.fromARGB(255, 211, 202, 202);
 const Color sideBarTextColor = Color.fromARGB(255, 135, 135, 135);
 const Color deleteButtonColor = Color.fromARGB(255, 255, 77, 85);
 const okButtonColor = Color.fromARGB(255, 9, 183, 120);
+const diffDeleteButtonColor = Color.fromARGB(255, 237, 74, 74);
 const Color darkBlueTextColor = Color.fromARGB(255, 21, 41, 104);
 const Color formBackground = Color.fromARGB(255, 245, 246, 250);
+const Color teamBar = Color.fromARGB(255, 245, 247, 251);
+const Color searchBar = Color.fromARGB(255, 143, 143, 143);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 

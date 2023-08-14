@@ -38,8 +38,7 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
             Text("Are you sure you want to\nchange the role?",
                 textAlign: TextAlign.center,
             style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600, color: darkBlueTextColor)),
-            
+                fontWeight: FontWeight.w600, color: darkBlueTextColor)),          
           ],
         ),
       ),
@@ -52,8 +51,7 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                backgroundColor: const Color.fromARGB(255, 9, 183, 120),
-                
+                backgroundColor: okButtonColor,
               ),
             onPressed: () {
               _updateUserRole();
@@ -69,20 +67,18 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(
-                    color: Color.fromARGB(
-                        255, 237, 74, 74), // Border color for Cancel button
-                    width: 2.0, // Border width
+                    color: diffDeleteButtonColor,
+                    width: 2.0, 
                   ),
                 ),
                 backgroundColor: Colors.white,
-              ),
-              
+              ),        
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
             child: const Text("Cancel",
             style: TextStyle(
-                  color: Color.fromARGB(255, 237, 74, 74),
+                  color: diffDeleteButtonColor,
                   fontWeight: FontWeight.bold,
                 ),),
           ),
@@ -90,8 +86,6 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
       ],
     );
   }
-
-  
 
   void _updateUserRole() {
     if (widget.selectedRole != null && widget.selectedRole.isNotEmpty) {

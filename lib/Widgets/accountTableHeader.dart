@@ -34,16 +34,12 @@ Container AccountTableHeader(context) {
             right: BorderSide(color: greyShade, width: 1))),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      //crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
             flex: 4,
             child: Center(
                 child: Container(
-                    //padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      
-                          'Users',
+                    child: Text('Users',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: sideBarTextColor,
@@ -56,10 +52,7 @@ Container AccountTableHeader(context) {
             flex: 5,
             child: Center(
                 child: Container(
-                    //padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      
-                          'Email',
+                    child: Text('Email',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: sideBarTextColor,
@@ -72,11 +65,7 @@ Container AccountTableHeader(context) {
             flex: 3,
             child: Center(
                 child: Container(
-                    //padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      
-                          'Role',
-                          
+                    child: Text('Role',
                       textAlign: TextAlign.center,
                       selectionColor: sideBarTextColor,
                       style: TextStyle(
@@ -90,19 +79,13 @@ Container AccountTableHeader(context) {
             flex: 3,
             child: Center(
                 child: Container(
-                    //padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      
-                          'Delete',
+                    child: Text('Delete',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: size_8,
-                          color: Color.fromARGB(255, 135, 135, 135),
-                          
+                          color: sideBarTextColor, 
                           fontFamily: 'Montserrat'),
                     )))),
-       
-        
       ],
     ),
   );

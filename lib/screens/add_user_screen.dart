@@ -21,18 +21,11 @@ class _AddUserState extends State<AddUser> {
   bool isError = false;
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   String selectedRole = "employee";
-  // List<DropdownMenuItem<String>> _dropDownItem() {
-  //   List<String> roles = ['employee', 'owner'];
-  //   return roles
-  //       .map((value) => DropdownMenuItem(value: value, child: Text(value)))
-  //       .toList();
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      
       child: FractionallySizedBox(
         widthFactor: 0.5,
         child: SingleChildScrollView(
@@ -101,28 +94,22 @@ class _AddUserState extends State<AddUser> {
                             flex: 163,
                             child:
                               Container(
-
-                                margin: EdgeInsets.only(left: 15,right:50.0),
+                                margin: const EdgeInsets.only(left: 15,right:50.0),
                                   height: 50,
                                   width: 30,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(2),
                                     color: darkBlueTextColor
                                   ),
-                                  
-                              // const Align(alignment: Alignment.center,
                                  child: 
                               const Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding: EdgeInsets.all(12.0),
                                 child: Icon(size: 25,Icons.add, color: Colors.white),
                               ),)
                             
                           )
                         ],
                       ),
-
-                      //   ],
-                      // ),
                       SizedBox(
                         height: 1.9.h,
                       ),
@@ -169,8 +156,7 @@ class _AddUserState extends State<AddUser> {
             ),
           ),
         ),
-      ),
-      
+      ),      
     );
   }
 }

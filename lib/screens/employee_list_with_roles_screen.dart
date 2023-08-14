@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -86,8 +85,8 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 245, 247, 251)),
+                              decoration: const BoxDecoration(
+                                  color: teamBar),
                               height: 90,
                               width: screenWidth,
                               child: Padding(
@@ -116,12 +115,10 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                                           hintText: 'Search',
                                           hintStyle: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w400,
-                                              color: const Color.fromARGB(
-                                                  255, 143, 143, 143)),
+                                              color: searchBar),
                                           border: const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 197, 195, 195)),
+                                                  color: greyShade),
                                               borderRadius:
                                                   BorderRadius.all(Radius.zero)),
                                           suffixIcon: const Icon(Icons.search)),
@@ -177,7 +174,6 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
                           padding: EdgeInsets.only(bottom: space_15),
-                          //controller: scrollController,
                           itemCount: users.length,
                           itemBuilder: (context, index) => (index ==
                                   users.length) //removed -1 here
@@ -195,14 +191,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
     );
   }
 
-  // void filterUsers(String query) {
-  //   setState(() {
-  //     filteredUsers = users.where((user) => user.name.toLowerCase().contains(query.toLowerCase())).toList();
-  //   });
-  // }
-
   //TODO: This function is used get all the list of employees who are added to company database
-  
 
 getCompanyEmployeeList() {
   if (mounted) {
@@ -213,9 +202,7 @@ getCompanyEmployeeList() {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference ref = database.ref();
   late Map<dynamic, dynamic> values;
-  ref
-      .child(
-          "companies/${shipperIdController.companyName.value.capitalizeFirst}/members")
+  ref.child("companies/${shipperIdController.companyName.value.capitalizeFirst}/members")
       .get()
       .then((DataSnapshot snapshot) => {
             values = snapshot.value as Map<dynamic, dynamic>,
@@ -228,5 +215,4 @@ getCompanyEmployeeList() {
             }),
           });
 }
-
 }
