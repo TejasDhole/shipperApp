@@ -9,6 +9,12 @@ FirebaseDatabase database = FirebaseDatabase.instance;
 DatabaseReference ref = database.ref();
 ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
+class User {
+  final String name;
+  final String email;
+  User({required this.name, required this.email});
+}
+
 //TODO: This function is used to get the shipper Id of an employer from our firebase database
 //This function is called at the start of the application and also using isolated shipper id function.
 getRoleOfEmployee(String uid) async{
@@ -16,7 +22,7 @@ getRoleOfEmployee(String uid) async{
    // This is the path for owner's shipper ID
   if(snapshot.exists){
     shipperIdController.updateOwnerStatus(snapshot.value == 'owner');
-    print(snapshot.value);
+    //print(snapshot.value);
     
      // After getting the owner status we are updating the role status through out the app
   }else{

@@ -51,46 +51,46 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       widthOfSideBar = 110;
     }
     if (_selectedIndex == 0) {
-      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+      dashboardSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       dashboardSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+         const  LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 1) {
-      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+      myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       myLoadsSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor = LinearGradient(colors: [
+      invoiceSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       invoiceSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor = LinearGradient(colors: [
+      accountSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       accountSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     liveasySelectedTabGradientColor =
-        LinearGradient(colors: [white, white]);
+        const LinearGradient(colors: [white, white]);
 
     isolatedShipperGetData();
   }
@@ -219,17 +219,18 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   width: 0.01,
                 )
               : Container(
+                
                   child: Stack(
                     children: [
                       Row(children: [
                         Card(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.zero)),
                           elevation: 5,
                           shadowColor: Colors.grey,
                           child: Container(
                             padding:
-                                EdgeInsets.only(left: 20, right: 20, top: 100),
+                                const EdgeInsets.only(left: 20, right: 20, top: 100),
                             height: MediaQuery.of(context).size.height,
                             width: widthOfSideBar,
                             child: Column(
@@ -238,7 +239,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                     title: "Dashboard",
                                     icon: AssetImage(
                                         'assets/images/shipper_web_dashboard.png')),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 SideExpandedItem(
@@ -256,7 +257,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                   height: 20,
                                 ),
                                 SideExpandedItem(
-                                    title: "Account",
+                                    title: "Team",
                                     icon: AssetImage(
                                         'assets/images/shipper_web_account.png')),
                                 Expanded(
@@ -286,7 +287,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                         height: 30,
                         width: 30,
                         child: Container(
-                          padding: EdgeInsets.all(0),
+                          //padding: EdgeInsets.all(0),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black, width: 1),
                               borderRadius: BorderRadius.circular(50),
@@ -309,13 +310,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                 (expandMode)
                                     ? Icons.arrow_back_ios_rounded
                                     : Icons.arrow_forward_ios_rounded,
-                                color: Color.fromRGBO(21, 41, 104, 1),
+                                color: darkBlueTextColor,
                                 size: 20),
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll<Color>(white),
+                                  const MaterialStatePropertyAll<Color>(white),
                               side: MaterialStateProperty.all(
-                                BorderSide(width: 1, color: Colors.black),
+                               const BorderSide(width: 1, color: Colors.black),
                               ),
                             ),
                             hoverColor: Colors.transparent,
@@ -325,7 +326,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     ],
                   ),
                 ),
+               
+                
           Expanded(
+            
             child: Container(
               child: Center(
                 child:
@@ -340,103 +344,117 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   InkWell SideExpandedItem({required String title, required AssetImage icon}) {
     if (_selectedIndex == 0) {
-      dashboardSelectedTabGradientColor = LinearGradient(colors: [
+      dashboardSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else{
       dashboardSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 1) {
-      myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+      myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       myLoadsSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor = LinearGradient(colors: [
+      invoiceSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       invoiceSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor = LinearGradient(colors: [
+      accountSelectedTabGradientColor = const LinearGradient(colors: [
         sideNavItemSelectedColor,
         transparent
       ]);
     } else {
       accountSelectedTabGradientColor =
-          LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     liveasySelectedTabGradientColor =
-        LinearGradient(colors: [white, white]);
+       const LinearGradient(colors: [white, white]);
 
     return InkWell(
         onTap: () {
           setState(() {
             if (title == "Dashboard") {
-              dashboardSelectedTabGradientColor = LinearGradient(colors: [
+              dashboardSelectedTabGradientColor = const LinearGradient(colors: [
                 sideNavItemSelectedColor,
                 transparent
               ]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               _selectedIndex = 0;
               _index = 0;
             } else if (title == "My Loads") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
-              myLoadsSelectedTabGradientColor = LinearGradient(colors: [
+                  const LinearGradient(colors: [white, white]);
+              myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
                 sideNavItemSelectedColor,
                 transparent
               ]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               _selectedIndex = 1;
               _index = 1;
             } else if (title == "Invoice") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
-              invoiceSelectedTabGradientColor = LinearGradient(colors: [
+                  const LinearGradient(colors: [white, white]);
+              invoiceSelectedTabGradientColor = const LinearGradient(colors: [
                 sideNavItemSelectedColor,
                 transparent
               ]);
               accountSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                 const LinearGradient(colors: [white, white]);
               _selectedIndex = 2;
               _index = 2;
-            } else if (title == "Account") {
+            } else if (title == "Team") {
               dashboardSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
-                  LinearGradient(colors: [white, white]);
-              accountSelectedTabGradientColor = LinearGradient(colors: [
+                  const LinearGradient(colors: [white, white]);
+              accountSelectedTabGradientColor = const LinearGradient(colors: [
                 sideNavItemSelectedColor,
                 transparent
               ]);
               _selectedIndex = 3;
               _index = 3;
             }
+            // else if (title == "Transporter") {
+            //   dashboardSelectedTabGradientColor =
+            //       const LinearGradient(colors: [white, white]);
+            //   myLoadsSelectedTabGradientColor =
+            //       const LinearGradient(colors: [white, white]);
+            //   invoiceSelectedTabGradientColor =
+            //       const LinearGradient(colors: [white, white]);
+            //   accountSelectedTabGradientColor = const LinearGradient(colors: [
+            //     sideNavItemSelectedColor,
+            //     transparent
+            //   ]);
+            //   _selectedIndex = 4;
+            //   _index = 11;
+            // }
           });
         },
         child: Container(
@@ -455,7 +473,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
             child: Row(
               children: [
                 Image(image: icon, filterQuality: FilterQuality.high),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Visibility(
@@ -463,18 +481,18 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     child: (title == "Liveasy")
                         ? Text(
                             title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: "Montserrat Bold",
-                                color: Color.fromRGBO(21, 41, 104, 1)),
+                                color: darkBlueTextColor),
                           )
                         : Text(
                             title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20,
                                 fontFamily: "Montserrat",
-                                color: Color.fromRGBO(21, 41, 104, 1)),
+                                color: darkBlueTextColor),
                           ))
               ],
             )));

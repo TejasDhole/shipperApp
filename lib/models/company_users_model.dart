@@ -2,6 +2,5 @@
 class CompanyUsers{
   final String uid;
   final String role;
-
-  CompanyUsers({required this.uid,required this.role});
+  CompanyUsers( {required this.uid,required this.role});
 }
