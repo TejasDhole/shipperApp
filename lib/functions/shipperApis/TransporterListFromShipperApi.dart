@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -22,7 +20,7 @@ class TransporterListFromShipperApi {
         },
       );
 
-      if (response.statusCode == HttpStatus.ok) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         var body = jsonDecode(response.body);
         var transporterList = body['transporterList'];
         return transporterList;
