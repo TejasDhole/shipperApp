@@ -51,9 +51,9 @@ class _RemoveEmployeeState extends State<RemoveEmployee> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomeScreenWeb(
-                                        index: screens.indexOf(accountVerificationStatusScreen),
+                                        index: screens.indexOf(employeeListScreen),
                                         selectedIndex:
-                                            screens.indexOf(accountVerificationStatusScreen),
+                                            screens.indexOf(employeeListScreen),
                                       )))
                           : Get.off(() => const EmployeeListRolesScreen())
                     });

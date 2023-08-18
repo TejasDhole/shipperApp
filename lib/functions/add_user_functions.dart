@@ -102,7 +102,6 @@ class AddUserFunctions {
           "companies/${companyName.capitalizeFirst}/members");
       newEmployeeRef.update({
         uid: "employee",
-        companyName : ""
       }).then((value)
        {
         showDialog(
