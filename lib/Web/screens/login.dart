@@ -62,7 +62,6 @@ class _LoginWebState extends State<LoginWeb> {
                 Expanded(
                   child: Container(
                     color: formBackground,
-                   
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,7 +70,8 @@ class _LoginWebState extends State<LoginWeb> {
                           key: _formKey,
                           child: LayoutBuilder(builder: (context, constraints) {
                             double maxWidth = kIsWeb ? 55.w : 40.w;
-                            double containerHeight = isError ? 50.h : screenHeight * 1;
+                            double containerHeight =
+                                isError ? 50.h : screenHeight * 1;
                             return Container(
                               //width: MediaQuery.of(context).size.width,
                               width: maxWidth,
@@ -95,7 +95,8 @@ class _LoginWebState extends State<LoginWeb> {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(left: 10.w, top: 5.h),
+                                        padding: EdgeInsets.only(
+                                            left: 10.w, top: 5.h),
                                         child: Text(
                                           'Email Address',
                                           style: GoogleFonts.montserrat(
@@ -118,7 +119,8 @@ class _LoginWebState extends State<LoginWeb> {
                                         autofillHints: autofillHints,
                                         decoration: InputDecoration(
                                           hintStyle: TextStyle(
-                                              decoration: TextDecoration.underline,
+                                              decoration:
+                                                  TextDecoration.underline,
                                               decorationColor: greyShade,
                                               fontSize: 2.h,
                                               color: hintTextColor),
@@ -179,22 +181,29 @@ class _LoginWebState extends State<LoginWeb> {
                                       color: white,
                                       child: TextFormField(
                                         obscureText: passwordVisible,
-                                        textAlignVertical: TextAlignVertical.center,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
                                         decoration: InputDecoration(
                                           hintStyle: GoogleFonts.roboto(
                                               fontSize: 2.h,
                                               fontWeight: FontWeight.w600,
                                               color: greyShade),
                                           hintText: '***********',
-                                          contentPadding: EdgeInsets.only(left: 3.h),
+                                          contentPadding:
+                                              EdgeInsets.only(left: 3.h),
                                           border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(5)),),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                          ),
                                           suffixIcon: IconButton(
                                             color: greyShade,
-                                            icon: Icon(passwordVisible ? Icons.visibility_off : Icons.visibility),
+                                            icon: Icon(passwordVisible
+                                                ? Icons.visibility_off
+                                                : Icons.visibility),
                                             onPressed: () {
                                               setState(() {
-                                                passwordVisible = !passwordVisible;
+                                                passwordVisible =
+                                                    !passwordVisible;
                                               });
                                             },
                                           ),
@@ -223,45 +232,56 @@ class _LoginWebState extends State<LoginWeb> {
                                       ),
                                     ),
                                   ),
-                                  
+
                                   //TODO : Sign In button
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 7.w, top: 5.h, right: 4.w),
-                                    child: ConfirmButton(text: 'Sign in', 
-                                    onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          _formKey.currentState!.save();
-                                          try {
-                                            UserCredential firebaseUser = await signIn(email, password, context);
-                                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                                            if (isChecked) {
-                                              prefs.setString('uid',firebaseUser.user!.uid);
+                                      padding: EdgeInsets.only(
+                                          left: 7.w, top: 5.h, right: 4.w),
+                                      child: ConfirmButton(
+                                        text: 'Sign in',
+                                        onPressed: () async {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _formKey.currentState!.save();
+                                            try {
+                                              UserCredential firebaseUser =
+                                                  await signIn(
+                                                      email, password, context);
+                                              SharedPreferences prefs =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                              if (isChecked) {
+                                                prefs.setString('uid',
+                                                    firebaseUser.user!.uid);
+                                              }
+                                              if (firebaseUser
+                                                      .user!.displayName ==
+                                                  null) {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const CompanyDetails()));
+                                              } else if (firebaseUser
+                                                  .user!.emailVerified) {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HomeScreenWeb()));
+                                              } else {
+                                                alertDialog(
+                                                    "Verify Your Mail",
+                                                    "Please verify your \n mail id to continue",
+                                                    context);
+                                                // firebaseUser.user!.sendEmailVerification();
+                                              }
+                                            } catch (e) {
+                                              log('in sign in button catch--->$e');
                                             }
-                                            if (firebaseUser.user!.displayName == null) {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const CompanyDetails()));
-                                            } else if (firebaseUser.user!.emailVerified) {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const HomeScreenWeb()));
-                                            } else {
-                                              alertDialog(
-                                                  "Verify Your Mail", "Please verify your \n mail id to continue", context);
-                                              // firebaseUser.user!.sendEmailVerification();
-                                            }
-                                          } catch (e) {
-                                            log('in sign in button catch--->$e');
                                           }
-                                        }
-                                      },
-                                    )
-                                  ),
+                                        },
+                                      )),
 
                                   //Forget Password
                                   Padding(
@@ -281,7 +301,8 @@ class _LoginWebState extends State<LoginWeb> {
                                     height: space_4,
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.only(left: 140, right: 100),
+                                    padding: const EdgeInsets.only(
+                                        left: 140, right: 100),
                                     child: Row(
                                       children: [
                                         Expanded(
@@ -317,22 +338,32 @@ class _LoginWebState extends State<LoginWeb> {
                                         left: 10.w, right: 7.w, top: 6.h),
                                     decoration: BoxDecoration(
                                       color: widgetBackGroundColor,
-                                      borderRadius: BorderRadius.circular(radius_1),
+                                      borderRadius:
+                                          BorderRadius.circular(radius_1),
                                     ),
                                     child: SignUpWithGoogleButton(
                                       onPressed: () async {
                                         try {
-                                          UserCredential firebaseUser = await signInWithGoogle();
-                                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                                          prefs.setString('uid', firebaseUser.user!.uid);
+                                          UserCredential firebaseUser =
+                                              await signInWithGoogle();
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          prefs.setString(
+                                              'uid', firebaseUser.user!.uid);
                                           prefs.setBool('isGoogleLogin', true);
                                           getShipperIdFromCompanyDatabase();
                                           if (!mounted) return;
-                                          ShipperModel shipperModel = await shipperApiCalls
-                                                  .getShipperCompanyDetailsByEmail(firebaseUser.user!.email.toString());
+                                          ShipperModel shipperModel =
+                                              await shipperApiCalls
+                                                  .getShipperCompanyDetailsByEmail(
+                                                      firebaseUser.user!.email
+                                                          .toString());
 
-                                          if (shipperModel.companyName == "Na" &&
-                                              shipperModel.shipperName == "Na") {
+                                          if (shipperModel.companyName ==
+                                                  "Na" &&
+                                              shipperModel.shipperName ==
+                                                  "Na") {
                                             //firebaseUser.user!.displayName == null --> previous condition
                                             Navigator.pushReplacement(
                                                 context,
@@ -341,7 +372,9 @@ class _LoginWebState extends State<LoginWeb> {
                                                         const CompanyDetails()));
                                           } else {
                                             runShipperApiPost(
-                                                emailId: firebaseUser.user!.email.toString());
+                                                emailId: firebaseUser
+                                                    .user!.email
+                                                    .toString());
                                             Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
