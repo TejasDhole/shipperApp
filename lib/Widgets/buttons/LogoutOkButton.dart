@@ -20,33 +20,39 @@ class LogoutOkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async{
-        SharedPreferences prefs =await SharedPreferences.getInstance();
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('uid');
         sidstorage.erase();
         Get.deleteAll(force: true);
-        if(prefs.getBool('isGoogleLogin')==true) {
+        if (prefs.getBool('isGoogleLogin') == true) {
           await GoogleSignIn().disconnect();
         }
         prefs.clear();
         FirebaseAuth.instance.signOut().then((value) =>
             sidstorage.erase().then((value) => print('Storage is erased')));
-        kIsWeb ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginWeb())) : Get.offAll(LoginScreenUsingMail());
+        kIsWeb
+            ? Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginWeb()))
+            : Get.offAll(LoginScreenUsingMail());
       },
       child: Container(
         height: 31,
         width: 80,
-        decoration: BoxDecoration(boxShadow: const [
-          BoxShadow(
-            color: darkShadow,
-            offset: Offset(0, 0),
-            blurRadius: 16,
-            spreadRadius: 0,
-          )
-        ], color: darkBlueColor, borderRadius: BorderRadius.circular(radius_4)),
+        decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: darkShadow,
+                offset: Offset(0, 0),
+                blurRadius: 16,
+                spreadRadius: 0,
+              )
+            ],
+            color: declineButtonRed,
+            borderRadius: BorderRadius.circular(radius_1)),
         child: Center(
           child: Text(
-            "ok".tr,
+            "Ok".tr,
             style: TextStyle(
                 color: backgroundColor,
                 fontWeight: mediumBoldWeight,

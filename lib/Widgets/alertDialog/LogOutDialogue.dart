@@ -12,21 +12,37 @@ class LogoutDialogue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(4),
         ),
-        title: Text('logoutDialog'.tr,
-            // "Are you sure? You want to logout" ,
-            style: TextStyle(
-                color: liveasyBlackColor,
-                fontSize: size_9,
-                
-                fontWeight: regularWeight)),
+        elevation: 50,
+        titlePadding: EdgeInsets.only(top: space_17),
+        title: Center(
+          child: Text('Are you sure you want to \n Signout ?'.tr,
+              // "Are you sure you want to signout" ,
+              style: TextStyle(
+                  color: bidBackground,
+                  fontSize: size_9,
+                  fontWeight: mediumBoldWeight),
+              textAlign: TextAlign.center),
+        ),
         actions: <Widget>[
+          Container(
+            width: screenWidth * 0.1,
+            height: screenHeight * 0.17,
+          ),
           LogoutOkButton(),
+          SizedBox(
+            width: space_2,
+          ),
           CancelLogoutButton(),
-          SizedBox(height: space_3)
+          SizedBox(
+            width: space_25,
+            height: space_10,
+          )
         ]);
   }
 }
