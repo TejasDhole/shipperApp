@@ -29,7 +29,9 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       myLoadsSelectedTabGradientColor,
       invoiceSelectedTabGradientColor,
       accountSelectedTabGradientColor,
-      liveasySelectedTabGradientColor;
+      liveasySelectedTabGradientColor,
+      signoutSelectedTabGradientColor;
+
   late bool expandMode;
   late double widthOfSideBar;
 
@@ -51,41 +53,40 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       widthOfSideBar = 110;
     }
     if (_selectedIndex == 0) {
-      dashboardSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      dashboardSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       dashboardSelectedTabGradientColor =
-         const  LinearGradient(colors: [white, white]);
+          const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 1) {
-      myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      myLoadsSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       myLoadsSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      invoiceSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       accountSelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 4) {
+      signoutSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      signoutSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
 
@@ -219,7 +220,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   width: 0.01,
                 )
               : Container(
-                
                   child: Stack(
                     children: [
                       Row(children: [
@@ -229,8 +229,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                           elevation: 5,
                           shadowColor: Colors.grey,
                           child: Container(
-                            padding:
-                                const EdgeInsets.only(left: 20, right: 20, top: 100),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 100),
                             height: MediaQuery.of(context).size.height,
                             width: widthOfSideBar,
                             child: Column(
@@ -260,6 +260,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                     title: "Team",
                                     icon: AssetImage(
                                         'assets/images/shipper_web_account.png')),
+                                SizedBox(
+                                  height: 100,
+                                ),
+                                SideExpandedItem(
+                                    title: "Signout",
+                                    icon:
+                                        AssetImage('assets/icons/signout.png')),
                                 Expanded(
                                     child: Align(
                                         alignment: Alignment.bottomLeft,
@@ -316,7 +323,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                               backgroundColor:
                                   const MaterialStatePropertyAll<Color>(white),
                               side: MaterialStateProperty.all(
-                               const BorderSide(width: 1, color: Colors.black),
+                                const BorderSide(width: 1, color: Colors.black),
                               ),
                             ),
                             hoverColor: Colors.transparent,
@@ -326,10 +333,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     ],
                   ),
                 ),
-               
-                
+
           Expanded(
-            
             child: Container(
               child: Center(
                 child:
@@ -344,73 +349,72 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   InkWell SideExpandedItem({required String title, required AssetImage icon}) {
     if (_selectedIndex == 0) {
-      dashboardSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
-    } else{
+      dashboardSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
       dashboardSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 1) {
-      myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      myLoadsSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       myLoadsSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
 
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      invoiceSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor = const LinearGradient(colors: [
-        sideNavItemSelectedColor,
-        transparent
-      ]);
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       accountSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
+    if (_selectedIndex == 4) {
+      signoutSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      signoutSelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
 
     liveasySelectedTabGradientColor =
-       const LinearGradient(colors: [white, white]);
+        const LinearGradient(colors: [white, white]);
 
     return InkWell(
         onTap: () {
           setState(() {
             if (title == "Dashboard") {
-              dashboardSelectedTabGradientColor = const LinearGradient(colors: [
-                sideNavItemSelectedColor,
-                transparent
-              ]);
+              dashboardSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
               myLoadsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
+              signoutSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               _selectedIndex = 0;
               _index = 0;
             } else if (title == "My Loads") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              myLoadsSelectedTabGradientColor = const LinearGradient(colors: [
-                sideNavItemSelectedColor,
-                transparent
-              ]);
+              myLoadsSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               _selectedIndex = 1;
               _index = 1;
@@ -419,12 +423,12 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              invoiceSelectedTabGradientColor = const LinearGradient(colors: [
-                sideNavItemSelectedColor,
-                transparent
-              ]);
+              invoiceSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
               accountSelectedTabGradientColor =
-                 const LinearGradient(colors: [white, white]);
+                  const LinearGradient(colors: [white, white]);
+              signoutSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               _selectedIndex = 2;
               _index = 2;
             } else if (title == "Team") {
@@ -434,27 +438,27 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              accountSelectedTabGradientColor = const LinearGradient(colors: [
-                sideNavItemSelectedColor,
-                transparent
-              ]);
+              accountSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
+              signoutSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               _selectedIndex = 3;
               _index = 3;
+            } else if (title == "Signout") {
+              dashboardSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              invoiceSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              accountSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              signoutSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
+
+              _selectedIndex = 4;
+              _index = 4;
             }
-            // else if (title == "Transporter") {
-            //   dashboardSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   myLoadsSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   invoiceSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   accountSelectedTabGradientColor = const LinearGradient(colors: [
-            //     sideNavItemSelectedColor,
-            //     transparent
-            //   ]);
-            //   _selectedIndex = 4;
-            //   _index = 11;
-            // }
           });
         },
         child: Container(
@@ -469,7 +473,9 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             ? myLoadsSelectedTabGradientColor
                             : (title == "Invoice")
                                 ? invoiceSelectedTabGradientColor
-                                : accountSelectedTabGradientColor),
+                                : (title == "Team")
+                                    ? accountSelectedTabGradientColor
+                                    : signoutSelectedTabGradientColor),
             child: Row(
               children: [
                 Image(image: icon, filterQuality: FilterQuality.high),

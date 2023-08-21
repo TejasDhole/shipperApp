@@ -13,8 +13,10 @@ import '../screens/add_user_screen.dart';
 //TODO : At first add screens like this,and add that to list.
 //TODO: So that we can use home screen as base screen and update the right side of screen accordingly
 const webDashBoard = WebDashBoard();
-const invoiceScreen = Center(child: Text('Invoice'),);
-const contactUs = Center(child:Text('contact us'));
+const invoiceScreen = Center(
+  child: Text('Invoice'),
+);
+const contactUs = Center(child: Text('contact us'));
 const postLoadScreen = PostLoadScreen();
 const postLoadNav = PostLoadNav();
 const addUser = AddUser();
@@ -32,9 +34,9 @@ List<Widget> screens = [
   postLoadScreen,
   invoiceScreen,
   employeeListScreen,
+  logoutDialogue,
   helpScreen,
   contactUs,
-  logoutDialogue,
 
   //
   postLoadNav,

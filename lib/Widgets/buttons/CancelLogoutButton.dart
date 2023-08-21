@@ -21,13 +21,18 @@ class CancelLogoutButton extends StatelessWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(radius_4),
-                  side: const BorderSide(color: darkBlueColor))),
+                  borderRadius: BorderRadius.circular(radius_1),
+                  side: BorderSide(color: shareButtonColor))),
           backgroundColor:
               MaterialStateProperty.all(Colors.white.withOpacity(0)),
         ),
         onPressed: () {
-          kIsWeb?Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomeScreenWeb())):Get.back();
+          kIsWeb
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomeScreenWeb()))
+              : Get.back();
         },
         child: Container(
           decoration: const BoxDecoration(
@@ -46,7 +51,7 @@ class CancelLogoutButton extends StatelessWidget {
             style: TextStyle(
               letterSpacing: 0.7,
               fontWeight: normalWeight,
-              color: darkBlueColor,
+              color: shareButtonColor,
               fontSize: size_7,
             ),
           ),
