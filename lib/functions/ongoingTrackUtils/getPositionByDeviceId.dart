@@ -35,7 +35,6 @@ Future<List<GpsDataModel>> getPositionByDeviceId(String deviceId) async {
     List<GpsDataModel> LatLongList = [];
     if (response.statusCode == 200) {
       for (var json in jsonData) {
-
         GpsDataModel gpsDataModel = new GpsDataModel();
         // gpsDataModel.id = json["id"] != null ? json["id"] : 'NA';
         gpsDataModel.deviceId =
@@ -76,15 +75,15 @@ Future<List<GpsDataModel>> getPositionByDeviceId(String deviceId) async {
             json["longitude"] != null ? json["longitude"] : 0;
         String? addressstring;
         try {
-          if(kIsWeb){
+          if (kIsWeb) {
             final apiKey = dotenv.get('mapKey');
-            http.Response addressResponse = await http.get(
-                Uri.parse("http://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
-            );
+            http.Response addressResponse = await http.get(Uri.parse(
+                "http://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey"));
             var addressJSONData = await jsonDecode(addressResponse.body);
             if (addressResponse.statusCode == 200) {
-              if(addressJSONData['results'].isNotEmpty){
-                String? address = addressJSONData['results'][0]['formatted_address'];
+              if (addressJSONData['results'].isNotEmpty) {
+                String? address =
+                    addressJSONData['results'][0]['formatted_address'];
                 addressstring = address;
               }
             }
@@ -103,16 +102,16 @@ Future<List<GpsDataModel>> getPositionByDeviceId(String deviceId) async {
 
             if (first.subLocality == "")
               addressstring =
-              " ${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                  " ${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
             else if (first.locality == "")
               addressstring =
-              "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                  "${first.street}, ${first.subLocality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
             else if (first.administrativeArea == "")
               addressstring =
-              "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
+                  "${first.street}, ${first.subLocality}, ${first.locality}, ${first.postalCode}, ${first.country}";
             else
               addressstring =
-              "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+                  "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
             // print("ADD $addressstring");
           }
         } catch (e) {

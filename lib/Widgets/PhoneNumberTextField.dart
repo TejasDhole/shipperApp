@@ -91,7 +91,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                 ],
                 maxLength: 10,
                 validator: (value) =>
-                value!.length == 10 ? null : 'EnterPhoneNumber'.tr,
+                    value!.length == 10 ? null : 'EnterPhoneNumber'.tr,
                 // 'Enter a valid Phone Number',
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(

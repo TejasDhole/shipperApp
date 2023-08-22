@@ -88,7 +88,7 @@ class shareImageWidget extends StatelessWidget {
               ),
               SizedBox(width: (space_1 - 2)),
               Text(
-                "("+ "${loadDetails.loadingPointState}".tr +")",
+                "(" + "${loadDetails.loadingPointState}".tr + ")",
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
@@ -132,7 +132,7 @@ class shareImageWidget extends StatelessWidget {
               ),
               SizedBox(width: (space_1 - 2)),
               Text(
-                "("+"${loadDetails.unloadingPointState}".tr +")",
+                "(" + "${loadDetails.unloadingPointState}".tr + ")",
                 style: TextStyle(
                     color: white, fontWeight: regularWeight, fontSize: size_9),
               )

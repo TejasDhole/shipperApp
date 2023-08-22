@@ -37,13 +37,13 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
     //   });
     // });
 
-    var response = await Dio().get(path, options: Options(responseType: ResponseType.bytes));
+    var response = await Dio()
+        .get(path, options: Options(responseType: ResponseType.bytes));
     final result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
         name: "Liveasy");
     print(result);
-
   }
 
   // ReceivePort _port = ReceivePort();

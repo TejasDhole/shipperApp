@@ -11,7 +11,6 @@ import '/widgets/loadingWidgets/bottomProgressBarIndicatorWidget.dart';
 import '/widgets/loadingWidgets/onGoingLoadingWidgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 class BiddingScreenTransporterSide extends StatefulWidget {
   @override
   _BiddingScreenTransporterSideState createState() =>
@@ -23,11 +22,9 @@ class _BiddingScreenTransporterSideState
   // final String biddingApiUrl = FlutterConfig.get('biddingApiUrl');
   final String biddingApiUrl = dotenv.get('biddingApiUrl');
 
-
   int i = 0;
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   //Scroll Controller for Pagination
   ScrollController scrollController = ScrollController();

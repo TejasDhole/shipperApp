@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,8 +13,6 @@ import '/language/localization_service.dart';
 import 'package:logger/logger.dart';
 import 'dart:ui' as ui;
 import 'mapUtils/getLoactionUsingImei.dart';
-import 'dart:math';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 MapUtil mapUtil = MapUtil();
@@ -165,9 +162,9 @@ getPoylineCoordinates(var gpsDataHistory, List<LatLng> polylineCoordinates) {
   for (int i = 0; i < gpsDataHistory.length; i++) {
     c = b + 3;
     LatLng point1 =
-    LatLng(gpsDataHistory[a].latitude, gpsDataHistory[a].longitude);
+        LatLng(gpsDataHistory[a].latitude, gpsDataHistory[a].longitude);
     LatLng point2 =
-    LatLng(gpsDataHistory[b].latitude, gpsDataHistory[b].longitude);
+        LatLng(gpsDataHistory[b].latitude, gpsDataHistory[b].longitude);
     polylineCoordinates.add(LatLng(point1.latitude, point1.longitude));
     polylineCoordinates.add(LatLng(point2.latitude, point2.longitude));
     a = b;
@@ -179,11 +176,9 @@ getPoylineCoordinates(var gpsDataHistory, List<LatLng> polylineCoordinates) {
 
   if (gpsDataHistory.length % 2 == 0) {
     // print("In even ");
-    LatLng point1 = LatLng(
-        gpsDataHistory[gpsDataHistory.length - 2].latitude,
+    LatLng point1 = LatLng(gpsDataHistory[gpsDataHistory.length - 2].latitude,
         gpsDataHistory[gpsDataHistory.length - 2].longitude);
-    LatLng point2 = LatLng(
-        gpsDataHistory[gpsDataHistory.length - 1].latitude,
+    LatLng point2 = LatLng(gpsDataHistory[gpsDataHistory.length - 1].latitude,
         gpsDataHistory[gpsDataHistory.length - 1].longitude);
     polylineCoordinates.add(LatLng(point1.latitude, point1.longitude));
     polylineCoordinates.add(LatLng(point2.latitude, point2.longitude));
@@ -203,10 +198,10 @@ getPoylineCoordinates2(var gpsDataHistory2) {
   // print("End lat ${gpsDataHistory2[gpsDataHistory2.length - 1].latitude}");
   for (int i = 0; i < gpsDataHistory2.length; i++) {
     c = b + 1;
-    LatLng point1 =
-    LatLng(gpsDataHistory2[a].latitude, gpsDataHistory2[a].longitude);  // in place of LatLng it was PointLatLng
+    LatLng point1 = LatLng(gpsDataHistory2[a].latitude,
+        gpsDataHistory2[a].longitude); // in place of LatLng it was PointLatLng
     LatLng point2 =
-    LatLng(gpsDataHistory2[b].latitude, gpsDataHistory2[b].longitude);
+        LatLng(gpsDataHistory2[b].latitude, gpsDataHistory2[b].longitude);
     polylineCoordinates2.add(LatLng(point1.latitude, point1.longitude));
     polylineCoordinates2.add(LatLng(point2.latitude, point2.longitude));
     a = b;
@@ -218,11 +213,9 @@ getPoylineCoordinates2(var gpsDataHistory2) {
 
   if (gpsDataHistory2.length % 2 == 0) {
     // print("In even ");
-    LatLng point1 = LatLng(
-        gpsDataHistory2[gpsDataHistory2.length - 2].latitude,
+    LatLng point1 = LatLng(gpsDataHistory2[gpsDataHistory2.length - 2].latitude,
         gpsDataHistory2[gpsDataHistory2.length - 2].longitude);
-    LatLng point2 = LatLng(
-        gpsDataHistory2[gpsDataHistory2.length - 1].latitude,
+    LatLng point2 = LatLng(gpsDataHistory2[gpsDataHistory2.length - 1].latitude,
         gpsDataHistory2[gpsDataHistory2.length - 1].longitude);
     polylineCoordinates2.add(LatLng(point1.latitude, point1.longitude));
     polylineCoordinates2.add(LatLng(point2.latitude, point2.longitude));
@@ -338,18 +331,17 @@ getStoppageDuration(var gpsStoppageHistory) {
 
 getStoppageAddress(var gpsStoppageHistory) async {
   var stopAddress = "";
-  if(kIsWeb) {
+  if (kIsWeb) {
     final apiKey = dotenv.get('mapKey');
 
     var latn = gpsStoppageHistory.latitude;
     var lngn = gpsStoppageHistory.longitude;
 
-    http.Response addressResponse = await http.get(
-        Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
-    );
+    http.Response addressResponse = await http.get(Uri.parse(
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey"));
     var addressJSONData = await jsonDecode(addressResponse.body);
     if (addressResponse.statusCode == 200) {
-      if(addressJSONData['results'].isNotEmpty){
+      if (addressJSONData['results'].isNotEmpty) {
         String address = addressJSONData['results'][0]['formatted_address'];
         stopAddress = address;
       }
@@ -363,11 +355,10 @@ getStoppageAddress(var gpsStoppageHistory) async {
 
     if (first.subLocality == "")
       stopAddress =
-      "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+          "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
     else
       stopAddress =
-      "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
-
+          "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
   }
   // }
   return stopAddress;
@@ -376,17 +367,16 @@ getStoppageAddress(var gpsStoppageHistory) async {
 getStoppageAddressLatLong(var lat, var long) async {
   var stopAddress = "NA";
   // for(int i=0; i<gpsStoppageHistory.length; i++) {
-  if(kIsWeb) {
+  if (kIsWeb) {
     final apiKey = dotenv.get('mapKey');
 
     var latn = lat;
     var lngn = long;
-    http.Response addressResponse = await http.get(
-        Uri.parse("https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey")
-    );
+    http.Response addressResponse = await http.get(Uri.parse(
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latn,$lngn&key=$apiKey"));
     var addressJSONData = await jsonDecode(addressResponse.body);
     if (addressResponse.statusCode == 200) {
-      if(addressJSONData['results'].isNotEmpty){
+      if (addressJSONData['results'].isNotEmpty) {
         String address = addressJSONData['results'][0]['formatted_address'];
         stopAddress = address;
       }
@@ -397,10 +387,10 @@ getStoppageAddressLatLong(var lat, var long) async {
     List<Placemark> placemarks;
     if (current_lang == 'Hindi') {
       placemarks =
-      await placemarkFromCoordinates(lat, long, localeIdentifier: "hi_IN");
+          await placemarkFromCoordinates(lat, long, localeIdentifier: "hi_IN");
     } else {
       placemarks =
-      await placemarkFromCoordinates(lat, long, localeIdentifier: "en_US");
+          await placemarkFromCoordinates(lat, long, localeIdentifier: "en_US");
     }
     var first = placemarks.first;
     print(
@@ -408,10 +398,10 @@ getStoppageAddressLatLong(var lat, var long) async {
 
     if (first.subLocality == "")
       stopAddress =
-      "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+          "${first.street}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
     else
       stopAddress =
-      "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
+          "${first.street}, ${first.subLocality}, ${first.locality}, ${first.administrativeArea}, ${first.postalCode}, ${first.country}";
 
     // }
   }

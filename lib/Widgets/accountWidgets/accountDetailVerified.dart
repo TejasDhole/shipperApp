@@ -13,11 +13,14 @@ class AccountDetailVerified extends StatelessWidget {
   final String address;
   final String mailId;
 
-  const AccountDetailVerified(
-      {super.key, required this.mobileNum,
-      required this.name,
-      required this.address, required this.mailId,
-      required this.companyName,});
+  const AccountDetailVerified({
+    super.key,
+    required this.mobileNum,
+    required this.name,
+    required this.address,
+    required this.mailId,
+    required this.companyName,
+  });
 
   @override
   Widget build(BuildContext context) {

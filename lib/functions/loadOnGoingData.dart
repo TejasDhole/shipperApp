@@ -19,7 +19,8 @@ DriverApiCalls driverApiCalls = DriverApiCalls();
 
 Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
   // Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId!);
-  ShipperModel shipperModel = await shipperApiCalls.getDataByShipperId(bookingModel.shipperId);
+  ShipperModel shipperModel =
+      await shipperApiCalls.getDataByShipperId(bookingModel.shipperId);
 
   OngoingCardModel loadALLDataModel = OngoingCardModel();
   loadALLDataModel.bookingDate = bookingModel.bookingDate;

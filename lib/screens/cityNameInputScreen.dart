@@ -46,7 +46,8 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     // logger.i("back from mmitoken");
     _initSpeech();
   }
-  void async_method()async{
+
+  void async_method() async {
     await getCurrentPosition();
   }
 
@@ -57,7 +58,8 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location services are disabled. Please enable the services')));
+          content: Text(
+              'Location services are disabled. Please enable the services')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -71,18 +73,19 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
     return true;
   }
+
   Future<void> getCurrentPosition() async {
     //final hasPermission = await _handleLocationPermission();
     //if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-          print(position);
+      print(position);
       setState(() {
         currentPosition = position;
         loading = false;
@@ -123,12 +126,13 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
-      controller = TextEditingController(
-          text: _lastWords);
+      controller = TextEditingController(text: _lastWords);
       if (widget.page == "postLoad") {
-        locationCard = fillCityGoogle(controller.text,currentPosition); //google place api is used in postLoad
+        locationCard = fillCityGoogle(controller.text,
+            currentPosition); //google place api is used in postLoad
       } else {
-        locationCard = fillCity(controller.text);}
+        locationCard = fillCity(controller.text);
+      }
     });
   }
 
@@ -136,214 +140,246 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   Widget build(BuildContext context) {
     double keyboardLength = MediaQuery.of(context).viewInsets.bottom;
     double screenHeight = MediaQuery.of(context).size.height;
-    return loading==true ?
-    SafeArea(
-      child: Scaffold(
-          backgroundColor: backgroundColor,
-          body: Center(
-            child: SpinKitRotatingCircle(
-              color: darkBlueColor,
-              size: 50.0,
-            ),
+    return loading == true
+        ? SafeArea(
+            child: Scaffold(
+                backgroundColor: backgroundColor,
+                body: Center(
+                  child: SpinKitRotatingCircle(
+                    color: darkBlueColor,
+                    size: 50.0,
+                  ),
+                )),
           )
-      ),
-    )
-    :SafeArea(
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: space_4),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: space_6,
-              ),
-              Container (
-                child: Row(
+        : SafeArea(
+            child: Scaffold(
+              backgroundColor: backgroundColor,
+              body: Container(
+                padding: EdgeInsets.symmetric(horizontal: space_4),
+                child: ListView(
                   children: [
-                    BackButtonWidget(),
                     SizedBox(
-                      width: space_2,
+                      height: space_6,
                     ),
-                    Expanded(
-                        child: Container(
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: liveasyBlackColor, width: 0.8),
-                        borderRadius: BorderRadius.circular(30),
-                        color: widgetBackGroundColor,
-                      ),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        controller: controller,
-                        // onChanged: widget.onChanged,
-                        onChanged: (String value) {
-                          setState(() {
-                            if (widget.page == "postLoad") {
-                              locationCard = fillCityGoogle(
-                                  value,currentPosition);
-                             //google place api is used in postLoad
-                            } else {
-                              locationCard = fillCity(
-                                  value); //return auto suggested places using rapid api
-                            }
-                            // locationCard = fillCityName(value);    //return auto suggested places using MapMyIndia api
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: 'enterCityName'.tr,
-                          prefixIcon: GestureDetector(
-                              onTap: _speechToText.isNotListening
-                                  ? _startListening
-                                  : _stopListening,
-                              child: Icon(_speechToText.isNotListening
-                                  ? Icons.mic_off
-                                  : Icons.mic)),
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                controller.clear();
+                    Container(
+                      child: Row(
+                        children: [
+                          BackButtonWidget(),
+                          SizedBox(
+                            width: space_2,
+                          ),
+                          Expanded(
+                              child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: liveasyBlackColor, width: 0.8),
+                              borderRadius: BorderRadius.circular(30),
+                              color: widgetBackGroundColor,
+                            ),
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              autofocus: true,
+                              controller: controller,
+                              // onChanged: widget.onChanged,
+                              onChanged: (String value) {
+                                setState(() {
+                                  if (widget.page == "postLoad") {
+                                    locationCard =
+                                        fillCityGoogle(value, currentPosition);
+                                    //google place api is used in postLoad
+                                  } else {
+                                    locationCard = fillCity(
+                                        value); //return auto suggested places using rapid api
+                                  }
+                                  // locationCard = fillCityName(value);    //return auto suggested places using MapMyIndia api
+                                });
                               },
-                              icon: CancelIconWidget()),
-                        ),
-                      ),
-                    )
-                        // child: TextFieldWidget(
-                        //     onChanged: (String value) {
-                        //       setState(() {
-                        //         if(widget.page=="postLoad"){
-                        //           locationCard=fillCityGoogle(value);    //google place api is used in postLoad
-                        //         }else{
-                        //           locationCard=fillCity(value);        //return auto suggested places using rapid api
-                        //         }
-                        //         // locationCard = fillCityName(value);    //return auto suggested places using MapMyIndia api
-                        //       });
-                        //     },
-                        //     hintText: 'enterCityName'.tr
-                        //     // AppLocalizations.of(context)!.enterCityName,
-                        //     ),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintText: 'enterCityName'.tr,
+                                prefixIcon: GestureDetector(
+                                    onTap: _speechToText.isNotListening
+                                        ? _startListening
+                                        : _stopListening,
+                                    child: Icon(_speechToText.isNotListening
+                                        ? Icons.mic_off
+                                        : Icons.mic)),
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      controller.clear();
+                                    },
+                                    icon: CancelIconWidget()),
+                              ),
+                            ),
+                          )
+                              // child: TextFieldWidget(
+                              //     onChanged: (String value) {
+                              //       setState(() {
+                              //         if(widget.page=="postLoad"){
+                              //           locationCard=fillCityGoogle(value);    //google place api is used in postLoad
+                              //         }else{
+                              //           locationCard=fillCity(value);        //return auto suggested places using rapid api
+                              //         }
+                              //         // locationCard = fillCityName(value);    //return auto suggested places using MapMyIndia api
+                              //       });
+                              //     },
+                              //     hintText: 'enterCityName'.tr
+                              //     // AppLocalizations.of(context)!.enterCityName,
+                              //     ),
 
-                        ),
+                              ),
+                        ],
+                      ),
+                    ),
+                    locationCard == null
+                        ? Container()
+                        : SizedBox(
+                            height: space_4,
+                          ),
+                    locationCard != null
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: backgroundColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            height: keyboardLength != 0
+                                ? screenHeight - keyboardLength - 130
+                                : screenHeight - 130, //TODO: to be modified
+                            child: FutureBuilder(
+                                future: locationCard,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.data == null) {
+                                      return Container();
+                                    }
+
+                                    return ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      reverse: false,
+                                      // padding: EdgeInsets.symmetric(
+                                      //   horizontal: space_2,
+                                      // ),
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) =>
+                                          AutoFillDataDisplayCard(
+                                              snapshot.data[index].placeName,
+                                              snapshot.data[index]
+                                                  .addresscomponent1,
+                                              snapshot
+                                                  .data[index].placeCityName,
+                                              snapshot.data[index]
+                                                  .placeStateName, () {
+                                        if (widget.valueType ==
+                                            "Loading Point") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateLoadingPointFindLoad(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          Get.back();
+                                        } else if (widget.valueType ==
+                                            "Unloading Point") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateUnloadingPointFindLoad(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          // Get.off(FindLoadScreen());
+                                          Get.back();
+                                        } else if (widget.valueType ==
+                                                "Loading point" ||
+                                            widget.valueType ==
+                                                "Loading point 1") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateLoadingPointPostLoad(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          Get.back();
+                                        } else if (widget.valueType ==
+                                            "Loading point 2") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateLoadingPointPostLoad2(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          Get.back();
+                                        } else if (widget.valueType ==
+                                                "Unloading point" ||
+                                            widget.valueType ==
+                                                "Unloading point 1") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateUnloadingPointPostLoad(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          Get.back();
+                                        } else if (widget.valueType ==
+                                            "Unloading point 2") {
+                                          Provider.of<ProviderData>(context,
+                                                  listen: false)
+                                              .updateUnloadingPointPostLoad2(
+                                                  place: snapshot.data[index]
+                                                              .addresscomponent1 ==
+                                                          null
+                                                      ? "${snapshot.data[index].placeName}"
+                                                      : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
+                                                  city: snapshot.data[index]
+                                                      .placeCityName,
+                                                  state: snapshot.data[index]
+                                                      .placeStateName);
+                                          Get.back();
+                                        }
+                                      }),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                }),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
-              locationCard == null
-                  ? Container()
-                  : SizedBox(
-                      height: space_4,
-                    ),
-              locationCard != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      height: keyboardLength != 0
-                          ? screenHeight - keyboardLength - 130
-                          : screenHeight - 130, //TODO: to be modified
-                      child: FutureBuilder(
-                          future: locationCard,
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-
-
-                            if(snapshot.connectionState == ConnectionState.done){
-                              if (snapshot.data == null) {
-                                return Container();
-                              }
-
-
-
-                              return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                reverse: false,
-                                // padding: EdgeInsets.symmetric(
-                                //   horizontal: space_2,
-                                // ),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) =>
-                                    AutoFillDataDisplayCard(
-                                        snapshot.data[index].placeName,
-                                        snapshot.data[index].addresscomponent1,
-                                        snapshot.data[index].placeCityName,
-                                        snapshot.data[index].placeStateName, () {
-                                      if (widget.valueType == "Loading Point") {
-                                        Provider.of<ProviderData>(context,
-                                            listen: false)
-                                            .updateLoadingPointFindLoad(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot
-                                                .data[index].placeCityName,
-                                            state: snapshot
-                                                .data[index].placeStateName);
-                                        Get.back();
-                                      }  else if (widget.valueType ==
-                                          "Unloading Point") {
-                                        Provider.of<ProviderData>(context,
-                                            listen: false)
-                                            .updateUnloadingPointFindLoad(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot
-                                                .data[index].placeCityName,
-                                            state: snapshot
-                                                .data[index].placeStateName);
-                                        // Get.off(FindLoadScreen());
-                                        Get.back();
-                                      } else if (widget.valueType ==
-                                          "Loading point" || widget.valueType == "Loading point 1") {
-                                        Provider.of<ProviderData>(context,
-                                            listen: false)
-                                            .updateLoadingPointPostLoad(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot
-                                                .data[index].placeCityName,
-                                            state: snapshot
-                                                .data[index].placeStateName);
-                                        Get.back();
-                                      } else if(widget.valueType == "Loading point 2"){
-                                        Provider.of<ProviderData>(context,listen: false)
-                                            .updateLoadingPointPostLoad2(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot
-                                                .data[index].placeCityName,
-                                            state: snapshot
-                                                .data[index].placeStateName);
-                                        Get.back();
-                                      } else if (widget.valueType ==
-                                          "Unloading point" || widget.valueType == "Unloading point 1") {
-                                        Provider.of<ProviderData>(context,
-                                            listen: false)
-                                            .updateUnloadingPointPostLoad(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot
-                                                .data[index].placeCityName,
-                                            state: snapshot
-                                                .data[index].placeStateName);
-                                        Get.back();
-                                      } else if(widget.valueType == "Unloading point 2")
-                                      {
-                                        Provider.of<ProviderData>(context,listen: false)
-                                            .updateUnloadingPointPostLoad2(
-                                            place: snapshot.data[index].addresscomponent1 == null ? "${snapshot.data[index].placeName}" : "${snapshot.data[index].placeName}, ${snapshot.data[index].addresscomponent1}",
-                                            city: snapshot.data[index].placeCityName,
-                                            state: snapshot.data[index].placeStateName);
-                                        Get.back();
-                                      }
-                                    }),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          }
-                          ),
-                    )
-                  : Container(),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

@@ -18,8 +18,8 @@ Future<List> getTruckDetailsFromTruckApi(BuildContext context) async {
   final String truckApiUrl = dotenv.get('truckApiUrl');
 
   try {
-    http.Response response = await http.get(Uri.parse(
-        truckApiUrl + '?transporterId=${tIdController.shipperId}'));
+    http.Response response = await http.get(
+        Uri.parse(truckApiUrl + '?transporterId=${tIdController.shipperId}'));
     jsonData = json.decode(response.body);
 
     for (var json in jsonData) {

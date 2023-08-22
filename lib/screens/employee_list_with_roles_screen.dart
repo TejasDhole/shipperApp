@@ -26,7 +26,7 @@ class EmployeeListRolesScreen extends StatefulWidget {
 
 class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
   final List<CompanyUsers> users = [];
-  List<CompanyUsers> filteredUsers = []; 
+  List<CompanyUsers> filteredUsers = [];
   bool loading = true;
   bool bottomProgressLoad = false;
   late TextEditingController _searchController;
@@ -85,8 +85,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              decoration: const BoxDecoration(
-                                  color: teamBar),
+                              decoration: const BoxDecoration(color: teamBar),
                               height: 90,
                               width: screenWidth,
                               child: Padding(
@@ -103,12 +102,10 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              
                               Padding(
                                 padding: const EdgeInsets.only(left: 1.0),
                                 child: Container(
                                     width: screenWidth * 0.3,
-                                    
                                     child: TextField(
                                       controller: _searchController,
                                       decoration: InputDecoration(
@@ -117,19 +114,18 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                                               fontWeight: FontWeight.w400,
                                               color: searchBar),
                                           border: const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: greyShade),
-                                              borderRadius:
-                                                  BorderRadius.all(Radius.zero)),
+                                              borderSide:
+                                                  BorderSide(color: greyShade),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.zero)),
                                           suffixIcon: const Icon(Icons.search)),
                                       onChanged: (value) {
                                         // Handle search functionality here
                                         // You can filter the users list based on the search value
-                                        //filterUsers(value); 
+                                        //filterUsers(value);
                                       },
                                     )),
                               ),
-
                               Container(
                                 width: 160,
                                 height: 65,
@@ -169,22 +165,21 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                             ],
                           ),
                           AccountTableHeader(context),
-
-              ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: space_15),
-                          itemCount: users.length,
-                          itemBuilder: (context, index) => (index ==
-                                  users.length) //removed -1 here
-                              ? Visibility(
-                                  visible: bottomProgressLoad,
-                                  child:
-                                      const bottomProgressBarIndicatorWidget())
-                              : EmployeeCard(
-                                  companyUsersModel: users[index],
-                                ),
-                        ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.only(bottom: space_15),
+                            itemCount: users.length,
+                            itemBuilder: (context, index) => (index ==
+                                    users.length) //removed -1 here
+                                ? Visibility(
+                                    visible: bottomProgressLoad,
+                                    child:
+                                        const bottomProgressBarIndicatorWidget())
+                                : EmployeeCard(
+                                    companyUsersModel: users[index],
+                                  ),
+                          ),
                         ]),
                   ),
       ),
@@ -193,26 +188,30 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
 
   //TODO: This function is used get all the list of employees who are added to company database
 
-getCompanyEmployeeList() {
-  if (mounted) {
-    setState(() {
-      bottomProgressLoad = true;
-    });
+  getCompanyEmployeeList() {
+    if (mounted) {
+      setState(() {
+        bottomProgressLoad = true;
+      });
+    }
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    DatabaseReference ref = database.ref();
+    late Map<dynamic, dynamic> values;
+    ref
+        .child(
+            "companies/${shipperIdController.companyName.value.capitalizeFirst}/members")
+        .get()
+        .then((DataSnapshot snapshot) => {
+              values = snapshot.value as Map<dynamic, dynamic>,
+              values.forEach((key, value) {
+                users.add(CompanyUsers(
+                  uid: key,
+                  role: value,
+                ));
+              }),
+              setState(() {
+                loading = false;
+              }),
+            });
   }
-  FirebaseDatabase database = FirebaseDatabase.instance;
-  DatabaseReference ref = database.ref();
-  late Map<dynamic, dynamic> values;
-  ref.child("companies/${shipperIdController.companyName.value.capitalizeFirst}/members")
-      .get()
-      .then((DataSnapshot snapshot) => {
-            values = snapshot.value as Map<dynamic, dynamic>,
-            values.forEach((key, value)  {
-              
-              users.add(CompanyUsers(uid: key ,  role: value, ));
-            }),
-            setState(() {
-              loading = false;
-            }),
-          });
-}
 }

@@ -19,16 +19,18 @@ class BidButtonAlertDialog extends StatefulWidget {
   bool? isPost;
   bool? isNegotiating;
 
-  BidButtonAlertDialog({this.loadId, this.bidId, required this.isPost ,  required this.isNegotiating});
+  BidButtonAlertDialog(
+      {this.loadId,
+      this.bidId,
+      required this.isPost,
+      required this.isNegotiating});
 
   @override
   _BidButtonAlertDialogState createState() => _BidButtonAlertDialogState();
 }
 
 class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
-
   RadioButtonOptions unitValue = RadioButtonOptions.PER_TON;
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,10 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
       insetPadding: EdgeInsets.symmetric(horizontal: space_4),
       title: Text(
         "Please enter your rate",
-        style: TextStyle(fontSize: size_9, fontWeight: normalWeight, color: liveasyBlackColor),
+        style: TextStyle(
+            fontSize: size_9,
+            fontWeight: normalWeight,
+            color: liveasyBlackColor),
       ),
       titlePadding: EdgeInsets.only(top: space_3, left: space_3),
       contentPadding: EdgeInsets.symmetric(horizontal: space_3),
@@ -51,7 +56,7 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       unitValue = RadioButtonOptions.PER_TON;
                     });
@@ -78,7 +83,7 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       unitValue = RadioButtonOptions.PER_TRUCK;
                       print(unitValue);
@@ -109,14 +114,16 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
               ],
             ),
           ),
-          SizedBox(height: space_2,),
+          SizedBox(
+            height: space_2,
+          ),
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(radius_4+2),
+                borderRadius: BorderRadius.circular(radius_4 + 2),
                 border: Border.all(color: darkGreyColor)),
             child: Container(
-              height: space_7+2,
+              height: space_7 + 2,
               padding: EdgeInsets.only(
                 left: space_3,
                 right: space_3,
@@ -134,7 +141,7 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
                     providerData.updateBidButtonSendRequest(false);
                   } else {
                     //TODO: bug: if we change unt value without changing rate then previous unitValue will be passed
-                    providerData.updateRate(rate , unitValue.toString());
+                    providerData.updateRate(rate, unitValue.toString());
                     providerData.updateBidButtonSendRequest(true);
                   }
                 },
@@ -151,7 +158,7 @@ class _BidButtonAlertDialogState extends State<BidButtonAlertDialog> {
             children: [
               BidButtonSendRequest(
                 isNegotiating: widget.isNegotiating,
-                loadId: widget.loadId ,
+                loadId: widget.loadId,
                 bidId: widget.bidId,
                 isPost: widget.isPost,
               ),

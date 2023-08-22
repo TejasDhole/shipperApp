@@ -7,8 +7,7 @@ import '/models/biddingModel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<List<BiddingModel>> getBidsFromBidApi() async {
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   var jsonData;
   List<BiddingModel> biddingModelList = [];
   // final String bidApiUrl = FlutterConfig.get("biddingApiUrl").toString();

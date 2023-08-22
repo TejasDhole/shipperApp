@@ -34,7 +34,7 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                 right: space_2,
               ),
               child: Expanded(
-                child:TextFormField(
+                child: TextFormField(
                   controller: controller,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -51,8 +51,7 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                     fontSize: size_7,
                   ),
                 ),
-              )
-          ),
+              )),
         ),
       ),
     );

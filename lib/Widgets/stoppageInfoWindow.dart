@@ -3,15 +3,15 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 
-Widget getInfoWindow(var duration, var stoppageTime, var stopAddress){
+Widget getInfoWindow(var duration, var stoppageTime, var stopAddress) {
   // print("getInfoWindow called");
-  return  Column(
+  return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Expanded(
         child: Opacity(
-            opacity: 0.5 ,
+            opacity: 0.5,
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -23,31 +23,28 @@ Widget getInfoWindow(var duration, var stoppageTime, var stopAddress){
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    (duration!="Ongoing")?
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        "${duration}",
-                        style: TextStyle(
-                            color: white,
-                            fontSize: size_6,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: regularWeight
-                        ),
-                      ),
-                    ) :
-                    SizedBox(
-                      height: 8.0,
-                    ),
-
+                    (duration != "Ongoing")
+                        ? Container(
+                            margin: EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              "${duration}",
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: size_6,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: regularWeight),
+                            ),
+                          )
+                        : SizedBox(
+                            height: 8.0,
+                          ),
                     Text(
                       "${stoppageTime}",
                       style: TextStyle(
                           color: white,
                           fontSize: size_6,
                           fontStyle: FontStyle.normal,
-                          fontWeight: regularWeight
-                      ),
+                          fontWeight: regularWeight),
                     ),
                     SizedBox(
                       height: 8.0,
@@ -58,8 +55,7 @@ Widget getInfoWindow(var duration, var stoppageTime, var stopAddress){
                           color: white,
                           fontSize: size_6,
                           fontStyle: FontStyle.normal,
-                          fontWeight: regularWeight
-                      ),
+                          fontWeight: regularWeight),
                     ),
                   ],
                 ),

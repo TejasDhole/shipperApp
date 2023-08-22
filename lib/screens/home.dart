@@ -9,7 +9,7 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http ;
+import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shipper_app/constants/colors.dart';
@@ -41,7 +41,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ShipperIdController shipperIdController = kIsWeb?Get.put(ShipperIdController()):Get.find<ShipperIdController>();
+  ShipperIdController shipperIdController =
+      kIsWeb ? Get.put(ShipperIdController()) : Get.find<ShipperIdController>();
   var imageLinks;
   bool isSwitched = false;
   final switchData = GetStorage();
@@ -54,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
     imageUrl();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -63,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           key: _scaffoldKey,
           floatingActionButton: PostButtonLoad(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           drawer: DrawerWidget(
             mobileNum: shipperIdController.mobileNum.value,
             userName: shipperIdController.name.toString(),
@@ -142,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: space_1,
                 ),
-                !(companyStatus== 'verified' || companyStatus == null || companyStatus == "")
+                !(companyStatus == 'verified' ||
+                        companyStatus == null ||
+                        companyStatus == "")
                     ? const AccountNotVerifiedWidget()
                     : SizedBox(
                         height: space_2,
@@ -170,7 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Image(
                     image: AssetImage('assets/images/EmptyBox.jpeg'),
                   ),
-
                 ),
                 // Container(
                 //     alignment: Alignment.bottomCenter,
@@ -196,5 +198,4 @@ class _HomeScreenState extends State<HomeScreen> {
         shipperIdController.shipperId.toString());
     setState(() {});
   }
-
 }

@@ -10,7 +10,8 @@ class ProductTypeTextField extends StatelessWidget {
   String hint;
   String category;
 
-  ProductTypeTextField({Key? key,required this.hint,required this.category}) : super(key: key);
+  ProductTypeTextField({Key? key, required this.hint, required this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,10 @@ class ProductTypeTextField extends StatelessWidget {
         color: widgetBackGroundColor,
       ),
       child: TextField(
-        decoration: InputDecoration(hintText: hint,border : InputBorder.none),
+        decoration: InputDecoration(hintText: hint, border: InputBorder.none),
         controller: controllerOthers,
-        keyboardType: category != "Type" ? TextInputType.number : TextInputType.name,
+        keyboardType:
+            category != "Type" ? TextInputType.number : TextInputType.name,
       ),
     );
   }

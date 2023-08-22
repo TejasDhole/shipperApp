@@ -9,29 +9,30 @@ class MapScreenBarButton extends StatelessWidget {
   final int value;
   final PageController pageController;
 
-  MapScreenBarButton({required this.text, required this.value , required this.pageController});
+  MapScreenBarButton(
+      {required this.text, required this.value, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
 
     return Container(
-    //  height: 26,
+      //  height: 26,
       width: 80,
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: GestureDetector(
-        
         onTap: () {
           providerData.updateUpperNavigatorIndex(value);
           pageController.jumpToPage(value);
         },
         child: Text(
-          
           '$text',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 15,
-            decoration: providerData.upperNavigatorIndex == value?TextDecoration.underline:null,
+            decoration: providerData.upperNavigatorIndex == value
+                ? TextDecoration.underline
+                : null,
             color: black,
             fontWeight: normalWeight,
           ),
@@ -39,5 +40,4 @@ class MapScreenBarButton extends StatelessWidget {
       ),
     );
   }
-
 }

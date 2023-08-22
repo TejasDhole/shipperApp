@@ -24,7 +24,7 @@ class _OTPInputFieldState extends State<OTPInputField> {
   HudController hudController = Get.put(HudController());
   AuthService authService = AuthService();
   IsOtpInvalidController isOtpInvalidController =
-  Get.put(IsOtpInvalidController());
+      Get.put(IsOtpInvalidController());
   TextEditingController textEditingController = TextEditingController();
   @override
   void dispose() {
@@ -65,27 +65,46 @@ class _OTPInputFieldState extends State<OTPInputField> {
         length: 6,
         enableActiveFill: true,
         keyboardType: TextInputType.phone,
-        onCompleted: (pin) async{
+        onCompleted: (pin) async {
           hudController.updateHud(true);
           providerData.updateSmsCode(pin);
           // isOtpInvalidController.updateIsOtpInvalid(false);
           try {
-            await FirebaseAuth.instance.currentUser!.updatePhoneNumber(
-                PhoneAuthProvider.credential(
-                  verificationId: widget._verificationCode,
-                  smsCode: providerData.smsCode,
-                )
-            );
-            if(FirebaseAuth.instance.currentUser!.phoneNumber!=null){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const CompanyDetailsForm()));
+            await FirebaseAuth.instance.currentUser!
+                .updatePhoneNumber(PhoneAuthProvider.credential(
+              verificationId: widget._verificationCode,
+              smsCode: providerData.smsCode,
+            ));
+            if (FirebaseAuth.instance.currentUser!.phoneNumber != null) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CompanyDetailsForm()));
             }
-          }on FirebaseAuthException catch(e){
-            switch(e.code){
-              case "provider-already-linked":alertDialog("Already Linked", 'The phone number is already linked', context); break;
-              case "invalid-credential":alertDialog("Invalid Credential", 'Invalid Credential', context); break;
-              case "credential-already-in-use":alertDialog("Linked with different email", 'The phone number is already linked with different email', context); break;
-              case "account-exists-with-different-credential":alertDialog("Linked with different email", 'The phone number is already linked with different email', context); break;
-              default: alertDialog("Error", '$e', context);
+          } on FirebaseAuthException catch (e) {
+            switch (e.code) {
+              case "provider-already-linked":
+                alertDialog("Already Linked",
+                    'The phone number is already linked', context);
+                break;
+              case "invalid-credential":
+                alertDialog(
+                    "Invalid Credential", 'Invalid Credential', context);
+                break;
+              case "credential-already-in-use":
+                alertDialog(
+                    "Linked with different email",
+                    'The phone number is already linked with different email',
+                    context);
+                break;
+              case "account-exists-with-different-credential":
+                alertDialog(
+                    "Linked with different email",
+                    'The phone number is already linked with different email',
+                    context);
+                break;
+              default:
+                alertDialog("Error", '$e', context);
             }
           }
           providerData.updateInputControllerLengthCheck(true);

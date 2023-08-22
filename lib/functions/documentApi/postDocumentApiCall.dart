@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 postDocumentApiCall(Map datanew2) async {
   // shipperIdController tIdController = Get.put(shipperIdController());
   // String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
@@ -21,7 +20,7 @@ postDocumentApiCall(Map datanew2) async {
     String body = json.encode(datanew2);
     final String documentApiUrl =
         // FlutterConfig.get('documentApiUrl').toString();
-    dotenv.get('documentApiUrl');
+        dotenv.get('documentApiUrl');
 
     final response = await http.post(Uri.parse("$documentApiUrl"),
         headers: <String, String>{

@@ -5,17 +5,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final String gpsApiUrl = dotenv.get('gpsApiUrl');
 
-
-Future<String?> postIMEILatLngData({
-  required String? trasnporterID,
-  required String? lat,
-  required String? lng,
-  required String? speed,
-  required String? deviceName,
-  required String? powerValue,
-  required String? direction,
-  required String? timestamp}) async {
-
+Future<String?> postIMEILatLngData(
+    {required String? trasnporterID,
+    required String? lat,
+    required String? lng,
+    required String? speed,
+    required String? deviceName,
+    required String? powerValue,
+    required String? direction,
+    required String? timestamp}) async {
   // json map
   Map<String, dynamic> data = {
     "imei": trasnporterID,
@@ -25,7 +23,7 @@ Future<String?> postIMEILatLngData({
     "deviceName": deviceName,
     "powerValue": powerValue,
     "direction": direction,
-    "timeStamp" : timestamp
+    "timeStamp": timestamp
   };
 
   String body = json.encode(data);

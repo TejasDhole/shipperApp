@@ -6,12 +6,13 @@ import '/constants/spaces.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ChooseReceiverButton extends StatelessWidget {
-   String? label;
+  String? label;
 
   // final dynamic function ;
   final String? phoneNum;
 
-  ChooseReceiverButton({super.key, required this.label, required this.phoneNum});
+  ChooseReceiverButton(
+      {super.key, required this.label, required this.phoneNum});
 
   _makingPhoneCall() async {
     print('in makingPhoneCall');
@@ -21,10 +22,7 @@ class ChooseReceiverButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    label = label!.length >= 12
-        ? label!.substring(0, 10) + '..'
-        : label;
+    label = label!.length >= 12 ? label!.substring(0, 10) + '..' : label;
     return SizedBox(
       width: 163,
       height: 40,

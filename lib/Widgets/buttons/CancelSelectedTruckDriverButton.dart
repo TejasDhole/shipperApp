@@ -4,25 +4,24 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 
-
 class CancelSelectedTruckDriverButton extends StatefulWidget {
-
-  List? truckModelList ;
+  List? truckModelList;
   List? driverModelList;
 
   CancelSelectedTruckDriverButton({
     this.driverModelList,
     this.truckModelList,
-});
+  });
 
   @override
-  _CancelSelectedTruckDriverButtonState createState() => _CancelSelectedTruckDriverButtonState();
+  _CancelSelectedTruckDriverButtonState createState() =>
+      _CancelSelectedTruckDriverButtonState();
 }
 
-class _CancelSelectedTruckDriverButtonState extends State<CancelSelectedTruckDriverButton> {
+class _CancelSelectedTruckDriverButtonState
+    extends State<CancelSelectedTruckDriverButton> {
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         //if instead of using cancel button user uses mobile button this fails

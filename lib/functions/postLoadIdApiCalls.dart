@@ -38,11 +38,18 @@ class PostLoadIdApiCalls {
     // Map transporterData = jsonData['companyName'];
 
     Map shipperData = {
-      'companyName': jsonData['companyName'] != null ? jsonData['companyName'] : 'NA',
-      'posterPhoneNum': jsonData['phoneNo'] != null ? jsonData['phoneNo'] : 'NA',
-      'posterName': jsonData['shipperName'] != null ? jsonData['shipperName'] : 'NA',
-      "posterLocation": jsonData['shipperLocation'] != null ? jsonData['shipperLocation'] : 'NA',
-      "companyApproved": jsonData['companyApproved'] != null ? jsonData['companyApproved'] : false,
+      'companyName':
+          jsonData['companyName'] != null ? jsonData['companyName'] : 'NA',
+      'posterPhoneNum':
+          jsonData['phoneNo'] != null ? jsonData['phoneNo'] : 'NA',
+      'posterName':
+          jsonData['shipperName'] != null ? jsonData['shipperName'] : 'NA',
+      "posterLocation": jsonData['shipperLocation'] != null
+          ? jsonData['shipperLocation']
+          : 'NA',
+      "companyApproved": jsonData['companyApproved'] != null
+          ? jsonData['companyApproved']
+          : false,
     };
 
     return shipperData;

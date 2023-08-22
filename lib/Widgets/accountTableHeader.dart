@@ -39,53 +39,54 @@ Container AccountTableHeader(context) {
             flex: 4,
             child: Center(
                 child: Container(
-                    child: Text('Users',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: sideBarTextColor,
-                          fontSize: size_8,
-                          fontFamily: 'Montserrat'),
-                    )))),
+                    child: Text(
+              'Users',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: sideBarTextColor,
+                  fontSize: size_8,
+                  fontFamily: 'Montserrat'),
+            )))),
         const VerticalDivider(color: greyShade, thickness: 1),
-
         Expanded(
             flex: 5,
             child: Center(
                 child: Container(
-                    child: Text('Email',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: sideBarTextColor,
-                          fontSize: size_8,
-                          fontFamily: 'Montserrat'),
-                    )))),
+                    child: Text(
+              'Email',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: sideBarTextColor,
+                  fontSize: size_8,
+                  fontFamily: 'Montserrat'),
+            )))),
         const VerticalDivider(color: greyShade, thickness: 1),
-
         Expanded(
             flex: 3,
             child: Center(
                 child: Container(
-                    child: Text('Role',
-                      textAlign: TextAlign.center,
-                      selectionColor: sideBarTextColor,
-                      style: TextStyle(
-                          color: sideBarTextColor,
-                          fontSize: size_8,
-                          fontFamily: 'Montserrat'),
-                    )))),
+                    child: Text(
+              'Role',
+              textAlign: TextAlign.center,
+              selectionColor: sideBarTextColor,
+              style: TextStyle(
+                  color: sideBarTextColor,
+                  fontSize: size_8,
+                  fontFamily: 'Montserrat'),
+            )))),
         const VerticalDivider(color: greyShade, thickness: 1),
-
         Expanded(
             flex: 3,
             child: Center(
                 child: Container(
-                    child: Text('Delete',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: size_8,
-                          color: sideBarTextColor, 
-                          fontFamily: 'Montserrat'),
-                    )))),
+                    child: Text(
+              'Delete',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: size_8,
+                  color: sideBarTextColor,
+                  fontFamily: 'Montserrat'),
+            )))),
       ],
     ),
   );

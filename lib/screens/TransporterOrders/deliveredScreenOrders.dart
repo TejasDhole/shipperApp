@@ -12,10 +12,7 @@ class DeliveredScreenOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.67,
+        height: MediaQuery.of(context).size.height * 0.67,
         child: FutureBuilder(
           //getTruckData returns list of truck Model
           future: bookingApiCallsOrders.getDataByShipperIdDelivered(),
@@ -67,7 +64,7 @@ class DeliveredScreenOrders extends StatelessWidget {
                             companyApproved: snapshot.data['companyApproved'],
                             driverPhoneNum: snapshot.data['driverPhoneNum'],
                             transporterPhoneNumber:
-                            snapshot.data['posterPhoneNum'],
+                                snapshot.data['posterPhoneNum'],
                             rate: snapshot.data['rate'],
                             loadingPoint: snapshot.data['loadingPoint'],
                             unloadingPoint: snapshot.data['unloadingPoint'],
@@ -82,8 +79,8 @@ class DeliveredScreenOrders extends StatelessWidget {
                           );
                         });
                   } //builder
-              );
-          } //else
+                  );
+            } //else
           },
         ));
   }

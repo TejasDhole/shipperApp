@@ -135,16 +135,16 @@ class _LoginScreenUsingPhoneState extends State<LoginScreenUsingPhone> {
                               ),
                               onPressed: providerData.inputControllerLengthCheck
                                   ? () {
-                                Get.to(() => NewOTPVerificationScreen(
-                                    providerData.phoneController));
+                                      Get.to(() => NewOTPVerificationScreen(
+                                          providerData.phoneController));
 
-                                //null safety error here , needs to be resolved
-                                // if (_formKey.currentState!.validate()) {
-                                //   Get.to(() => NewOTPVerificationScreen(
-                                //       providerData.phoneController));
+                                      //null safety error here , needs to be resolved
+                                      // if (_formKey.currentState!.validate()) {
+                                      //   Get.to(() => NewOTPVerificationScreen(
+                                      //       providerData.phoneController));
 
-                                providerData.clearAll();
-                              } // if
+                                      providerData.clearAll();
+                                    } // if
 
                                   : () {},
                               child: Text(

@@ -30,22 +30,28 @@ class _AddPostLoadHeaderState extends State<AddPostLoadHeader> {
       children: [
         Row(
           children: [
-            !kIsWeb?Container(
-                margin: EdgeInsets.only(right: space_2),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    providerData.updateUpperNavigatorIndex2(0);
-                  },
-                  child: const Icon(Icons.arrow_back_ios_rounded),
-                )):const SizedBox(width: 2,),
-            Text('postLoad'.tr,
-                // AppLocalizations.of(context)!.postLoad,
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: kLiveasyColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30),),
+            !kIsWeb
+                ? Container(
+                    margin: EdgeInsets.only(right: space_2),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                        providerData.updateUpperNavigatorIndex2(0);
+                      },
+                      child: const Icon(Icons.arrow_back_ios_rounded),
+                    ))
+                : const SizedBox(
+                    width: 2,
+                  ),
+            Text(
+              'postLoad'.tr,
+              // AppLocalizations.of(context)!.postLoad,
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: kLiveasyColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 30),
+            ),
           ],
         ),
         widget.reset

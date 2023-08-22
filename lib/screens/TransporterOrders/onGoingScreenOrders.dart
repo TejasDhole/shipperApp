@@ -53,12 +53,10 @@ class _OngoingScreenOrdersState extends State<OngoingScreenOrders> {
   bool loading = false;
   bool OngoingProgress = false;
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
-
 
   List<OngoingCardModel> modelList = [];
   // Future<dynamic>? modelList = [];
@@ -401,8 +399,8 @@ class _OngoingScreenOrdersState extends State<OngoingScreenOrders> {
     List<GpsDataModel> gpsRoute1 = await getTraccarSummaryByDeviceId(
         deviceId: modelList[index].deviceId, from: from, to: to);
 
-      totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
-      initfunctionBoolValue = true;
+    totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
+    initfunctionBoolValue = true;
 
     print('in init');
     // return initfunctionBoolValue;

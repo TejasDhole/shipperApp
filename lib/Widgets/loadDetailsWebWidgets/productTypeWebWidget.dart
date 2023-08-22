@@ -17,12 +17,13 @@ class ProductTypeWebWidget extends StatefulWidget {
 }
 
 class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
-
   TextEditingController txtController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    if(providerData.productType!=null && providerData.productType !='' && providerData.productType != 'Choose Product Type'){
+    if (providerData.productType != null &&
+        providerData.productType != '' &&
+        providerData.productType != 'Choose Product Type') {
       txtController.text = providerData.productType;
     }
     return Expanded(
@@ -35,7 +36,7 @@ class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
           showCursor: false,
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
-             Get.to(() => ProductTypeSelection());
+            Get.to(() => ProductTypeSelection());
           },
           decoration: InputDecoration(
               border: OutlineInputBorder(

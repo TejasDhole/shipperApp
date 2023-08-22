@@ -44,14 +44,15 @@ class _ProfilePhotoWidgetState extends State<ProfilePhotoWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(radius_11),
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             widget.providerData.updateProfilePhoto(null);
                             widget.providerData.updateProfilePhotoStr(null);
                           });
                         },
                         child: Container(
-                          decoration: const BoxDecoration(shape: BoxShape.rectangle),
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.rectangle),
                           height: space_4,
                           width: space_4,
                           child: Container(

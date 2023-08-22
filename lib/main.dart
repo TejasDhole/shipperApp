@@ -157,7 +157,6 @@ class _MyAppState extends State<MyApp> {
             return Sizer(builder: (context, orientation, deviceType) {
               return kIsWeb
                   ? GetMaterialApp(
-                    
                       debugShowCheckedModeBanner: false,
                       builder: EasyLoading.init(),
                       theme: ThemeData(fontFamily: "Montserrat"),

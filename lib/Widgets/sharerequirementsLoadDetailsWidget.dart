@@ -44,12 +44,14 @@ class ShareRequirementsLoadDetails extends StatelessWidget {
               shareNewRowTemplate(
                   label: 'truckType'.tr, value: loadDetails['truckType']),
               shareNewRowTemplate(
-                  label: 'weight'.tr, value: "${loadDetails['weight']}" +"tonnes".tr),
+                  label: 'weight'.tr,
+                  value: "${loadDetails['weight']}" + "tonnes".tr),
               shareNewRowTemplate(
                   label: 'productType'.tr, value: loadDetails['productType']),
               shareNewRowTemplate(
                   label: 'bidPrice'.tr,
-                  value: "${loadDetails['rate']}/${loadDetails['unitValue'.tr]}"),
+                  value:
+                      "${loadDetails['rate']}/${loadDetails['unitValue'.tr]}"),
             ],
           ),
         ),

@@ -30,24 +30,29 @@ class TransporterApiCalls {
     transporterModel.companyName =
         jsonData['companyName'] != null ? jsonData['companyName'] : 'Na';
 
-    transporterModel.transporterApproved = jsonData['transporterApproved'] != null ? jsonData['transporterApproved'] : false;
+    transporterModel.transporterApproved =
+        jsonData['transporterApproved'] != null
+            ? jsonData['transporterApproved']
+            : false;
 
-    transporterModel.companyApproved = jsonData['companyApproved'] != null ? jsonData['companyApproved'] : false;
+    transporterModel.companyApproved = jsonData['companyApproved'] != null
+        ? jsonData['companyApproved']
+        : false;
 
     transporterModel.accountVerificationInProgress =
-        jsonData['accountVerificationInProgress'] != null ? jsonData['accountVerificationInProgress'] : false;
+        jsonData['accountVerificationInProgress'] != null
+            ? jsonData['accountVerificationInProgress']
+            : false;
 
-    transporterModel.transporterEmail = jsonData['emailId'] != null ? jsonData['companyName'] : 'Na';
-
+    transporterModel.transporterEmail =
+        jsonData['emailId'] != null ? jsonData['companyName'] : 'Na';
 
     return transporterModel;
   }
 
   Future<String> getTransporterIdByPhoneNo({String? phoneNo}) async {
     final String transporterIDImei;
-    Map data = {
-      "phoneNo": "$phoneNo"
-    };
+    Map data = {"phoneNo": "$phoneNo"};
     String body = json.encode(data);
     final response = await http.post(Uri.parse("$transporterApiUrl"),
         headers: <String, String>{
@@ -60,5 +65,4 @@ class TransporterApiCalls {
     print("Transporter ID Imei is $transporterIDImei");
     return transporterIDImei;
   }
-
 }

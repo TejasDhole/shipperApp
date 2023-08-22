@@ -28,13 +28,23 @@ class _OpenCellIDState extends State<OpenCellId> {
       signal = result;
       print("this is signal result from try $signal");
       var useCellInfo = jsonDecode(signal);
-      mcc = cellInfoModel.mcc = useCellInfo["mcc"] != null ? useCellInfo["mcc"] : 0;
-      mnc = cellInfoModel.mnc = useCellInfo["mnc"] != null ? useCellInfo["mnc"] : 0;
-      signalstrength = cellInfoModel.signal = useCellInfo["signal"] != null ? useCellInfo["signal"] : 0;
-      radio = cellInfoModel.radio = useCellInfo["radio"] != null ? useCellInfo["radio"] : 'NA';
-      lac = cellInfoModel.lac = useCellInfo["cells"][0]["lac"] != null ? useCellInfo["cells"][0]["lac"] : 0;
-      psc = cellInfoModel.psc = useCellInfo["cells"][0]["psc"] != null ? useCellInfo["cells"][0]["psc"] : 0;
-      cid = cellInfoModel.cid = useCellInfo["cells"][0]["cid"] != null ? useCellInfo["cells"][0]["cid"] : 0;
+      mcc = cellInfoModel.mcc =
+          useCellInfo["mcc"] != null ? useCellInfo["mcc"] : 0;
+      mnc = cellInfoModel.mnc =
+          useCellInfo["mnc"] != null ? useCellInfo["mnc"] : 0;
+      signalstrength = cellInfoModel.signal =
+          useCellInfo["signal"] != null ? useCellInfo["signal"] : 0;
+      radio = cellInfoModel.radio =
+          useCellInfo["radio"] != null ? useCellInfo["radio"] : 'NA';
+      lac = cellInfoModel.lac = useCellInfo["cells"][0]["lac"] != null
+          ? useCellInfo["cells"][0]["lac"]
+          : 0;
+      psc = cellInfoModel.psc = useCellInfo["cells"][0]["psc"] != null
+          ? useCellInfo["cells"][0]["psc"]
+          : 0;
+      cid = cellInfoModel.cid = useCellInfo["cells"][0]["cid"] != null
+          ? useCellInfo["cells"][0]["cid"]
+          : 0;
       print("MCC is ${cellInfoModel.mcc}");
       print("mnc is ${cellInfoModel.mnc}");
       print("signal is ${cellInfoModel.signal}");

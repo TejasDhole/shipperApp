@@ -83,7 +83,6 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
-      
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);
@@ -184,7 +183,6 @@ class MapUtil {
         'Accept': 'application/json'
       });
       print(response.statusCode);
-
 
       print(response.body);
       var jsonData = await jsonDecode(response.body);

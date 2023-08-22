@@ -1,5 +1,4 @@
 class DeviceModel {
-  
   int? deviceId;
   String? truckno;
   String? imei;
@@ -12,13 +11,12 @@ class DeviceModel {
 
   DeviceModel(
       {this.deviceId,
-        this.truckno,
-        this.imei,
-        this.status,
-        this.lastUpdate,
-        this.phone,
-        this.model,
-        this.contact,
-        this.category
-      });
+      this.truckno,
+      this.imei,
+      this.status,
+      this.lastUpdate,
+      this.phone,
+      this.model,
+      this.contact,
+      this.category});
 }

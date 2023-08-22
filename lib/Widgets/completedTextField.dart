@@ -29,13 +29,11 @@ class _CompletedTextFieldState extends State<CompletedTextField> {
         lastDate: DateTime(DateTime.now().year, DateTime.now().month,
             DateTime.now().day + 10, 0, 0));
     Jiffy nextDay;
-    if(picked != null){
+    if (picked != null) {
       nextDay = Jiffy.parseFromDateTime(picked);
-    }
-    else{
+    } else {
       nextDay = Jiffy.parseFromDateTime(selectedDate);
     }
-
 
     String date = nextDay.date < 10
         ? "0${nextDay.date.toString()}"

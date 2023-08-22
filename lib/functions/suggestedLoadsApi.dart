@@ -4,7 +4,6 @@ import '/models/loadApiModel.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<List<LoadApiModel>> runSuggestedLoadApi() async {
   // String loadApiUrl = FlutterConfig.get("loadApiUrl").toString();
   String loadApiUrl = dotenv.get('loadApiUrl');

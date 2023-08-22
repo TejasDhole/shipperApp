@@ -3,18 +3,18 @@ import 'package:flutter/cupertino.dart';
 import '../alert_dialog.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
-signIn(String email, String password,BuildContext context) async {
+signIn(String email, String password, BuildContext context) async {
   late UserCredential credential;
   try {
-    credential = await auth.signInWithEmailAndPassword(
-        email: email, password: password);
+    credential =
+        await auth.signInWithEmailAndPassword(email: email, password: password);
     if (!credential.user!.emailVerified) {
       credential.user!.sendEmailVerification();
     }
     return credential;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      credential = await signUp(email, password,context);
+      credential = await signUp(email, password, context);
       if (!credential.user!.emailVerified) {
         credential.user!.sendEmailVerification();
       }
@@ -25,7 +25,7 @@ signIn(String email, String password,BuildContext context) async {
   }
 }
 
-signUp(String email, String password,BuildContext context) async {
+signUp(String email, String password, BuildContext context) async {
   try {
     return await auth.createUserWithEmailAndPassword(
         email: email, password: password);

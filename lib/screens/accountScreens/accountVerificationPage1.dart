@@ -54,10 +54,12 @@ class _AccountVerificationPage1State extends State<AccountVerificationPage1> {
               Center(
                 child: GestureDetector(
                   onTap: () async {
-                    providerData.profilePhotoFile!=null?
-                    Get.to(ImageDisplay(providerData: providerData.profilePhotoFile,imageName: "profilePhoto64"))
-                        :showPicker(providerData.updateProfilePhoto,
-                        providerData.updateProfilePhotoStr, context);
+                    providerData.profilePhotoFile != null
+                        ? Get.to(ImageDisplay(
+                            providerData: providerData.profilePhotoFile,
+                            imageName: "profilePhoto64"))
+                        : showPicker(providerData.updateProfilePhoto,
+                            providerData.updateProfilePhotoStr, context);
                   },
                   child: ProfilePhotoWidget(
                     providerData: providerData,

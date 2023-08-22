@@ -1,4 +1,4 @@
-  import 'dart:convert';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '/models/gpsDataModel.dart';
 // import 'package:flutter_config/flutter_config.dart';

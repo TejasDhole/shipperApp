@@ -21,7 +21,7 @@ class LocationDetailsLoadDetails extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(bottom: space_3),
           child: Text(
-            "postedon".tr +" : ${loadDetails['loadDate']}",
+            "postedon".tr + " : ${loadDetails['loadDate']}",
             style: TextStyle(
                 fontWeight: regularWeight,
                 fontSize: size_6,
@@ -60,30 +60,31 @@ class LocationDetailsLoadDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              loadDetails['loadingPoint2']!='NA'?
-                  Container(
-                margin: EdgeInsets.only(top: space_3),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: space_1),
-                      child: Image(
-                        image: AssetImage(
-                            "assets/icons/greenFilledCircleIcon.png"),
-                      ),
-                      width: space_2,
-                      height: space_2,
-                    ),
-                    Expanded(
-                      child: Text(
-                        "${loadDetails['loadingPoint2']}, ${loadDetails['loadingPointCity2'.tr]}, ${loadDetails['loadingPointState2'.tr]}",
-                        style: TextStyle(
-                            fontWeight: normalWeight, fontSize: size_6),
+              loadDetails['loadingPoint2'] != 'NA'
+                  ? Container(
+                      margin: EdgeInsets.only(top: space_3),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: space_1),
+                            child: Image(
+                              image: AssetImage(
+                                  "assets/icons/greenFilledCircleIcon.png"),
+                            ),
+                            width: space_2,
+                            height: space_2,
+                          ),
+                          Expanded(
+                            child: Text(
+                              "${loadDetails['loadingPoint2']}, ${loadDetails['loadingPointCity2'.tr]}, ${loadDetails['loadingPointState2'.tr]}",
+                              style: TextStyle(
+                                  fontWeight: normalWeight, fontSize: size_6),
+                            ),
+                          )
+                        ],
                       ),
                     )
-                  ],
-                ),
-              ):Container(),
+                  : Container(),
               Container(
                 height: space_5,
                 padding: EdgeInsets.only(left: space_1 - 3),
@@ -111,30 +112,31 @@ class LocationDetailsLoadDetails extends StatelessWidget {
                   )
                 ],
               ),
-              loadDetails['unloadingPoint2']!='NA'
-                  ?Container(
-                margin: EdgeInsets.only(top: space_3),
-                    child: Row(
-                children: [
-                    Container(
-                      margin: EdgeInsets.only(right: space_1),
-                      child: Image(
-                        image: AssetImage(
-                            "assets/icons/redSemiFilledCircleIcon.png"),
-                      ),
-                      width: space_2,
-                      height: space_2,
-                    ),
-                    Expanded(
-                      child: Text(
-                        "${loadDetails['unloadingPoint2']}, ${loadDetails['unloadingPointCity2'.tr]}, ${loadDetails['unloadingPointState2'.tr]}",
-                        style:
-                        TextStyle(fontWeight: normalWeight, fontSize: size_6),
+              loadDetails['unloadingPoint2'] != 'NA'
+                  ? Container(
+                      margin: EdgeInsets.only(top: space_3),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: space_1),
+                            child: Image(
+                              image: AssetImage(
+                                  "assets/icons/redSemiFilledCircleIcon.png"),
+                            ),
+                            width: space_2,
+                            height: space_2,
+                          ),
+                          Expanded(
+                            child: Text(
+                              "${loadDetails['unloadingPoint2']}, ${loadDetails['unloadingPointCity2'.tr]}, ${loadDetails['unloadingPointState2'.tr]}",
+                              style: TextStyle(
+                                  fontWeight: normalWeight, fontSize: size_6),
+                            ),
+                          )
+                        ],
                       ),
                     )
-                ],
-              ),
-                  ):Container()
+                  : Container()
             ],
           ),
         ),

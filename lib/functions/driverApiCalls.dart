@@ -18,8 +18,7 @@ class DriverApiCalls {
 
   late List jsonData;
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   SelectedDriverController selectedDriverController =
       Get.put(SelectedDriverController());
 

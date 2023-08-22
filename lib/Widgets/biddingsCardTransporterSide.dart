@@ -68,7 +68,7 @@ class BiddingsCardTransporterSide extends StatelessWidget {
                     isLoadPosterVerified:
                         biddingModel.loadPosterCompanyApproved,
                     fromTransporterSide: true,
-                transporterEmail: biddingModel.loadPosterEmail,
+                    transporterEmail: biddingModel.loadPosterEmail,
                   ));
             },
       child: Container(

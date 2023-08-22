@@ -31,14 +31,18 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
-      contentPadding: const EdgeInsets.only(left:90, right : 90, top : 90, bottom: 45), // Adjust the padding as needed
+      contentPadding: const EdgeInsets.only(
+          left: 90,
+          right: 90,
+          top: 90,
+          bottom: 45), // Adjust the padding as needed
       content: SingleChildScrollView(
         child: Column(
           children: [
             Text("Are you sure you want to\nchange the role?",
                 textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600, color: darkBlueTextColor)),          
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w600, color: darkBlueTextColor)),
           ],
         ),
       ),
@@ -48,39 +52,42 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
           padding: EdgeInsets.only(bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                backgroundColor: okButtonColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
+              backgroundColor: okButtonColor,
+            ),
             onPressed: () {
               _updateUserRole();
-             Navigator.of(context).pop(); 
+              Navigator.of(context).pop();
             },
             child: const Text("Ok"),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(right : screenWidth * 0.08,bottom: screenHeight * 0.09),
+          padding: EdgeInsets.only(
+              right: screenWidth * 0.08, bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: const BorderSide(
-                    color: diffDeleteButtonColor,
-                    width: 2.0, 
-                  ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(
+                  color: diffDeleteButtonColor,
+                  width: 2.0,
                 ),
-                backgroundColor: Colors.white,
-              ),        
+              ),
+              backgroundColor: Colors.white,
+            ),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
-            child: const Text("Cancel",
-            style: TextStyle(
-                  color: diffDeleteButtonColor,
-                  fontWeight: FontWeight.bold,
-                ),),
+            child: const Text(
+              "Cancel",
+              style: TextStyle(
+                color: diffDeleteButtonColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ],

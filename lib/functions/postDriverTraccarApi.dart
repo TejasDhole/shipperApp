@@ -7,7 +7,6 @@ import '/controller/shipperIdController.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 postDriverTraccarApi(DriverName, DriverPhoneNo, TransporterId) async {
   // shipperIdController tIdController = Get.put(shipperIdController());
 
@@ -23,7 +22,7 @@ postDriverTraccarApi(DriverName, DriverPhoneNo, TransporterId) async {
     String body = json.encode(data);
     final String DriverTraccarApiUrl =
         // FlutterConfig.get('traccarApi').toString();
-           dotenv.get('traccarApi');
+        dotenv.get('traccarApi');
     final response =
         await http.post(Uri.parse("$DriverTraccarApiUrl" + "/drivers"),
             headers: <String, String>{

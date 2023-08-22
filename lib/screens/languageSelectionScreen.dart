@@ -24,22 +24,25 @@ class LanguageSelectionScreen extends StatefulWidget {
       _LanguageSelectionScreenState();
 }
 
-class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with AutomaticKeepAliveClientMixin<LanguageSelectionScreen>{
+class _LanguageSelectionScreenState extends State<LanguageSelectionScreen>
+    with AutomaticKeepAliveClientMixin<LanguageSelectionScreen> {
   String currentItem = 'English'; //added this
   String? shipperId;
   bool _nextScreen = false;
   ShipperIdController shipperIdController =
-  Get.put(ShipperIdController(), permanent: true);
+      Get.put(ShipperIdController(), permanent: true);
   @override
   void initState() {
     super.initState();
     getData();
-    currentItem = LocalizationService().getCurrentLang();  //added this
+    currentItem = LocalizationService().getCurrentLang(); //added this
   }
-  Function? onTapNext(){
+
+  Function? onTapNext() {
     Get.to(const bottomProgressBarIndicatorWidget());
     Get.off(() => NavigationScreen());
   }
+
   getData() async {
     bool? companyApproved;
     String? mobileNum;
@@ -50,23 +53,23 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
     String? companyStatus;
 
     //transporterId = await runTransporterApiPost(
-      //mobileNum: FirebaseAuth
-        //.instance.currentUser!.phoneNumber
-        //.toString()
-        //.substring(3, 13),
+    //mobileNum: FirebaseAuth
+    //.instance.currentUser!.phoneNumber
+    //.toString()
+    //.substring(3, 13),
     //);
 
-    if (shipperId != null){
+    if (shipperId != null) {
       setState(() {
-        _nextScreen=true;
+        _nextScreen = true;
       });
-    }
-    else {
+    } else {
       setState(() {
         shipperId = sidstorage.read("shipperId");
         companyApproved = sidstorage.read("companyApproved");
         mobileNum = sidstorage.read("mobileNum");
-        accountVerificationInProgress = sidstorage.read("accountVerificationInProgress");
+        accountVerificationInProgress =
+            sidstorage.read("accountVerificationInProgress");
         transporterLocation = sidstorage.read("shipperLocation");
         name = sidstorage.read("name");
         companyName = sidstorage.read("companyName");
@@ -80,26 +83,25 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
         shipperIdController.updateShipperId(shipperId!);
         shipperIdController.updateCompanyApproved(companyApproved!);
         shipperIdController.updateMobileNum(mobileNum!);
-        shipperIdController
-            .updateAccountVerificationInProgress(accountVerificationInProgress!);
+        shipperIdController.updateAccountVerificationInProgress(
+            accountVerificationInProgress!);
         shipperIdController.updateShipperLocation(transporterLocation!);
         shipperIdController.updateName(name!);
         shipperIdController.updateCompanyName(companyName!);
         shipperIdController.updateCompanyStatus(companyStatus!);
         print("shipperID is $shipperId");
         setState(() {
-        _nextScreen=true;
-      });
+          _nextScreen = true;
+        });
       }
       //setState(() {
-        //_nextScreen=true;
+      //_nextScreen=true;
       //});
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     // final provider = Provider.of<ProviderData>(context);
     // final currentItem = provider.languageItem;
     // currentItem = LocalizationService().getCurrentLang();  //added this
@@ -119,7 +121,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                 height: MediaQuery.of(context).size.height / 1.5,
                 child: Padding(
                   padding:
-                  EdgeInsets.fromLTRB(space_5, space_8, space_5, space_0),
+                      EdgeInsets.fromLTRB(space_5, space_8, space_5, space_0),
                   child: Column(
                     children: [
                       Padding(
@@ -127,7 +129,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                         child: const Image(
                             image: AssetImage("assets/icons/welcomeIcon.png")),
                       ),
-                      Text('welcome'.tr,  // changed this
+                      Text(
+                        'welcome'.tr, // changed this
                         // AppLocalizations.of(context)!.welcome,
                         style: TextStyle(
                             fontSize: size_11, fontWeight: boldWeight),
@@ -135,7 +138,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                       SizedBox(
                         height: space_6,
                       ),
-                      Text('selectLanguage'.tr, //changed this
+                      Text(
+                        'selectLanguage'.tr, //changed this
                         // AppLocalizations.of(context)!.selectLanguage,
                         style: TextStyle(
                             fontSize: size_10, fontWeight: normalWeight),
@@ -156,15 +160,19 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                   var locale = const Locale('en', 'US');
                                   Get.updateLocale(locale);
                                   currentItem = 'English';
-                                  LocalizationService().changeLocale(currentItem);
+                                  LocalizationService()
+                                      .changeLocale(currentItem);
                                 });
                               },
                               child: Container(
                                 height: space_8,
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 1,
-                                        color:currentItem == 'English' ? navy : darkGreyColor //change here
-                                    ),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: currentItem == 'English'
+                                            ? navy
+                                            : darkGreyColor //change here
+                                        ),
                                     borderRadius:
                                         BorderRadius.circular(radius_1)),
                                 child: Row(
@@ -174,16 +182,22 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                     Text(
                                       "English",
                                       style: TextStyle(
-                                          color: currentItem == 'English' ? navy : darkGreyColor, //change here
+                                          color: currentItem == 'English'
+                                              ? navy
+                                              : darkGreyColor, //change here
                                           fontSize: size_9,
                                           fontWeight: normalWeight),
                                     ),
                                     Container(
-                                      child: currentItem == 'English' ? Image( //chenge here
-                                        image: const AssetImage("assets/icons/tick.png"),
-                                        width: space_3,
-                                        height: space_3,
-                                      ): Container(),
+                                      child: currentItem == 'English'
+                                          ? Image(
+                                              //chenge here
+                                              image: const AssetImage(
+                                                  "assets/icons/tick.png"),
+                                              width: space_3,
+                                              height: space_3,
+                                            )
+                                          : Container(),
                                     )
                                   ],
                                 ),
@@ -196,14 +210,15 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                  // selectLanguageItem(context, LanguageItem.Hindi);
-                                  // provider.setLocale(Locale('hi'));
+                                // selectLanguageItem(context, LanguageItem.Hindi);
+                                // provider.setLocale(Locale('hi'));
                                 //change here
                                 setState(() {
                                   var locale = const Locale('hi', 'IN');
                                   Get.updateLocale(locale);
                                   currentItem = 'Hindi';
-                                  LocalizationService().changeLocale(currentItem);
+                                  LocalizationService()
+                                      .changeLocale(currentItem);
                                 });
                               },
                               child: Container(
@@ -211,27 +226,36 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 1,
-                                        color: currentItem == 'Hindi' ? navy : darkGreyColor    //change here
-                                    ),
+                                        color: currentItem == 'Hindi'
+                                            ? navy
+                                            : darkGreyColor //change here
+                                        ),
                                     borderRadius:
                                         BorderRadius.circular(radius_1)),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       "हिन्दी",
                                       style: TextStyle(
-                                          color: currentItem == 'Hindi' ? navy : darkGreyColor,   //change here
+                                          color: currentItem == 'Hindi'
+                                              ? navy
+                                              : darkGreyColor, //change here
                                           fontSize: size_9,
                                           fontWeight: normalWeight),
                                     ),
-                                Container(
-                                  child: currentItem == 'Hindi' ? Image(   //change here
-                                    image: const AssetImage("assets/icons/tick.png"),
-                                    width: space_3,
-                                    height: space_3,
-                                  ): Container(),),
+                                    Container(
+                                      child: currentItem == 'Hindi'
+                                          ? Image(
+                                              //change here
+                                              image: const AssetImage(
+                                                  "assets/icons/tick.png"),
+                                              width: space_3,
+                                              height: space_3,
+                                            )
+                                          : Container(),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -242,11 +266,15 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
                       SizedBox(
                         height: space_5,
                       ),
-                      _nextScreen?
-                      GetStartedButton(onTapNext: this.onTapNext,) : GetStartedButton(onTapNext: (){
-                        Get.off(const LoginScreenUsingPhone());
-                      },)
-
+                      _nextScreen
+                          ? GetStartedButton(
+                              onTapNext: this.onTapNext,
+                            )
+                          : GetStartedButton(
+                              onTapNext: () {
+                                Get.off(const LoginScreenUsingPhone());
+                              },
+                            )
                     ],
                   ),
                 ),

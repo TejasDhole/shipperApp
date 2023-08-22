@@ -87,55 +87,53 @@ class _OngoingScreenState extends State<OngoingScreen> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height -
-          kBottomNavigationBarHeight -
-          space_8,
-      child: loading
-          ? OnGoingLoadingWidgets()
-          : modelList.isEmpty
-              ? Container(
-                  margin: EdgeInsets.only(top: 153),
-                  child: Column(
-                    children: [
-                      Image(
-                        image: AssetImage('assets/images/EmptyLoad.png'),
-                        height: 127,
-                        width: 127,
-                      ),
-                      Text(
-                        'noOnGoingLoad'.tr,
-                        // 'Looks like you have not added any Loads!',
-                        style: TextStyle(fontSize: size_8, color: grey),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                )
-              : RefreshIndicator(
-                      color: lightNavyBlue,
-                      onRefresh: () {
-                        setState(() {
-                          modelList.clear();
-                          loading = true;
-                        });
-                        return getDataByPostLoadIdOnGoing(0);
-                      },
-                      child: (kIsWeb && Responsive.isDesktop(context))
-                          ? Card(
+        height: MediaQuery.of(context).size.height -
+            kBottomNavigationBarHeight -
+            space_8,
+        child: loading
+            ? OnGoingLoadingWidgets()
+            : modelList.isEmpty
+                ? Container(
+                    margin: EdgeInsets.only(top: 153),
+                    child: Column(
+                      children: [
+                        Image(
+                          image: AssetImage('assets/images/EmptyLoad.png'),
+                          height: 127,
+                          width: 127,
+                        ),
+                        Text(
+                          'noOnGoingLoad'.tr,
+                          // 'Looks like you have not added any Loads!',
+                          style: TextStyle(fontSize: size_8, color: grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                : RefreshIndicator(
+                    color: lightNavyBlue,
+                    onRefresh: () {
+                      setState(() {
+                        modelList.clear();
+                        loading = true;
+                      });
+                      return getDataByPostLoadIdOnGoing(0);
+                    },
+                    child: (kIsWeb && Responsive.isDesktop(context))
+                        ? Card(
                             margin: EdgeInsets.only(top: 20, bottom: 5),
                             shadowColor: Colors.grey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero),
                             elevation: 10,
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 LoadsTableHeader(
                                     loadingStatus: 'On-Going',
-                                    screenWidth: MediaQuery.of(context)
-                                        .size
-                                        .width),
+                                    screenWidth:
+                                        MediaQuery.of(context).size.width),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -143,17 +141,14 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                   flex: 4,
                                   child: ListView.separated(
                                     primary: false,
-                                    physics:
-                                        const BouncingScrollPhysics(),
+                                    physics: const BouncingScrollPhysics(),
                                     // physics: const AlwaysScrollableScrollPhysics (),
                                     scrollDirection: Axis.vertical,
-                                    padding:
-                                        EdgeInsets.only(bottom: space_15),
+                                    padding: EdgeInsets.only(bottom: space_15),
                                     controller: scrollController,
                                     itemCount: modelList.length,
                                     itemBuilder: (context, index) => (index ==
-                                            modelList
-                                                .length) //removed -1 here
+                                            modelList.length) //removed -1 here
                                         ? Visibility(
                                             visible: OngoingProgress,
                                             child:
@@ -174,23 +169,21 @@ class _OngoingScreenState extends State<OngoingScreen> {
                               ],
                             ),
                           )
-                          : ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              padding: EdgeInsets.only(bottom: space_15),
-                              itemCount: modelList.length,
-                              itemBuilder: (context, index) {
-                                return (index == modelList.length)
-                                    ? Visibility(
-                                        visible: OngoingProgress,
-                                        child:
-                                            bottomProgressBarIndicatorWidget())
-                                    : (index < modelList.length)
-                                        ? OngoingCard(
-                                            loadAllDataModel: modelList[index],
-                                          )
-                                        : Container();
-                              }),
-                    )
-    );
+                        : ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            padding: EdgeInsets.only(bottom: space_15),
+                            itemCount: modelList.length,
+                            itemBuilder: (context, index) {
+                              return (index == modelList.length)
+                                  ? Visibility(
+                                      visible: OngoingProgress,
+                                      child: bottomProgressBarIndicatorWidget())
+                                  : (index < modelList.length)
+                                      ? OngoingCard(
+                                          loadAllDataModel: modelList[index],
+                                        )
+                                      : Container();
+                            }),
+                  ));
   }
 } //class end

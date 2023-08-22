@@ -25,8 +25,7 @@ class RoundedImageDisplay extends StatelessWidget {
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(space_3),
-            ))
-        ),
+            ))),
         child: Container(
           decoration: imageFile != null
               ? BoxDecoration(

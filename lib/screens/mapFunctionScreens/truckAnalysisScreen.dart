@@ -20,9 +20,7 @@ import 'package:http/http.dart' as http;
 import '/widgets/truckAnalysisDoughnut.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 String routeDataApi = dotenv.get("routeDataApiUrl");
-
 
 class truckAnalysisScreen extends StatefulWidget {
   var recentStops;
@@ -163,7 +161,6 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
 
   // Function to fetch the address
   validStoppages() async {
-
     /// To empty the lists to avoid overlap of Data.
     validStoppageList = [];
     truckStatusList = [];
@@ -192,7 +189,7 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
   }
 
   // To get valid Addresses
-  getValidAddresses() async{
+  getValidAddresses() async {
     for (var stopInstance in validStoppageList) {
       var n = await getStoppageAddress(stopInstance);
       validAddressList.add(n);
@@ -205,7 +202,6 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
   /// if the stop has already been defined.
   getRouteData() async {
     try {
-
       /// Call for route Data Api
       http.Response response =
           await http.get(Uri.parse("${routeDataApi}?devideId=1"));
@@ -245,15 +241,13 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
           loading = false;
         });
       }
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
       EasyLoading.dismiss();
     }
-
   }
 
-  void calculateDoughnutData(var returnData){
+  void calculateDoughnutData(var returnData) {
     /// Calculates the Data for the Analysis Doughnut
     for (int i = 0; i < validStoppageList.length; i++) {
       for (var json in returnData) {
@@ -286,7 +280,7 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
     }
   }
 
-  void calculateAnalysisBarValues(){
+  void calculateAnalysisBarValues() {
     /// To calculate the Analysis Bar Values.
     for (var stop in stopStatusList) {
       stop == "Loading_Point" ? loadingNav++ : null;
@@ -422,7 +416,7 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
   void initFunction() async {
     setState(() {
       recentStops = widget.recentStops;
-    //  truckId = widget.truckId;
+      //  truckId = widget.truckId;
       TruckNo = widget.TruckNo;
       imei = widget.imei;
       deviceId = widget.deviceId;
@@ -469,7 +463,6 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-
           title: Text(
             "$TruckNo",
             style: TextStyle(color: black, fontWeight: FontWeight.bold),
@@ -504,14 +497,21 @@ class _truckAnalysisScreenState extends State<truckAnalysisScreen>
                                       decoration: BoxDecoration(
                                           color: white,
                                           border: Border.all(
-                                              color: Color.fromRGBO(64, 64, 64, 1)),
+                                              color: Color.fromRGBO(
+                                                  64, 64, 64, 1)),
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
                                       height: 30,
                                       child: ElevatedButton(
                                         onPressed: () => _selectDate(context),
                                         child: Text(
-                                          "${formatDate(selectedDate, [d, ' ', M, ' ', yyyy])}",
+                                          "${formatDate(selectedDate, [
+                                                d,
+                                                ' ',
+                                                M,
+                                                ' ',
+                                                yyyy
+                                              ])}",
                                           style: TextStyle(
                                               fontSize: 11, color: black),
                                         ),

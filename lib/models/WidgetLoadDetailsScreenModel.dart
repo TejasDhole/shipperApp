@@ -8,13 +8,14 @@ class WidgetLoadDetailsScreenModel {
   bool? loadPosterCompanyApproved;
   bool? loadPosterApproved;
 
-  WidgetLoadDetailsScreenModel(
-      {this.loadPosterId,
-        this.phoneNo,
-        this.loadPosterLocation,
-        this.loadPosterName,
-        this.loadPosterCompanyName,
-        this.loadPosterKyc,
-        this.loadPosterCompanyApproved,
-        this.loadPosterApproved,});
+  WidgetLoadDetailsScreenModel({
+    this.loadPosterId,
+    this.phoneNo,
+    this.loadPosterLocation,
+    this.loadPosterName,
+    this.loadPosterCompanyName,
+    this.loadPosterKyc,
+    this.loadPosterCompanyApproved,
+    this.loadPosterApproved,
+  });
 }
