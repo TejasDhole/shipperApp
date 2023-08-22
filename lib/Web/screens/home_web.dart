@@ -441,20 +441,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               _selectedIndex = 3;
               _index = 3;
             }
-            // else if (title == "Transporter") {
-            //   dashboardSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   myLoadsSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   invoiceSelectedTabGradientColor =
-            //       const LinearGradient(colors: [white, white]);
-            //   accountSelectedTabGradientColor = const LinearGradient(colors: [
-            //     sideNavItemSelectedColor,
-            //     transparent
-            //   ]);
-            //   _selectedIndex = 4;
-            //   _index = 11;
-            // }
           });
         },
         child: Container(
