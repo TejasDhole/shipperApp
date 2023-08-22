@@ -29,15 +29,15 @@ class BuyGPSPayButton extends StatelessWidget {
   String? truckID;
   var context;
 
-  BuyGPSPayButton({
-    Key? key,
-    required this.groupValue,
-    required this.durationGroupValue,
-    required this.locationPermissionis,
-    required this.currentAddress,
-    required this.truckID,
-    required this.context
-  }) : super(key: key);
+  BuyGPSPayButton(
+      {Key? key,
+      required this.groupValue,
+      required this.durationGroupValue,
+      required this.locationPermissionis,
+      required this.currentAddress,
+      required this.truckID,
+      required this.context})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,47 +45,43 @@ class BuyGPSPayButton extends StatelessWidget {
       height: space_8,
       width: (space_20 + space_40),
       margin: EdgeInsets.only(bottom: space_2),
-      child: Obx(() => TextButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      isDisable
-                          ? bidBackground
-                          : updateButtonController.updateButton.value
-                          ? bidBackground
-                          : solidLineColor
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(radius_6)
-                      )
+      child: Obx(
+        () => TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(isDisable
+                    ? bidBackground
+                    : updateButtonController.updateButton.value
+                        ? bidBackground
+                        : solidLineColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(radius_6)))),
+            onPressed: updateButtonController.updateButton.value
+                ? () => _payButtonFunction()
+                : null,
+            child: updateButtonController.updateButton.value
+                ? Text(
+                    "Pay $groupValue",
+                    style: TextStyle(
+                      color: greyishWhiteColor,
+                      fontWeight: mediumBoldWeight,
+                      fontSize: size_9,
+                    ),
+                    textAlign: TextAlign.center,
                   )
-              ),
-              onPressed: updateButtonController.updateButton.value
-                  ? () => _payButtonFunction()
-                  : null,
-              child: updateButtonController.updateButton.value
-                  ? Text(
-                "Pay $groupValue",
-                style: TextStyle(
-                  color: greyishWhiteColor,
-                  fontWeight: mediumBoldWeight,
-                  fontSize: size_9,
-                ),
-                textAlign: TextAlign.center,
-              )
-                  : Text(
-                "Pay NA",
-                style: TextStyle(
-                  color: greyishWhiteColor,
-                  fontWeight: mediumBoldWeight,
-                  fontSize: size_9,
-                ),
-                textAlign: TextAlign.center,
-              )
-          ),
+                : Text(
+                    "Pay NA",
+                    style: TextStyle(
+                      color: greyishWhiteColor,
+                      fontWeight: mediumBoldWeight,
+                      fontSize: size_9,
+                    ),
+                    textAlign: TextAlign.center,
+                  )),
       ),
     );
   }
+
   _payButtonFunction() async {
     EasyLoading.instance
       ..indicatorType = EasyLoadingIndicatorType.ring
@@ -101,20 +97,18 @@ class BuyGPSPayButton extends StatelessWidget {
     gpsId = await buyGPSApiCalls.postByGPSData(
         rate: groupValue,
         duration: durationGroupValue,
-        address: locationPermissionis
-            ? currentAddress
-            : "Location not Available",
+        address:
+            locationPermissionis ? currentAddress : "Location not Available",
         truckId: truckID);
     if (gpsId != null) {
       EasyLoading.dismiss();
       showDialog(
           context: context,
           builder: (context) => completedDialog(
-            upperDialogText: "You’ve purchased GPS",
-            lowerDialogText: "successfully!",
-          ));
-      Timer(Duration(seconds: 3),
-              () => {Get.back()});
+                upperDialogText: "You’ve purchased GPS",
+                lowerDialogText: "successfully!",
+              ));
+      Timer(Duration(seconds: 3), () => {Get.back()});
     } else {
       EasyLoading.dismiss();
       showDialog(

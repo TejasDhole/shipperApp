@@ -6,7 +6,8 @@ class CustomRole extends StatefulWidget {
   final String selectedRole;
   final ValueChanged<String> roleChanged;
 
-  const CustomRole({Key? key, required this.selectedRole, required this.roleChanged})
+  const CustomRole(
+      {Key? key, required this.selectedRole, required this.roleChanged})
       : super(key: key);
 
   @override
@@ -16,25 +17,21 @@ class CustomRole extends StatefulWidget {
 class _CustomRoleState extends State<CustomRole> {
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       alignment: Alignment.center,
       width: 250,
       decoration: BoxDecoration(
-      border: Border.all(color: greyShade),
-    ),
+        border: Border.all(color: greyShade),
+      ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           alignment: Alignment.center,
           isExpanded: true,
-          
           value: widget.selectedRole,
           items: _dropDownItem(),
-          
           onChanged: (value) {
             widget.roleChanged(value!);
           },
-          
         ),
       ),
     );
@@ -47,7 +44,7 @@ class _CustomRoleState extends State<CustomRole> {
             value: value,
             child: Center(
               child: Text(value,
-              textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                       color: darkBlueTextColor, fontWeight: FontWeight.w500)),
             )))

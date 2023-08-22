@@ -7,7 +7,6 @@ import '/controller/shipperIdController.dart';
 import '/models/loadDetailsScreenModel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 postBookingApiNew(LoadDetailsScreenModel? loadDetailsScreenModel, truckId,
     deviceId, driverName, driverPhoneNo) async {
   ShipperIdController tIdController = Get.put(ShipperIdController());

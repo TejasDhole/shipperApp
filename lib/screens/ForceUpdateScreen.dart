@@ -17,7 +17,8 @@ class ForceUpdateScreen extends StatefulWidget {
 class _ForceUpdateScreenState extends State<ForceUpdateScreen> {
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
     super.dispose();
   }
 
@@ -26,15 +27,14 @@ class _ForceUpdateScreenState extends State<ForceUpdateScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            color: updateAvailableBackgroundColor
-        ),
+        decoration: BoxDecoration(color: updateAvailableBackgroundColor),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,8 +59,7 @@ class _ForceUpdateScreenState extends State<ForceUpdateScreen> {
                         fontSize: size_9,
                         fontWeight: normalWeight,
                         fontStyle: FontStyle.normal,
-                        color: liveasyBlackColor
-                    ),
+                        color: liveasyBlackColor),
                   ),
                   SizedBox(
                     height: 20,
@@ -71,8 +70,7 @@ class _ForceUpdateScreenState extends State<ForceUpdateScreen> {
                         fontSize: size_7,
                         fontWeight: normalWeight,
                         fontStyle: FontStyle.normal,
-                        color: liveasyBlackColor
-                    ),
+                        color: liveasyBlackColor),
                   ),
                 ],
               ),
@@ -85,21 +83,16 @@ class _ForceUpdateScreenState extends State<ForceUpdateScreen> {
               height: 38,
               child: TextButton(
                 onPressed: () => launchURL(AppUpdateDialog.PLAY_STORE_URL),
-                child: Text(
-                    "Update",
+                child: Text("Update",
                     style: TextStyle(
                         color: backgroundColor,
                         fontWeight: mediumBoldWeight,
                         fontStyle: FontStyle.normal,
-                        fontSize: size_7
-                    )
-                ),
+                        fontSize: size_7)),
                 style: TextButton.styleFrom(
                     backgroundColor: liveasyGreen,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(radius_5 - 2)
-                    )
-                ),
+                        borderRadius: BorderRadius.circular(radius_5 - 2))),
               ),
             )
           ],

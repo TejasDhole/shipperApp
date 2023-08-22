@@ -20,9 +20,8 @@ import '../models/popup_model_for_employee_card.dart';
 //TODO: This card is used to display the employee name/uid and role in the company and also we can edit the role as well as delete the employee from company database
 class EmployeeCard extends StatelessWidget {
   CompanyUsers companyUsersModel;
-  
-  EmployeeCard({Key? key, required this.companyUsersModel}) : super(key: key);
 
+  EmployeeCard({Key? key, required this.companyUsersModel}) : super(key: key);
 
   List<Map<String, dynamic>> employeeDataList = [];
 
@@ -49,77 +48,73 @@ class EmployeeCard extends StatelessWidget {
             'Role': role,
           };
           return Expanded(
-        child: Row(
-          children: [
-            Expanded(
-                flex: 4,
-                child: Center(
-                    child: Container(
-                        padding: const EdgeInsets.only(left: 8,top : 12),
-                        child: Text(
-                          '$name',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                              color: kLiveasyColor,
-                              fontSize: 15,
-                              fontFamily: 'Montserrat'),
-                        )))),
-            const VerticalDivider(
-              color: Colors.grey,
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 4,
+                    child: Center(
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 8, top: 12),
+                            child: Text(
+                              '$name',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kLiveasyColor,
+                                  fontSize: 15,
+                                  fontFamily: 'Montserrat'),
+                            )))),
+                const VerticalDivider(
+                  color: Colors.grey,
+                ),
+                Expanded(
+                    flex: 5,
+                    child: Center(
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 8, top: 12),
+                            child: Text(
+                              '$email',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: kLiveasyColor,
+                                  fontSize: 15,
+                                  fontFamily: 'Montserrat'),
+                            )))),
+                const VerticalDivider(
+                  color: Colors.grey,
+                ),
+                Expanded(
+                    flex: 3,
+                    child: Center(
+                        child: Container(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: CustomRole(
+                          selectedRole: '$role',
+                          roleChanged: (newRole) {
+                            Future.delayed(Duration.zero, () {
+                              updateUser(context, newRole);
+                            });
+                          }),
+                    ))),
+                const VerticalDivider(
+                  color: Colors.grey,
+                ),
+                Expanded(
+                    flex: 3,
+                    child: Center(
+                        child: Container(
+                      padding: const EdgeInsets.only(left: 8, top: 12),
+                      child: GestureDetector(
+                        onTap: () {
+                          removeUser(context, '$email');
+                        },
+                        child: const Image(
+                            image: AssetImage('assets/icons/deleteIcon.png')),
+                      ),
+                    ))),
+              ],
             ),
-
-            Expanded(
-                flex: 5,
-                child: Center(
-                    child: Container(
-                        padding: const EdgeInsets.only(left: 8,top : 12),
-                        child: Text(
-                          '$email',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: kLiveasyColor,
-                              fontSize: 15,
-                              fontFamily: 'Montserrat'),
-                        )))),
-            const VerticalDivider(
-              color: Colors.grey,
-            ),
-
-            Expanded(
-                flex: 3,
-                child: Center(
-                    child: Container(
-                        padding: const  EdgeInsets.only( top : 12),
-                        child: CustomRole(
-                              selectedRole: '$role',
-                              roleChanged: (newRole) {
-                                Future.delayed(Duration.zero, () {
-                                  updateUser(context, newRole);
-                                });
-                              }),))),
-            const VerticalDivider(
-              color: Colors.grey,
-            ),
-
-            Expanded(
-                flex: 3,
-                child: Center(
-                    child: Container(
-                        padding: const EdgeInsets.only(left: 8,top : 12),
-                        
-                        child: GestureDetector(
-                          onTap: (){
-                            removeUser(context, '$email');
-                          },
-                          child: const Image(
-                              image: AssetImage('assets/icons/deleteIcon.png')),
-                        ),
-                          ))),
-            
-            ],
-            ),
-            );
+          );
         } else {
           return Container();
         }
@@ -150,8 +145,6 @@ class EmployeeCard extends StatelessWidget {
             ],
           ));
 
-  
-
   void updateUser(BuildContext context, String newRole) {
     showDialog(
         context: context,
@@ -159,7 +152,6 @@ class EmployeeCard extends StatelessWidget {
           return UpdateEmployeeRole(
               employeeUid: companyUsersModel.uid, selectedRole: newRole);
         });
- 
   }
 
   removeUser(BuildContext context, String name) {
@@ -171,5 +163,3 @@ class EmployeeCard extends StatelessWidget {
         });
   }
 }
-
-

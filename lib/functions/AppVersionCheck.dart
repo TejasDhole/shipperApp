@@ -14,11 +14,8 @@ Future<void> versionCheck(BuildContext context) async {
     //in place of FirebaseRemoteConfig it was RemoteConfig
     FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: Duration(
-          seconds: 1),
-      minimumFetchInterval: Duration(
-          seconds:
-          10),
+      fetchTimeout: Duration(seconds: 1),
+      minimumFetchInterval: Duration(seconds: 10),
     ));
     await _remoteConfig.fetchAndActivate();
     double normalversion = double.parse(
@@ -32,10 +29,10 @@ Future<void> versionCheck(BuildContext context) async {
     if (currentVersion < forceupdateversion) {
       Get.to(() => ForceUpdateScreen());
     } else if (currentVersion < normalversion) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context)=> AppUpdateDialog());
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => AppUpdateDialog());
     } else {
       print("You can go");
     }

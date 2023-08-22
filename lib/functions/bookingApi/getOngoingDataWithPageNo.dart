@@ -16,7 +16,7 @@ getOngoingDataWithPageNo(int i) async {
 
   http.Response response = await http.get(Uri.parse(
       '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
-     // '$bookingApiUrl?postLoadId=transporter:81a794cd-08fa-455c-9727-eaf12279410b&completed=false&cancel=false&pageNo=$i'));
+  // '$bookingApiUrl?postLoadId=transporter:81a794cd-08fa-455c-9727-eaf12279410b&completed=false&cancel=false&pageNo=$i'));
 
   var jsonData = json.decode(response.body);
   // print("from getOngoingDataWithPageNo: ${response.body}");
@@ -33,7 +33,11 @@ getOngoingDataWithPageNo(int i) async {
     bookingModel.completedDate = json['completedDate'] ?? "NA";
     bookingModel.rate = json['rate'] != null ? json['rate'].toString() : 'NA';
     bookingModel.unitValue = json['unitValue'] ?? 'PER_TON';
-    bookingModel.deviceId = json['deviceId'] != null ? json['deviceId'] == 'NA' ? 80 : int.parse(json["deviceId"]) : 80;
+    bookingModel.deviceId = json['deviceId'] != null
+        ? json['deviceId'] == 'NA'
+            ? 80
+            : int.parse(json["deviceId"])
+        : 80;
     bookingModel.unloadingPointCity = json['unloadingPointCity'] ?? 'NA';
     bookingModel.loadingPointCity = json['loadingPointCity'] ?? 'NA';
     bookingModel.truckNo = json['truckNo'] ?? 'NA';

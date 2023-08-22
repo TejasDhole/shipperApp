@@ -75,7 +75,6 @@ Future<String?> runShipperApiPost({
     }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-
       var decodedResponse = json.decode(response.body);
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
@@ -94,9 +93,7 @@ Future<String?> runShipperApiPost({
         shipperIdController.updateShipperId(shipperId);
         sidstorage
             .write("shipperId", shipperId)
-            .then((value) =>
-            print("Written shipperId")
-        );
+            .then((value) => print("Written shipperId"));
         shipperIdController.updateCompanyApproved(companyApproved);
         sidstorage
             .write("companyApproved", companyApproved)
@@ -134,7 +131,9 @@ Future<String?> runShipperApiPost({
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
-        CreateCompanyDatabase().createCompanyDatabase(shipperIdController.companyName.value.toString(),shipperIdController.shipperId.value.toString());
+        CreateCompanyDatabase().createCompanyDatabase(
+            shipperIdController.companyName.value.toString(),
+            shipperIdController.shipperId.value.toString());
         getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
         getShipperIdFromCompanyDatabase();
         return shipperId;

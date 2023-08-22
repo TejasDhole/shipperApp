@@ -357,52 +357,52 @@ class _docInputPodState extends State<docInputPod> {
           return
               // child:
               Dialog(
-                child: Wrap(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            topLeft: Radius.circular(20)),
-                        color: white,
-                      ),
-                      width: 240,
-                      // color: white,
-                      child: new ListTile(
-                          textColor: black,
-                          iconColor: black,
-                          // selectedColor: darkBlueColor,
-                          leading: new Icon(Icons.photo_library),
-                          title: new Text("Gallery".tr),
-                          onTap: () async {
-                            await getImageFromGallery2(
-                                functionToUpdate, strToUpdate, context);
-                            Navigator.of(context).pop();
-                          }),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(20),
-                            bottomLeft: Radius.circular(20)),
-                        color: white,
-                      ),
-                      width: 240,
-                      child: new ListTile(
-                        textColor: black,
-                        iconColor: black,
-                        leading: new Icon(Icons.photo_camera),
-                        title: new Text("Camera".tr),
-                        onTap: () async {
-                          await getImageFromCamera2(
-                              functionToUpdate, strToUpdate, context);
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ],
+            child: Wrap(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20)),
+                    color: white,
+                  ),
+                  width: 240,
+                  // color: white,
+                  child: new ListTile(
+                      textColor: black,
+                      iconColor: black,
+                      // selectedColor: darkBlueColor,
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text("Gallery".tr),
+                      onTap: () async {
+                        await getImageFromGallery2(
+                            functionToUpdate, strToUpdate, context);
+                        Navigator.of(context).pop();
+                      }),
                 ),
-              );
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)),
+                    color: white,
+                  ),
+                  width: 240,
+                  child: new ListTile(
+                    textColor: black,
+                    iconColor: black,
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text("Camera".tr),
+                    onTap: () async {
+                      await getImageFromCamera2(
+                          functionToUpdate, strToUpdate, context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
           // );
         });
   }
@@ -479,7 +479,9 @@ class _docInputPodState extends State<docInputPod> {
       // }
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
+      bytes = kIsWeb
+          ? await pickedFile.readAsBytes()
+          : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);

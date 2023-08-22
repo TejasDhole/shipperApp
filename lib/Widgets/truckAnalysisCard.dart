@@ -32,8 +32,8 @@ class truckanalysisCard extends StatefulWidget {
   _truckanalysisCardState createState() => _truckanalysisCardState();
 }
 
-class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKeepAliveClientMixin{
-
+class _truckanalysisCardState extends State<truckanalysisCard>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -44,7 +44,6 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
   var imei;
   var truckStatus;
   var stopStatus;
-
 
   String textHolder = 'What is this Location?';
 
@@ -61,7 +60,6 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
   bool _colorButtonTwo = false;
   bool _colorButtonThree = false;
   bool _colorButtonFour = false;
-
 
   /// Function to make a post request to the routeData Api
   postRouteData(
@@ -89,43 +87,53 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
   }
 
   /// To set color of button to green Once its Clicked.
-  colorDisabledOne(){
+  colorDisabledOne() {
     setState(() {
       _disableButtonOne = true;
+
       /// Change text in card when Post is made.
       textHolder = 'You marked this Location as?';
-      /// Disable all buttons.
-      buttonIsClickable = false;
-    });
-  }
-  colorDisabledTwo(){
-    setState(() {
-      _disableButtonTwo = true;
-      /// Change text in card when Post is made.
-      textHolder = 'You marked this Location as?';
-      /// Disable all buttons.
-      buttonIsClickable = false;
-    });
-  }
-  colorDisabledThree(){
-    setState(() {
-      _disableButtonThree = true;
-      /// Change text in card when Post is made.
-      textHolder = 'You marked this Location as?';
-      /// Disable all buttons.
-      buttonIsClickable = false;
-    });
-  }
-  colorDisabledFour(){
-    setState(() {
-      _disableButtonFour = true;
-      /// Change text in card when Post is made.
-      textHolder = 'You marked this Location as?';
+
       /// Disable all buttons.
       buttonIsClickable = false;
     });
   }
 
+  colorDisabledTwo() {
+    setState(() {
+      _disableButtonTwo = true;
+
+      /// Change text in card when Post is made.
+      textHolder = 'You marked this Location as?';
+
+      /// Disable all buttons.
+      buttonIsClickable = false;
+    });
+  }
+
+  colorDisabledThree() {
+    setState(() {
+      _disableButtonThree = true;
+
+      /// Change text in card when Post is made.
+      textHolder = 'You marked this Location as?';
+
+      /// Disable all buttons.
+      buttonIsClickable = false;
+    });
+  }
+
+  colorDisabledFour() {
+    setState(() {
+      _disableButtonFour = true;
+
+      /// Change text in card when Post is made.
+      textHolder = 'You marked this Location as?';
+
+      /// Disable all buttons.
+      buttonIsClickable = false;
+    });
+  }
 
   /// To determine which button to enable when stop is already defined.
   enableCorrectButton() {
@@ -170,14 +178,13 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
     initFunction();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.all(5.0),
-        child:
-        (truckStatus == true) ?
-        Card(elevation: 5,
+        child: (truckStatus == true)
+            ? Card(
+                elevation: 5,
                 child: Column(
                   children: [
                     Container(
@@ -185,13 +192,11 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                         leading: Icon(Icons.location_on_outlined),
                         trailing:
                             Image.asset('assets/icons/gmaps.png', scale: 2),
-                        onTap: (){
-                          Get.to(
-                            showStopOnMap(
-                              validStop: validStop,
-                              validAddress: validAddress,
-                            )
-                          );
+                        onTap: () {
+                          Get.to(showStopOnMap(
+                            validStop: validStop,
+                            validAddress: validAddress,
+                          ));
                         },
                         title: Text(
                           "$validAddress",
@@ -221,14 +226,16 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                 height: 15,
                                 width: 50,
                                 child: ElevatedButton(
-                                    onPressed: buttonIsClickable ? () {
+                                    onPressed: buttonIsClickable
+                                        ? () {
                                             postRouteData(
                                               "$validAddress",
                                               "Loading_Point",
                                               validStop,
                                             );
                                             colorDisabledOne();
-                                          } : null,
+                                          }
+                                        : null,
                                     style: ButtonStyle(
                                       padding:
                                           MaterialStateProperty.all<EdgeInsets>(
@@ -236,8 +243,12 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                       backgroundColor: MaterialStateProperty
                                           .resolveWith<Color>(
                                         (Set<MaterialState> states) {
-                                          if (states.contains(MaterialState.disabled))
-                                            return _disableButtonOne ? Color.fromRGBO(9, 183, 120, 1) : Color.fromRGBO(205, 205, 205, 1);
+                                          if (states
+                                              .contains(MaterialState.disabled))
+                                            return _disableButtonOne
+                                                ? Color.fromRGBO(9, 183, 120, 1)
+                                                : Color.fromRGBO(
+                                                    205, 205, 205, 1);
                                           return bidBackground;
                                         },
                                       ),
@@ -246,7 +257,9 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                       "Loading",
                                       style: TextStyle(
                                           fontSize: 10,
-                                          color: _disableButtonOne ? Colors.white : Colors.grey[250]),
+                                          color: _disableButtonOne
+                                              ? Colors.white
+                                              : Colors.grey[250]),
                                     )),
                               ),
                               SizedBox(
@@ -269,29 +282,34 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                         (Set<MaterialState> states) {
                                           if (states
                                               .contains(MaterialState.disabled))
-                                            return _disableButtonTwo ? Color.fromRGBO(9, 183, 120, 1) : Color.fromRGBO(205, 205, 205, 1);
+                                            return _disableButtonTwo
+                                                ? Color.fromRGBO(9, 183, 120, 1)
+                                                : Color.fromRGBO(
+                                                    205, 205, 205, 1);
                                           return bidBackground;
                                         },
                                       ),
                                     ),
                                     child: Text(
                                       "Unloading",
-                                      style: TextStyle(fontSize: 10,
-                                          color: _disableButtonTwo ? Colors.white : Colors.grey[250]),
-                                    )
-                                ),
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          color: _disableButtonTwo
+                                              ? Colors.white
+                                              : Colors.grey[250]),
+                                    )),
                               ),
                               SizedBox(
                                 height: 15,
                                 width: 50,
                                 child: ElevatedButton(
-                                    onPressed: buttonIsClickable ? () {
-                                            postRouteData(
-                                                "${validAddress}",
-                                                "Parking",
-                                                validStop);
-                                                colorDisabledThree();
-                                          } : null,
+                                    onPressed: buttonIsClickable
+                                        ? () {
+                                            postRouteData("${validAddress}",
+                                                "Parking", validStop);
+                                            colorDisabledThree();
+                                          }
+                                        : null,
                                     style: ButtonStyle(
                                       padding:
                                           MaterialStateProperty.all<EdgeInsets>(
@@ -301,17 +319,22 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                         (Set<MaterialState> states) {
                                           if (states
                                               .contains(MaterialState.disabled))
-                                            return _disableButtonThree ? Color.fromRGBO(9, 183, 120, 1) : Color.fromRGBO(205, 205, 205, 1);
+                                            return _disableButtonThree
+                                                ? Color.fromRGBO(9, 183, 120, 1)
+                                                : Color.fromRGBO(
+                                                    205, 205, 205, 1);
                                           return bidBackground;
                                         },
                                       ),
                                     ),
                                     child: Text(
                                       "Parking",
-                                      style: TextStyle(fontSize: 10,
-                                          color: _disableButtonThree ? Colors.white : Colors.grey[250]),
-                                    )
-                                ),
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          color: _disableButtonThree
+                                              ? Colors.white
+                                              : Colors.grey[250]),
+                                    )),
                               ),
                               SizedBox(
                                 height: 15,
@@ -319,12 +342,11 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                 child: ElevatedButton(
                                     onPressed: buttonIsClickable
                                         ? () {
-                                            postRouteData(
-                                                "${validAddress}",
-                                                "Maintenance",
-                                                validStop);
-                                                colorDisabledFour();
-                                          } : null,
+                                            postRouteData("${validAddress}",
+                                                "Maintenance", validStop);
+                                            colorDisabledFour();
+                                          }
+                                        : null,
                                     style: ButtonStyle(
                                       padding:
                                           MaterialStateProperty.all<EdgeInsets>(
@@ -334,15 +356,21 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                         (Set<MaterialState> states) {
                                           if (states
                                               .contains(MaterialState.disabled))
-                                            return _disableButtonFour ? Color.fromRGBO(9, 183, 120, 1) : Color.fromRGBO(205, 205, 205, 1);
+                                            return _disableButtonFour
+                                                ? Color.fromRGBO(9, 183, 120, 1)
+                                                : Color.fromRGBO(
+                                                    205, 205, 205, 1);
                                           return bidBackground;
                                         },
                                       ),
                                     ),
                                     child: Text(
                                       "Maintenance",
-                                      style: TextStyle(fontSize: 10,
-                                      color: _disableButtonFour ? Colors.white : Colors.grey[250]),
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          color: _disableButtonFour
+                                              ? Colors.white
+                                              : Colors.grey[250]),
                                     )),
                               ),
                             ],
@@ -362,12 +390,11 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                         leading: Icon(Icons.location_on_outlined),
                         trailing:
                             Image.asset('assets/icons/gmaps.png', scale: 2),
-                        onTap: (){
-                          Get.to(
-                              showStopOnMap(
-                                validStop: validStop,
-                                validAddress: validAddress,)
-                          );
+                        onTap: () {
+                          Get.to(showStopOnMap(
+                            validStop: validStop,
+                            validAddress: validAddress,
+                          ));
                         },
                         title: Text(
                           "${validAddress}",
@@ -449,8 +476,7 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                                       child: Text(
                                         "Maintenance",
                                         style: TextStyle(fontSize: 10),
-                                      )
-                                  ),
+                                      )),
                                 )
                               ],
                             ),
@@ -460,7 +486,6 @@ class _truckanalysisCardState extends State<truckanalysisCard> with AutomaticKee
                     )
                   ],
                 ),
-              )
-    );
+              ));
   }
 }

@@ -10,15 +10,14 @@ Future<String> getMapMyIndiaToken() async {
   String? clientIdMapMyIndia;
   String? clientSecretMapMyIndia;
   try {
-
     await FirebaseDatabase.instance
         .reference()
         .child('clientSecretMapMyIndia')
         .once()
         .then((DataSnapshot snapshot) {
-      clientSecretMapMyIndia = snapshot.value as String?;
-      print("clientSecretMapMyIndia = $clientSecretMapMyIndia");
-    } as FutureOr Function(DatabaseEvent value));
+          clientSecretMapMyIndia = snapshot.value as String?;
+          print("clientSecretMapMyIndia = $clientSecretMapMyIndia");
+        } as FutureOr Function(DatabaseEvent value));
 
     // await FirebaseDatabase.instance
     //     .reference()
@@ -46,9 +45,7 @@ Future<String> getMapMyIndiaToken() async {
     //       clientIdMapMyIndia = event.snapshot.value as String?;
     //       print("clientIdMapMyIndia = $clientIdMapMyIndia");
     //     });
-
-
-  } catch (e){
+  } catch (e) {
     print("Exception ${e.toString()}");
   } finally {
     // print("clientIdMapMyIndia $clientIdMapMyIndia, clientSecretMapMyIndia $clientSecretMapMyIndia");

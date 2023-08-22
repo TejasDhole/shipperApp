@@ -59,7 +59,7 @@ Future getImageFromCamera(
       //   functionToUpdate(File(pickedFile.path));
       //   strToUpdate(img64);
       // } else {
-        showDialog(context: context, builder: (context) => PermissionDialog());
+      showDialog(context: context, builder: (context) => PermissionDialog());
       // }
     }
   } else {

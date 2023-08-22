@@ -13,7 +13,7 @@ class BonusWidget extends StatelessWidget {
       onTap: () {
         // showDialog(
         //     context: context,
-            // builder: (context) => NextUpdateAlertDialog());
+        // builder: (context) => NextUpdateAlertDialog());
       },
       child: Container(
         height: 100,

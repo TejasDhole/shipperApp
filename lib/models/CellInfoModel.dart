@@ -1,5 +1,4 @@
 class CellInfoModel {
-
   String? radio;
   int? mcc;
   int? mnc;
@@ -9,12 +8,12 @@ class CellInfoModel {
   int? psc;
 
   CellInfoModel({
-        this.radio,
-        this.mcc,
-        this.mnc,
-        this.signal,
-        this.lac,
-        this.cid,
-        this.psc,
-      });
+    this.radio,
+    this.mcc,
+    this.mnc,
+    this.signal,
+    this.lac,
+    this.cid,
+    this.psc,
+  });
 }

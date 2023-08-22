@@ -23,19 +23,16 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
   bool loading = false;
   bool DeliveredProgress = false;
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
-
 
   List<DeliveredCardModel> modelList = [];
 
   ScrollController scrollController = ScrollController();
 
   getDataByPostLoadIdDelivered(int i) async {
-
     if (this.mounted) {
       setState(() {
         DeliveredProgress = true;

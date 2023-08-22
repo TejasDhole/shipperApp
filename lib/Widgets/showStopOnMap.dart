@@ -17,7 +17,6 @@ class showStopOnMap extends StatefulWidget {
 
 class _showStopOnMapState extends State<showStopOnMap>
     with WidgetsBindingObserver {
-
   List<Marker> currentStoppage = [];
   var validStop;
   var validAddress;
@@ -42,7 +41,6 @@ class _showStopOnMapState extends State<showStopOnMap>
     ));
   }
 
-
   late LatLng latLngMarker = LatLng(validStop.latitude, validStop.longitude);
   late CameraPosition _camPosition =
       CameraPosition(target: latLngMarker, zoom: 12);
@@ -59,18 +57,14 @@ class _showStopOnMapState extends State<showStopOnMap>
     return Scaffold(
       appBar: AppBar(
         title: Text("$validAddress"),
-        titleTextStyle: TextStyle(
-
-          color: Colors.black
-        ),
+        titleTextStyle: TextStyle(color: Colors.black),
       ),
-        body: GoogleMap(
+      body: GoogleMap(
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
           initialCameraPosition: _camPosition,
           onMapCreated: (controller) => _googleMapController = controller,
-          markers: Set.from(currentStoppage)
-        ),
+          markers: Set.from(currentStoppage)),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,

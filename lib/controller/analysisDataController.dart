@@ -31,5 +31,4 @@ class AnalysisDataController extends GetxController {
   void updateUnknownStopData(int value) {
     unknownStopData.value = value;
   }
-
 }

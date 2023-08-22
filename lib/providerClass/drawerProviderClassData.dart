@@ -1,7 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 
-enum NavigationItem{
+enum NavigationItem {
   MyAccount,
   Language,
   AddDriver,
@@ -10,12 +9,12 @@ enum NavigationItem{
   Default
 }
 
-class  NavigationProvider extends ChangeNotifier{
+class NavigationProvider extends ChangeNotifier {
   NavigationItem _navigationItem = NavigationItem.Default;
 
   NavigationItem get navigationItem => _navigationItem;
 
-  void setNavigationItem(NavigationItem navigationItem){
+  void setNavigationItem(NavigationItem navigationItem) {
     _navigationItem = navigationItem;
     notifyListeners();
   }

@@ -41,7 +41,7 @@ class RequirementsLoadDetails extends StatelessWidget {
               NewRowTemplate(
                   label: 'weight'.tr,
                   // AppLocalizations.of(context)!.weight,
-                  value: "${loadDetails['weight']} " +"tonnes".tr),
+                  value: "${loadDetails['weight']} " + "tonnes".tr),
               NewRowTemplate(
                   label: 'productType'.tr,
                   // AppLocalizations.of(context)!.productType,
@@ -49,7 +49,8 @@ class RequirementsLoadDetails extends StatelessWidget {
               NewRowTemplate(
                   label: 'bidPrice'.tr,
                   // 'Bid Price',
-                  value: "${loadDetails['rate']}/"+"${loadDetails['unitValue']}".tr),
+                  value: "${loadDetails['rate']}/" +
+                      "${loadDetails['unitValue']}".tr),
             ],
           ),
         ),

@@ -715,7 +715,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                 top: space_13,
                 child: Container(
                     width: MediaQuery.of(context).size.width / 1.5,
-                    height: MediaQuery.of(context).size.height-space_13,
+                    height: MediaQuery.of(context).size.height - space_13,
                     child: Stack(children: <Widget>[
                       loading_map && loadmap2 && loadmap3 ||
                               !(widget.online!) &&
@@ -1153,5 +1153,3 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     );
   }
 }
-
-

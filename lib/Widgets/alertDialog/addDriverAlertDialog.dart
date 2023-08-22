@@ -173,8 +173,10 @@ class _AddDriverAlertDialogState extends State<AddDriverAlertDialog> {
                   if (driverNumberController.text.length == 10 &&
                       (driverNumberController.text
                           .startsWith(RegExp(r'[6-9]')))) {
-                    ShipperIdController sIdController = Get.put(ShipperIdController());
-                    String shipperId = '${sIdController.shipperId}' ;                // String? driverAdded = driverNameController.text;
+                    ShipperIdController sIdController =
+                        Get.put(ShipperIdController());
+                    String shipperId =
+                        '${sIdController.shipperId}'; // String? driverAdded = driverNameController.text;
                     // if (driverAdded == "") {
                     //   showDialog(
                     //     context: context,

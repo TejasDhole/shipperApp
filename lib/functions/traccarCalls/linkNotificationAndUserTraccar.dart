@@ -13,7 +13,6 @@ void linkNotificationAndUserTraccar(String? userId, List<String?>? id) async {
   // String traccarApi = FlutterConfig.get("traccarApi");
   String traccarApi = dotenv.get('traccarApi');
 
-
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));
 

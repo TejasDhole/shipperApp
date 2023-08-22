@@ -28,13 +28,14 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
   TextEditingController controller1 = TextEditingController();
   TextEditingController controller2 = TextEditingController();
   var findLoadApiData;
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   @override
   Widget build(BuildContext context) {
-    if(Get.isRegistered<TokenMMIController>()){
+    if (Get.isRegistered<TokenMMIController>()) {
       Get.put(TokenMMIController());
-    }else{Get.put(TokenMMIController());}
+    } else {
+      Get.put(TokenMMIController());
+    }
     getMMIToken();
     var providerData = Provider.of<ProviderData>(context, listen: false);
     if (Provider.of<ProviderData>(context).loadingPointCityFindLoad != "") {
@@ -43,7 +44,6 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
               ("${providerData.loadingPointCityFindLoad} (${providerData.loadingPointStateFindLoad})"));
       findLoadApiData = runFindLoadApiGet(providerData.loadingPointCityFindLoad,
           providerData.unloadingPointCityFindLoad);
-
     }
     if (Provider.of<ProviderData>(context).unloadingPointCityFindLoad != "") {
       controller2 = TextEditingController(
@@ -77,10 +77,9 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
                         SizedBox(
                           width: space_3,
                         ),
-                        HeadingTextWidget(
-                        'findLoad'.tr
+                        HeadingTextWidget('findLoad'.tr
                             // "Find Load"
-                        ),
+                            ),
                         // HelpButtonWidget(),
                       ],
                     ),
@@ -91,7 +90,7 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
                   height: space_5,
                 ),
                 AddressInputMMIWidget(
-                  page:"findLoad",
+                    page: "findLoad",
                     hintText: "Loading Point",
                     // "Loading Point",
                     icon: LoadingPointImageIcon(
@@ -106,7 +105,7 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
                   height: space_4,
                 ),
                 AddressInputMMIWidget(
-                  page:"findLoad",
+                  page: "findLoad",
                   hintText: "Unloading Point",
                   // "Unloading Point",
                   icon: UnloadingPointImageIcon(
@@ -166,7 +165,8 @@ class _FindLoadScreenState extends State<FindLoadScreen> {
                                   itemCount: (snapshot.data.length),
                                   itemBuilder: (BuildContext context, index) =>
                                       SuggestedLoadsCard(
-                                        loadDetailsScreenModel: snapshot.data[index],
+                                    loadDetailsScreenModel:
+                                        snapshot.data[index],
                                   ),
                                 ),
                               ),

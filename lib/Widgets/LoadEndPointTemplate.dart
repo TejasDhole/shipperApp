@@ -26,7 +26,8 @@ class LoadEndPointTemplate extends StatelessWidget {
               width: 10,
               image: endPointType == 'loading'
                   ? const AssetImage('assets/icons/greenFilledCircleIcon.png')
-                  : const AssetImage('assets/icons/redSemiFilledCircleIcon.png')),
+                  : const AssetImage(
+                      'assets/icons/redSemiFilledCircleIcon.png')),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,9 +38,7 @@ class LoadEndPointTemplate extends StatelessWidget {
                         ? "Loading Point"
                         : "Unloading Point",
                     style: TextStyle(
-                        
-                        fontSize: size_6 + 1,
-                        color: const Color(0xFF7B7B7B)),
+                        fontSize: size_6 + 1, color: const Color(0xFF7B7B7B)),
                   )
                 : const SizedBox(
                     height: 0.1,

@@ -151,7 +151,7 @@ class _docInputLrState extends State<docInputLr> {
                                 child: verified
                                     ? Image(
                                         image: AssetImage(
-                                            "assets/images/verifiedDoc.png"))// to show verified document image if uploaded doucments get verified.
+                                            "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
                                     : docUploadbtn2(
                                         // text1: "( Click Here to add".tr,
                                         // text2: "documents / Photos )".tr,
@@ -279,7 +279,7 @@ class _docInputLrState extends State<docInputLr> {
         builder: (BuildContext bc) {
           return
               // child:
-          Dialog(
+              Dialog(
             // shape:
             child: Wrap(
               children: <Widget>[
@@ -364,12 +364,13 @@ class _docInputLrState extends State<docInputLr> {
       // }
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.camera);
-      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
+      bytes = kIsWeb
+          ? await pickedFile.readAsBytes()
+          : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
       setState(() {});
-
     }
   }
 
@@ -407,7 +408,9 @@ class _docInputLrState extends State<docInputLr> {
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       // print("pickedFile!.path ${pickedFile!.path}");
-      bytes = kIsWeb ? await pickedFile.readAsBytes() : await Io.File(pickedFile!.path).readAsBytes();
+      bytes = kIsWeb
+          ? await pickedFile.readAsBytes()
+          : await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);

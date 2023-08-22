@@ -84,7 +84,8 @@ class AccountVerificationStatusScreen extends StatelessWidget {
                             //AccountDetailVerified(
                             mobileNum: shipperIdController.mobileNum.value,
                             name: shipperIdController.name.value,
-                            mailId:FirebaseAuth.instance.currentUser!.email.toString(),
+                            mailId: FirebaseAuth.instance.currentUser!.email
+                                .toString(),
                             companyName: shipperIdController.companyName.value,
                             address: shipperIdController.shipperLocation.value,
                           ),
@@ -102,31 +103,38 @@ class AccountVerificationStatusScreen extends StatelessWidget {
               //         height: space_3,
               //       )
               //     : Container(),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               //TODO: Add user/ employee button in account page, it is only displayed if the user role is owner
-              shipperIdController.isOwner.value?Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+              shipperIdController.isOwner.value
+                  ? Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          backgroundColor: const Color(0xFF000066),
+                        ),
+                        child: const Text('Employee List'),
+                        onPressed: () {
+                          kIsWeb
+                              ? Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreenWeb(
+                                            index: screens
+                                                .indexOf(employeeListScreen),
+                                            selectedIndex: screens.indexOf(
+                                                accountVerificationStatusScreen),
+                                          )))
+                              : Get.to(() => const EmployeeListRolesScreen());
+                        },
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 5,
                     ),
-                    backgroundColor: const Color(0xFF000066),
-                  ),
-                  child: const Text('Employee List'),
-                  onPressed: (){
-                    kIsWeb
-                        ? Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreenWeb(
-                              index: screens.indexOf(employeeListScreen),
-                              selectedIndex:
-                              screens.indexOf(accountVerificationStatusScreen),
-                            )))
-                        : Get.to(() => const EmployeeListRolesScreen());
-                  },
-                ),
-              ):const SizedBox(height:5,),
             ],
           ),
         ),

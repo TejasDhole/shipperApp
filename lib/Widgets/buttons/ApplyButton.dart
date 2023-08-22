@@ -14,8 +14,7 @@ class ApplyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(ShipperIdController());
 
-    ShipperIdController shipperIdController =
-        Get.put(ShipperIdController());
+    ShipperIdController shipperIdController = Get.put(ShipperIdController());
     ProviderData providerData = Provider.of<ProviderData>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

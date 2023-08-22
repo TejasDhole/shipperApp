@@ -37,43 +37,40 @@ class _BuyGPSAddTruckDialogState extends State<BuyGPSAddTruckDialog> {
         borderRadius: BorderRadius.circular((radius_2 - 2)),
       ),
       title: Text(
-          "Add Truck",
+        "Add Truck",
         style: TextStyle(
-          color: bidBackground,
-          fontSize: size_9,
-          fontWeight: mediumBoldWeight
-        ),
+            color: bidBackground,
+            fontSize: size_9,
+            fontWeight: mediumBoldWeight),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              "Enter truck number",
+            "Enter truck number",
             style: TextStyle(
-              color: loadingPointTextColor,
-              fontSize: size_8,
-              fontWeight: normalWeight
-            ),
+                color: loadingPointTextColor,
+                fontSize: size_8,
+                fontWeight: normalWeight),
           ),
           SizedBox(
             height: space_1,
           ),
           Container(
-            height: space_7+2,
+            height: space_7 + 2,
             padding: EdgeInsets.only(
               left: space_3,
               right: space_3,
             ),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(radius_4+2),
-                border: Border.all(color: darkGreyColor)
-            ),
+                borderRadius: BorderRadius.circular(radius_4 + 2),
+                border: Border.all(color: darkGreyColor)),
             child: TextFormField(
               onChanged: (value) {
                 if (_controller.text != value.toUpperCase())
-                  _controller.value = _controller.value
-                      .copyWith(text: value.toUpperCase());
+                  _controller.value =
+                      _controller.value.copyWith(text: value.toUpperCase());
                 if (truckNoRegex.hasMatch(value) && value.length > 9) {
                   print("It is correct enable");
                   providerData.updateResetActive(true);
@@ -84,8 +81,7 @@ class _BuyGPSAddTruckDialogState extends State<BuyGPSAddTruckDialog> {
               },
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
-                FilteringTextInputFormatter.allow(
-                    RegExp(r"[a-zA-Z0-9]")),
+                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9]")),
               ],
               textCapitalization: TextCapitalization.characters,
               controller: _controller,
@@ -100,10 +96,9 @@ class _BuyGPSAddTruckDialogState extends State<BuyGPSAddTruckDialog> {
                 border: InputBorder.none,
               ),
               style: TextStyle(
-                color: liveasyBlackColor,
-                fontSize: size_7,
-                fontWeight: regularWeight
-              ),
+                  color: liveasyBlackColor,
+                  fontSize: size_7,
+                  fontWeight: regularWeight),
             ),
           ),
           SizedBox(
@@ -116,59 +111,58 @@ class _BuyGPSAddTruckDialogState extends State<BuyGPSAddTruckDialog> {
                 height: (space_6 + 1),
                 width: space_16,
                 child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(isDisable
-                        ? bidBackground
-                        : providerData.resetActive
-                        ? bidBackground
-                        : solidLineColor
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(radius_4)
-                      )
-                    )
-                  ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(isDisable
+                                ? bidBackground
+                                : providerData.resetActive
+                                    ? bidBackground
+                                    : solidLineColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(radius_4)))),
                     onPressed: providerData.resetActive
                         ? () async {
-                      setState(() {
-                        loading = true;
-                      });
-                      truckId = await truckApiCalls.postTruckData(truckNo: _controller.text);
-                      if (truckId != null) {
-                        setState(() {
-                          loading = false;
-                        });
-                        providerData.updateResetActive(false);
-                        Navigator.of(context).pop();
-                        showDialog(
-                            context: context,
-                            builder: (context) => completedDialog(
-                              upperDialogText: "You’ve added truck successfully!",
-                              lowerDialogText: "",
-                            ));
-                      } else {
-                        setState(() {
-                          loading = false;
-                        });
-                        showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              return SameTruckAlertDialogBox();
+                            setState(() {
+                              loading = true;
                             });
-                      }
-                    }
+                            truckId = await truckApiCalls.postTruckData(
+                                truckNo: _controller.text);
+                            if (truckId != null) {
+                              setState(() {
+                                loading = false;
+                              });
+                              providerData.updateResetActive(false);
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => completedDialog(
+                                        upperDialogText:
+                                            "You’ve added truck successfully!",
+                                        lowerDialogText: "",
+                                      ));
+                            } else {
+                              setState(() {
+                                loading = false;
+                              });
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return SameTruckAlertDialogBox();
+                                  });
+                            }
+                          }
                         : null,
                     child: Text(
                       "Add",
                       style: TextStyle(
-                        color: backgroundColor,
-                        fontSize: (size_6 + 1),
-                        fontWeight: mediumBoldWeight
-                      ),
-                    )
-                ),
+                          color: backgroundColor,
+                          fontSize: (size_6 + 1),
+                          fontWeight: mediumBoldWeight),
+                    )),
               ),
               SizedBox(
                 width: space_1,

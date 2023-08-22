@@ -4,8 +4,8 @@ import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/radius.dart';
 import '/constants/spaces.dart';
-class MyRadioOption<T> extends StatelessWidget {
 
+class MyRadioOption<T> extends StatelessWidget {
   final T value;
   final T duration;
   final T? groupValue;
@@ -14,15 +14,14 @@ class MyRadioOption<T> extends StatelessWidget {
   final ValueChanged<T?> onChanged;
   final ValueChanged<T?> onDurationChanged;
 
-  const MyRadioOption({
-    required this.groupDurationValue,
-    required this.duration,
-    required this.value,
-    required this.groupValue,
-    required this.text,
-    required this.onChanged,
-    required this.onDurationChanged
-  });
+  const MyRadioOption(
+      {required this.groupDurationValue,
+      required this.duration,
+      required this.value,
+      required this.groupValue,
+      required this.text,
+      required this.onChanged,
+      required this.onDurationChanged});
 
   Widget _buildLabel() {
     final bool isSelected = value == groupValue;
@@ -33,17 +32,14 @@ class MyRadioOption<T> extends StatelessWidget {
       height: (space_18 + 2),
       decoration: BoxDecoration(
           color: isSelected ? bidBackground : white,
-          borderRadius: BorderRadius.circular((radius_1 + 2))
-      ),
+          borderRadius: BorderRadius.circular((radius_1 + 2))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image(
-            image: isSelected ? AssetImage(
-                'assets/icons/selectedIcon.png'
-            ) : AssetImage(
-                'assets/icons/blueCircle.png'
-            ),
+            image: isSelected
+                ? AssetImage('assets/icons/selectedIcon.png')
+                : AssetImage('assets/icons/blueCircle.png'),
             height: space_4,
             width: space_4,
           ),
@@ -62,8 +58,7 @@ class MyRadioOption<T> extends StatelessWidget {
                 children: [
                   Container(
                     child: Image(
-                      image: AssetImage(
-                          'assets/icons/tickIcon.png'),
+                      image: AssetImage('assets/icons/tickIcon.png'),
                       height: (space_2 - 1),
                       width: (space_2 - 3),
                     ),
@@ -77,8 +72,7 @@ class MyRadioOption<T> extends StatelessWidget {
                       style: TextStyle(
                           color: isSelected ? white : bidBackground,
                           fontWeight: regularWeight,
-                          fontSize: size_6
-                      ),
+                          fontSize: size_6),
                     ),
                   )
                 ],
@@ -90,9 +84,7 @@ class MyRadioOption<T> extends StatelessWidget {
                 children: [
                   Container(
                     child: Image(
-                      image: AssetImage(
-                          'assets/icons/tickIcon.png'
-                      ),
+                      image: AssetImage('assets/icons/tickIcon.png'),
                       height: (space_2 - 1),
                       width: (space_2 - 3),
                     ),
@@ -106,8 +98,7 @@ class MyRadioOption<T> extends StatelessWidget {
                       style: TextStyle(
                           color: isSelected ? white : bidBackground,
                           fontWeight: regularWeight,
-                          fontSize: size_6
-                      ),
+                          fontSize: size_6),
                     ),
                   )
                 ],
@@ -126,11 +117,9 @@ class MyRadioOption<T> extends StatelessWidget {
       style: TextStyle(
           color: isSelected ? white : bidBackground,
           fontWeight: mediumBoldWeight,
-          fontSize: size_7
-      ),
+          fontSize: size_7),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +129,7 @@ class MyRadioOption<T> extends StatelessWidget {
         onDurationChanged(duration),
       },
       child: Row(
-        children: [
-          _buildLabel()
-        ],
+        children: [_buildLabel()],
       ),
     );
   }

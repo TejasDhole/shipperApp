@@ -8,19 +8,17 @@ import '../../constants/fontWeights.dart';
 import '../../constants/radius.dart';
 import '../../constants/spaces.dart';
 
-class ImageDisplay extends StatefulWidget{
-  
+class ImageDisplay extends StatefulWidget {
   // late final image;
   var providerData;
   String imageName;
-  ImageDisplay({Key? key,required this.providerData,required this.imageName});
+  ImageDisplay({Key? key, required this.providerData, required this.imageName});
 
   @override
   State<ImageDisplay> createState() => _ImageDisplayState();
 }
 
 class _ImageDisplayState extends State<ImageDisplay> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -30,25 +28,23 @@ class _ImageDisplayState extends State<ImageDisplay> {
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    void clearImage(String image){
-
-      if(image=="addressProofBackPhoto64"){
+    void clearImage(String image) {
+      if (image == "addressProofBackPhoto64") {
         providerData.updateAddressProofBackPhoto(null);
         providerData.updateAddressProofBackPhotoStr(null);
-      }else if(image=="addressProofFrontPhoto64"){
+      } else if (image == "addressProofFrontPhoto64") {
         providerData.updateAddressProofFrontPhoto(null);
         providerData.updateAddressProofFrontPhotoStr(null);
-      }else if(image=="panFrontPhoto64"){
+      } else if (image == "panFrontPhoto64") {
         providerData.updatePanFrontPhoto(null);
         providerData.updatePanFrontPhotoStr(null);
-      }else if(image == "companyIdProofPhoto64"){
+      } else if (image == "companyIdProofPhoto64") {
         providerData.updateCompanyIdProofPhoto(null);
         providerData.updateCompanyIdProofPhotoStr(null);
-      }else if(image == "profilePhoto64"){
+      } else if (image == "profilePhoto64") {
         providerData.updatePanFrontPhoto(null);
         providerData.updatePanFrontPhotoStr(null);
       }
-
     }
 
     return SafeArea(
@@ -64,7 +60,7 @@ class _ImageDisplayState extends State<ImageDisplay> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(radius_10),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           clearImage(widget.imageName);
                           Navigator.pop(context);
@@ -87,11 +83,10 @@ class _ImageDisplayState extends State<ImageDisplay> {
                 ),
               ),
             ),
-
             Expanded(
               child: SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 0,left: 10,right: 10),
+                  padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
                   child: Image.file(widget.providerData),
                 ),
               ),
@@ -99,34 +94,28 @@ class _ImageDisplayState extends State<ImageDisplay> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: activeButtonColor,
-                ),
-                child: Container(
-                  height: space_8,
-                  child: Center(
-                    child: Text(
-                      "Back",
-                      style: TextStyle(
-                          color: white,
-                          fontSize: size_8,
-                          fontWeight: mediumBoldWeight),
+                  style: ButtonStyle(
+                    backgroundColor: activeButtonColor,
+                  ),
+                  child: Container(
+                    height: space_8,
+                    child: Center(
+                      child: Text(
+                        "Back",
+                        style: TextStyle(
+                            color: white,
+                            fontSize: size_8,
+                            fontWeight: mediumBoldWeight),
+                      ),
                     ),
                   ),
-                ),
-                onPressed: (){
-
-                  Navigator.pop(context);
-              }
-              ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ),
           ],
         ),
       ),
     );
   }
-
-
-
-
 }

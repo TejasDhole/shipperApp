@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-alertDialog(String text,String message,BuildContext context) async {
+alertDialog(String text, String message, BuildContext context) async {
   return showDialog(
     context: context,
     barrierDismissible: false,

@@ -40,7 +40,8 @@ class TruckHistoryScreenOngoing extends StatefulWidget {
   });
 
   @override
-  _TruckHistoryScreenOngoingState createState() => _TruckHistoryScreenOngoingState();
+  _TruckHistoryScreenOngoingState createState() =>
+      _TruckHistoryScreenOngoingState();
 }
 
 class _TruckHistoryScreenOngoingState extends State<TruckHistoryScreenOngoing> {
@@ -267,8 +268,8 @@ class _TruckHistoryScreenOngoingState extends State<TruckHistoryScreenOngoing> {
   }
 
   distancecalculation(String from, String to) async {
-    var gpsRoute1 =
-        await getTraccarSummaryByDeviceId(deviceId: widget.deviceId, from: from, to: to);
+    var gpsRoute1 = await getTraccarSummaryByDeviceId(
+        deviceId: widget.deviceId, from: from, to: to);
     setState(() {
       totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
     });

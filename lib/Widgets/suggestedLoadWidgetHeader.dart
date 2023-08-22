@@ -16,7 +16,6 @@ class SuggestedLoadWidgetHeader extends StatelessWidget {
           // AppLocalizations.of(context)!.suggestedLoad,
           style: TextStyle(
               color: liveasyBlackColor,
-              
               fontWeight: FontWeight.bold,
               fontSize: 16),
         ),
@@ -31,7 +30,6 @@ class SuggestedLoadWidgetHeader extends StatelessWidget {
             // AppLocalizations.of(context)!.seeAll,
             style: TextStyle(
                 color: liveasyGreen,
-                
                 fontWeight: FontWeight.bold,
                 fontSize: size_8),
           ),

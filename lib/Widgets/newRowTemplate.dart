@@ -10,7 +10,7 @@ class NewRowTemplate extends StatelessWidget {
   final String? value;
   double? width;
 
-  NewRowTemplate({ required this.label , required this.value , this.width});
+  NewRowTemplate({required this.label, required this.value, this.width});
   @override
   Widget build(BuildContext context) {
     return Container(

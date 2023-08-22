@@ -16,7 +16,6 @@ import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 ShipperIdController shipperIdController =
     Get.put(ShipperIdController(), permanent: true);
 bool exe = true;
@@ -31,10 +30,12 @@ isolatedShipperGetData() {
       Duration(seconds: 15), (Timer t) => exe ? apirun2() : timer.cancel());
 }
 
-
 Future<dynamic> apirun2() async {
   var response = await runShipperApiPostIsolated(
-      emailId: FirebaseAuth.instance.currentUser!.email.toString(),phoneNo: FirebaseAuth.instance.currentUser!.phoneNumber.toString().replaceFirst("+91", ""));
+      emailId: FirebaseAuth.instance.currentUser!.email.toString(),
+      phoneNo: FirebaseAuth.instance.currentUser!.phoneNumber
+          .toString()
+          .replaceFirst("+91", ""));
   count = count + 1;
   print(count);
   // print("response = ");
@@ -53,7 +54,7 @@ Future<dynamic> apirun2() async {
 GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
 Future<String?> runShipperApiPostIsolated(
-    {required String emailId, String? userLocation,String? phoneNo}) async {
+    {required String emailId, String? userLocation, String? phoneNo}) async {
   try {
     // print("in the try block of api file");
     // var mUser = FirebaseAuth.instance.currentUser;
@@ -68,11 +69,11 @@ Future<String?> runShipperApiPostIsolated(
 
     final String shipperApiUrl =
         // FlutterConfig.get("shipperApiUrl").toString();
-    dotenv.get('shipperApiUrl');
+        dotenv.get('shipperApiUrl');
 
     Map data = userLocation != null
         ? {"emailId": emailId, "shipperLocation": userLocation}
-        : {"emailId": emailId,"phoneNo": phoneNo };
+        : {"emailId": emailId, "phoneNo": phoneNo};
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
@@ -137,7 +138,7 @@ Future<String?> runShipperApiPostIsolated(
             .updateAccountVerificationInProgress(accountVerificationInProgress);
         sidstorage
             .write(
-            "accountVerificationInProgress", accountVerificationInProgress)
+                "accountVerificationInProgress", accountVerificationInProgress)
             .then((value) => print("Written accountVerificationInProgress"));
         shipperIdController.updateShipperLocation(shipperLocation);
         sidstorage
@@ -156,7 +157,7 @@ Future<String?> runShipperApiPostIsolated(
         getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
         getShipperIdFromCompanyDatabase();
         return shipperId;
-      }  else {
+      } else {
         return null;
       }
     } else {

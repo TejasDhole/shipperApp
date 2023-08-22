@@ -13,8 +13,7 @@ class WebDashBoard extends StatefulWidget {
 }
 
 class _WebDashBoardState extends State<WebDashBoard> {
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   @override
   Widget build(BuildContext context) {

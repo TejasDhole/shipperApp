@@ -276,13 +276,13 @@ class _NewOTPVerificationScreenState
           hudController.updateHud(true);
           print(credential.smsCode);
           _verificationCode = credential.verificationId!;
-          await FirebaseAuth.instance.currentUser!.updatePhoneNumber(credential);
+          await FirebaseAuth.instance.currentUser!
+              .updatePhoneNumber(credential);
 
           timerController.cancelTimer();
-          if(FirebaseAuth.instance.currentUser!.emailVerified) {
+          if (FirebaseAuth.instance.currentUser!.emailVerified) {
             await runShipperApiPost(
-                emailId: FirebaseAuth.instance.currentUser!.email.toString()
-            );
+                emailId: FirebaseAuth.instance.currentUser!.email.toString());
           }
           Get.offAll(() => CompanyDetailsForm());
         },

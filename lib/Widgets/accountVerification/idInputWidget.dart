@@ -21,7 +21,6 @@ class IdInputWidget extends StatefulWidget {
 }
 
 class _IdInputWidgetState extends State<IdInputWidget> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -61,45 +60,59 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                       RoundedImageDisplay(
                         text: "idFront".tr,
                         onPressed: () async {
-                          widget.providerData.addressProofFrontPhotoFile!=null?
-                          Get.to(ImageDisplay(providerData: widget.providerData.addressProofFrontPhotoFile,imageName: 'addressProofFrontPhoto64',))
-                              :showPicker(
-                              widget.providerData.updateAddressProofFrontPhoto,
-                              widget.providerData.updateAddressProofFrontPhotoStr,
-                              context);
+                          widget.providerData.addressProofFrontPhotoFile != null
+                              ? Get.to(ImageDisplay(
+                                  providerData: widget
+                                      .providerData.addressProofFrontPhotoFile,
+                                  imageName: 'addressProofFrontPhoto64',
+                                ))
+                              : showPicker(
+                                  widget.providerData
+                                      .updateAddressProofFrontPhoto,
+                                  widget.providerData
+                                      .updateAddressProofFrontPhotoStr,
+                                  context);
                         },
-                        imageFile: widget.providerData.addressProofFrontPhotoFile,
+                        imageFile:
+                            widget.providerData.addressProofFrontPhotoFile,
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: widget.providerData.addressProofFrontPhotoFile!=null?
-                        Container(
-                          margin: EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(radius_10),
-                            child: GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  widget.providerData.updateAddressProofFrontPhoto(null);
-                                  widget.providerData.updateAddressProofFrontPhotoStr(null);
-                                });
-                              },
-                              child: Container(
-                                decoration: const BoxDecoration(shape: BoxShape.rectangle),
-                                height: space_5,
-                                width: space_5,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.clear,
-                                    color: darkBlueColor,
+                        child: widget.providerData.addressProofFrontPhotoFile !=
+                                null
+                            ? Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    space_22, 0, 0, space_1),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(radius_10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        widget.providerData
+                                            .updateAddressProofFrontPhoto(null);
+                                        widget.providerData
+                                            .updateAddressProofFrontPhotoStr(
+                                                null);
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.rectangle),
+                                      height: space_5,
+                                      width: space_5,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: darkBlueColor,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ):Container(),
+                              )
+                            : Container(),
                       ),
-
                     ],
                   ),
                   Stack(
@@ -107,43 +120,59 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                       RoundedImageDisplay(
                         text: "idBack".tr,
                         onPressed: () async {
-                          widget.providerData.addressProofBackPhotoFile!=null?
-                          Get.to(ImageDisplay(providerData: widget.providerData.addressProofBackPhotoFile,imageName: 'addressProofBackPhoto64',))
-                              :showPicker(widget.providerData.updateAddressProofBackPhoto,
-                              widget.providerData.updateAddressProofBackPhotoStr, context);
+                          widget.providerData.addressProofBackPhotoFile != null
+                              ? Get.to(ImageDisplay(
+                                  providerData: widget
+                                      .providerData.addressProofBackPhotoFile,
+                                  imageName: 'addressProofBackPhoto64',
+                                ))
+                              : showPicker(
+                                  widget
+                                      .providerData.updateAddressProofBackPhoto,
+                                  widget.providerData
+                                      .updateAddressProofBackPhotoStr,
+                                  context);
                         },
-                        imageFile: widget.providerData.addressProofBackPhotoFile,
+                        imageFile:
+                            widget.providerData.addressProofBackPhotoFile,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: widget.providerData.addressProofBackPhotoFile!=null?
-                        Container(
-                          margin: EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(radius_10),
-                            child: GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  widget.providerData.updateAddressProofBackPhoto(null);
-                                  widget.providerData.updateAddressProofBackPhotoStr(null);
-                                });
-                              },
-                              child: Container(
-                                decoration: const BoxDecoration(shape: BoxShape.rectangle),
-                                height: space_5,
-                                width: space_5,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.clear,
-                                    color: darkBlueColor,
+                        child: widget.providerData.addressProofBackPhotoFile !=
+                                null
+                            ? Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    space_22, 0, 0, space_1),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(radius_10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        widget.providerData
+                                            .updateAddressProofBackPhoto(null);
+                                        widget.providerData
+                                            .updateAddressProofBackPhotoStr(
+                                                null);
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.rectangle),
+                                      height: space_5,
+                                      width: space_5,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: darkBlueColor,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ):Container(),
+                              )
+                            : Container(),
                       ),
-
                     ],
                   ),
                 ],
@@ -171,45 +200,54 @@ class _IdInputWidgetState extends State<IdInputWidget> {
                     child: RoundedImageDisplay(
                       text: "panFront".tr,
                       onPressed: () async {
-                        widget.providerData.panFrontPhotoFile!=null?
-                        Get.to(ImageDisplay(providerData: widget.providerData.panFrontPhotoFile,imageName: "panFrontPhoto64",))
-                            :showPicker(widget.providerData.updatePanFrontPhoto,
-                            widget.providerData.updatePanFrontPhotoStr, context);
+                        widget.providerData.panFrontPhotoFile != null
+                            ? Get.to(ImageDisplay(
+                                providerData:
+                                    widget.providerData.panFrontPhotoFile,
+                                imageName: "panFrontPhoto64",
+                              ))
+                            : showPicker(
+                                widget.providerData.updatePanFrontPhoto,
+                                widget.providerData.updatePanFrontPhotoStr,
+                                context);
                       },
                       imageFile: widget.providerData.panFrontPhotoFile,
                     ),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
-                    child: widget.providerData.panFrontPhotoFile != null?
-                      Container(
-                      margin: EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(radius_10),
-                        child: GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              widget.providerData.updatePanFrontPhoto(null);
-                              widget.providerData.updatePanFrontPhotoStr(null);
-                            });
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(shape: BoxShape.rectangle),
-                            height: space_5,
-                            width: space_5,
-                            child: const Center(
-                              child: Icon(
-                                Icons.clear_rounded,
-                                color: darkBlueColor,
+                    child: widget.providerData.panFrontPhotoFile != null
+                        ? Container(
+                            margin:
+                                EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(radius_10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.providerData
+                                        .updatePanFrontPhoto(null);
+                                    widget.providerData
+                                        .updatePanFrontPhotoStr(null);
+                                  });
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.rectangle),
+                                  height: space_5,
+                                  width: space_5,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.clear_rounded,
+                                      color: darkBlueColor,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ):Container(),
+                          )
+                        : Container(),
                   ),
-
-
                 ],
               ),
             ],

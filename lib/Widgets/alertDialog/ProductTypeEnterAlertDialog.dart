@@ -14,7 +14,8 @@ class ProductTypeEnterAlertDialog extends StatefulWidget {
   String heading;
   String category;
 
-  ProductTypeEnterAlertDialog({Key? key, required this.heading,required this.category})
+  ProductTypeEnterAlertDialog(
+      {Key? key, required this.heading, required this.category})
       : super(key: key);
 
   @override
@@ -46,7 +47,11 @@ class _ProductTypeEnterAlertDialogState
                     ),
                     SizedBox(
                       height: space_3,
-                    ),ProductTypeTextField(hint: "Enter Product "+widget.category, category: widget.category,)
+                    ),
+                    ProductTypeTextField(
+                      hint: "Enter Product " + widget.category,
+                      category: widget.category,
+                    )
                   ],
                 ),
               ),

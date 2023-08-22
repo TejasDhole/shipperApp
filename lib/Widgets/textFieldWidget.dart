@@ -20,7 +20,7 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  TextEditingController controller=TextEditingController();
+  TextEditingController controller = TextEditingController();
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -41,18 +41,18 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   void _startListening() async {
     await _speechToText.listen(onResult: _onSpeechResult);
     print("hello start");
-    controller=TextEditingController(text:  _speechToText.isListening
-        ? '$_lastWords'
-    // If listening isn't active but could be tell the user
-    // how to start it, otherwise indicate that speech
-    // recognition is not yet ready or not supported on
-    // the target device
-        : _speechEnabled
-        ? 'Tap the microphone to start listening...'
-        : 'Speech not available');
+    controller = TextEditingController(
+        text: _speechToText.isListening
+            ? '$_lastWords'
+            // If listening isn't active but could be tell the user
+            // how to start it, otherwise indicate that speech
+            // recognition is not yet ready or not supported on
+            // the target device
+            : _speechEnabled
+                ? 'Tap the microphone to start listening...'
+                : 'Speech not available');
     print("$_lastWords ++++ $controller");
-    setState(() {
-    });
+    setState(() {});
   }
 
   /// Manually stop the active speech recognition session
@@ -93,11 +93,15 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           //   onPressed: (){_speechToText.isNotListening ? _startListening : _stopListening;},
           //   icon: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
           // ),
-          prefixIcon: GestureDetector(onTap:_speechToText.isNotListening ? _startListening : _stopListening,
-              child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic)),
+          prefixIcon: GestureDetector(
+              onTap: _speechToText.isNotListening
+                  ? _startListening
+                  : _stopListening,
+              child: Icon(
+                  _speechToText.isNotListening ? Icons.mic_off : Icons.mic)),
           suffixIcon: IconButton(
               onPressed: () {
-                 controller.clear();
+                controller.clear();
               },
               icon: CancelIconWidget()),
         ),

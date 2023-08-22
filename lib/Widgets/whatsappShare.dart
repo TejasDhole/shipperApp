@@ -16,11 +16,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class WhatsappShare extends StatefulWidget {
   int deviceId;
- // String? truckId;
+  // String? truckId;
   String? truckNo;
   WhatsappShare({
     required this.deviceId,
-   // required this.truckId,
+    // required this.truckId,
     required this.truckNo,
   });
   @override
@@ -68,7 +68,8 @@ class _WhatsappShareState extends State<WhatsappShare> {
 
     Uri url;
     if (short) {
-      final ShortDynamicLink shortLink = await dynamicLinks.buildShortLink(parameters);
+      final ShortDynamicLink shortLink =
+          await dynamicLinks.buildShortLink(parameters);
       url = shortLink.shortUrl;
       print("Dynamic URL is $url");
     } else {

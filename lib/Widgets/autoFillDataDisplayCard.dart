@@ -12,11 +12,8 @@ class AutoFillDataDisplayCard extends StatelessWidget {
   String placeAddress;
   var onTap;
 
-
-
-
   AutoFillDataDisplayCard(
-      this.placeName,
+    this.placeName,
     this.addresscomponent,
     this.placeCity,
     this.placeAddress,
@@ -62,15 +59,23 @@ class AutoFillDataDisplayCard extends StatelessWidget {
                         '''$placeName'''.tr,
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
-                        style:
-                        TextStyle(fontSize: size_7, color: liveasyBlackColor),
+                        style: TextStyle(
+                            fontSize: size_7, color: liveasyBlackColor),
                       ),
                     ),
                     Container(
-                      child: Text(addresscomponent==null?
-                        placeAddress==placeCity?'$placeCity'.tr:'$placeCity'.tr + '$placeAddress'.tr:
-                        '$addresscomponent'.tr+','+ '$placeCity'.tr+','+ '$placeAddress'.tr,
-                        style: TextStyle(fontSize: size_6, color: darkGreyColor),
+                      child: Text(
+                        addresscomponent == null
+                            ? placeAddress == placeCity
+                                ? '$placeCity'.tr
+                                : '$placeCity'.tr + '$placeAddress'.tr
+                            : '$addresscomponent'.tr +
+                                ',' +
+                                '$placeCity'.tr +
+                                ',' +
+                                '$placeAddress'.tr,
+                        style:
+                            TextStyle(fontSize: size_6, color: darkGreyColor),
                       ),
                     ),
                   ],

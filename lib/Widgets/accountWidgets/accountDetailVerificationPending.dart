@@ -10,7 +10,8 @@ class AccountDetailVerificationPending extends StatelessWidget {
   final String mobileNum;
   final String name;
 
-  const AccountDetailVerificationPending({super.key, required this.name,required this.mobileNum});
+  const AccountDetailVerificationPending(
+      {super.key, required this.name, required this.mobileNum});
 
   @override
   Widget build(BuildContext context) {

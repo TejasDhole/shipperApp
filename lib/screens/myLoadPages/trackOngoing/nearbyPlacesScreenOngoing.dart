@@ -45,7 +45,8 @@ class NearbyPlacesScreenOngoing extends StatefulWidget {
       this.truckId});
 
   @override
-  _NearbyPlacesScreenOngoingState createState() => _NearbyPlacesScreenOngoingState();
+  _NearbyPlacesScreenOngoingState createState() =>
+      _NearbyPlacesScreenOngoingState();
 }
 
 class _NearbyPlacesScreenOngoingState extends State<NearbyPlacesScreenOngoing>
@@ -319,8 +320,7 @@ class _NearbyPlacesScreenOngoingState extends State<NearbyPlacesScreenOngoing>
       googleAPiKey,
       LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      LatLng(
-          endLocationForDistance.latitude, endLocationForDistance.longitude),
+      LatLng(endLocationForDistance.latitude, endLocationForDistance.longitude),
       travelMode: TravelMode.driving,
     );
 

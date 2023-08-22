@@ -270,7 +270,8 @@ class MyLoadsCard extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image(
-                                    image: AssetImage('assets/icons/red_circle.png'),
+                                    image: AssetImage(
+                                        'assets/icons/red_circle.png'),
                                     height: 10,
                                     width: 10,
                                     fit: BoxFit.cover,

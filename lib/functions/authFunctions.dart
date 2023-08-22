@@ -39,8 +39,7 @@ class AuthService {
           hudController.updateHud(true);
           timerController.cancelTimer();
 
-          await runShipperApiPost(
-              emailId: value.user!.email!.toString());
+          await runShipperApiPost(emailId: value.user!.email!.toString());
 
           Get.offAll(() => NavigationScreen());
         }

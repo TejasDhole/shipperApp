@@ -23,7 +23,9 @@ class DrawerWidget extends StatelessWidget {
   GetStorage sidstorage = GetStorage('ShipperIDStorage');
 
   DrawerWidget(
-      {required this.mobileNum, required this.userName, required this.imageUrl});
+      {required this.mobileNum,
+      required this.userName,
+      required this.imageUrl});
 
   final padding = EdgeInsets.only(left: space_1, right: space_7);
 
@@ -32,8 +34,9 @@ class DrawerWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     String name;
     String image;
-    image =
-    (imageUrl == "no profile" ? "assets/icons/defaultAccountIcon.png" : imageUrl);
+    image = (imageUrl == "no profile"
+        ? "assets/icons/defaultAccountIcon.png"
+        : imageUrl);
     name = userName.length > 17 ? "${userName.substring(0, 15)}..." : userName;
     NavigationIndexController navigationIndexController =
         Get.put(NavigationIndexController());
@@ -59,27 +62,26 @@ class DrawerWidget extends StatelessWidget {
                           CircleAvatar(
                             radius: radius_7,
                             backgroundColor: white,
-                            child:
-                            GestureDetector(
+                            child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (_) {
-                                        return FullScreenImage(
-                                          imageUrl: imageUrl,
-                                        );
-                                      }));
+                                    return FullScreenImage(
+                                      imageUrl: imageUrl,
+                                    );
+                                  }));
                                 },
-                                child:
-                                imageUrl == "no profile" ?
-                                Container(
-                                  height: space_7,
-                                  width: space_7,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(image),
-                                    ),
-                                  ),
-                                ):Image.network(image)),
+                                child: imageUrl == "no profile"
+                                    ? Container(
+                                        height: space_7,
+                                        width: space_7,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(image),
+                                          ),
+                                        ),
+                                      )
+                                    : Image.network(image)),
                           ),
                           SizedBox(
                             width: space_2,
@@ -97,7 +99,6 @@ class DrawerWidget extends StatelessWidget {
                                         style: TextStyle(
                                           fontWeight: mediumBoldWeight,
                                           fontSize: size_7,
-                                          
                                         ),
                                       ),
                                     ),
@@ -156,7 +157,7 @@ class DrawerWidget extends StatelessWidget {
                     //         style: TextStyle(
                     //             color: darkBlueColor,
                     //             fontSize: size_8,
-                    //             
+                    //
                     //             fontWeight: regularWeight)),
                     //   ),
                     // ),
@@ -193,7 +194,7 @@ class DrawerWidget extends StatelessWidget {
                     //           child: Text('contact_us'.tr, style: TextStyle(
                     //               color: darkBlueColor,
                     //               fontSize: size_8,
-                    //               
+                    //
                     //               fontWeight: regularWeight),textAlign: TextAlign.left,),
                     //         ),),
                     //   ),
@@ -231,7 +232,6 @@ class DrawerWidget extends StatelessWidget {
                             style: TextStyle(
                                 color: black,
                                 fontSize: size_8,
-                                
                                 fontWeight: regularWeight)),
                         leading: Container(
                             margin: EdgeInsets.only(left: space_4),
@@ -281,7 +281,6 @@ class DrawerWidget extends StatelessWidget {
             style: TextStyle(
                 color: isSelected ? darkBlueColor : black,
                 fontSize: size_8,
-                
                 fontWeight: isSelected ? boldWeight : regularWeight)),
       ),
     );

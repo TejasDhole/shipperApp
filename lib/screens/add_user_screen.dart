@@ -42,7 +42,7 @@ class _AddUserState extends State<AddUser> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   ListBody(
-                    children: <Widget>[  
+                    children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
@@ -54,7 +54,6 @@ class _AddUserState extends State<AddUser> {
                               fontSize: kIsWeb ? 4.75.sp : 16.sp),
                         ),
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -62,7 +61,7 @@ class _AddUserState extends State<AddUser> {
                             flex: 837,
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  left: 54.0, top: 30,bottom:30),
+                                  left: 54.0, top: 30, bottom: 30),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: 'Email',
@@ -78,7 +77,6 @@ class _AddUserState extends State<AddUser> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  
                                   setState(() {
                                     isError = false;
                                   });
@@ -91,29 +89,26 @@ class _AddUserState extends State<AddUser> {
                             ),
                           ),
                           Expanded(
-                            flex: 163,
-                            child:
-                              Container(
-                                margin: const EdgeInsets.only(left: 15,right:50.0),
-                                  height: 50,
-                                  width: 30,
-                                  decoration: BoxDecoration(
+                              flex: 163,
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 15, right: 50.0),
+                                height: 50,
+                                width: 30,
+                                decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(2),
-                                    color: darkBlueTextColor
-                                  ),
-                                 child: 
-                              const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: Icon(size: 25,Icons.add, color: Colors.white),
-                              ),)
-                            
-                          )
+                                    color: darkBlueTextColor),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Icon(
+                                      size: 25, Icons.add, color: Colors.white),
+                                ),
+                              ))
                         ],
                       ),
                       SizedBox(
                         height: 1.9.h,
                       ),
-
                       Container(
                         height: 55,
                         child: Padding(
@@ -156,7 +151,7 @@ class _AddUserState extends State<AddUser> {
             ),
           ),
         ),
-      ),      
+      ),
     );
   }
 }

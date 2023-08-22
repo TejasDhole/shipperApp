@@ -42,11 +42,12 @@ class HistoryScreenMapWidgetOngoing extends StatefulWidget {
   });
 
   @override
-  _HistoryScreenMapWidgetOngoingState createState() => _HistoryScreenMapWidgetOngoingState();
+  _HistoryScreenMapWidgetOngoingState createState() =>
+      _HistoryScreenMapWidgetOngoingState();
 }
 
-class _HistoryScreenMapWidgetOngoingState extends State<HistoryScreenMapWidgetOngoing>
-    with WidgetsBindingObserver {
+class _HistoryScreenMapWidgetOngoingState
+    extends State<HistoryScreenMapWidgetOngoing> with WidgetsBindingObserver {
   final Set<Polyline> _polyline1 = new Set<Polyline>();
   Map<PolylineId, Polyline> polylines1 = new Map<PolylineId, Polyline>();
   late GoogleMapController _googleMapController;
@@ -365,10 +366,10 @@ class _HistoryScreenMapWidgetOngoingState extends State<HistoryScreenMapWidgetOn
   }
 
   distancecalculation(String from, String to) async {
-    var gpsRoute1 =
-        await getTraccarSummaryByDeviceId(deviceId: widget.deviceId, from: from, to: to);
+    var gpsRoute1 = await getTraccarSummaryByDeviceId(
+        deviceId: widget.deviceId, from: from, to: to);
     setState(() {
-      totalDistance = (gpsRoute1[0].distance !/ 1000).toStringAsFixed(2);
+      totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
     });
   }
 

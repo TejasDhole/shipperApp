@@ -27,6 +27,6 @@ Future<String> getDriverNameFromDriverApi(
   } catch (e) {
     print(e);
   }
-  providerData.updateSelectedDriver( tempDropDownValue2.toString());
+  providerData.updateSelectedDriver(tempDropDownValue2.toString());
   return tempDropDownValue2.toString();
 }
