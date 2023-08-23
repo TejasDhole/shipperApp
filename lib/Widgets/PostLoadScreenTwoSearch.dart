@@ -44,28 +44,30 @@ class PostLoadScreenTwoSearch extends StatelessWidget {
               content: Container(
                 width: kIsWeb ? 500 : MediaQuery.of(context).size.width,
                 height: 530,
-                child: kIsWeb ? ListView.builder(
-                  itemCount: productTypeList.length,
-                  itemBuilder: (context, index) {
-                      return  addRectangularButtonProductType(
-                        text: productTypeList[index].tr,
-                        value: productTypeList[index],
-                      );
-                    },
-                ) :
-                GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  childAspectRatio: size_1,
-                  crossAxisSpacing: space_10,
-                  mainAxisSpacing: space_2,
-                  crossAxisCount: 2,
-                  children: productTypeList
-                      .map((e) {
-                    return addRectangularButtonProductType(value: e, text: e.tr);
-                      },)
-                      .toList(),
-                ),
+                child: kIsWeb
+                    ? ListView.builder(
+                        itemCount: productTypeList.length,
+                        itemBuilder: (context, index) {
+                          return addRectangularButtonProductType(
+                            text: productTypeList[index].tr,
+                            value: productTypeList[index],
+                          );
+                        },
+                      )
+                    : GridView.count(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        childAspectRatio: size_1,
+                        crossAxisSpacing: space_10,
+                        mainAxisSpacing: space_2,
+                        crossAxisCount: 2,
+                        children: productTypeList.map(
+                          (e) {
+                            return addRectangularButtonProductType(
+                                value: e, text: e.tr);
+                          },
+                        ).toList(),
+                      ),
               ),
             );
           },

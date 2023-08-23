@@ -24,16 +24,16 @@ class _HelpScreenState extends State<HelpScreen> {
 
   //add questions here
   List<String> questions = [
- //   'How to add truck?',
+    //   'How to add truck?',
     'How to post load?',
- //   'How to bid?',
- //   'How to purchase GPS?',
+    //   'How to bid?',
+    //   'How to purchase GPS?',
     'How to see my orders?',
- //   'How to verify my account?',
- //   'How to add driver?',
- //   'How to change language?',
+    //   'How to verify my account?',
+    //   'How to add driver?',
+    //   'How to change language?',
     'How to find load for my truck?',
- //   'Why should I buy GPS?',
+    //   'Why should I buy GPS?',
   ];
 
   @override
@@ -44,7 +44,8 @@ class _HelpScreenState extends State<HelpScreen> {
       body: SafeArea(
         child: Container(
           color: backgroundColor,
-          padding: EdgeInsets.only(top: space_5, right: space_4, left: space_4, bottom: space_3),
+          padding: EdgeInsets.only(
+              top: space_5, right: space_4, left: space_4, bottom: space_3),
           height: MediaQuery.of(context).size.height - space_4,
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Row(
@@ -162,20 +163,31 @@ class _HelpScreenState extends State<HelpScreen> {
                                                             myController,
                                                         textAlign:
                                                             TextAlign.start,
-                                                        decoration: InputDecoration(
-                                                            fillColor: backgroundColor,
-                                                            filled: true,
-                                                            contentPadding:
-                                                                EdgeInsets.only(top: space_4, left: space_2, right: space_2),
-                                                            border:
-                                                                OutlineInputBorder(),
-                                                            hintText:
-                                                                'Please write to us, we will get in touch with you.'.tr,
-                                                            hintStyle: TextStyle(
-                                                                fontSize: size_6,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,)),
+                                                        decoration:
+                                                            InputDecoration(
+                                                                fillColor:
+                                                                    backgroundColor,
+                                                                filled: true,
+                                                                contentPadding: EdgeInsets.only(
+                                                                    top:
+                                                                        space_4,
+                                                                    left:
+                                                                        space_2,
+                                                                    right:
+                                                                        space_2),
+                                                                border:
+                                                                    OutlineInputBorder(),
+                                                                hintText:
+                                                                    'Please write to us, we will get in touch with you.'
+                                                                        .tr,
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      size_6,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                )),
                                                       ),
                                                     ),
                                                     Container(
@@ -228,6 +240,7 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 }
+
 _sendMail(String askedQuestion) async {
   String url =
       'mailto:liveasy97@gmail.com?subject=Question&body=${askedQuestion}';

@@ -19,7 +19,8 @@ class AddCalender extends StatefulWidget {
 }
 
 class _AddCalenderState extends State<AddCalender> {
-  PostLoadVariablesController postLoadVariables = Get.put(PostLoadVariablesController());
+  PostLoadVariablesController postLoadVariables =
+      Get.put(PostLoadVariablesController());
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
@@ -41,7 +42,9 @@ class _AddCalenderState extends State<AddCalender> {
                     widget.text == 'Standard Container'
                 ? size_6
                 : size_7,
-            color: postLoadVariables.bookingDate.value == widget.text ? white : black),
+            color: postLoadVariables.bookingDate.value == widget.text
+                ? white
+                : black),
       ),
       onPressed: () {
         providerData.updateResetActive(true);

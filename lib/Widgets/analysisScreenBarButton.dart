@@ -9,37 +9,36 @@ class AnalysisScreenBarButton extends StatelessWidget {
   final int value;
   final PageController pageController;
 
-  AnalysisScreenBarButton({required this.text, required this.value , required this.pageController});
+  AnalysisScreenBarButton(
+      {required this.text, required this.value, required this.pageController});
 
-  AnalysisScreenNavController analysisScreenNavController = Get.put(AnalysisScreenNavController());
+  AnalysisScreenNavController analysisScreenNavController =
+      Get.put(AnalysisScreenNavController());
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-        width: 115,
-        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-        child: Obx( () => GestureDetector(
-            onTap: () {
-              analysisScreenNavController.updateUpperNavIndex(value);
-              pageController.jumpToPage(value);
-            },
-            child: Text(
-              '$text',
+      width: 115,
+      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      child: Obx(
+        () => GestureDetector(
+          onTap: () {
+            analysisScreenNavController.updateUpperNavIndex(value);
+            pageController.jumpToPage(value);
+          },
+          child: Text('$text',
               textAlign: TextAlign.center,
               textScaleFactor: 1,
-              style:
-                analysisScreenNavController.upperNavIndex.value == value ?
-                Theme.of(context).textTheme.bodyText1
-                ?.underlined(
-                  distance: 5,
-                  color: Color.fromRGBO(21, 41, 104, 1),
-                  thickness: 4,
-                ): null
-              ),
-            ),
-          ),
-        );
+              style: analysisScreenNavController.upperNavIndex.value == value
+                  ? Theme.of(context).textTheme.bodyText1?.underlined(
+                        distance: 5,
+                        color: Color.fromRGBO(21, 41, 104, 1),
+                        thickness: 4,
+                      )
+                  : null),
+        ),
+      ),
+    );
   }
 }
 

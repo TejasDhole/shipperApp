@@ -28,7 +28,7 @@ Future<String?> putLoadAPI(
     unitValue,
     rate) async {
   PostLoadErrorController postLoadErrorController =
-  Get.put(PostLoadErrorController());
+      Get.put(PostLoadErrorController());
   try {
     Map data = {
       "loadDate": loadDate,
@@ -37,17 +37,17 @@ Future<String?> putLoadAPI(
       "loadingPointCity": loadingPointCity,
       "loadingPointState": loadingPointState,
       "loadingPoint2": loadingPoint2,
-      "loadingPointCity2":loadingPointCity2,
-      "loadingPointState2":loadingPointState2,
+      "loadingPointCity2": loadingPointCity2,
+      "loadingPointState2": loadingPointState2,
       "noOfTrucks": noOfTrucks,
       "productType": productType,
       "truckType": truckType,
       "unloadingPoint": unloadingPoint,
       "unloadingPointCity": unloadingPointCity,
       "unloadingPointState": unloadingPointState,
-      "unloadingPoint2":unloadingPoint2,
-      "unloadingPointCity2":unloadingPointCity2,
-      "unloadingPointState2":unloadingPointState2,
+      "unloadingPoint2": unloadingPoint2,
+      "unloadingPointCity2": unloadingPointCity2,
+      "unloadingPointState2": unloadingPointState2,
       "weight": weight,
       "unitValue": unitValue,
       "rate": rate

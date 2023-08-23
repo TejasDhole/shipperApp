@@ -97,13 +97,12 @@ class AddUserFunctions {
     if (uid == null) {
       // Handle the case when the user is not found.
       alertDialog('Add Employee', 'Employee Not Found', context);
-    }else {  
-      final newEmployeeRef = ref.child(
-          "companies/${companyName.capitalizeFirst}/members");
+    } else {
+      final newEmployeeRef =
+          ref.child("companies/${companyName.capitalizeFirst}/members");
       newEmployeeRef.update({
         uid: "employee",
-      }).then((value)
-       {
+      }).then((value) {
         showDialog(
           context: context,
           builder: (BuildContext context) {

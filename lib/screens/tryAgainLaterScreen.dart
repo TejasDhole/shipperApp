@@ -18,7 +18,8 @@ class TryAgainLaterScreen extends StatefulWidget {
   final String? truckId;
 
   const TryAgainLaterScreen(
-      {super.key, required this.gpsData,
+      {super.key,
+      required this.gpsData,
       required this.gpsDataHistory,
       required this.gpsStoppageHistory,
       //required this.routeHistory,

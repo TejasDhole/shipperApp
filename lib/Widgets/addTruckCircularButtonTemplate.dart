@@ -71,21 +71,20 @@ class AddTruckCircularButtonTemplate extends StatelessWidget {
         ),
       ),
       onTap: () {
-        if(value == 0)
-          {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return ProductTypeEnterAlertDialog(
-                    heading: 'Enter The Product $category', category: category,);
-              },
-            );
-          }
-        else
-          {
-            providerData.updateResetActive(true);
-            providerFunction(value);
-          }
+        if (value == 0) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ProductTypeEnterAlertDialog(
+                heading: 'Enter The Product $category',
+                category: category,
+              );
+            },
+          );
+        } else {
+          providerData.updateResetActive(true);
+          providerFunction(value);
+        }
       },
     );
   }

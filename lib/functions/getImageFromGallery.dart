@@ -6,28 +6,27 @@ import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
 
-Future getImageFromGallery(var functionToUpdate, var strToUpdate, var context) async {
+Future getImageFromGallery(
+    var functionToUpdate, var strToUpdate, var context) async {
   var status = await Permission.camera.status;
   if (status.isDenied) {
-    if(await Permission.camera.request().isGranted) {
+    if (await Permission.camera.request().isGranted) {
       final picker = ImagePicker();
       var pickedFile = await picker.pickImage(source: ImageSource.gallery);
       final bytes = await Io.File(pickedFile!.path).readAsBytes();
       String img64 = base64Encode(bytes);
       functionToUpdate(File(pickedFile.path));
       strToUpdate(img64);
-    // } else {
-    //   if(await Permission.camera.isPermanentlyDenied) {
-    //     final picker = ImagePicker();
-    //     var pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    //     final bytes = await Io.File(pickedFile!.path).readAsBytes();
-    //     String img64 = base64Encode(bytes);
-    //     functionToUpdate(File(pickedFile.path));
-    //     strToUpdate(img64);
-      } else {
-        showDialog(
-            context: context,
-            builder: (context) => PermissionDialog());
+      // } else {
+      //   if(await Permission.camera.isPermanentlyDenied) {
+      //     final picker = ImagePicker();
+      //     var pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      //     final bytes = await Io.File(pickedFile!.path).readAsBytes();
+      //     String img64 = base64Encode(bytes);
+      //     functionToUpdate(File(pickedFile.path));
+      //     strToUpdate(img64);
+    } else {
+      showDialog(context: context, builder: (context) => PermissionDialog());
       // }
     }
   } else {

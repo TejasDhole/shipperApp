@@ -1,4 +1,4 @@
-class DeliveredCardModel{
+class DeliveredCardModel {
   String? bookingId;
   String? loadingPointCity;
   String? unloadingPointCity;
@@ -22,24 +22,23 @@ class DeliveredCardModel{
 
   DeliveredCardModel(
       {this.bookingId,
-        this.imei,
-        this.unitValue,
-        this.bookingDate,
-        this.companyApproved,
-        this.companyName,
-        this.completedDate,
-        this.driverName,
-        this.driverPhoneNum,
-        this.loadingPointCity,
-        this.noOfTrucks,
-        this.productType,
-        this.rate,
-        this.transporterApproved,
-        this.transporterLocation,
-        this.transporterName,
-        this.transporterPhoneNum,
-        this.truckNo,
-        this.truckType,
-        this.unloadingPointCity
-      });
+      this.imei,
+      this.unitValue,
+      this.bookingDate,
+      this.companyApproved,
+      this.companyName,
+      this.completedDate,
+      this.driverName,
+      this.driverPhoneNum,
+      this.loadingPointCity,
+      this.noOfTrucks,
+      this.productType,
+      this.rate,
+      this.transporterApproved,
+      this.transporterLocation,
+      this.transporterName,
+      this.transporterPhoneNum,
+      this.truckNo,
+      this.truckType,
+      this.unloadingPointCity});
 }

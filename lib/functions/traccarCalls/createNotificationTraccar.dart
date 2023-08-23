@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<List<String?>?> createNotificationTraccar() async {
   List<String?> id = [];
   // String traccarUser = FlutterConfig.get("traccarUser");

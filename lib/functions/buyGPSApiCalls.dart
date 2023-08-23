@@ -14,8 +14,11 @@ class BuyGPSApiCalls {
 
   String? _gpsId;
 
-  Future<String?> postByGPSData({required String? truckId, required String? address, required String? rate, required String? duration}) async {
-
+  Future<String?> postByGPSData(
+      {required String? truckId,
+      required String? address,
+      required String? rate,
+      required String? duration}) async {
     // json map
     Map<String, dynamic> data = {
       "transporterId": shipperIdController.shipperId.value,
@@ -41,5 +44,4 @@ class BuyGPSApiCalls {
 
     return _gpsId;
   }
-
 }

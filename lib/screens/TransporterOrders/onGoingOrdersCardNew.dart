@@ -251,171 +251,171 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
   }
 }
 
-  //   if (widget.loadAllDataModel.driverName == null) {
-  //     widget.loadAllDataModel.driverName = "NA";
-  //   }
-  //   widget.loadAllDataModel.driverName =
-  //       widget.loadAllDataModel.driverName!.length >= 20
-  //           ? widget.loadAllDataModel.driverName!.substring(0, 18) + '..'
-  //           : widget.loadAllDataModel.driverName;
-  //   // if (widget.loadAllDataModel.companyName == null) {}
-  //   // widget.loadAllDataModel.companyName =
-  //   //     widget.loadAllDataModel.companyName!.length >= 35
-  //   //         ? widget.loadAllDataModel.companyName!.substring(0, 33) + '..'
-  //   //         : widget.loadAllDataModel.companyName;
+//   if (widget.loadAllDataModel.driverName == null) {
+//     widget.loadAllDataModel.driverName = "NA";
+//   }
+//   widget.loadAllDataModel.driverName =
+//       widget.loadAllDataModel.driverName!.length >= 20
+//           ? widget.loadAllDataModel.driverName!.substring(0, 18) + '..'
+//           : widget.loadAllDataModel.driverName;
+//   // if (widget.loadAllDataModel.companyName == null) {}
+//   // widget.loadAllDataModel.companyName =
+//   //     widget.loadAllDataModel.companyName!.length >= 35
+//   //         ? widget.loadAllDataModel.companyName!.substring(0, 33) + '..'
+//   //         : widget.loadAllDataModel.companyName;
 
-  //   widget.loadAllDataModel.unitValue =
-  //       widget.loadAllDataModel.unitValue == "PER_TON"
-  //           ? "tonne".tr
-  //           : "truck".tr;
+//   widget.loadAllDataModel.unitValue =
+//       widget.loadAllDataModel.unitValue == "PER_TON"
+//           ? "tonne".tr
+//           : "truck".tr;
 
-  //   return GestureDetector(
-  //     onTap: () {
-  //       Get.to(ShipperDetails(
-  //         bookingId: widget.loadAllDataModel.bookingId.toString(),
-  //         // truckType: truckType,
-  //         // noOfTrucks: noOfTrucks,
-  //         // productType: productType,
-  //         loadingPoint: widget.loadAllDataModel.loadingPointCity,
-  //         unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
-  //         rate: widget.loadAllDataModel.rate,
-  //         vehicleNo: widget.loadAllDataModel.truckNo,
-  //         // shipperPosterCompanyApproved: companyApproved,
-  //         // shipperPosterCompanyName: companyName,
-  //         // shipperPosterLocation: posterLocation,
-  //         // shipperPosterName: posterName,
-  //         // transporterPhoneNum: transporterPhoneNumber,
-  //         driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
-  //         driverName: widget.loadAllDataModel.driverName,
-  //         // transporterName: companyName,
-  //         trackApproved: true,
-  //       ));
-  //       // Get.to(() => OnGoingLoadDetails(
-  //       //       loadALlDataModel: widget.loadAllDataModel,
-  //       //       trackIndicator: false,
-  //       //     ));
-  //     },
-  //     child: Container(
-  //       margin: EdgeInsets.only(bottom: space_3),
-  //       child: Card(
-  //         elevation: 5,
-  //         child: Column(
-  //           children: [
-  //             Container(
-  //               margin: EdgeInsets.all(space_4),
-  //               child: Column(
-  //                 children: [
-  //                   Row(
-  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                     children: [
-  //                       Text(
-  //                         '${"bookingDate".tr} : ${widget.loadAllDataModel.bookingDate}',
-  //                         style: TextStyle(
-  //                           fontSize: size_6,
-  //                           color: veryDarkGrey,
-  //                         ),
-  //                       ),
-  //                       Icon(Icons.arrow_forward_ios_sharp),
-  //                     ],
-  //                   ),
-  //                   Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       LoadEndPointTemplate(
-  //                           text: widget.loadAllDataModel.loadingPointCity,
-  //                           endPointType: 'loading'),
-  //                       Container(
-  //                           padding: EdgeInsets.only(left: 2),
-  //                           height: space_3,
-  //                           width: space_12,
-  //                           child: CustomPaint(
-  //                             foregroundPainter: LinePainter(height: space_3),
-  //                           )),
-  //                       LoadEndPointTemplate(
-  //                           text: widget.loadAllDataModel.unloadingPointCity,
-  //                           endPointType: 'unloading'),
-  //                     ],
-  //                   ),
-  //                   Container(
-  //                     margin: EdgeInsets.only(top: space_4),
-  //                     child: Column(
-  //                       children: [
-  //                         NewRowTemplate(
-  //                           label: "truckNumber".tr,
-  //                           value: widget.loadAllDataModel.truckNo,
-  //                           width: 78,
-  //                         ),
-  //                         NewRowTemplate(
-  //                             label: "driverName".tr,
-  //                             value: widget.loadAllDataModel.driverName),
-  //                         NewRowTemplate(
-  //                           label: "price".tr,
-  //                           // value: widget.loadAllDataModel.rate,
-  //                           value:
-  //                               '${widget.loadAllDataModel.rate}/${widget.loadAllDataModel.unitValue}',
-  //                           width: 78,
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   // Container(
-  //                   //   margin: EdgeInsets.only(top: space_4),
-  //                   //   child: Row(
-  //                   //     children: [
-  //                   //       Container(
-  //                   //         margin: EdgeInsets.only(right: space_1),
-  //                   //         child: Image(
-  //                   //             height: 16,
-  //                   //             width: 23,
-  //                   //             color: black,
-  //                   //             image:
-  //                   //                 AssetImage('assets/icons/TruckIcon.png')),
-  //                   //       ),
-  //                   //       Text(
-  //                   //         "widget.loadAllDataModel.companyName!",
-  //                   //         style: TextStyle(
-  //                   //           color: liveasyBlackColor,
-  //                   //           fontWeight: mediumBoldWeight,
-  //                   //         ),
-  //                   //       )
-  //                   //     ],
-  //                   //   ),
-  //                   // ),
-  //                 ],
-  //               ),
-  //             ),
-  //             Container(
-  //               color: contactPlaneBackground,
-  //               padding: EdgeInsets.symmetric(
-  //                 vertical: space_2,
-  //               ),
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                 children: [
-  //                   // print(gpsDataList[0]),
-  //                   TrackButton(
-  //                     gpsData: gpsDataList[0],
-  //                     truckApproved: true,
-  //                     TruckNo: "widget.loadAllDataModel.truckNo",
-  //                     totalDistance: "totalDistance",
-  //                   ),
-  //                   CallButton(
-  //                     directCall: false,
-  //                     transporterPhoneNum:
-  //                         "widget.loadAllDataModel.transporterPhoneNum",
-  //                     driverPhoneNum: "widget.loadAllDataModel.driverPhoneNum",
-  //                     driverName: "widget.loadAllDataModel.driverName",
-  //                     transporterName: "widget.loadAllDataModel.companyName",
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+//   return GestureDetector(
+//     onTap: () {
+//       Get.to(ShipperDetails(
+//         bookingId: widget.loadAllDataModel.bookingId.toString(),
+//         // truckType: truckType,
+//         // noOfTrucks: noOfTrucks,
+//         // productType: productType,
+//         loadingPoint: widget.loadAllDataModel.loadingPointCity,
+//         unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
+//         rate: widget.loadAllDataModel.rate,
+//         vehicleNo: widget.loadAllDataModel.truckNo,
+//         // shipperPosterCompanyApproved: companyApproved,
+//         // shipperPosterCompanyName: companyName,
+//         // shipperPosterLocation: posterLocation,
+//         // shipperPosterName: posterName,
+//         // transporterPhoneNum: transporterPhoneNumber,
+//         driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
+//         driverName: widget.loadAllDataModel.driverName,
+//         // transporterName: companyName,
+//         trackApproved: true,
+//       ));
+//       // Get.to(() => OnGoingLoadDetails(
+//       //       loadALlDataModel: widget.loadAllDataModel,
+//       //       trackIndicator: false,
+//       //     ));
+//     },
+//     child: Container(
+//       margin: EdgeInsets.only(bottom: space_3),
+//       child: Card(
+//         elevation: 5,
+//         child: Column(
+//           children: [
+//             Container(
+//               margin: EdgeInsets.all(space_4),
+//               child: Column(
+//                 children: [
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     children: [
+//                       Text(
+//                         '${"bookingDate".tr} : ${widget.loadAllDataModel.bookingDate}',
+//                         style: TextStyle(
+//                           fontSize: size_6,
+//                           color: veryDarkGrey,
+//                         ),
+//                       ),
+//                       Icon(Icons.arrow_forward_ios_sharp),
+//                     ],
+//                   ),
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       LoadEndPointTemplate(
+//                           text: widget.loadAllDataModel.loadingPointCity,
+//                           endPointType: 'loading'),
+//                       Container(
+//                           padding: EdgeInsets.only(left: 2),
+//                           height: space_3,
+//                           width: space_12,
+//                           child: CustomPaint(
+//                             foregroundPainter: LinePainter(height: space_3),
+//                           )),
+//                       LoadEndPointTemplate(
+//                           text: widget.loadAllDataModel.unloadingPointCity,
+//                           endPointType: 'unloading'),
+//                     ],
+//                   ),
+//                   Container(
+//                     margin: EdgeInsets.only(top: space_4),
+//                     child: Column(
+//                       children: [
+//                         NewRowTemplate(
+//                           label: "truckNumber".tr,
+//                           value: widget.loadAllDataModel.truckNo,
+//                           width: 78,
+//                         ),
+//                         NewRowTemplate(
+//                             label: "driverName".tr,
+//                             value: widget.loadAllDataModel.driverName),
+//                         NewRowTemplate(
+//                           label: "price".tr,
+//                           // value: widget.loadAllDataModel.rate,
+//                           value:
+//                               '${widget.loadAllDataModel.rate}/${widget.loadAllDataModel.unitValue}',
+//                           width: 78,
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                   // Container(
+//                   //   margin: EdgeInsets.only(top: space_4),
+//                   //   child: Row(
+//                   //     children: [
+//                   //       Container(
+//                   //         margin: EdgeInsets.only(right: space_1),
+//                   //         child: Image(
+//                   //             height: 16,
+//                   //             width: 23,
+//                   //             color: black,
+//                   //             image:
+//                   //                 AssetImage('assets/icons/TruckIcon.png')),
+//                   //       ),
+//                   //       Text(
+//                   //         "widget.loadAllDataModel.companyName!",
+//                   //         style: TextStyle(
+//                   //           color: liveasyBlackColor,
+//                   //           fontWeight: mediumBoldWeight,
+//                   //         ),
+//                   //       )
+//                   //     ],
+//                   //   ),
+//                   // ),
+//                 ],
+//               ),
+//             ),
+//             Container(
+//               color: contactPlaneBackground,
+//               padding: EdgeInsets.symmetric(
+//                 vertical: space_2,
+//               ),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                 children: [
+//                   // print(gpsDataList[0]),
+//                   TrackButton(
+//                     gpsData: gpsDataList[0],
+//                     truckApproved: true,
+//                     TruckNo: "widget.loadAllDataModel.truckNo",
+//                     totalDistance: "totalDistance",
+//                   ),
+//                   CallButton(
+//                     directCall: false,
+//                     transporterPhoneNum:
+//                         "widget.loadAllDataModel.transporterPhoneNum",
+//                     driverPhoneNum: "widget.loadAllDataModel.driverPhoneNum",
+//                     driverName: "widget.loadAllDataModel.driverName",
+//                     transporterName: "widget.loadAllDataModel.companyName",
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 //   void getMyTruckPosition() async {
 //     var devices =

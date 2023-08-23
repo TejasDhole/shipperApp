@@ -11,7 +11,6 @@ import '/models/gpsDataModelForHistory.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<List<DeviceModel>> getDeviceByDeviceId(String deviceId) async {
   // String traccarUser = FlutterConfig.get("traccarUser");
   String traccarUser = dotenv.get('traccarUser');

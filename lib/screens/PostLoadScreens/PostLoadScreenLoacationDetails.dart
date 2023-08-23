@@ -27,7 +27,8 @@ class PostLoadScreenOne extends StatefulWidget {
 
 TextEditingController controller1 = TextEditingController();
 TextEditingController controller2 = TextEditingController();
-Jiffy initialDay = Jiffy.parseFromDateTime(DateTime.now()); // previously .parseFromDateTime was not there
+Jiffy initialDay = Jiffy.parseFromDateTime(
+    DateTime.now()); // previously .parseFromDateTime was not there
 Jiffy secondDay = Jiffy.parseFromDateTime(DateTime.now()).add(days: 1);
 Jiffy thirdDay = Jiffy.parseFromDateTime(DateTime.now()).add(days: 2);
 Jiffy fourthDay = Jiffy.parseFromDateTime(DateTime.now()).add(days: 3);
@@ -53,7 +54,7 @@ class _PostLoadScreenOneState extends State<PostLoadScreenOne> {
     Jiffy nextDay;
     if (picked != null) {
       nextDay = Jiffy.parseFromDateTime(picked);
-    }else{
+    } else {
       nextDay = Jiffy.parseFromDateTime(selectedDate);
     }
 
@@ -119,8 +120,6 @@ class _PostLoadScreenOneState extends State<PostLoadScreenOne> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-
-
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -133,10 +132,10 @@ class _PostLoadScreenOneState extends State<PostLoadScreenOne> {
                 child: Column(
                   children: [
                     //AddPostLoadHeader(
-                      //reset: true,
-                      //resetFunction: () {
-                        //providerData.resetPostLoadScreenOne();
-                      //},
+                    //reset: true,
+                    //resetFunction: () {
+                    //providerData.resetPostLoadScreenOne();
+                    //},
                     //),
                     Container(
                       child: Column(

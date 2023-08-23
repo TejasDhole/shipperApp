@@ -9,7 +9,7 @@ class DynamicLinkService extends StatefulWidget {
   String? truckNo;
   DynamicLinkService({
     required this.deviceId,
- //   required this.truckId,
+    //   required this.truckId,
     required this.truckNo,
   });
 
@@ -41,7 +41,7 @@ class DynamicLink extends State<DynamicLinkService> {
               context: context,
               builder: (context) => WhatsappShare(
                     deviceId: widget.deviceId,
-              //      truckId: widget.truckId,
+                    //      truckId: widget.truckId,
                     truckNo: widget.truckNo,
                   ));
           print(MediaQuery.of(context).size.width);

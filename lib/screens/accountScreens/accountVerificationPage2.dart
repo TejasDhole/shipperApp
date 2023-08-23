@@ -23,8 +23,7 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AccountVerificationPage2 extends StatelessWidget {
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   HudController hudController = Get.put(HudController());
 
   @override
@@ -105,8 +104,8 @@ class AccountVerificationPage2 extends StatelessWidget {
                           if (uploadstatus == "Success") {
                             final status = await updateShipperApi(
                                 comapnyStatus: "inProgress",
-                                transporterId: shipperIdController
-                                    .shipperId.value);
+                                transporterId:
+                                    shipperIdController.shipperId.value);
                             if (status == "Success") {
                               hudController.updateHud(false);
                               Get.offAll(NavigationScreen());

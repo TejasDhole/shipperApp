@@ -9,7 +9,7 @@ class shareNewRowTemplate extends StatelessWidget {
   final String? value;
   double? width;
 
-  shareNewRowTemplate({ required this.label , required this.value , this.width});
+  shareNewRowTemplate({required this.label, required this.value, this.width});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,10 +20,7 @@ class shareNewRowTemplate extends StatelessWidget {
             child: Text(
               label!,
               style: TextStyle(
-                color: white,
-                fontSize: size_6,
-                fontWeight: regularWeight
-              ),
+                  color: white, fontSize: size_6, fontWeight: regularWeight),
             ),
           ),
           Text(

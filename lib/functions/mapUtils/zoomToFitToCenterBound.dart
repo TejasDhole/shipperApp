@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-Future<void> zoomToFitToCenterBound(GoogleMapController controller, LatLngBounds bounds,
-    LatLng centerBounds) async {
+Future<void> zoomToFitToCenterBound(GoogleMapController controller,
+    LatLngBounds bounds, LatLng centerBounds) async {
   bool keepZoomingOut = true;
 
   while (keepZoomingOut) {

@@ -10,8 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BookingApiCallsOrders {
   //shipperIdController will be used as postId in Transporter App
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   ProviderData providerData = ProviderData();
 
   //BookingApiUrl

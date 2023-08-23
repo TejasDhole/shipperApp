@@ -76,7 +76,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             // and adjust your widget sizes accordingly.
 
                             double maxWidth = kIsWeb ? 55.w : 40.w;
-                            double containerHeight = isError ? 50.h : screenHeight * 1;
+                            double containerHeight =
+                                isError ? 50.h : screenHeight * 1;
 
                             return Container(
                               width: maxWidth,
@@ -92,7 +93,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         style: GoogleFonts.montserrat(
                                           fontSize: screenHeight * 0.027,
                                           fontWeight: FontWeight.w500,
-                                          color:darkBlueTextColor,
+                                          color: darkBlueTextColor,
                                         )),
                                   ),
                                   Padding(
@@ -118,7 +119,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                           suffixIcon: Transform.scale(
                                             scale: 1.5,
                                             child: const Image(
-                                                image: AssetImage( "assets/images/UserRounded.png")),
+                                                image: AssetImage(
+                                                    "assets/images/UserRounded.png")),
                                           ),
                                           hintStyle: TextStyle(
                                               decorationColor: greyShade,
@@ -132,7 +134,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                                 Radius.circular(5)),
                                           ),
                                         ),
-
                                         style: GoogleFonts.montserrat(
                                             color: black,
                                             fontWeight: FontWeight.w400,
@@ -150,14 +151,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       child: TextFormField(
                                         controller: phoneController,
                                         keyboardType: TextInputType.phone,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(10)
                                         ],
                                         autofocus: true,
                                         decoration: InputDecoration(
                                           suffixIcon: Transform.scale(
                                             scale: 1.5,
                                             child: const Image(
-                                                image: AssetImage( "assets/images/PhoneRounded.png")),
+                                                image: AssetImage(
+                                                    "assets/images/PhoneRounded.png")),
                                           ),
                                           hintStyle: TextStyle(
                                               decorationColor: greyShade,
@@ -220,31 +225,38 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                     padding: EdgeInsets.only(
                                         left: 10.w, top: 6.h, right: 7.w),
                                     child: Container(
-                                     
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: darkBlueTextColor,
-                                        borderRadius:
-                                            BorderRadius.circular(radius_1),
-                                      ),
-                                      child: ConfirmButton(text: 'Confirm', 
-                                      onPressed: () async {
-                                          try {
-                                            if (companyNameController.text.toString().isNotEmpty && nameController.text.toString().isNotEmpty) {
-                                              updateDetails();
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg: 'Enter details (Company Name and Name)',
-                                                  fontSize: size_8,
-                                                  backgroundColor: Colors.white,
-                                                  textColor: Colors.black);
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          color: darkBlueTextColor,
+                                          borderRadius:
+                                              BorderRadius.circular(radius_1),
+                                        ),
+                                        child: ConfirmButton(
+                                          text: 'Confirm',
+                                          onPressed: () async {
+                                            try {
+                                              if (companyNameController.text
+                                                      .toString()
+                                                      .isNotEmpty &&
+                                                  nameController.text
+                                                      .toString()
+                                                      .isNotEmpty) {
+                                                updateDetails();
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        'Enter details (Company Name and Name)',
+                                                    fontSize: size_8,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    textColor: Colors.black);
+                                              }
+                                            } catch (e) {
+                                              log('Not updating--->$e');
                                             }
-                                          } catch (e) {
-                                            log('Not updating--->$e');
-                                          }
-                                        },
-                                      )
-                                    ),
+                                          },
+                                        )),
                                   ),
                                 ],
                               ),

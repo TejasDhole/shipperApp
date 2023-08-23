@@ -40,7 +40,7 @@ const Color greyShade = Color.fromARGB(255, 197, 195, 195);
 const Color hintTextColor = Color.fromARGB(255, 217, 217, 217);
 const Color darkGreyish = Color.fromARGB(255, 160, 160, 160);
 const Color textGreyColor = Color.fromARGB(255, 211, 202, 202);
-//const Color 
+//const Color
 const Color sideBarTextColor = Color.fromARGB(255, 135, 135, 135);
 const Color deleteButtonColor = Color.fromARGB(255, 255, 77, 85);
 const okButtonColor = Color.fromARGB(255, 9, 183, 120);

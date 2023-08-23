@@ -15,8 +15,7 @@ onGoingOrdersApiCall(int i) async {
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   // List<BookingModel> modelList = [];
   List<OngoingCardModel?> modelList = [];
   print("transported id");
@@ -67,8 +66,11 @@ onGoingOrdersApiCall(int i) async {
         json['unloadingPointCity'] != null ? json['unloadingPointCity'] : 'NA';
     bookingModel.truckNo = json['truckNo'] != null ? json['truckNo'] : 'NA';
     // bookingModel.deviceId = json['deviceId'] != null ? json['deviceId'] : 'NA';
-    bookingModel.deviceId =
-        json['deviceId'] != null ? json['deviceId'] == 'NA' ? 80 : int.parse(json["deviceId"]) : 80;
+    bookingModel.deviceId = json['deviceId'] != null
+        ? json['deviceId'] == 'NA'
+            ? 80
+            : int.parse(json["deviceId"])
+        : 80;
 //     print(bookingModel);
 
 // // var loadAllDataModel = BookingModel(bookingModel);

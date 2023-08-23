@@ -65,7 +65,8 @@ class _ShareButtonState extends State<ShareButton> {
 
     Uri url;
     if (short) {
-      final ShortDynamicLink shortLink = await dynamicLinks.buildShortLink(parameters);
+      final ShortDynamicLink shortLink =
+          await dynamicLinks.buildShortLink(parameters);
       url = shortLink.shortUrl;
       print("Dynamic URL is $url");
     } else {
@@ -100,9 +101,12 @@ class _ShareButtonState extends State<ShareButton> {
             .then((capturedImage) async {
           var pngBytes = capturedImage.buffer.asUint8List();
           await Share.share(
-              "loadAvailable".tr +"\n$_stringUrl\n\n" +"callonthisnum".tr +" ${widget.widgetLoadDetailsScreenModel.phoneNo} \n\n"+ "moreLoad".tr,
-            subject: "This is subject"
-                  )
+                  "loadAvailable".tr +
+                      "\n$_stringUrl\n\n" +
+                      "callonthisnum".tr +
+                      " ${widget.widgetLoadDetailsScreenModel.phoneNo} \n\n" +
+                      "moreLoad".tr,
+                  subject: "This is subject")
               .then((value) => EasyLoading.dismiss());
         });
       },

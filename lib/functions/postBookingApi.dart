@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import '/controller/shipperIdController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 postBookingApi(loadId, currentBid, unit, truckId, postLoadId, rate) async {
   ShipperIdController tIdController = Get.put(ShipperIdController());
   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());

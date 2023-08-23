@@ -15,11 +15,10 @@ class CancelButtonBidDialogBox extends StatelessWidget {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                      color: darkBlueColor))),
-          backgroundColor:                MaterialStateProperty.all(Colors.white),
+                  side: BorderSide(color: darkBlueColor))),
+          backgroundColor: MaterialStateProperty.all(Colors.white),
         ),
-        onPressed: (){
+        onPressed: () {
           Navigator.pop(context);
         },
         child: Container(

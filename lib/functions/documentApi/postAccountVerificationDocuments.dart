@@ -5,74 +5,74 @@ import 'package:http/http.dart' as http;
 import '/controller/shipperIdController.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<String> postAccountVerificationDocuments(
     {String? profilePhoto,
-      String? addressProofFront,
-      String? addressProofBack,
-      String? panFront,
-      String? companyIdProof}) async {
-  ShipperIdController shipperIdController =
-  Get.put(ShipperIdController());
+    String? addressProofFront,
+    String? addressProofBack,
+    String? panFront,
+    String? companyIdProof}) async {
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   try {
     final String documentApiUrl =
-    // FlutterConfig.get("documentApiUrl").toString();
-    dotenv.get('documentApiUrl');
+        // FlutterConfig.get("documentApiUrl").toString();
+        dotenv.get('documentApiUrl');
 
-    Map data = companyIdProof != null?{
-      "documents": [
-        {
-          "data": profilePhoto,
-          "documentType": "Profile Photo",
-          "verified": true
-        },
-        {
-          "data": addressProofFront,
-          "documentType": "Address Proof Front Photo",
-          "verified": true
-        },
-        {
-          "data": addressProofBack,
-          "documentType": "Address Proof Back Photo",
-          "verified": true
-        },
-        {
-          "data": panFront,
-          "documentType": "ID Proof (Pan Card)Front Photo",
-          "verified": true
-        },
-        {
-          "data": companyIdProof,
-          "documentType": "Company ID Proof Photo",
-          "verified": true
-        }
-      ],
-      "entityId": shipperIdController.shipperId.value
-    }: {
-      "documents": [
-        {
-          "data": profilePhoto,
-          "documentType": "Profile Photo",
-          "verified": true
-        },
-        {
-          "data": addressProofFront,
-          "documentType": "Address Proof Front Photo",
-          "verified": true
-        },
-        {
-          "data": addressProofBack,
-          "documentType": "Address Proof Back Photo",
-          "verified": true
-        },
-        {
-          "data": panFront,
-          "documentType": "ID Proof (Pan Card)Front Photo",
-          "verified": true
-        }
-      ],
-      "entityId": shipperIdController.shipperId.value
-    };
+    Map data = companyIdProof != null
+        ? {
+            "documents": [
+              {
+                "data": profilePhoto,
+                "documentType": "Profile Photo",
+                "verified": true
+              },
+              {
+                "data": addressProofFront,
+                "documentType": "Address Proof Front Photo",
+                "verified": true
+              },
+              {
+                "data": addressProofBack,
+                "documentType": "Address Proof Back Photo",
+                "verified": true
+              },
+              {
+                "data": panFront,
+                "documentType": "ID Proof (Pan Card)Front Photo",
+                "verified": true
+              },
+              {
+                "data": companyIdProof,
+                "documentType": "Company ID Proof Photo",
+                "verified": true
+              }
+            ],
+            "entityId": shipperIdController.shipperId.value
+          }
+        : {
+            "documents": [
+              {
+                "data": profilePhoto,
+                "documentType": "Profile Photo",
+                "verified": true
+              },
+              {
+                "data": addressProofFront,
+                "documentType": "Address Proof Front Photo",
+                "verified": true
+              },
+              {
+                "data": addressProofBack,
+                "documentType": "Address Proof Back Photo",
+                "verified": true
+              },
+              {
+                "data": panFront,
+                "documentType": "ID Proof (Pan Card)Front Photo",
+                "verified": true
+              }
+            ],
+            "entityId": shipperIdController.shipperId.value
+          };
     String body = json.encode(data);
 
     final response = await http.post(Uri.parse(documentApiUrl),

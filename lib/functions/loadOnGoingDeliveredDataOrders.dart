@@ -31,8 +31,7 @@ Future<Map> loadAllDataOrders(BookingModel bookingModel) async {
 
   if (bookingModel.postLoadId != 'NA') {
     postLoadIdData = bookingModel.postLoadId![0] == "t"
-        ? await postLoadIdApiCalls
-            .getDataByShipperId(bookingModel.postLoadId!)
+        ? await postLoadIdApiCalls.getDataByShipperId(bookingModel.postLoadId!)
         : await postLoadIdApiCalls.getDataByShipperId(bookingModel.postLoadId!);
   } else {
     postLoadIdData = {
@@ -60,8 +59,7 @@ Future<Map> loadAllDataOrders(BookingModel bookingModel) async {
     'unloadingPoint': loadDetails['unloadingPointCity'] == null
         ? "NA"
         : loadDetails['unloadingPointCity'],
-    'truckType':
-        truckData['truckType'] == null ? "NA" : truckData['truckType'],
+    'truckType': truckData['truckType'] == null ? "NA" : truckData['truckType'],
     'productType':
         loadDetails['productType'] == null ? "NA" : loadDetails['productType'],
     'noOfTrucks':

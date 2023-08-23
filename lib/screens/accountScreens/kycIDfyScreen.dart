@@ -20,8 +20,7 @@ class KYCIDfyScreen extends StatefulWidget {
 class _KYCIDfyScreenState extends State<KYCIDfyScreen> {
   bool isLoaded = false;
   late String url;
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   NavigationIndexController navigationIndexController =
       Get.put(NavigationIndexController());
 
@@ -52,7 +51,8 @@ class _KYCIDfyScreenState extends State<KYCIDfyScreen> {
   Widget build(BuildContext context) {
     final PlatformWebViewController _controller = PlatformWebViewController(
       const PlatformWebViewControllerCreationParams(),
-    )..loadRequest(LoadRequestParams(uri: isLoaded ? Uri.parse(url) : Uri.parse('https:google.com')));
+    )..loadRequest(LoadRequestParams(
+        uri: isLoaded ? Uri.parse(url) : Uri.parse('https:google.com')));
     _controller.setJavaScriptMode(JavaScriptMode.unrestricted);
     WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

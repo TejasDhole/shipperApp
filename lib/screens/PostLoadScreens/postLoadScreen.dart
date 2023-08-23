@@ -43,7 +43,13 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.fromLTRB((Responsive.isDesktop(context) || Responsive.isTablet(context))?space_0:space_4, space_4, space_4, space_2),
+          padding: EdgeInsets.fromLTRB(
+              (Responsive.isDesktop(context) || Responsive.isTablet(context))
+                  ? space_0
+                  : space_4,
+              space_4,
+              space_4,
+              space_2),
           child: Column(
             children: [
               (kIsWeb &&

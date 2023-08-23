@@ -9,7 +9,6 @@ import 'package:screenshot/screenshot.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 class simpleMap extends StatefulWidget {
   @override
   _simpleMapState createState() => _simpleMapState();

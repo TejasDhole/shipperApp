@@ -48,7 +48,7 @@ class _LoadTruckWeightSelectScreenWebState
 
     if (widget.maxWeight > widget.minWeight && widget.minWeight != 0.0) {
       createSlotFromWeightRange();
-      if(weightSlots[0][0] == 0 && weightSlots[0][1] == 0) {
+      if (weightSlots[0][0] == 0 && weightSlots[0][1] == 0) {
         weightSlots.removeAt(0);
       }
     }
@@ -111,7 +111,9 @@ class _LoadTruckWeightSelectScreenWebState
           children: [
             Text(
               key: GlobalObjectKey(e),
-              (e.length == 1) ? '${e[0]} - ${e[0]} tons' : '${e[0]} - ${e[1]} tons',
+              (e.length == 1)
+                  ? '${e[0]} - ${e[0]} tons'
+                  : '${e[0]} - ${e[1]} tons',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: truckGreen,
@@ -126,34 +128,45 @@ class _LoadTruckWeightSelectScreenWebState
                   return CheckboxListTile(
                     contentPadding:
                         EdgeInsets.only(top: 5, bottom: 5, right: 10),
-                    value: (((e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator && selectedWeight.contains('${(e[0]+iterator).floor()}')))
+                    value: (((e.length > 1 &&
+                            (((e[1] - e[0]) + 1).ceil().toInt()) - 1 ==
+                                iterator &&
+                            selectedWeight
+                                .contains('${(e[0] + iterator).floor()}')))
                         ? true
-                        : selectedWeight.contains('${e[0]+iterator}')?true:false),
+                        : selectedWeight.contains('${e[0] + iterator}')
+                            ? true
+                            : false),
                     onChanged: (value) {
                       setState(() {
                         if ((value ?? false) && selectedWeight.length < 5) {
-                          if( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator){
-                            selectedWeight.add('${(e[0]+iterator).floor()}');
-                          }
-                          else{
+                          if (e.length > 1 &&
+                              (((e[1] - e[0]) + 1).ceil().toInt()) - 1 ==
+                                  iterator) {
+                            selectedWeight.add('${(e[0] + iterator).floor()}');
+                          } else {
                             selectedWeight.add('${e[0] + iterator}');
                           }
                         } else {
-                            if( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator){
-                              selectedWeight.remove('${(e[0]+iterator).floor()}');
-                            }
-                            else{
-                              selectedWeight.remove('${e[0] + iterator}');
-                            }
+                          if (e.length > 1 &&
+                              (((e[1] - e[0]) + 1).ceil().toInt()) - 1 ==
+                                  iterator) {
+                            selectedWeight
+                                .remove('${(e[0] + iterator).floor()}');
+                          } else {
+                            selectedWeight.remove('${e[0] + iterator}');
+                          }
                         }
                         // check = value ?? false;
                       });
                     },
                     mouseCursor: SystemMouseCursors.click,
                     title: Text(
-                      ( e.length > 1 && (((e[1] - e[0]) + 1).ceil().toInt())-1 == iterator)?
-                          '${e[1]} tons'
-                      :'${e[0] + iterator} tons',
+                      (e.length > 1 &&
+                              (((e[1] - e[0]) + 1).ceil().toInt()) - 1 ==
+                                  iterator)
+                          ? '${e[1]} tons'
+                          : '${e[0] + iterator} tons',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           color: kLiveasyColor,
@@ -176,7 +189,9 @@ class _LoadTruckWeightSelectScreenWebState
                     height: 0,
                   );
                 },
-                itemCount: (e.length == 1)? (((e[0] - e[0]) + 1).toInt()):((e[1] - e[0]) + 1).ceil().toInt())
+                itemCount: (e.length == 1)
+                    ? (((e[0] - e[0]) + 1).toInt())
+                    : ((e[1] - e[0]) + 1).ceil().toInt())
           ],
         ),
       );
@@ -208,8 +223,8 @@ class _LoadTruckWeightSelectScreenWebState
           ),
           onPressed: () {
             if (selectedWeight.isNotEmpty) {
-              List<double> sortedNumbers = selectedWeight.map(double.parse).toList()
-                ..sort();
+              List<double> sortedNumbers =
+                  selectedWeight.map(double.parse).toList()..sort();
               selectedWeight =
                   sortedNumbers.map((number) => number.toString()).toList();
               providerData.updateResetActive(true);
@@ -273,7 +288,9 @@ class _LoadTruckWeightSelectScreenWebState
                             child: Center(
                                 child: Text(
                               (index < weightSlots.length)
-                                  ? (weightSlots[index].length == 1)?'${weightSlots[index][0]} - ${weightSlots[index][0]} tons':'${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
+                                  ? (weightSlots[index].length == 1)
+                                      ? '${weightSlots[index][0]} - ${weightSlots[index][0]} tons'
+                                      : '${weightSlots[index][0]} - ${weightSlots[index][1]} tons'
                                   : 'Other',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',

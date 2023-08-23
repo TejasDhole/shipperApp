@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<String?> postBidAPi(loadId, rate, shipperIdController, unit) async {
   String now = DateFormat("dd-MM-yyyy").format(DateTime.now());
   var jsondata;
@@ -111,7 +110,6 @@ declineBidFromShipperSide(String bidId) async {
   // final String bidApiUrl = FlutterConfig.get('biddingApiUrl');
   final String bidApiUrl = dotenv.get('biddingApiUrl');
 
-
   Map<String, bool> data = {'transporterApproval': false};
 
   String body = json.encode(data);
@@ -129,7 +127,6 @@ declineBidFromTransporterSideSide(
     {required String bidId, required approvalVariable}) async {
   // final String bidApiUrl = FlutterConfig.get('biddingApiUrl');
   final String bidApiUrl = dotenv.get('biddingApiUrl');
-
 
   Map<String, bool> data = {'$approvalVariable': false};
 

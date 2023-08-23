@@ -14,21 +14,20 @@ class GpsDataModelForHistory {
   double? distanceCovered;
   double? totalDistanceCovered;
 
-  GpsDataModelForHistory(
-      {
-        this.gpsSpeed,
-        this.satellite,
-        this.lat,
-        this.lng,
-        this.gpsTime,
-        this.direction,
-        this.posType,
-        this.address,
-        this.duration,
-        this.startTime,
-        this.endTime,
-        this.truckStatus,
-        this.distanceCovered,
-        this.totalDistanceCovered,
-      });
+  GpsDataModelForHistory({
+    this.gpsSpeed,
+    this.satellite,
+    this.lat,
+    this.lng,
+    this.gpsTime,
+    this.direction,
+    this.posType,
+    this.address,
+    this.duration,
+    this.startTime,
+    this.endTime,
+    this.truckStatus,
+    this.distanceCovered,
+    this.totalDistanceCovered,
+  });
 }

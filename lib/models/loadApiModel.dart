@@ -17,7 +17,6 @@ class LoadApiModel {
   String? unitValue;
   String? loadDate;
 
-
   LoadApiModel({
     this.loadId,
     this.loadingPoint,

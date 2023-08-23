@@ -234,7 +234,8 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
               }),
               createmarker()
             });
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: kIsWeb ? Size(50,50) :Size(16, 16) ),
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: kIsWeb ? Size(50, 50) : Size(16, 16)),
             "assets/icons/" + widget.placeOnTheMapTag + "_rounded.png")
         .then((value) => {
               setState(() {
@@ -321,8 +322,7 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
       googleAPiKey,
       LatLng(startLocationForDistance.latitude,
           startLocationForDistance.longitude),
-      LatLng(
-          endLocationForDistance.latitude, endLocationForDistance.longitude),
+      LatLng(endLocationForDistance.latitude, endLocationForDistance.longitude),
       travelMode: TravelMode.driving,
     );
 
@@ -811,13 +811,12 @@ class PolylinePoints {
     return polylinePoints;
   }
 
-
   Future<PolylineResult> getRouteBetweenCoordinates(
-      String apiKey,
-      LatLng origin,
-      LatLng destination, {
-        TravelMode travelMode = TravelMode.driving,
-      }) async {
+    String apiKey,
+    LatLng origin,
+    LatLng destination, {
+    TravelMode travelMode = TravelMode.driving,
+  }) async {
     String url =
         'https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&mode=${_getTravelModeString(travelMode)}&key=$apiKey';
 
@@ -825,10 +824,12 @@ class PolylinePoints {
 
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
-      List<LatLng> polylinePoints =
-      _decodePolylinePoints(decodedResponse['routes'][0]['overview_polyline']['points']);
-      Duration duration = _getDuration(decodedResponse['routes'][0]['legs'][0]['duration']['value']);
-      String distance = decodedResponse['routes'][0]['legs'][0]['distance']['text'];
+      List<LatLng> polylinePoints = _decodePolylinePoints(
+          decodedResponse['routes'][0]['overview_polyline']['points']);
+      Duration duration = _getDuration(
+          decodedResponse['routes'][0]['legs'][0]['duration']['value']);
+      String distance =
+          decodedResponse['routes'][0]['legs'][0]['distance']['text'];
 
       return PolylineResult(
         polylinePoints: polylinePoints,
@@ -843,7 +844,6 @@ class PolylinePoints {
   Duration _getDuration(int value) {
     return Duration(seconds: value);
   }
-
 
   String _getTravelModeString(TravelMode travelMode) {
     switch (travelMode) {

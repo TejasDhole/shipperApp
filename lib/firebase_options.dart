@@ -55,7 +55,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '692017725889',
     projectId: 'shipperwebapp',
     authDomain: 'shipperwebapp.firebaseapp.com',
-    databaseURL: 'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'shipperwebapp.appspot.com',
   );
 
@@ -64,7 +65,8 @@ class DefaultFirebaseOptions {
     appId: '1:692017725889:android:97de2700f739792859ef40',
     messagingSenderId: '692017725889',
     projectId: 'shipperwebapp',
-    databaseURL: 'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'shipperwebapp.appspot.com',
   );
 }

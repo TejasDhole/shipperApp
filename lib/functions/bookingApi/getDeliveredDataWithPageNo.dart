@@ -13,8 +13,7 @@ getDeliveredDataWithPageNo(int i) async {
   // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
 
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
   List<DeliveredCardModel> modelList = [];
   http.Response response = await http.get(Uri.parse(
       '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=true&cancel=false&pageNo=$i'));

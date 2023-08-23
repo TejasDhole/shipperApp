@@ -202,16 +202,20 @@ class _navigateToTrackScreenState extends State<navigateToTrackScreen> {
                                             fontWeight: boldWeight),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
                                         child: Image(
-                                            image: AssetImage("assets/icons/Arrow.png")),
+                                            image: AssetImage(
+                                                "assets/icons/Arrow.png")),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(top: 1, right: 7),
+                                        padding:
+                                            EdgeInsets.only(top: 1, right: 7),
                                         child: Image(
                                             height: 19,
                                             width: 19,
-                                            image: AssetImage("assets/icons/location_pin.png")),
+                                            image: AssetImage(
+                                                "assets/icons/location_pin.png")),
                                       ),
                                       Text(
                                         widget.unloadingPoint.toString().tr,
@@ -223,22 +227,22 @@ class _navigateToTrackScreenState extends State<navigateToTrackScreen> {
                                       ),
                                     ],
                                   ),
-                                )
-                            ),
-
+                                )),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
                               child: Text(
                                 widget.bookingDate.toString(),
                                 // "20 JUN 2022",
-                                style: TextStyle(color: white, fontSize: size_6),
+                                style:
+                                    TextStyle(color: white, fontSize: size_6),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
                               child: Text(
                                 "8:47 AM",
-                                style: TextStyle(color: white, fontSize: size_6),
+                                style:
+                                    TextStyle(color: white, fontSize: size_6),
                               ),
                             )
                           ],

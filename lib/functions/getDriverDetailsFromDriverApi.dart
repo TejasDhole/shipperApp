@@ -9,7 +9,6 @@ import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 Future<List> getDriverDetailsFromDriverApi(
     BuildContext context /*, driverIdList*/) async {
   var providerData = Provider.of<ProviderData>(context, listen: false);
@@ -20,8 +19,8 @@ Future<List> getDriverDetailsFromDriverApi(
 
   List<DriverModel> driverDetailsList = [];
   try {
-    http.Response response = await http.get(Uri.parse(
-        "$driverApiUrl?transporterId=${tIdController.shipperId}"));
+    http.Response response = await http.get(
+        Uri.parse("$driverApiUrl?transporterId=${tIdController.shipperId}"));
     jsonData = json.decode(response.body);
     for (var json in jsonData) {
       DriverModel driverModel = DriverModel();

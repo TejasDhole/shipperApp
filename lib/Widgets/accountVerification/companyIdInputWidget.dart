@@ -22,7 +22,6 @@ class CompanyIdInputWidget extends StatefulWidget {
 }
 
 class _CompanyIdInputWidgetState extends State<CompanyIdInputWidget> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -60,47 +59,55 @@ class _CompanyIdInputWidgetState extends State<CompanyIdInputWidget> {
                     child: RoundedImageDisplay(
                       text: "",
                       onPressed: () {
-                        widget.providerData.companyIdProofPhotoFile!=null?
-                        Get.to(ImageDisplay(providerData: widget.providerData.companyIdProofPhotoFile,imageName: 'companyIdProofPhoto64',))
-                            :showPicker(
-                            widget.providerData.updateCompanyIdProofPhoto,
-                            widget.providerData.updateCompanyIdProofPhotoStr,
-                            context
-                        );
+                        widget.providerData.companyIdProofPhotoFile != null
+                            ? Get.to(ImageDisplay(
+                                providerData:
+                                    widget.providerData.companyIdProofPhotoFile,
+                                imageName: 'companyIdProofPhoto64',
+                              ))
+                            : showPicker(
+                                widget.providerData.updateCompanyIdProofPhoto,
+                                widget
+                                    .providerData.updateCompanyIdProofPhotoStr,
+                                context);
                       },
                       imageFile: widget.providerData.companyIdProofPhotoFile,
                     ),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
-                    child: widget.providerData.companyIdProofPhotoFile!=null?
-                    Container(
-                      margin: EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(radius_10),
-                        child: GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              widget.providerData.updateCompanyIdProofPhoto(null);
-                              widget.providerData.updateCompanyIdProofPhotoStr(null);
-                            });
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(shape: BoxShape.rectangle),
-                            height: space_5,
-                            width: space_5,
-                            child: const Center(
-                              child: Icon(
-                                Icons.clear,
-                                color: darkBlueColor,
+                    child: widget.providerData.companyIdProofPhotoFile != null
+                        ? Container(
+                            margin:
+                                EdgeInsets.fromLTRB(space_22, 0, 0, space_1),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(radius_10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.providerData
+                                        .updateCompanyIdProofPhoto(null);
+                                    widget.providerData
+                                        .updateCompanyIdProofPhotoStr(null);
+                                  });
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.rectangle),
+                                  height: space_5,
+                                  width: space_5,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: darkBlueColor,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ):Container(),
+                          )
+                        : Container(),
                   ),
-
                 ],
               ),
             ],

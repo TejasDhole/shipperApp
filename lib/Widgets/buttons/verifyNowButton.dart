@@ -20,9 +20,12 @@ class VerifyNowButton extends StatelessWidget {
         Get.put(NavigationIndexController());
     return GestureDetector(
       onTap: () {
-        if(kIsWeb){
-          Get.offAll(const HomeScreenWeb(index:3,selectedIndex: 3,));
-        }else {
+        if (kIsWeb) {
+          Get.offAll(const HomeScreenWeb(
+            index: 3,
+            selectedIndex: 3,
+          ));
+        } else {
           Get.offAll(NavigationScreen(initScreen: 2));
           navigationIndexController.updateIndex(2);
         }

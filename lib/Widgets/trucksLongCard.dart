@@ -8,10 +8,7 @@ class TrucksLongCard extends StatelessWidget {
   final Border? borderCard;
   final TruckModel truckData;
 
-  TrucksLongCard({
-    required this.truckData,
-    required this.borderCard
-  });
+  TrucksLongCard({required this.truckData, required this.borderCard});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class TrucksLongCard extends StatelessWidget {
         width: (space_20 + space_40),
         height: space_12,
         decoration: BoxDecoration(
-          border: borderCard,
+            border: borderCard,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.10),
@@ -32,14 +29,11 @@ class TrucksLongCard extends StatelessWidget {
               ),
             ],
             color: greyishWhiteColor,
-            borderRadius: BorderRadius.circular(radius_2 - 2)
-        ),
+            borderRadius: BorderRadius.circular(radius_2 - 2)),
         child: Row(
           children: [
             Image(
-              image: AssetImage(
-                  'assets/images/TruckListEmptyImage.png'
-              ),
+              image: AssetImage('assets/images/TruckListEmptyImage.png'),
               height: (space_7 - 2),
               width: (space_7 - 2),
             ),

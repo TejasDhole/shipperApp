@@ -27,9 +27,7 @@ class ElevatedButtonWidget extends StatelessWidget {
               backgroundColor:
                   condition ? activeButtonColor : deactiveButtonColor,
             ),
-            onPressed: condition
-                ? onPressedConditionTrue
-                : null,
+            onPressed: condition ? onPressedConditionTrue : null,
             child: SizedBox(
               height: space_8,
               child: Center(

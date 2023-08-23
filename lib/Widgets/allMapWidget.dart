@@ -29,8 +29,8 @@ class AllMapWidget extends StatefulWidget {
 
   AllMapWidget(
       {required this.gpsDataList,
-        required this.truckDataList,
-        required this.status});
+      required this.truckDataList,
+      required this.status});
 
   @override
   _AllMapWidgetState createState() => _AllMapWidgetState();
@@ -47,7 +47,7 @@ class _AllMapWidgetState extends State<AllMapWidget>
   late BitmapDescriptor pinLocationIconGreenTruck;
   late BitmapDescriptor pinLocationIconRedTruck;
   late CameraPosition camPosition =
-  CameraPosition(target: lastlatLngMarker, zoom: 4.5);
+      CameraPosition(target: lastlatLngMarker, zoom: 4.5);
   var logger = Logger();
   bool showdetails = false;
   late Marker markernew;
@@ -69,7 +69,7 @@ class _AllMapWidgetState extends State<AllMapWidget>
 
   //CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
   CustomInfoWindowController _customDetailsInfoWindowController =
-  CustomInfoWindowController();
+      CustomInfoWindowController();
   bool isAnimation = false;
   double mapHeight = 600;
   var direction;
@@ -152,44 +152,44 @@ class _AllMapWidgetState extends State<AllMapWidget>
       if (widget.status[i].toString() == "Offline") {
         print("speed grey ${widget.gpsDataList[i].speed!}");
         BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(devicePixelRatio: 2.5), greyImg)
+                ImageConfiguration(devicePixelRatio: 2.5), greyImg)
             .then((value) => {
-          setState(() {
-            pinLocationIconGreyTruck = value;
-          }),
-          print("working grey"),
-          createmarkerGrey(
-              widget.gpsDataList[i], widget.truckDataList[i]),
-        });
+                  setState(() {
+                    pinLocationIconGreyTruck = value;
+                  }),
+                  print("working grey"),
+                  createmarkerGrey(
+                      widget.gpsDataList[i], widget.truckDataList[i]),
+                });
       } else {
         if (widget.status[i].toString() == "Online" &&
             widget.gpsDataList[i].speed! >= 5) {
           print("speed green ${widget.gpsDataList[i].speed!}");
           BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(devicePixelRatio: 2.5),
-              'assets/icons/truckPinGreen.png')
+                  ImageConfiguration(devicePixelRatio: 2.5),
+                  'assets/icons/truckPinGreen.png')
               .then((value) => {
-            setState(() {
-              pinLocationIconGreenTruck = value;
-            }),
-            print("working green"),
-            createmarkerGreen(
-                widget.gpsDataList[i], widget.truckDataList[i]),
-          });
+                    setState(() {
+                      pinLocationIconGreenTruck = value;
+                    }),
+                    print("working green"),
+                    createmarkerGreen(
+                        widget.gpsDataList[i], widget.truckDataList[i]),
+                  });
         } else if (widget.status[i].toString() == "Online" &&
             widget.gpsDataList[i].speed! < 5) {
           print("speed red ${widget.gpsDataList[i].speed!}");
           BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(devicePixelRatio: 2.5),
-              'assets/icons/truckPinRed.png')
+                  ImageConfiguration(devicePixelRatio: 2.5),
+                  'assets/icons/truckPinRed.png')
               .then((value) => {
-            setState(() {
-              pinLocationIconRedTruck = value;
-            }),
-            print("working red"),
-            createmarkerRed(
-                widget.gpsDataList[i], widget.truckDataList[i]),
-          });
+                    setState(() {
+                      pinLocationIconRedTruck = value;
+                    }),
+                    print("working red"),
+                    createmarkerRed(
+                        widget.gpsDataList[i], widget.truckDataList[i]),
+                  });
         }
       }
     }
@@ -220,7 +220,7 @@ class _AllMapWidgetState extends State<AllMapWidget>
               );
             },
             infoWindow: InfoWindow(
-              //   title: title,
+                //   title: title,
                 onTap: () {}),
             icon: pinLocationIconGreyTruck,
             rotation: direction));
@@ -270,7 +270,7 @@ class _AllMapWidgetState extends State<AllMapWidget>
               );
             },
             infoWindow: InfoWindow(
-              //   title: title,
+                //   title: title,
                 onTap: () {}),
             icon: pinLocationIconGreenTruck,
             rotation: direction));
@@ -320,7 +320,7 @@ class _AllMapWidgetState extends State<AllMapWidget>
               );
             },
             infoWindow: InfoWindow(
-              //   title: title,
+                //   title: title,
                 onTap: () {}),
             icon: pinLocationIconRedTruck,
             rotation: direction));

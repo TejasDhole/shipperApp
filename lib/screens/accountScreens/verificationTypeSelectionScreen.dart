@@ -30,16 +30,20 @@ class VerificationTypeSelection extends StatelessWidget {
                     HelpButtonWidget(),
                   ],
                 ),
-                SizedBox(height: queryData.size.height/15,),
+                SizedBox(
+                  height: queryData.size.height / 15,
+                ),
                 Container(
                   alignment: Alignment.center,
-                  width: queryData.size.width/1.2,
-                  height: queryData.size.height/1.5,
+                  width: queryData.size.width / 1.2,
+                  height: queryData.size.height / 1.5,
                   decoration: BoxDecoration(
-                    boxShadow: [BoxShadow(color: Colors.blueGrey,blurRadius: 5)],
+                    boxShadow: [
+                      BoxShadow(color: Colors.blueGrey, blurRadius: 5)
+                    ],
                     gradient: LinearGradient(
-                      stops: [0.5,0.5],
-                      colors: [Color(0xFF152968),Colors.white],
+                      stops: [0.5, 0.5],
+                      colors: [Color(0xFF152968), Colors.white],
                       end: Alignment.bottomCenter,
                       begin: Alignment.topCenter,
                     ),
@@ -50,81 +54,91 @@ class VerificationTypeSelection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding:EdgeInsets.only(top:queryData.size.height/15,),
-                        child: Text('Verification of Transporter Status',
+                        padding: EdgeInsets.only(
+                          top: queryData.size.height / 15,
+                        ),
+                        child: Text(
+                          'Verification of Transporter Status',
                           style: TextStyle(
                             color: Colors.white,
-                            
-                            fontSize: kIsWeb? space_4 :space_3,
+                            fontSize: kIsWeb ? space_4 : space_3,
                           ),
                         ),
-                      ),//Verification text title
+                      ), //Verification text title
                       Padding(
-                        padding:EdgeInsets.only(top:3,),
-                        child: Text('via Aadhaar',
+                        padding: EdgeInsets.only(
+                          top: 3,
+                        ),
+                        child: Text(
+                          'via Aadhaar',
                           style: TextStyle(
                             color: Colors.white,
-                            
-                            fontSize: kIsWeb? space_4 :space_3,
+                            fontSize: kIsWeb ? space_4 : space_3,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top:queryData.size.height/12.5),
+                        padding:
+                            EdgeInsets.only(top: queryData.size.height / 12.5),
                         child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: () {
                             Get.to(() => AccountVerificationPage1());
                           },
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            backgroundColor:Color(0xFF09B778),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: Color(0xFF09B778),
                           ),
-                          child: Text("Manual verification",
+                          child: Text(
+                            "Manual verification",
                             style: TextStyle(
                               color: Colors.white,
-                              
-                              fontSize: kIsWeb? space_5 :space_3,
+                              fontSize: kIsWeb ? space_5 : space_3,
                             ),
                           ),
                         ),
-                      ),//Manual Verification Button
+                      ), //Manual Verification Button
                       Padding(
-                        padding: EdgeInsets.only(top: kIsWeb?queryData.size.height/15.5:queryData.size.height/17.5),
-                        child: Text('OR',
+                        padding: EdgeInsets.only(
+                            top: kIsWeb
+                                ? queryData.size.height / 15.5
+                                : queryData.size.height / 17.5),
+                        child: Text(
+                          'OR',
                           style: TextStyle(
-                            color: Colors.white,
-                            
-                            fontSize: 25,
-                            fontWeight: FontWeight.w600,
-                            shadows: [
-                              Shadow(
-                                offset:Offset(0, 2),
-                                blurRadius: 3,
-                                color: Colors.blueGrey,
-                              )
-                            ]
-                          ),
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                              shadows: [
+                                Shadow(
+                                  offset: Offset(0, 2),
+                                  blurRadius: 3,
+                                  color: Colors.blueGrey,
+                                )
+                              ]),
                         ),
                       ), //Or text
                       Padding(
-                        padding: EdgeInsets.only(top:queryData.size.height/11.3),
+                        padding:
+                            EdgeInsets.only(top: queryData.size.height / 11.3),
                         child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: () {
                             Get.to(() => KYCIDfyScreen());
                           },
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            backgroundColor:Color(0xFF09B778),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: Color(0xFF09B778),
                           ),
-                          child: Text("Immediate verification",
+                          child: Text(
+                            "Immediate verification",
                             style: TextStyle(
                               color: Colors.white,
-                              
-                              fontSize: kIsWeb? space_5 :space_3,
+                              fontSize: kIsWeb ? space_5 : space_3,
                             ),
                           ),
                         ),
-                      ),//Immediate Verification Button
+                      ), //Immediate Verification Button
                     ],
                   ),
                 ),

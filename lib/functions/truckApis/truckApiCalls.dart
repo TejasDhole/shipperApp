@@ -15,8 +15,7 @@ class TruckApiCalls {
   final String truckApiUrl = dotenv.get('truckApiUrl');
 
   // transporterId controller
-  ShipperIdController shipperIdController =
-      Get.put(ShipperIdController());
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
   //truckId controller ..used to store truckId for latest truck
   TruckIdController truckIdController = TruckIdController();

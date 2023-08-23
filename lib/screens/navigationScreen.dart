@@ -62,8 +62,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
     this.checkUpdate();
   }
 
-
-
   void checkUpdate() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = (prefs.getBool('isFirstTime') ?? true);

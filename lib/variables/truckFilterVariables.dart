@@ -32,8 +32,8 @@ class TruckFilterVariables {
 
   Map<String, List<int>> passingWeightList = {
     // 'OPEN_HALF_BODY': [7, 8, 9, 15, 16, 18, 19, 20, 21, 24, 25, 30],
-    'OPEN_BODY': [7, 8, 9, 15, 16, 18, 19, 20, 21, 24, 25, 30,0],
-    'FLATBED': [16, 21, 24, 30, 32, 33, 34, 40,0],
+    'OPEN_BODY': [7, 8, 9, 15, 16, 18, 19, 20, 21, 24, 25, 30, 0],
+    'FLATBED': [16, 21, 24, 30, 32, 33, 34, 40, 0],
     // 'OPEN_FULL_BODY': [7, 8, 9, 15, 16, 18, 19, 20, 21, 24, 25, 30],
     // 'FULL_BODY_TRAILER': [
     //   27,
@@ -69,7 +69,8 @@ class TruckFilterVariables {
       39,
       40,
       41,
-      42,0
+      42,
+      0
     ],
     // 'HALF_BODY_TRAILER': [
     //   27,
@@ -89,20 +90,70 @@ class TruckFilterVariables {
     //   41,
     //   42
     // ],
-    'STANDARD_CONTAINER': [6, 7, 9, 15, 18,0],
-    'HIGH_CUBE_CONTAINER': [6, 7, 9, 15, 18,0],
+    'STANDARD_CONTAINER': [6, 7, 9, 15, 18, 0],
+    'HIGH_CUBE_CONTAINER': [6, 7, 9, 15, 18, 0],
   };
 
   Map<String, List<int>> totalTyresList = {
     // 'OPEN_HALF_BODY': [6, 8, 10, 12, 14, 16, 18, 20, 22],
-    'OPEN_BODY': [6, 8, 10, 12, 14, 16, 18, 20, 22,],
-    'FLATBED': [6, 8, 10, 12, 14, 16, 18, 20, 22,],
+    'OPEN_BODY': [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+    ],
+    'FLATBED': [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+    ],
     // 'OPEN_FULL_BODY': [6, 8, 10, 12, 14, 16, 18, 20, 22],
     // 'FULL_BODY_TRAILER': [6, 8, 10, 12, 14, 16, 18, 20, 22],
     // 'HALF_BODY_TRAILER': [6, 8, 10, 12, 14, 16, 18, 20, 22],
-    'TRAILER_BODY': [6, 8, 10, 12, 14, 16, 18, 20, 22,],
-    'STANDARD_CONTAINER': [6, 8, 10, 12, 14, 16, 18, 20, 22,],
-    'HIGH_CUBE_CONTAINER': [6, 8, 10, 12, 14, 16, 18, 20, 22,],
+    'TRAILER_BODY': [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+    ],
+    'STANDARD_CONTAINER': [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+    ],
+    'HIGH_CUBE_CONTAINER': [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+    ],
   };
   // chaged this-----------------------
   // Map<String, List<int>> truckLengthList = {

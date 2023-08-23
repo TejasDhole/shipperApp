@@ -449,8 +449,8 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
                               _customInfoWindowController.googleMapController =
                                   gController;
                             },
-                            gestureRecognizers:
-                                <Factory<OneSequenceGestureRecognizer>>{
+                            gestureRecognizers: <
+                                Factory<OneSequenceGestureRecognizer>>{
                               Factory<OneSequenceGestureRecognizer>(
                                 () => EagerGestureRecognizer(),
                               ),

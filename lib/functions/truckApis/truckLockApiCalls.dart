@@ -9,9 +9,7 @@ import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-ShipperIdController shipperIdController =
-    Get.put(ShipperIdController());
+ShipperIdController shipperIdController = Get.put(ShipperIdController());
 final lockStorage = GetStorage();
 // String? traccarUser = FlutterConfig.get("traccarUser");
 String? traccarUser = dotenv.get('traccarUser');

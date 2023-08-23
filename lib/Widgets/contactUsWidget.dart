@@ -5,9 +5,7 @@ import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-
 class ContactUsWidget extends StatefulWidget {
-
   @override
   _ContactUsWidgetState createState() => _ContactUsWidgetState();
 }
@@ -29,7 +27,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border:
-                Border.all(width: borderWidth_10, color: darkBlueColor)),
+                    Border.all(width: borderWidth_10, color: darkBlueColor)),
             child: Center(
               child: Row(
                 children: [
@@ -54,6 +52,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
         ));
   }
 }
+
 _callUs() async {
   String url = 'tel:8290748131';
   UrlLauncher.launch(url);

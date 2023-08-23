@@ -3,9 +3,9 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 
-Widget trucknoInfoWindow(var truckno){
-  return  Container(
-   // height: 300,
+Widget trucknoInfoWindow(var truckno) {
+  return Container(
+    // height: 300,
     margin: EdgeInsets.fromLTRB(100, 80, 0, 0),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -13,7 +13,6 @@ Widget trucknoInfoWindow(var truckno){
       children: [
         Container(
           alignment: Alignment.center,
-          
           decoration: BoxDecoration(
             color: Color(0xff152968),
             borderRadius: BorderRadius.circular(4),
@@ -23,21 +22,17 @@ Widget trucknoInfoWindow(var truckno){
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Container(
-                //  margin: EdgeInsets.only(bottom: 8.0),
+                  //  margin: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     "$truckno",
                     style: TextStyle(
                         color: white,
                         fontSize: size_5,
                         fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w800
-                    ),
+                        fontWeight: FontWeight.w800),
                   ),
                 ),
-
-                
               ],
             ),
           ),
@@ -47,5 +42,4 @@ Widget trucknoInfoWindow(var truckno){
       ],
     ),
   );
-
 }

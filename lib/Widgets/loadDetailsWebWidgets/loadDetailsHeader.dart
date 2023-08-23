@@ -12,7 +12,11 @@ class LoadDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 15, bottom: 15, left: 15, right: MediaQuery.of(context).size.width*0.047),
+      padding: EdgeInsets.only(
+          top: 15,
+          bottom: 15,
+          left: 15,
+          right: MediaQuery.of(context).size.width * 0.047),
       decoration: BoxDecoration(
         color: Colors.white,
       ),
@@ -20,41 +24,46 @@ class LoadDetailsHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(children: [
-            IconButton(onPressed: (){
-              Get.back();
-            }, icon: const Icon(
-              Icons.keyboard_backspace,
-              color: Colors.black,
-              size: 30,
-            ),),
-            SizedBox(
-              width: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title ?? 'Title',
-                  style: TextStyle(
-                      fontSize: size_8,
-                      fontFamily: 'Montserrat Bold',
-                      color: kLiveasyColor),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.keyboard_backspace,
+                  color: Colors.black,
+                  size: 30,
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  subTitle ?? 'Sub Title',
-                  style: TextStyle(
-                      fontSize: size_6,
-                      fontFamily: 'Montserrat',
-                      color: textLightColor),
-                ),
-              ],
-            ),
-          ],),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title ?? 'Title',
+                    style: TextStyle(
+                        fontSize: size_8,
+                        fontFamily: 'Montserrat Bold',
+                        color: kLiveasyColor),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    subTitle ?? 'Sub Title',
+                    style: TextStyle(
+                        fontSize: size_6,
+                        fontFamily: 'Montserrat',
+                        color: textLightColor),
+                  ),
+                ],
+              ),
+            ],
+          ),
           Container(
             width: 95,
             child: IconButton(
@@ -69,7 +78,9 @@ class LoadDetailsHeader extends StatelessWidget {
                       color: truckGreen,
                       size: 20,
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text(
                       "Reset",
                       style: TextStyle(
@@ -80,7 +91,6 @@ class LoadDetailsHeader extends StatelessWidget {
                   ],
                 )),
           ),
-
         ],
       ),
     );

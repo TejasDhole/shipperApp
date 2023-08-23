@@ -18,17 +18,23 @@ class APIService {
 
   // Base API request to get response
   Future<List<CityModel>> get(String cityName) async {
-    var _query = {"q": cityName, "type": "CITY","limit":"10","country":"IN"};
+    var _query = {
+      "q": cityName,
+      "type": "CITY",
+      "limit": "10",
+      "country": "IN"
+    };
     Uri uri = Uri.https(_authority, _path, _query);
-    final response = await http.get(uri, headers: {"x-rapidapi-key": RapidApiKey,
-      "x-rapidapi-host": "spott.p.rapidapi.com"});
+    final response = await http.get(uri, headers: {
+      "x-rapidapi-key": RapidApiKey,
+      "x-rapidapi-host": "spott.p.rapidapi.com"
+    });
     if (response.statusCode == 200) {
       final List city = json.decode(response.body);
 
       return city.map((json) => CityModel.fromJson(json)).toList();
     } else {
-      throw Exception(
-          "error");
+      throw Exception("error");
     }
   }
 }
@@ -49,17 +55,17 @@ class CityModel {
 
   CityModel(
       {this.id,
-        this.geonameId,
-        this.type,
-        this.name,
-        this.population,
-        this.elevation,
-        this.timezoneId,
-        this.country,
-        this.adminDivision1,
-        this.adminDivision2,
-        // this.score,
-        this.coordinates});
+      this.geonameId,
+      this.type,
+      this.name,
+      this.population,
+      this.elevation,
+      this.timezoneId,
+      this.country,
+      this.adminDivision1,
+      this.adminDivision2,
+      // this.score,
+      this.coordinates});
 
   CityModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,7 +76,7 @@ class CityModel {
     elevation = json['elevation'];
     timezoneId = json['timezoneId'];
     country =
-    json['country'] != null ? Country.fromJson(json['country']) : null;
+        json['country'] != null ? Country.fromJson(json['country']) : null;
     adminDivision1 = json['adminDivision1'] != null
         ? Country.fromJson(json['adminDivision1'])
         : null;
