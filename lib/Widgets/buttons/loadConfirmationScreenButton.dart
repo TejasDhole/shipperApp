@@ -227,7 +227,10 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         // title=="Edit"?Get.to(PostLoadScreenOne()):
         if (title == "Edit") {
           providerData.updateUpperNavigatorIndex2(0);
-          Get.to(() => PostLoadNav());
+          Get.to(() => PostLoadNav(
+                setChild: Container(),
+                index: 0,
+              ));
         } else {
           providerData.updateUnitValue();
           getData();

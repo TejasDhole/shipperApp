@@ -1,4 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
 import '/constants/borderWidth.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -8,6 +12,8 @@ import 'package:get/get.dart';
 import '/widgets/cancelIconWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
+
+import 'postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 // import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart';
 
 // ignore: must_be_immutable
@@ -105,9 +111,8 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
     // );
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(space_6),
-        border: Border.all(color: darkBlueColor, width: borderWidth_8),
-        color: widgetBackGroundColor,
+        borderRadius: BorderRadius.circular(0),
+        border: Border.all(color: kLiveasyColor, width: borderWidth_20),
       ),
       padding: EdgeInsets.symmetric(horizontal: space_3),
       child: TextFormField(
@@ -117,8 +122,21 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
           if (hasPermission) {
             providerData.updateResetActive(true);
             FocusScope.of(context).requestFocus(FocusNode());
-            Get.to(() => CityNameInputScreen(
-                widget.page, widget.hintText)); // for MapMyIndia api
+            kIsWeb
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreenWeb(
+                              visibleWidget: PostLoadNav(
+                                setChild: CityNameInputScreen(
+                                    widget.page, widget.hintText),
+                                index: 0,
+                              ),
+                              index: 1000,
+                              selectedIndex: screens.indexOf(postLoadScreen),
+                            )))
+                : Get.to(() => CityNameInputScreen(
+                    widget.page, widget.hintText)); // for MapMyIndia api
           }
         },
         controller: widget.controller,

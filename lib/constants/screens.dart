@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
@@ -18,7 +19,7 @@ const invoiceScreen = Center(
 );
 const contactUs = Center(child: Text('contact us'));
 const postLoadScreen = PostLoadScreen();
-const postLoadNav = PostLoadNav();
+var postLoadNav = PostLoadNav(setChild: Container(),index: 0,);
 const addUser = AddUser();
 const accountVerificationStatusScreen = AccountVerificationStatusScreen();
 const helpScreen = HelpScreen();

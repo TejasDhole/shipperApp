@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/functions/alert_dialog.dart';
 import 'package:shipper_app/responsive.dart';
@@ -24,22 +26,28 @@ class _nextButtonState extends State<nextButton> {
     ProviderData providerData = Provider.of<ProviderData>(context);
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        width: MediaQuery.of(context).size.width * 0.3,
         height: space_8,
-        margin: EdgeInsets.fromLTRB(space_8, space_0, space_8, space_20),
+        width: space_33,
+        margin: EdgeInsets.fromLTRB(space_8, space_0, space_8, space_2),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(space_10),
-          child: ElevatedButton(
+          child: TextButton(
               style: ButtonStyle(
-                backgroundColor: providerData.postLoadScreenOneButton()
-                    ? activeButtonColor
-                    : deactiveButtonColor,
-              ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: (Responsive.isMobile(context))
+                        ? BorderRadius.circular(50)
+                        : BorderRadius.all(Radius.zero),
+                  )),
+                  backgroundColor: providerData.postLoadScreenOneButton()
+                      ? MaterialStateProperty.all<Color>(truckGreen)
+                      : deactiveButtonColor),
               child: Text(
                 'next'.tr,
                 // AppLocalizations.of(context)!.next,
                 style: TextStyle(
+                  fontWeight: mediumBoldWeight,
                   color: white,
+                  fontSize: size_8,
                 ),
               ),
               onPressed: () {
