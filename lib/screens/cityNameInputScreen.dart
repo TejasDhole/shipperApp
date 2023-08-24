@@ -13,6 +13,7 @@ import '/widgets/autoFillDataDisplayCard.dart';
 import '/widgets/buttons/backButtonWidget.dart';
 import '/widgets/textFieldWidget.dart';
 import 'package:provider/provider.dart';
+
 // import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart';
 import '../functions/placeAutoFillUtils/autoFillRapidSpott.dart';
 import '/widgets/cancelIconWidget.dart';
@@ -209,171 +210,176 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     focus.requestFocus();
     double keyboardLength = MediaQuery.of(context).viewInsets.bottom;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      height: Get.height * 0.65,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          LoadDetailsHeader(
-              title: 'Location Details',
-              subTitle: 'Tell us your location details'),
-          Container(
-            height: 10,
-            color: lineDividerColor,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 40),
-            decoration: BoxDecoration(
-              border: Border.all(color: kLiveasyColor, width: borderWidth_20),
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.all(0),
+      child: Container(
+        height: Get.height * 0.65,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            LoadDetailsHeader(
+                title: 'Location Details',
+                subTitle: 'Tell us your location details'),
+            Container(
+              height: 10,
+              color: lineDividerColor,
             ),
-            child: TextFormField(
-              textAlign: TextAlign.center,
-              autofocus: true,
-              controller: controller,
-              // onChanged: widget.onChanged,
-              onChanged: (String value) {
-                setState(() {
-                  if (widget.page == "postLoad") {
-                    locationCard = fillCityGoogle(value, currentPosition);
-                    //google place api is used in postLoad
-                  } else {
-                    locationCard = fillCity(
-                        value); //return auto suggested places using rapid api
-                  } //return auto suggested places using MapMyIndia api
-                  selectedItemIndex = -1;
-                });
-              },
-              onFieldSubmitted: (value) {
-                setState(() {});
-              },
-              onTapOutside: (value) {
-                setState(() {});
-              },
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: 'enterCityName'.tr,
-                prefixIcon: GestureDetector(
-                    onTap: _speechToText.isNotListening
-                        ? _startListening
-                        : _stopListening,
-                    child: Icon(_speechToText.isNotListening
-                        ? Icons.mic_off
-                        : Icons.mic)),
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      controller.clear();
-                    },
-                    icon: CancelIconWidget()),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 40),
+              decoration: BoxDecoration(
+                border: Border.all(color: kLiveasyColor, width: borderWidth_20),
+              ),
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                autofocus: true,
+                controller: controller,
+                // onChanged: widget.onChanged,
+                onChanged: (String value) {
+                  setState(() {
+                    if (widget.page == "postLoad") {
+                      locationCard = fillCityGoogle(value, currentPosition);
+                      //google place api is used in postLoad
+                    } else {
+                      locationCard = fillCity(
+                          value); //return auto suggested places using rapid api
+                    } //return auto suggested places using MapMyIndia api
+                    selectedItemIndex = -1;
+                  });
+                },
+                onFieldSubmitted: (value) {
+                  setState(() {});
+                },
+                onTapOutside: (value) {
+                  setState(() {});
+                },
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: 'enterCityName'.tr,
+                  prefixIcon: GestureDetector(
+                      onTap: _speechToText.isNotListening
+                          ? _startListening
+                          : _stopListening,
+                      child: Icon(_speechToText.isNotListening
+                          ? Icons.mic_off
+                          : Icons.mic)),
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.clear();
+                      },
+                      icon: CancelIconWidget()),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: space_4,
-          ),
-          locationCard != null
-              ? FutureBuilder(
-                  future: locationCard,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.data == null || snapshot.data.isEmpty) {
-                        return Container();
-                      }
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: black, width: 2),
-                                top: BorderSide(color: black, width: 2),
-                                left: BorderSide(color: black, width: 2),
-                                right: BorderSide(color: black, width: 2))),
-                        // height: keyboardLength != 0
-                        //     ? screenHeight - keyboardLength - 130
-                        //     : screenHeight - 130, //TODO: to be modified
-                        child: RawKeyboardListener(
-                          focusNode: focus,
-                          onKey: (value) {
-                            if (value.logicalKey ==
-                                    LogicalKeyboardKey.arrowUp &&
-                                value is RawKeyUpEvent) {
-                              // focus previous item
-                              if (selectedItemIndex > 0) {
-                                setState(() {
-                                  selectedItemIndex--;
-                                });
+            SizedBox(
+              height: space_4,
+            ),
+            locationCard != null
+                ? FutureBuilder(
+                    future: locationCard,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.data == null || snapshot.data.isEmpty) {
+                          return Container();
+                        }
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 20),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: black, width: 2),
+                                  top: BorderSide(color: black, width: 2),
+                                  left: BorderSide(color: black, width: 2),
+                                  right: BorderSide(color: black, width: 2))),
+                          // height: keyboardLength != 0
+                          //     ? screenHeight - keyboardLength - 130
+                          //     : screenHeight - 130, //TODO: to be modified
+                          child: RawKeyboardListener(
+                            focusNode: focus,
+                            onKey: (value) {
+                              if (value.logicalKey ==
+                                      LogicalKeyboardKey.arrowUp &&
+                                  value is RawKeyUpEvent) {
+                                // focus previous item
+                                if (selectedItemIndex > 0) {
+                                  setState(() {
+                                    selectedItemIndex--;
+                                  });
+                                }
+                              } else if (value.logicalKey ==
+                                      LogicalKeyboardKey.arrowDown &&
+                                  value is RawKeyDownEvent) {
+                                //focus next item
+                                if (selectedItemIndex <
+                                    snapshot.data.length - 1) {
+                                  setState(() {
+                                    selectedItemIndex++;
+                                  });
+                                }
+                              } else if (value.logicalKey ==
+                                      LogicalKeyboardKey.enter &&
+                                  value is RawKeyUpEvent) {
+                                if (selectedItemIndex != -1 &&
+                                    selectedItemIndex < snapshot.data.length) {
+                                  selectSuggestedLocation(
+                                      context,
+                                      snapshot
+                                          .data[selectedItemIndex].placeName,
+                                      snapshot.data[selectedItemIndex]
+                                          .addresscomponent1,
+                                      snapshot.data[selectedItemIndex]
+                                          .placeCityName,
+                                      snapshot.data[selectedItemIndex]
+                                          .placeStateName);
+                                }
                               }
-                            } else if (value.logicalKey ==
-                                    LogicalKeyboardKey.arrowDown &&
-                                value is RawKeyDownEvent) {
-                              //focus next item
-                              if (selectedItemIndex <
-                                  snapshot.data.length - 1) {
-                                setState(() {
-                                  selectedItemIndex++;
-                                });
-                              }
-                            } else if (value.logicalKey ==
-                                    LogicalKeyboardKey.enter &&
-                                value is RawKeyUpEvent) {
-                              if (selectedItemIndex != -1 &&
-                                  selectedItemIndex < snapshot.data.length) {
+                            },
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              reverse: false,
+                              // padding: EdgeInsets.symmetric(
+                              //   horizontal: space_2,
+                              // ),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) =>
+                                  AutoFillDataDisplayCard(
+                                      snapshot.data[index].placeName,
+                                      snapshot.data[index].addresscomponent1,
+                                      snapshot.data[index].placeCityName,
+                                      snapshot.data[index].placeStateName,
+                                      index,
+                                      selectedItemIndex, () {
                                 selectSuggestedLocation(
                                     context,
-                                    snapshot.data[selectedItemIndex].placeName,
-                                    snapshot.data[selectedItemIndex]
-                                        .addresscomponent1,
-                                    snapshot
-                                        .data[selectedItemIndex].placeCityName,
-                                    snapshot.data[selectedItemIndex]
-                                        .placeStateName);
-                              }
-                            }
-                          },
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            reverse: false,
-                            // padding: EdgeInsets.symmetric(
-                            //   horizontal: space_2,
-                            // ),
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) =>
-                                AutoFillDataDisplayCard(
                                     snapshot.data[index].placeName,
                                     snapshot.data[index].addresscomponent1,
                                     snapshot.data[index].placeCityName,
-                                    snapshot.data[index].placeStateName,
-                                    index,
-                                    selectedItemIndex, () {
-                              selectSuggestedLocation(
-                                  context,
-                                  snapshot.data[index].placeName,
-                                  snapshot.data[index].addresscomponent1,
-                                  snapshot.data[index].placeCityName,
-                                  snapshot.data[index].placeStateName);
-                            }),
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Divider(
-                                thickness: 1,
-                                height: 1,
-                                color: black,
-                              );
-                            },
+                                    snapshot.data[index].placeStateName);
+                              }),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Divider(
+                                  thickness: 1,
+                                  height: 1,
+                                  color: black,
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  })
-              : Container(),
-        ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    })
+                : Container(),
+          ],
+        ),
       ),
     );
   }
