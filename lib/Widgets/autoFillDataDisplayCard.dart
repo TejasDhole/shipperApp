@@ -30,20 +30,9 @@ class AutoFillDataDisplayCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            border: Border(
-          right: (index == selectedIndex)
-              ? BorderSide(color: black, width: 1)
-              : BorderSide(color: transparent, width: 0),
-          left: (index == selectedIndex)
-              ? BorderSide(color: black, width: 1)
-              : BorderSide(color: transparent, width: 0),
-          top: (index == selectedIndex)
-              ? BorderSide(color: black, width: 1)
-              : BorderSide(color: transparent, width: 0),
-          bottom: (index == selectedIndex)
-              ? BorderSide(color: black, width: 1)
-              : BorderSide(color: transparent, width: 0),
-        )),
+            border: (index == selectedIndex)
+                ? Border.all(width: 1, color: black)
+                : Border.all(width: 0, color: transparent)),
         padding: EdgeInsets.only(
           top: space_2,
           bottom: space_2,

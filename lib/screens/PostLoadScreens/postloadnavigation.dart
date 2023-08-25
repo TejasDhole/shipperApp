@@ -40,6 +40,7 @@ class _PostLoadNavState extends State<PostLoadNav> {
           child: Column(
             children: [
               Container(
+                height: Get.height * 0.1,
                 padding:
                     EdgeInsets.fromLTRB(space_4, space_4, space_4, space_2),
                 child: Row(
@@ -61,7 +62,7 @@ class _PostLoadNavState extends State<PostLoadNav> {
                 ),
               ),
               Container(
-                height: 100,
+                height: Get.height * 0.13,
                 child: Center(
                     child: Image.asset(
                   (widget.index == 0)

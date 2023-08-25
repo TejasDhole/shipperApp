@@ -151,56 +151,45 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
 
   selectSuggestedLocation(
       context, placeName, addressName, cityName, stateName) {
+    ProviderData providerData =
+        Provider.of<ProviderData>(context, listen: false);
     if (widget.valueType == "Loading Point") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateLoadingPointFindLoad(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
+      providerData.updateLoadingPointFindLoad(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     } else if (widget.valueType == "Unloading Point") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateUnloadingPointFindLoad(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
-      // Get.off(FindLoadScreen());
+      providerData.updateUnloadingPointFindLoad(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     } else if (widget.valueType == "Loading point" ||
         widget.valueType == "Loading point 1") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateLoadingPointPostLoad(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
+      providerData.updateLoadingPointPostLoad(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     } else if (widget.valueType == "Loading point 2") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateLoadingPointPostLoad2(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
+      providerData.updateLoadingPointPostLoad2(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     } else if (widget.valueType == "Unloading point" ||
         widget.valueType == "Unloading point 1") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateUnloadingPointPostLoad(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
+      providerData.updateUnloadingPointPostLoad(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     } else if (widget.valueType == "Unloading point 2") {
-      Provider.of<ProviderData>(context, listen: false)
-          .updateUnloadingPointPostLoad2(
-              place:
-                  addressName == null ? placeName : '$placeName, $addressName',
-              city: cityName,
-              state: stateName);
+      providerData.updateUnloadingPointPostLoad2(
+          place: addressName == null ? placeName : '$placeName, $addressName',
+          city: cityName,
+          state: stateName);
       Get.back();
     }
   }
@@ -214,7 +203,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
       elevation: 0,
       margin: EdgeInsets.all(0),
       child: Container(
-        height: Get.height * 0.65,
+        height: Get.height * 0.70,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -275,109 +264,107 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              height: space_4,
-            ),
-            locationCard != null
-                ? FutureBuilder(
-                    future: locationCard,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.data == null || snapshot.data.isEmpty) {
-                          return Container();
-                        }
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 40),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 20),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: black, width: 2),
-                                  top: BorderSide(color: black, width: 2),
-                                  left: BorderSide(color: black, width: 2),
-                                  right: BorderSide(color: black, width: 2))),
-                          // height: keyboardLength != 0
-                          //     ? screenHeight - keyboardLength - 130
-                          //     : screenHeight - 130, //TODO: to be modified
-                          child: RawKeyboardListener(
-                            focusNode: focus,
-                            onKey: (value) {
-                              if (value.logicalKey ==
-                                      LogicalKeyboardKey.arrowUp &&
-                                  value is RawKeyUpEvent) {
-                                // focus previous item
-                                if (selectedItemIndex > 0) {
-                                  setState(() {
-                                    selectedItemIndex--;
-                                  });
+            Expanded(
+                child: Center(
+              child: locationCard != null
+                  ? FutureBuilder(
+                      future: locationCard,
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.data == null || snapshot.data.isEmpty) {
+                            return Container();
+                          }
+                          return Container(
+                            height: Get.height * 0.40,
+                            margin: EdgeInsets.symmetric(horizontal: 40),
+                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: black, width: 2)),
+                            // height: keyboardLength != 0
+                            //     ? screenHeight - keyboardLength - 130
+                            //     : screenHeight - 130, //TODO: to be modified
+                            child: RawKeyboardListener(
+                              focusNode: focus,
+                              onKey: (value) {
+                                if (value.logicalKey ==
+                                        LogicalKeyboardKey.arrowUp &&
+                                    value is RawKeyUpEvent) {
+                                  // focus previous item
+                                  if (selectedItemIndex > 0) {
+                                    setState(() {
+                                      selectedItemIndex--;
+                                    });
+                                  }
+                                } else if (value.logicalKey ==
+                                        LogicalKeyboardKey.arrowDown &&
+                                    value is RawKeyDownEvent) {
+                                  //focus next item
+                                  if (selectedItemIndex <
+                                      snapshot.data.length - 1) {
+                                    setState(() {
+                                      selectedItemIndex++;
+                                    });
+                                  }
+                                } else if (value.logicalKey ==
+                                        LogicalKeyboardKey.enter &&
+                                    value is RawKeyUpEvent) {
+                                  if (selectedItemIndex != -1 &&
+                                      selectedItemIndex <
+                                          snapshot.data.length) {
+                                    selectSuggestedLocation(
+                                        context,
+                                        snapshot
+                                            .data[selectedItemIndex].placeName,
+                                        snapshot.data[selectedItemIndex]
+                                            .addresscomponent1,
+                                        snapshot.data[selectedItemIndex]
+                                            .placeCityName,
+                                        snapshot.data[selectedItemIndex]
+                                            .placeStateName);
+                                  }
                                 }
-                              } else if (value.logicalKey ==
-                                      LogicalKeyboardKey.arrowDown &&
-                                  value is RawKeyDownEvent) {
-                                //focus next item
-                                if (selectedItemIndex <
-                                    snapshot.data.length - 1) {
-                                  setState(() {
-                                    selectedItemIndex++;
-                                  });
-                                }
-                              } else if (value.logicalKey ==
-                                      LogicalKeyboardKey.enter &&
-                                  value is RawKeyUpEvent) {
-                                if (selectedItemIndex != -1 &&
-                                    selectedItemIndex < snapshot.data.length) {
+                              },
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                reverse: false,
+                                // padding: EdgeInsets.symmetric(
+                                //   horizontal: space_2,
+                                // ),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) =>
+                                    AutoFillDataDisplayCard(
+                                        snapshot.data[index].placeName,
+                                        snapshot.data[index].addresscomponent1,
+                                        snapshot.data[index].placeCityName,
+                                        snapshot.data[index].placeStateName,
+                                        index,
+                                        selectedItemIndex, () {
                                   selectSuggestedLocation(
                                       context,
-                                      snapshot
-                                          .data[selectedItemIndex].placeName,
-                                      snapshot.data[selectedItemIndex]
-                                          .addresscomponent1,
-                                      snapshot.data[selectedItemIndex]
-                                          .placeCityName,
-                                      snapshot.data[selectedItemIndex]
-                                          .placeStateName);
-                                }
-                              }
-                            },
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              reverse: false,
-                              // padding: EdgeInsets.symmetric(
-                              //   horizontal: space_2,
-                              // ),
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) =>
-                                  AutoFillDataDisplayCard(
                                       snapshot.data[index].placeName,
                                       snapshot.data[index].addresscomponent1,
                                       snapshot.data[index].placeCityName,
-                                      snapshot.data[index].placeStateName,
-                                      index,
-                                      selectedItemIndex, () {
-                                selectSuggestedLocation(
-                                    context,
-                                    snapshot.data[index].placeName,
-                                    snapshot.data[index].addresscomponent1,
-                                    snapshot.data[index].placeCityName,
-                                    snapshot.data[index].placeStateName);
-                              }),
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return Divider(
-                                  thickness: 1,
-                                  height: 1,
-                                  color: black,
-                                );
-                              },
+                                      snapshot.data[index].placeStateName);
+                                }),
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return Divider(
+                                    thickness: 1,
+                                    height: 1,
+                                    color: black,
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    })
-                : Container(),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      })
+                  : Container(),
+            ))
           ],
         ),
       ),
