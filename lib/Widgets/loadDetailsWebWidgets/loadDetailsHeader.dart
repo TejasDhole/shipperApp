@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/responsive.dart';
 
 class LoadDetailsHeader extends StatelessWidget {
   String? title, subTitle;
@@ -17,7 +19,7 @@ class LoadDetailsHeader extends StatelessWidget {
       margin: EdgeInsets.all(0),
       child: Container(
         padding: EdgeInsets.only(
-            top: 15,
+            top: (kIsWeb && Responsive.isMobile(context)) ? 0 : 15,
             bottom: 15,
             left: 15,
             right: MediaQuery.of(context).size.width * 0.047),
@@ -34,14 +36,14 @@ class LoadDetailsHeader extends StatelessWidget {
                   onPressed: () {
                     Get.back();
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.keyboard_backspace,
                     color: Colors.black,
-                    size: 30,
+                    size: (Responsive.isMobile(context)) ? 25 : 30,
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: (Responsive.isMobile(context)) ? 10 : 20,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +52,8 @@ class LoadDetailsHeader extends StatelessWidget {
                     Text(
                       title ?? 'Title',
                       style: TextStyle(
-                          fontSize: size_8,
+                          fontSize:
+                              (Responsive.isMobile(context)) ? size_7 : size_8,
                           fontFamily: 'Montserrat Bold',
                           color: kLiveasyColor),
                     ),
@@ -60,7 +63,8 @@ class LoadDetailsHeader extends StatelessWidget {
                     Text(
                       subTitle ?? 'Sub Title',
                       style: TextStyle(
-                          fontSize: size_6,
+                          fontSize:
+                              (Responsive.isMobile(context)) ? size_5 : size_6,
                           fontFamily: 'Montserrat',
                           color: textLightColor),
                     ),
@@ -69,7 +73,7 @@ class LoadDetailsHeader extends StatelessWidget {
               ],
             ),
             Container(
-              width: 95,
+              width: (Responsive.isMobile(context)) ? 85 : 95,
               child: IconButton(
                   onPressed: () {
                     print("hello");
@@ -80,7 +84,7 @@ class LoadDetailsHeader extends StatelessWidget {
                       Icon(
                         Icons.refresh,
                         color: truckGreen,
-                        size: 20,
+                        size: (Responsive.isMobile(context)) ? 15 : 20,
                       ),
                       SizedBox(
                         width: 10,
@@ -90,7 +94,9 @@ class LoadDetailsHeader extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             color: truckGreen,
-                            fontSize: size_8),
+                            fontSize: (Responsive.isMobile(context))
+                                ? size_7
+                                : size_8),
                       )
                     ],
                   )),

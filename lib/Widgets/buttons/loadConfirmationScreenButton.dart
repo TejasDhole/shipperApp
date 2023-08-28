@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/Widgets/alertDialog/loadingAlertDialog.dart';
 import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/PostLoadScreens/postLoadScreen.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -238,7 +239,9 @@ class LoadConfirmationScreenButton extends StatelessWidget {
       },
       child: Container(
         height: space_8,
-        padding: EdgeInsets.only(left: 40, right: 40),
+        padding: (Responsive.isMobile(context))
+            ? EdgeInsets.only(left: 20, right: 20)
+            : EdgeInsets.only(left: 40, right: 40),
         decoration: BoxDecoration(
             color: (title == 'Confirm') ? truckGreen : darkBlueColor,
             borderRadius: BorderRadius.all(Radius.circular(0))),

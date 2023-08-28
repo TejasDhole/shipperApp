@@ -130,7 +130,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                               visibleWidget: PostLoadNav(
                                 setChild: CityNameInputScreen(
                                     widget.page, widget.hintText),
-                                index: 0,
+                                index: 1,
                               ),
                               index: 1000,
                               selectedIndex: screens.indexOf(postLoadScreen),
