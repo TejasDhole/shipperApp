@@ -15,7 +15,7 @@ class LoadDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 0, // without card widget 'Material Widget required' will be thrown while running the application for android
       margin: EdgeInsets.all(0),
       child: Container(
         padding: EdgeInsets.only(

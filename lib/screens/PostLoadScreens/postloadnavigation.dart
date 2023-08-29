@@ -15,8 +15,9 @@ import '/screens/PostLoadScreens/PostLoadScreenLoacationDetails.dart';
 import '/screens/PostLoadScreens/PostLoadScreenMultiple.dart';
 
 class PostLoadNav extends StatefulWidget {
-  final Widget setChild;
-  final int index;
+  final Widget setChild; // bottom screen or child widget
+  final int index; // index is required to display post load status or progress image
+                    // index 0 for post load location; 1 for post load details and 2 for post load confirmation screen
 
   const PostLoadNav({Key? key, required this.setChild, required this.index})
       : super(key: key);

@@ -37,6 +37,7 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
     if (postLoadVariables.bookingDate.value == "") {
+      //for setting booking date using provider data.
       postLoadVariables
           .updateBookingDate(Jiffy.parseFromDateTime(DateTime.now()).MMMEd);
     }

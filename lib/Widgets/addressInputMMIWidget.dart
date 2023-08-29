@@ -122,7 +122,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
           if (hasPermission) {
             providerData.updateResetActive(true);
             FocusScope.of(context).requestFocus(FocusNode());
-            kIsWeb
+            kIsWeb // in web the sidebar will only be visible wheares for mobile the complete screen will be switched
                 ? Navigator.push(
                     context,
                     MaterialPageRoute(

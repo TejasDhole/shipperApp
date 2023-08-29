@@ -152,6 +152,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
 
   selectSuggestedLocation(
       context, placeName, addressName, cityName, stateName) {
+    //Update selected location on provider data and back to previous screen based on widget.valueType
     ProviderData providerData =
         Provider.of<ProviderData>(context, listen: false);
     if (widget.valueType == "Loading Point") {
@@ -273,7 +274,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                 ),
               ),
               locationCard != null
-                  ? (Responsive.isMobile(context))
+                  ? (Responsive.isMobile(context)) // for mobile keyboard operations is not required.
                       ? FutureBuilder(
                           future: locationCard,
                           builder:
@@ -379,6 +380,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                             } else if (value.logicalKey ==
                                                     LogicalKeyboardKey.enter &&
                                                 value is RawKeyUpEvent) {
+                                              //select an item using enter key and then update location in provider data and back to previous screen
                                               if (selectedItemIndex != -1 &&
                                                   selectedItemIndex <
                                                       snapshot.data.length) {
