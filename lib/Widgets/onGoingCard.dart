@@ -496,9 +496,11 @@ class _OngoingCardState extends State<OngoingCard> {
 
     if (devices != null) {
       for (var device in devices) {
-        setState(() {
-          deviceList.add(device);
-        });
+        if (mounted) {
+          setState(() {
+            deviceList.add(device);
+          });
+        }
       }
     }
 
@@ -509,9 +511,11 @@ class _OngoingCardState extends State<OngoingCard> {
       getGPSData(gpsDataAll[i], i);
     }
 
-    setState(() {
-      gpsDataList = gpsList;
-    });
+    if (mounted) {
+      setState(() {
+        gpsDataList = gpsList;
+      });
+    }
   }
 
   void getGPSData(var gpsData, int i) async {
@@ -523,9 +527,11 @@ class _OngoingCardState extends State<OngoingCard> {
   void initFunction() async {
     var gpsRoute1 = await getTraccarSummaryByDeviceId(
         deviceId: widget.loadAllDataModel.deviceId, from: from, to: to);
-    setState(() {
-      totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
-    });
+    if (mounted) {
+      setState(() {
+        totalDistance = (gpsRoute1[0].distance! / 1000).toStringAsFixed(2);
+      });
+    }
 
     // print('in init');
   }
