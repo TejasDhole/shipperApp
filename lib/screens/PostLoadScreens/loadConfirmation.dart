@@ -38,7 +38,7 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
             1, providerData.passingWeightMultipleValue.toString().length - 1);
 
     return Scaffold(
-      backgroundColor: (kIsWeb) ? Colors.white : statusBarColor,
+      backgroundColor: white,
       body: (kIsWeb)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,

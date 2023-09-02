@@ -1,97 +1,108 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/responsive.dart';
 
 class LoadDetailsHeader extends StatelessWidget {
   String? title, subTitle;
+
   LoadDetailsHeader({super.key, required this.title, required this.subTitle});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-          top: 15,
-          bottom: 15,
-          left: 15,
-          right: MediaQuery.of(context).size.width * 0.047),
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(
-                  Icons.keyboard_backspace,
-                  color: Colors.black,
-                  size: 30,
+    return Card(
+      elevation: 0, // without card widget 'Material Widget required' will be thrown while running the application for android
+      margin: EdgeInsets.all(0),
+      child: Container(
+        padding: EdgeInsets.only(
+            top: (kIsWeb && Responsive.isMobile(context)) ? 0 : 15,
+            bottom: 15,
+            left: 15,
+            right: MediaQuery.of(context).size.width * 0.047),
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(
+                    Icons.keyboard_backspace,
+                    color: Colors.black,
+                    size: (Responsive.isMobile(context)) ? 25 : 30,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title ?? 'Title',
-                    style: TextStyle(
-                        fontSize: size_8,
-                        fontFamily: 'Montserrat Bold',
-                        color: kLiveasyColor),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    subTitle ?? 'Sub Title',
-                    style: TextStyle(
-                        fontSize: size_6,
-                        fontFamily: 'Montserrat',
-                        color: textLightColor),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Container(
-            width: 95,
-            child: IconButton(
-                onPressed: () {
-                  print("hello");
-                },
-                icon: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                SizedBox(
+                  width: (Responsive.isMobile(context)) ? 10 : 20,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.refresh,
-                      color: truckGreen,
-                      size: 20,
+                    Text(
+                      title ?? 'Title',
+                      style: TextStyle(
+                          fontSize:
+                              (Responsive.isMobile(context)) ? size_7 : size_8,
+                          fontFamily: 'Montserrat Bold',
+                          color: kLiveasyColor),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 5,
                     ),
                     Text(
-                      "Reset",
+                      subTitle ?? 'Sub Title',
                       style: TextStyle(
+                          fontSize:
+                              (Responsive.isMobile(context)) ? size_5 : size_6,
                           fontFamily: 'Montserrat',
-                          color: truckGreen,
-                          fontSize: size_8),
-                    )
+                          color: textLightColor),
+                    ),
                   ],
-                )),
-          ),
-        ],
+                ),
+              ],
+            ),
+            Container(
+              width: (Responsive.isMobile(context)) ? 85 : 95,
+              child: IconButton(
+                  onPressed: () {
+                    print("hello");
+                  },
+                  icon: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.refresh,
+                        color: truckGreen,
+                        size: (Responsive.isMobile(context)) ? 15 : 20,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Reset",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: truckGreen,
+                            fontSize: (Responsive.isMobile(context))
+                                ? size_7
+                                : size_8),
+                      )
+                    ],
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
