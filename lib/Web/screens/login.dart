@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:shipper_app/Web/screens/login_phone_no.dart';
 import 'package:shipper_app/Widgets/buttons/ConfirmButton.dart';
 import 'package:shipper_app/Widgets/webHeader.dart';
@@ -352,6 +353,7 @@ class _LoginWebState extends State<LoginWeb> {
                                           prefs.setString(
                                               'uid', firebaseUser.user!.uid);
                                           prefs.setBool('isGoogleLogin', true);
+                                          prefs.setString('userEmail', firebaseUser.user!.email!);
                                           getShipperIdFromCompanyDatabase();
                                           if (!mounted) return;
                                           ShipperModel shipperModel =

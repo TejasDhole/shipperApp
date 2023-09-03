@@ -28,6 +28,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
   final List<CompanyUsers> users = [];
   List<CompanyUsers> filteredUsers = [];
   bool loading = true;
+  bool isAllowed = false;
   bool bottomProgressLoad = false;
   late TextEditingController _searchController;
 
@@ -127,7 +128,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                                     )),
                               ),
                               Container(
-                                width: 160,
+                                width: screenWidth * 0.15,
                                 height: 65,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
