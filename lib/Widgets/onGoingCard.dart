@@ -55,7 +55,6 @@ class _OngoingCardState extends State<OngoingCard> {
     DateTime now = DateTime.now()
         .subtract(const Duration(hours: 5, minutes: 30)); //to param
     to = now.toIso8601String();
-
     getMyTruckPosition();
     initFunction();
   }

@@ -436,6 +436,7 @@ class ProviderData extends ChangeNotifier {
     unloadingPointPostLoad2 = place;
     unloadingPointCityPostLoad2 = city;
     unloadingPointStatePostLoad2 = state;
+    notifyListeners();
   }
 
   //functions for login screen

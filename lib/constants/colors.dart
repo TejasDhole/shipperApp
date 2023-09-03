@@ -72,7 +72,7 @@ Color disableButtonColor = const Color.fromRGBO(9, 183, 120, 0.5);
 dynamic activeButtonColor =
     MaterialStateProperty.all<Color>(const Color(0xff152968));
 dynamic deactiveButtonColor =
-    MaterialStateProperty.all<Color>(const Color(0xFFC4C9D9));
+    MaterialStateProperty.all<Color>(const Color.fromRGBO(9, 183, 120, 0.5));
 
 Color borderLightColor = const Color(0xFF878787);
 Color textLightColor = const Color(0xFF979797);

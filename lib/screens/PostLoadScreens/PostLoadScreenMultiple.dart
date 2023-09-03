@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:shipper_app/controller/postLoadVariablesController.dart';
 import '/constants/colors.dart';
 import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
@@ -28,9 +30,18 @@ bool add_load = false;
 bool add_unload = false;
 
 class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
+  PostLoadVariablesController postLoadVariables =
+      Get.put(PostLoadVariablesController());
+
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
+    if (postLoadVariables.bookingDate.value == "") {
+      //for setting booking date using provider data.
+      postLoadVariables
+          .updateBookingDate(Jiffy.parseFromDateTime(DateTime.now()).MMMEd);
+    }
+
     if (providerData.loadingPointCityPostLoad != "") {
       controller1 = TextEditingController(
           text:
@@ -60,217 +71,207 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
       controller4 = TextEditingController(text: "");
     }
     return Scaffold(
-      backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding:
-                    EdgeInsets.fromLTRB(space_4, space_2, space_4, space_0),
-                color: backgroundColor,
-                child: Column(
-                  children: [
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Loading Point",
-                              style: TextStyle(
-                                  fontSize: size_10,
-                                  fontWeight: boldWeight,
-                                  color: darkBlueColor)),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                size_2, size_7, size_10, size_0),
-                            child: AddressInputMMIWidget(
-                                page:
-                                    "postLoad", //use AddressInputMMIWidget for using mapMyIndia api
-                                hintText: "Loading point 1",
-                                icon: LoadingPointImageIcon(
-                                  height: size_6,
-                                  width: size_6,
-                                ),
-                                controller: controller1,
-                                onTap: () {
-                                  providerData.updateLoadingPointPostLoad(
-                                      place: "", city: "", state: "");
-                                }),
-                          ),
-                          SizedBox(height: size_2),
-                          add_load
-                              ? Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      size_2, size_7, size_10, size_0),
-                                  child: AddressInputMMIWidget(
-                                      page:
-                                          "postLoad", //use AddressInputMMIWidget for using mapMyIndia api
-                                      hintText: "Loading point 2",
-                                      icon: LoadingPointImageIcon(
-                                        height: size_6,
-                                        width: size_6,
-                                      ),
-                                      controller: controller3,
-                                      onTap: () {
-                                        providerData
-                                            .updateLoadingPointPostLoad2(
-                                                place: "", city: "", state: "");
-                                        setState(() {
-                                          add_load = !add_load;
-                                        });
-                                      }),
-                                )
-                              : Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      space_8, space_0, space_0, space_0),
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      setState(() {
-                                        add_load = !add_load;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.add,
-                                      color: darkBlueColor,
-                                    ),
-                                    label: Text(
-                                      "Add more loading point",
-                                      style: TextStyle(color: darkBlueColor),
-                                    ),
-                                  ),
-                                ),
-                          SizedBox(
-                            height: space_18,
-                          ),
-                          Text("Unloading Point",
-                              style: TextStyle(
-                                  fontSize: size_10,
-                                  fontWeight: boldWeight,
-                                  color: darkBlueColor)),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                size_2, size_5, size_10, size_0),
-                            child: AddressInputMMIWidget(
+      backgroundColor: white,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(space_4, space_2, space_4, space_0),
+              color: white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Loading Point",
+                      style: TextStyle(
+                          fontSize: size_10,
+                          fontWeight: boldWeight,
+                          color: darkBlueColor)),
+                  Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(size_2, size_7, size_10, size_0),
+                    child: AddressInputMMIWidget(
+                        page: "postLoad",
+                        //use AddressInputMMIWidget for using mapMyIndia api
+                        hintText: "Loading point 1",
+                        icon: LoadingPointImageIcon(
+                          height: size_6,
+                          width: size_6,
+                        ),
+                        controller: controller1,
+                        onTap: () {
+                          providerData.updateLoadingPointPostLoad(
+                              place: "", city: "", state: "");
+                        }),
+                  ),
+                  SizedBox(height: size_2),
+                  add_load
+                      ? Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              size_2, size_7, size_10, size_0),
+                          child: AddressInputMMIWidget(
                               page: "postLoad",
-                              hintText: "Unloading point 1",
-                              icon: UnloadingPointImageIcon(
+                              //use AddressInputMMIWidget for using mapMyIndia api
+                              hintText: "Loading point 2",
+                              icon: LoadingPointImageIcon(
                                 height: size_6,
                                 width: size_6,
                               ),
-                              controller: controller2,
+                              controller: controller3,
                               onTap: () {
-                                providerData.updateUnloadingPointPostLoad(
+                                providerData.updateLoadingPointPostLoad2(
                                     place: "", city: "", state: "");
-                              },
+                                setState(() {
+                                  add_load = !add_load;
+                                });
+                              }),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              space_8, space_0, space_0, space_0),
+                          child: TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                add_load = !add_load;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: darkBlueColor,
+                            ),
+                            label: Text(
+                              "Add more loading point",
+                              style: TextStyle(color: darkBlueColor),
                             ),
                           ),
-                          SizedBox(height: space_2),
-                          add_unload
-                              ? Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      size_2, size_5, size_10, size_0),
-                                  child: AddressInputMMIWidget(
-                                    page: "postLoad",
-                                    hintText: "Unloading point 2",
-                                    icon: UnloadingPointImageIcon(
-                                      height: size_6,
-                                      width: size_6,
-                                    ),
-                                    controller: controller4,
-                                    onTap: () {
-                                      providerData
-                                          .updateUnloadingPointPostLoad2(
-                                              place: "", city: "", state: "");
-                                      setState(() {
-                                        add_unload = !add_unload;
-                                      });
-                                    },
-                                  ),
-                                )
-                              : Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      space_8, space_0, space_0, space_0),
-                                  child: TextButton.icon(
-                                    onPressed: () {
-                                      setState(() {
-                                        add_unload = !add_unload;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.add,
-                                      color: darkBlueColor,
-                                    ),
-                                    label: Text(
-                                      "Add more unloading point",
-                                      style: TextStyle(color: darkBlueColor),
-                                    ),
-                                  )),
-                          /*AddTruckSubtitleText(text: 'bookingDate'.tr
-                              // AppLocalizations.of(context)!.bookingDate
-                              ),
-                          GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            childAspectRatio: 4,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            padding: EdgeInsets.all(10.0),
-                            crossAxisCount: 2,
-                            children: bookingDateList
-                                .map((e) => AddCalender(value: e, text: e))
-                                .toList(),
-                          ),
-                          SizedBox(
-                            height: space_4,
-                          ),
-                          Center(
-                            child: Container(
-                              width: space_30,
-                              height: space_8,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setDate = false;
-                                  _selectDate(context);
-                                },
-                                style:
-                                    ButtonStyle(backgroundColor: calendarColor),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'selectDates'.tr,
-                                      style: TextStyle(
-                                          color: black,
-                                          fontSize: size_7,
-                                          fontWeight: normalWeight),
-                                    ),
-                                    Icon(
-                                      Icons.calendar_today_outlined,
-                                      color: black,
-                                      size: size_9,
-                                    )
-                                  ],
-                                ),
-                              ),
+                        ),
+                  SizedBox(
+                    height: space_10,
+                  ),
+                  Text("Unloading Point",
+                      style: TextStyle(
+                          fontSize: size_10,
+                          fontWeight: boldWeight,
+                          color: darkBlueColor)),
+                  Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(size_2, size_5, size_10, size_0),
+                    child: AddressInputMMIWidget(
+                      page: "postLoad",
+                      hintText: "Unloading point 1",
+                      icon: UnloadingPointImageIcon(
+                        height: size_6,
+                        width: size_6,
+                      ),
+                      controller: controller2,
+                      onTap: () {
+                        providerData.updateUnloadingPointPostLoad(
+                            place: "", city: "", state: "");
+                      },
+                    ),
+                  ),
+                  SizedBox(height: space_2),
+                  add_unload
+                      ? Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              size_2, size_5, size_10, size_0),
+                          child: AddressInputMMIWidget(
+                            page: "postLoad",
+                            hintText: "Unloading point 2",
+                            icon: UnloadingPointImageIcon(
+                              height: size_6,
+                              width: size_6,
                             ),
+                            controller: controller4,
+                            onTap: () {
+                              providerData.updateUnloadingPointPostLoad2(
+                                  place: "", city: "", state: "");
+                              setState(() {
+                                add_unload = !add_unload;
+                              });
+                            },
                           ),
-                          SizedBox(
-                            height: space_3,
-                          ),*/
-                        ],
+                        )
+                      : Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              space_8, space_0, space_0, space_0),
+                          child: TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                add_unload = !add_unload;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: darkBlueColor,
+                            ),
+                            label: Text(
+                              "Add more unloading point",
+                              style: TextStyle(color: darkBlueColor),
+                            ),
+                          )),
+                  /*AddTruckSubtitleText(text: 'bookingDate'.tr
+                      // AppLocalizations.of(context)!.bookingDate
+                      ),
+                  GridView.count(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    childAspectRatio: 4,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    padding: EdgeInsets.all(10.0),
+                    crossAxisCount: 2,
+                    children: bookingDateList
+                        .map((e) => AddCalender(value: e, text: e))
+                        .toList(),
+                  ),
+                  SizedBox(
+                    height: space_4,
+                  ),
+                  Center(
+                    child: Container(
+                      width: space_30,
+                      height: space_8,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setDate = false;
+                          _selectDate(context);
+                        },
+                        style:
+                            ButtonStyle(backgroundColor: calendarColor),
+                        child: Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'selectDates'.tr,
+                              style: TextStyle(
+                                  color: black,
+                                  fontSize: size_7,
+                                  fontWeight: normalWeight),
+                            ),
+                            Icon(
+                              Icons.calendar_today_outlined,
+                              color: black,
+                              size: size_9,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: space_3,
+                  ),*/
+                ],
               ),
-              SizedBox(
-                height: 136,
-              ),
-              nextButton(),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 60,
+            ),
+            nextButton(),
+          ],
         ),
       ),
     );
