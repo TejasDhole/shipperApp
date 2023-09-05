@@ -79,7 +79,7 @@ class AddUserFunctions {
     }
   }
 
-//This function is used to fetch the shipperId of the user 
+//This function is used to fetch the shipperId of the invited user 
 Future<String?> getShipperId(String? mail) async {
   final String shipperApi = dotenv.get("shipperApiUrl");
   http.Response response = await http.get(Uri.parse("$shipperApi?emailId=$mail"),

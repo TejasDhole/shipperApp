@@ -91,15 +91,13 @@ class EmployeeCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 12),
                       child: CustomRole(
                           selectedRole: '$role',
-                          roleChanged: (newRole) {
-                            Future.delayed(Duration.zero, () async {
+                          roleChanged: (newRole) async{
                               bool Role = await _fetchUserRole(); 
                                 if(Role){
                                   updateUser(context, newRole);
                                 }else{
                                   showNotAllowedPopup(context);
                                 }
-                            });
                           }),
                     ))),
                 const VerticalDivider(
