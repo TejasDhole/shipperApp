@@ -93,8 +93,8 @@ class EmployeeCard extends StatelessWidget {
                           selectedRole: '$role',
                           roleChanged: (newRole) {
                             Future.delayed(Duration.zero, () async {
-                              String rolee = await _fetchUserRole(); 
-                                if(rolee == 'owner'){
+                              bool Role = await _fetchUserRole(); 
+                                if(Role){
                                   updateUser(context, newRole);
                                 }else{
                                   showNotAllowedPopup(context);
@@ -112,8 +112,8 @@ class EmployeeCard extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8, top: 12),
                       child: GestureDetector(
                         onTap: () async {
-                          String rolee = await _fetchUserRole(); 
-                          if(rolee == 'owner'){
+                          bool Role = await _fetchUserRole(); 
+                          if(Role){
                             removeUser(context, '$email');
                           }else{
                             showNotAllowedPopup(context);
@@ -193,12 +193,12 @@ class EmployeeCard extends StatelessWidget {
   );
 }
 
-Future<String> _fetchUserRole() async {
+Future<bool> _fetchUserRole() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   //fetching the email, the user has entered while signing in with Google
   String storedEmail = prefs.getString('userEmail')?? 'employee';
   //fetching the role of the user wh0 is currently logged in
-  String userRole = await AddUserFunctions().getCurrentUserRole(storedEmail);
+  bool userRole = await AddUserFunctions().getCurrentUserRole(storedEmail);
   return userRole;
 }
   

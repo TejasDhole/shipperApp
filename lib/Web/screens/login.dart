@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:shipper_app/Web/screens/login_phone_no.dart';
 import 'package:shipper_app/Widgets/buttons/ConfirmButton.dart';
 import 'package:shipper_app/Widgets/webHeader.dart';

@@ -185,9 +185,9 @@ Future<String?> getShipperId(String? mail) async {
   }
 
 //This function is used to fetch the role of the current user who is logged in.
-  Future<String> getCurrentUserRole(String? userEmail) async{
+  Future<bool> getCurrentUserRole(String? userEmail) async{
     String? uid;
-    final String role;
+    final bool role;
     uid = await getUserByMail(userEmail!);
     //print(_fetchUserRole(uid));
     role = await _fetchUserRole(uid) ;
@@ -195,19 +195,22 @@ Future<String?> getShipperId(String? mail) async {
   }
 
 //Fetch the role of the user from the firebase.
-  Future<String> _fetchUserRole(uid) async {
+Future<bool> _fetchUserRole(uid) async {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
   String userRole = " ";
   final employeeRef = await ref.child(
       "companies/${shipperIdController.companyName.value.capitalizeFirst}/members/$uid").get();
   try{ 
     if(employeeRef.exists){
-    debugPrint(employeeRef.value as String?);
-    userRole = employeeRef.value.toString();
-  }}catch (error) {
-    debugPrint("Error Occurred while fetching user data: $error");
-  }
-  return userRole;
+      debugPrint(employeeRef.value as String?);
+      userRole = employeeRef.value.toString();
+      if(userRole == 'owner'){
+        return true;
+      }
+    }}catch (error) {
+      debugPrint("Error Occurred while fetching user data: $error");
+    }
+  return false;
 }
 
 }
