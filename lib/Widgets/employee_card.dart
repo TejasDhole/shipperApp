@@ -154,7 +154,7 @@ class EmployeeCard extends StatelessWidget {
         });
   }
 
-  removeUser(BuildContext context, String name) {
+  removeUser(BuildContext context, String name) { 
     showDialog(
         context: context,
         builder: (BuildContext context) {

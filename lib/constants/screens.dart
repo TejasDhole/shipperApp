@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
+import 'package:shipper_app/screens/accountScreens/account_verification_web_screen.dart';
 import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
 import '../Web/screens/web_dashboard.dart';
@@ -7,7 +8,6 @@ import '../Widgets/accountVerification/accountPageUtil.dart';
 import '../Widgets/alertDialog/LogOutDialogue.dart';
 import '../screens/HelpScreen.dart';
 import '../screens/PostLoadScreens/postLoadScreen.dart';
-import '../screens/accountScreens/accountVerificationStatusScreen.dart';
 import '../screens/add_user_screen.dart';
 
 //TODO : At first add screens like this,and add that to list.
@@ -20,7 +20,7 @@ const contactUs = Center(child: Text('contact us'));
 const postLoadScreen = PostLoadScreen();
 const postLoadNav = PostLoadNav();
 const addUser = AddUser();
-const accountVerificationStatusScreen = AccountVerificationStatusScreen();
+const accountVerificationStatusScreen = AccountScreen();
 const helpScreen = HelpScreen();
 final accountPageUtil = AccountPageUtil();
 const logoutDialogue = LogoutDialogue();
