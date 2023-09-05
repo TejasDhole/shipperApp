@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
+import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -41,93 +42,91 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
           ? null
           : PostButtonLoad(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(
-              (Responsive.isDesktop(context) || Responsive.isTablet(context))
-                  ? space_0
-                  : space_4,
-              space_4,
-              space_4,
-              space_2),
-          child: Column(
-            children: [
-              (kIsWeb &&
-                      (Responsive.isDesktop(context) ||
-                          Responsive.isTablet(context)))
-                  ? Container(
-                      padding: EdgeInsets.only(bottom: space_2),
-                      color: Color.fromRGBO(245, 246, 250, 1),
-                      child: Row(
-                        children: [
-                          Text(
-                            'loads'.tr,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: kLiveasyColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 30),
-                          ),
-                          Expanded(
-                              child: Align(
-                            alignment: Alignment.centerRight,
-                            child: PostButtonLoad(),
-                          )),
-                        ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(
+                (Responsive.isDesktop(context) || Responsive.isTablet(context))
+                    ? space_0
+                    : space_4,
+                space_4,
+                space_4,
+                space_2),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(bottom: space_2),
+                  color: Color.fromRGBO(245, 246, 250, 1),
+                  child: Row(
+                    children: [
+                      Text(
+                        'loads'.tr,
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: kLiveasyColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: (Responsive.isMobile(context))?size_10:size_15),
                       ),
-                    )
-                  : Header(
-                      reset: false,
-                      text: 'loads'.tr,
-                      // AppLocalizations.of(context)!.loads,
-                      backButton: false),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    OrderScreenNavigationBarButton(
-                        text: 'my_loads'.tr,
-                        // AppLocalizations.of(context)!.my_loads,
-                        value: 0,
-                        pageController: pageController),
-                    OrderScreenNavigationBarButton(
-                        text: 'on_going'.tr,
-                        // AppLocalizations.of(context)!.on_going,
-                        value: 1,
-                        pageController: pageController),
-                    OrderScreenNavigationBarButton(
-                        text: 'completed'.tr,
-                        // AppLocalizations.of(context)!.completed,
-                        value: 2,
-                        pageController: pageController)
-                  ],
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Visibility(
+                            visible: Responsive.isMobile(context)?false:true,
+                            child: PostButtonLoad(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                height: 5,
-                padding: EdgeInsets.zero,
-                margin: EdgeInsets.only(top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                    gradient:
-                        LinearGradient(colors: [kLiveasyColor, truckGreen])),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.75,
-                child: PageView(
-                  controller: pageController,
-                  onPageChanged: (value) {
-                    setState(() {
-                      providerData.updateUpperNavigatorIndex(value);
-                    });
-                  },
-                  children: [
-                    MyLoadsScreen(),
-                    OngoingScreen(),
-                    DeliveredScreen(),
-                  ],
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OrderScreenNavigationBarButton(
+                          text: 'my_loads'.tr,
+                          // AppLocalizations.of(context)!.my_loads,
+                          value: 0,
+                          pageController: pageController),
+                      OrderScreenNavigationBarButton(
+                          text: 'on_going'.tr,
+                          // AppLocalizations.of(context)!.on_going,
+                          value: 1,
+                          pageController: pageController),
+                      OrderScreenNavigationBarButton(
+                          text: 'completed'.tr,
+                          // AppLocalizations.of(context)!.completed,
+                          value: 2,
+                          pageController: pageController)
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  height: 5,
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.only(top: 5, bottom: 5),
+                  decoration: BoxDecoration(
+                      gradient:
+                          LinearGradient(colors: [kLiveasyColor, truckGreen])),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  child: PageView(
+                    controller: pageController,
+                    onPageChanged: (value) {
+                      setState(() {
+                        providerData.updateUpperNavigatorIndex(value);
+                      });
+                    },
+                    children: [
+                      MyLoadsScreen(),
+                      OngoingScreen(),
+                      DeliveredScreen(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
