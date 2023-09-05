@@ -47,8 +47,7 @@ class EmployeeCard extends StatelessWidget {
             'Email': email,
             'Role': role,
           };
-          return Expanded(
-            child: Row(
+          return Row(
               children: [
                 Expanded(
                     flex: 4,
@@ -113,8 +112,7 @@ class EmployeeCard extends StatelessWidget {
                       ),
                     ))),
               ],
-            ),
-          );
+            );
         } else {
           return Container();
         }

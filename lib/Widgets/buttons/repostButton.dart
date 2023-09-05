@@ -30,7 +30,10 @@ Widget Repostbutton(bool? small, BuildContext context) {
                   MaterialStateProperty.all<Color>(declineButtonRed),
             ),
             onPressed: () {
-              Get.to(PostLoadNav());
+              Get.to(PostLoadNav(
+                setChild: Container(),
+                index: 0,
+              ));
             },
             child: Text(
               'repost'.tr,
@@ -59,7 +62,10 @@ Widget Repostbutton(bool? small, BuildContext context) {
           backgroundColor: MaterialStateProperty.all<Color>(declineButtonRed),
         ),
         onPressed: () {
-          Get.to(PostLoadNav());
+          Get.to(PostLoadNav(
+            setChild: Container(),
+            index: 0,
+          ));
         },
         child: Text(
           'repost'.tr,

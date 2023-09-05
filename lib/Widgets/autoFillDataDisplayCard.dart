@@ -9,80 +9,82 @@ class AutoFillDataDisplayCard extends StatelessWidget {
   String placeName;
   String placeCity;
   String? addresscomponent;
-  String placeAddress;
+  String stateName;
   var onTap;
+  int index;
+  int selectedIndex;
 
   AutoFillDataDisplayCard(
     this.placeName,
     this.addresscomponent,
     this.placeCity,
-    this.placeAddress,
+    this.stateName,
+    this.index,
+    this.selectedIndex,
     this.onTap,
   );
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
-        // height: space_12,
         decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.symmetric(
-            horizontal: BorderSide(
-              width: 0.5,
-              color: greyBorderColor,
-            ),
-          ),
+            border: (index == selectedIndex)
+                ? Border.all(width: 1, color: black)
+                : Border.all(width: 0, color: transparent)),
+        padding: EdgeInsets.only(
+          top: space_2,
+          bottom: space_2,
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: space_2,
-            bottom: space_2,
-          ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: space_1),
-                child: Icon(
-                  Icons.location_on_outlined,
-                  color: darkBlueColor,
-                ),
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: space_1),
+              child: Icon(
+                Icons.location_pin,
+                color: kLiveasyColor,
               ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      // height: 170,
-                      child: Text(
-                        '''$placeName'''.tr,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: size_7, color: liveasyBlackColor),
-                      ),
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    // height: 170,
+                    child: Text(
+                      '''$placeName'''.tr,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: size_7,
+                          color: kLiveasyColor,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      child: Text(
-                        addresscomponent == null
-                            ? placeAddress == placeCity
-                                ? '$placeCity'.tr
-                                : '$placeCity'.tr + '$placeAddress'.tr
-                            : '$addresscomponent'.tr +
-                                ',' +
-                                '$placeCity'.tr +
-                                ',' +
-                                '$placeAddress'.tr,
-                        style:
-                            TextStyle(fontSize: size_6, color: darkGreyColor),
-                      ),
+                  ),
+                  Container(
+                    child: Text(
+                      addresscomponent == null
+                          ? stateName == placeCity
+                              ? '$placeCity'.tr
+                              : '$placeCity'.tr + '$stateName'.tr
+                          : '$addresscomponent'.tr +
+                              ',' +
+                              '$placeCity'.tr +
+                              ',' +
+                              '$stateName'.tr,
+                      style: TextStyle(
+                          fontSize: size_6,
+                          color: darkGreyColor,
+                          fontFamily: 'Montserrat'),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

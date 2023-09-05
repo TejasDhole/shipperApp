@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 import 'package:shipper_app/responsive.dart';
 import '../../constants/screens.dart';
 import '/constants/colors.dart';
@@ -47,10 +48,17 @@ class PostButtonLoad extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreenWeb(
-                                index: screens.indexOf(postLoadNav),
+                                visibleWidget: PostLoadNav(
+                                    setChild:
+                                        postLoadMultipleLocationWidget(context),
+                                    index: 0),
+                                index: 1000,
                                 selectedIndex: screens.indexOf(postLoadScreen),
                               )))
-                  : Get.to(() => const PostLoadNav())
+                  : Get.to(() => PostLoadNav(
+                        setChild: postLoadMultipleLocationWidget(context),
+                        index: 0,
+                      ))
               : showDialog(
                   context: context,
                   builder: (context) => VerifyAccountNotifyAlertDialog());
