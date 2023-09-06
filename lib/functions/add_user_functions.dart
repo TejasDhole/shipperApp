@@ -18,13 +18,13 @@ import '../constants/screens.dart';
 import '../controller/navigationIndexController.dart';
 import '../screens/navigationScreen.dart';
 import '/functions/alert_dialog.dart';
+import 'shipperApis/isolatedShipperGetData.dart';
 
 class AddUserFunctions {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference ref = FirebaseDatabase.instance.ref();
   NavigationIndexController navigationIndexController =
       Get.put(NavigationIndexController());
-  //bool isError = false;
 
   //TODO: The functions getUserByMail and getUserByPhone are used to get the uid of the required employee for adding him to the database.
   //TODO: These functions are called respectively whether employer given mailId or phone number of an employee.
@@ -79,6 +79,47 @@ class AddUserFunctions {
     }
   }
 
+//This function is used to fetch the shipperId of the invited user 
+Future<String?> getShipperId(String? mail) async {
+  final String shipperApi = dotenv.get("shipperApiUrl");
+  http.Response response = await http.get(Uri.parse("$shipperApi?emailId=$mail"),
+  headers: <String,String>{
+    'Content-Type' : 'application/json; charset = UTF-8'
+  },);
+
+  if (response.statusCode == 200) {
+    var jsonData = json.decode(response.body);
+    if (jsonData is List && jsonData.isNotEmpty) {
+      var firstShipper = jsonData[0];
+      if (firstShipper["shipperId"] != null) {
+        return firstShipper["shipperId"];
+      }
+    }
+  }
+  return null;
+}
+
+// This function is used to change the company name of the user(whom we are adding) with the owner's company name
+  updateCompanyName(String? phoneOrMail,String companyName) async {
+    String? sid;
+    final String shipperApi = dotenv.get("shipperApiUrl");
+    sid = await getShipperId(phoneOrMail!);
+    final Map<String, dynamic> userData = {
+      'companyName': companyName
+    };
+    http.Response response = await http.put(Uri.parse("$shipperApi/$sid"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(userData),);
+    debugPrint(response.body);
+    if(response.statusCode == 200 || response.statusCode == 201){
+      debugPrint("companyName Changed");
+    }else{
+     debugPrint("companyName not Changed");
+    }
+  }
+
   //TODO: This function is called for adding the employee to the company's database so that he can use employer's shipper Id
   addUser(String? phoneOrMail, String companyName,
       {required BuildContext context, required String role}) async {
@@ -103,6 +144,7 @@ class AddUserFunctions {
       newEmployeeRef.update({
         uid: "employee",
       }).then((value) {
+        updateCompanyName(phoneOrMail, companyName);
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -141,4 +183,34 @@ class AddUserFunctions {
       });
     }
   }
+
+//This function is used to fetch the role of the current user who is logged in.
+  Future<bool> getCurrentUserRole(String? userEmail) async{
+    String? uid;
+    final bool role;
+    uid = await getUserByMail(userEmail!);
+    //print(_fetchUserRole(uid));
+    role = await _fetchUserRole(uid) ;
+    return role;
+  }
+
+//Fetch the role of the user from the firebase.
+Future<bool> _fetchUserRole(uid) async {
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
+  String userRole = " ";
+  final employeeRef = await ref.child(
+      "companies/${shipperIdController.companyName.value.capitalizeFirst}/members/$uid").get();
+  try{ 
+    if(employeeRef.exists){
+      debugPrint(employeeRef.value as String?);
+      userRole = employeeRef.value.toString();
+      if(userRole == 'owner'){
+        return true;
+      }
+    }}catch (error) {
+      debugPrint("Error Occurred while fetching user data: $error");
+    }
+  return false;
+}
+
 }

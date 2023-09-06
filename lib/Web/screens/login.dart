@@ -352,6 +352,7 @@ class _LoginWebState extends State<LoginWeb> {
                                           prefs.setString(
                                               'uid', firebaseUser.user!.uid);
                                           prefs.setBool('isGoogleLogin', true);
+                                          prefs.setString('userEmail', firebaseUser.user!.email!);
                                           getShipperIdFromCompanyDatabase();
                                           if (!mounted) return;
                                           ShipperModel shipperModel =

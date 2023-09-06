@@ -27,7 +27,7 @@ late Timer timer;
 isolatedShipperGetData() {
   exe = true;
   timer = Timer.periodic(
-      Duration(seconds: 15), (Timer t) => exe ? apirun2() : timer.cancel());
+      Duration(seconds: 2), (Timer t) => exe ? apirun2() : timer.cancel());
 }
 
 Future<dynamic> apirun2() async {
