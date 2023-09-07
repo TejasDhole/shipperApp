@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shipper_app/Widgets/alertDialog/update_employee_alert_dialog.dart';
 import 'package:shipper_app/Widgets/customRoleCell.dart';
 import 'package:shipper_app/Widgets/remove_employee_alert_dialog.dart';
+import 'package:shipper_app/functions/add_user_functions.dart';
 import 'package:shipper_app/functions/fetchUserData.dart';
 import 'package:shipper_app/functions/get_role_of_employee.dart';
 import 'package:shipper_app/models/company_users_model.dart';
@@ -89,10 +91,13 @@ class EmployeeCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 12),
                       child: CustomRole(
                           selectedRole: '$role',
-                          roleChanged: (newRole) {
-                            Future.delayed(Duration.zero, () {
-                              updateUser(context, newRole);
-                            });
+                          roleChanged: (newRole) async{
+                              bool Role = await _fetchUserRole(); 
+                                if(Role){
+                                  updateUser(context, newRole);
+                                }else{
+                                  showNotAllowedPopup(context);
+                                }
                           }),
                     ))),
                 const VerticalDivider(
@@ -104,8 +109,13 @@ class EmployeeCard extends StatelessWidget {
                         child: Container(
                       padding: const EdgeInsets.only(left: 8, top: 12),
                       child: GestureDetector(
-                        onTap: () {
-                          removeUser(context, '$email');
+                        onTap: () async {
+                          bool Role = await _fetchUserRole(); 
+                          if(Role){
+                            removeUser(context, '$email');
+                          }else{
+                            showNotAllowedPopup(context);
+                          }
                         },
                         child: const Image(
                             image: AssetImage('assets/icons/deleteIcon.png')),
@@ -160,4 +170,34 @@ class EmployeeCard extends StatelessWidget {
               employeeUid: companyUsersModel.uid, employeeName: name);
         });
   }
+
+  void showNotAllowedPopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Permission Denied'),
+        content: const Text('This action is only allowed for administrators.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<bool> _fetchUserRole() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //fetching the email, the user has entered while signing in with Google
+  String storedEmail = prefs.getString('userEmail')?? 'employee';
+  //fetching the role of the user wh0 is currently logged in
+  bool userRole = await AddUserFunctions().getCurrentUserRole(storedEmail);
+  return userRole;
+}
+  
 }
