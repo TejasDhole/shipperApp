@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/responsive.dart';
-import 'package:shipper_app/screens/accountScreens/label_text.dart';
-
+import 'package:shipper_app/Widgets/accountWidgets/label_text.dart';
 import '../../Widgets/headingTextWidget.dart';
 import '../../constants/colors.dart';
 import '../../constants/spaces.dart';

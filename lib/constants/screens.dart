@@ -19,7 +19,10 @@ const invoiceScreen = Center(
 );
 const contactUs = Center(child: Text('contact us'));
 const postLoadScreen = PostLoadScreen();
-var postLoadNav = PostLoadNav(setChild: Container(),index: 0,);
+var postLoadNav = PostLoadNav(
+  setChild: Container(),
+  index: 0,
+);
 const addUser = AddUser();
 const accountVerificationStatusScreen = AccountScreen();
 const helpScreen = HelpScreen();
