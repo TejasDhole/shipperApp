@@ -123,193 +123,217 @@ class _BiddingScreensState extends State<BiddingScreens> {
         providerData.updateBidEndpoints(
             widget.loadingPointCity, widget.unloadingPointCity));
     return Scaffold(
-        body: Column(
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-          decoration: BoxDecoration(
-            color: headerLightBlueColor,
+        body: SafeArea(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+            decoration: BoxDecoration(
+              color: headerLightBlueColor,
+            ),
+            child: Row(
+              children: [
+                Visibility(
+                  visible: (Responsive.isMobile(context)) ? true : false,
+                  child: BackButtonWidget(
+                      previousPage: PostLoadScreen(),
+                      selectedIndex: screens.indexOf(postLoadScreen)),
+                ),
+                Visibility(
+                    visible: (Responsive.isMobile(context)) ? true : false,
+                    child: SizedBox(
+                      width: 20,
+                    )),
+                Text('bids'.tr,
+                    style: TextStyle(
+                      fontSize: size_10 - 1,
+                      fontWeight: mediumBoldWeight,
+                    )),
+              ],
+            ),
           ),
-          child: Row(
-            children: [
-              Text('bids'.tr,
-                  style: TextStyle(
-                    fontSize: size_10 - 1,
-                    fontWeight: mediumBoldWeight,
-                  )),
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-          child: Row(
-            children: [
-              BackButtonWidget(
-                  previousPage: PostLoadScreen(),
-                  selectedIndex: screens.indexOf(postLoadScreen)),
-              SizedBox(
-                width: 20,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: TextField(
-                  style: TextStyle(
-                      color: kLiveasyColor,
-                      fontFamily: 'Montserrat',
-                      fontSize: size_8),
-                  textAlign: TextAlign.center,
-                  cursorColor: kLiveasyColor,
-                  cursorWidth: 1,
-                  mouseCursor: SystemMouseCursors.click,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide:
-                              BorderSide(color: borderLightColor, width: 1.5)),
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                          color: borderLightColor,
+          Visibility(
+            visible: (Responsive.isMobile(context)) ? false : true,
+            child: Container(
+              padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+              child: Row(
+                children: [
+                  BackButtonWidget(
+                      previousPage: PostLoadScreen(),
+                      selectedIndex: screens.indexOf(postLoadScreen)),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: TextField(
+                      style: TextStyle(
+                          color: kLiveasyColor,
                           fontFamily: 'Montserrat',
                           fontSize: size_8),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        color: borderLightColor,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                          borderSide:
-                              BorderSide(color: truckGreen, width: 1.5))),
-                ),
-              )
-            ],
+                      textAlign: TextAlign.center,
+                      cursorColor: kLiveasyColor,
+                      cursorWidth: 1,
+                      mouseCursor: SystemMouseCursors.click,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
+                              borderSide: BorderSide(
+                                  color: borderLightColor, width: 1.5)),
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                              color: borderLightColor,
+                              fontFamily: 'Montserrat',
+                              fontSize: size_8),
+                          suffixIcon: Icon(
+                            Icons.search,
+                            color: borderLightColor,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
+                              borderSide:
+                                  BorderSide(color: truckGreen, width: 1.5))),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-        Container(
-          height: 10,
-          color: lineDividerColor,
-        ),
-        Expanded(
-            child: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.65,
-            child: loading
-                ? LoadingWidget()
-                : biddingModelList.isEmpty
-                    ? Center(
-                        child: Text(
-                          'noBid'.tr,
-                          // 'No bids yet'
-                        ),
-                      )
-                    : (Responsive.isTablet(context) ||
-                            Responsive.isDesktop(context))
-                        ? Card(
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                            color: white,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                biddingScreenTableHeader(),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                ListView.separated(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  controller: scrollController,
-                                  itemCount: biddingModelList.length,
-                                  itemBuilder: (context, index) {
-                                    return BiddingsCardShipperSide(
-                                      index: index + 1,
-                                      loadId: widget.loadId,
-                                      loadingPointCity: widget.loadingPointCity,
-                                      unloadingPointCity:
-                                          widget.unloadingPointCity,
-                                      currentBid:
-                                          biddingModelList[index].currentBid,
-                                      previousBid:
-                                          biddingModelList[index].previousBid,
-                                      unitValue:
-                                          biddingModelList[index].unitValue,
-                                      companyName: transporterModelList[index]
-                                          .companyName,
-                                      transporterEmail:
-                                          transporterModelList[index]
-                                              .transporterEmail,
-                                      biddingDate:
-                                          biddingModelList[index].biddingDate,
-                                      bidId: biddingModelList[index].bidId,
-                                      transporterPhoneNum:
-                                          transporterModelList[index]
-                                              .transporterPhoneNum,
-                                      transporterLocation:
-                                          transporterModelList[index]
-                                              .transporterLocation,
-                                      transporterName:
-                                          transporterModelList[index]
-                                              .transporterName,
-                                      shipperApproved: biddingModelList[index]
-                                          .shipperApproval,
-                                      transporterApproved:
-                                          biddingModelList[index]
-                                              .transporterApproval,
-                                      isLoadPosterVerified:
-                                          transporterModelList[index]
-                                              .companyApproved,
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return Divider(
-                                      color: unselectedGrey,
-                                      thickness: 1,
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          )
-                        : ListView.builder(
-                            controller: scrollController,
-                            itemCount: biddingModelList.length,
-                            itemBuilder: (context, index) {
-                              return BiddingsCardShipperSide(
-                                index: index + 1,
-                                loadId: widget.loadId,
-                                loadingPointCity: widget.loadingPointCity,
-                                unloadingPointCity: widget.unloadingPointCity,
-                                currentBid: biddingModelList[index].currentBid,
-                                previousBid:
-                                    biddingModelList[index].previousBid,
-                                unitValue: biddingModelList[index].unitValue,
-                                companyName:
-                                    transporterModelList[index].companyName,
-                                transporterEmail: transporterModelList[index]
-                                    .transporterEmail,
-                                biddingDate:
-                                    biddingModelList[index].biddingDate,
-                                bidId: biddingModelList[index].bidId,
-                                transporterPhoneNum: transporterModelList[index]
-                                    .transporterPhoneNum,
-                                transporterLocation: transporterModelList[index]
-                                    .transporterLocation,
-                                transporterName:
-                                    transporterModelList[index].transporterName,
-                                shipperApproved:
-                                    biddingModelList[index].shipperApproval,
-                                transporterApproved:
-                                    biddingModelList[index].transporterApproval,
-                                isLoadPosterVerified:
-                                    transporterModelList[index].companyApproved,
-                              );
-                            }),
+          Container(
+            height: 10,
+            color: lineDividerColor,
           ),
-        ))
-      ],
+          Expanded(
+              child: Align(
+            alignment: Responsive.isMobile(context)
+                ? Alignment.topCenter
+                : Alignment.center,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.65,
+              child: loading
+                  ? LoadingWidget()
+                  : biddingModelList.isEmpty
+                      ? Center(
+                          child: Text(
+                            'noBid'.tr,
+                            // 'No bids yet'
+                          ),
+                        )
+                      : (Responsive.isTablet(context) ||
+                              Responsive.isDesktop(context))
+                          ? Card(
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              color: white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  biddingScreenTableHeader(),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    controller: scrollController,
+                                    itemCount: biddingModelList.length,
+                                    itemBuilder: (context, index) {
+                                      return BiddingsCardShipperSide(
+                                        index: index + 1,
+                                        loadId: widget.loadId,
+                                        loadingPointCity:
+                                            widget.loadingPointCity,
+                                        unloadingPointCity:
+                                            widget.unloadingPointCity,
+                                        currentBid:
+                                            biddingModelList[index].currentBid,
+                                        previousBid:
+                                            biddingModelList[index].previousBid,
+                                        unitValue:
+                                            biddingModelList[index].unitValue,
+                                        companyName: transporterModelList[index]
+                                            .companyName,
+                                        transporterEmail:
+                                            transporterModelList[index]
+                                                .transporterEmail,
+                                        biddingDate:
+                                            biddingModelList[index].biddingDate,
+                                        bidId: biddingModelList[index].bidId,
+                                        transporterPhoneNum:
+                                            transporterModelList[index]
+                                                .transporterPhoneNum,
+                                        transporterLocation:
+                                            transporterModelList[index]
+                                                .transporterLocation,
+                                        transporterName:
+                                            transporterModelList[index]
+                                                .transporterName,
+                                        shipperApproved: biddingModelList[index]
+                                            .shipperApproval,
+                                        transporterApproved:
+                                            biddingModelList[index]
+                                                .transporterApproval,
+                                        isLoadPosterVerified:
+                                            transporterModelList[index]
+                                                .companyApproved,
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return Divider(
+                                        color: unselectedGrey,
+                                        thickness: 1,
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              controller: scrollController,
+                              itemCount: biddingModelList.length,
+                              itemBuilder: (context, index) {
+                                return BiddingsCardShipperSide(
+                                  index: index + 1,
+                                  loadId: widget.loadId,
+                                  loadingPointCity: widget.loadingPointCity,
+                                  unloadingPointCity: widget.unloadingPointCity,
+                                  currentBid:
+                                      biddingModelList[index].currentBid,
+                                  previousBid:
+                                      biddingModelList[index].previousBid,
+                                  unitValue: biddingModelList[index].unitValue,
+                                  companyName:
+                                      transporterModelList[index].companyName,
+                                  transporterEmail: transporterModelList[index]
+                                      .transporterEmail,
+                                  biddingDate:
+                                      biddingModelList[index].biddingDate,
+                                  bidId: biddingModelList[index].bidId,
+                                  transporterPhoneNum:
+                                      transporterModelList[index]
+                                          .transporterPhoneNum,
+                                  transporterLocation:
+                                      transporterModelList[index]
+                                          .transporterLocation,
+                                  transporterName: transporterModelList[index]
+                                      .transporterName,
+                                  shipperApproved:
+                                      biddingModelList[index].shipperApproval,
+                                  transporterApproved: biddingModelList[index]
+                                      .transporterApproval,
+                                  isLoadPosterVerified:
+                                      transporterModelList[index]
+                                          .companyApproved,
+                                );
+                              }),
+            ),
+          ))
+        ],
+      ),
     ));
   }
 } //class end

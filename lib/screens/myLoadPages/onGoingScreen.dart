@@ -151,7 +151,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
             Row(
               children: [
                 Expanded(
-                    flex: 5,
+                    flex: (Responsive.isMobile(context))?8:5,
                     child: TextField(
                       controller: searchTextController,
                       onChanged: (value) {
@@ -190,7 +190,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                   BorderSide(color: truckGreen, width: 1.5))),
                     )),
                 Expanded(
-                  flex: 4,
+                  flex: (Responsive.isMobile(context))?2:4,
                   child: Container(),
                 )
               ],
@@ -251,6 +251,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                       Expanded(
                                         flex: 4,
                                         child: ListView.separated(
+                                          shrinkWrap: true,
                                           primary: false,
                                           physics:
                                               const BouncingScrollPhysics(),
@@ -284,6 +285,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                   ),
                                 )
                               : ListView.builder(
+                                  shrinkWrap: true,
                                   physics: BouncingScrollPhysics(),
                                   padding: EdgeInsets.only(bottom: space_15),
                                   itemCount: searchedLoadList.length,

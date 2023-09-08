@@ -3,6 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/functions/ongoingTruckGpsData.dart';
+import 'package:shipper_app/functions/ongoingTrackUtils/getDeviceData.dart';
+import 'package:shipper_app/functions/ongoingTrackUtils/getPositionByDeviceId.dart';
+import 'package:shipper_app/functions/ongoingTrackUtils/getTraccarSummaryByDeviceId.dart';
+import 'package:shipper_app/models/gpsDataModel.dart';
+import 'package:shipper_app/models/onGoingCardModel.dart';
 import 'package:shipper_app/responsive.dart';
 import '../../functions/shipperApis/shipperApiCalls.dart';
 import '/constants/colors.dart';
@@ -17,24 +23,10 @@ import 'package:logger/logger.dart';
 
 // ignore: must_be_immutable
 class TrackButton extends StatefulWidget {
-  bool truckApproved = false;
-  String? phoneNo;
-  String? TruckNo;
-  String? imei;
-  String? DriverName;
-  var gpsData;
-  var totalDistance;
-  var device;
+  final OngoingCardModel loadAllDataModel;
 
   TrackButton({
-    required this.truckApproved,
-    this.gpsData,
-    this.phoneNo,
-    this.TruckNo,
-    this.DriverName,
-    this.totalDistance,
-    this.imei,
-    this.device,
+    required this.loadAllDataModel,
   });
 
   @override
@@ -42,40 +34,11 @@ class TrackButton extends StatefulWidget {
 }
 
 class _TrackButtonState extends State<TrackButton> {
-  String? transporterIDImei;
-  final ShipperApiCalls shipperApiCalls = ShipperApiCalls();
-  final TruckApiCalls truckApiCalls = TruckApiCalls();
-
-  var truckData;
-  var gpsDataHistory;
-  var gpsStoppageHistory;
-  var gpsRoute;
-  var endTimeParam;
-  var startTimeParam;
-  MapUtil mapUtil = MapUtil();
-  bool loading = false;
-  late String from;
-  late String to;
+  late OngoingTruckGpsData ongoingTruckGpsData;
 
   @override
   void initState() {
     super.initState();
-
-    DateTime yesterday = DateTime.now()
-        .subtract(Duration(days: 1, hours: 5, minutes: 30)); //from param
-    from = yesterday.toIso8601String();
-    DateTime now =
-        DateTime.now().subtract(Duration(hours: 5, minutes: 30)); //to param
-    to = now.toIso8601String();
-
-    var logger = Logger();
-
-    // logger.i("gpsData ${widget.gpsData}");
-    // logger.i("gpsDataList ${widget.gpsData.last.latitude}");
-
-    setState(() {
-      loading = true;
-    });
   }
 
   @override
@@ -96,25 +59,30 @@ class _TrackButtonState extends State<TrackButton> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(darkBlueColor),
                   ),
-                  onPressed: () {
-                    Get.to(
-                      TrackScreen(
-                        deviceId: widget.gpsData.deviceId,
-                        gpsData: widget.gpsData,
-                        truckNo: widget.TruckNo,
-                        totalDistance: widget.totalDistance,
-                        imei: widget.imei,
-                        // online: widget.device.status == "online" ? true : false,
-                        online: true,
-                        active: true,
-                      ),
+                  onPressed: () async {
+                    ongoingTruckGpsData = OngoingTruckGpsData(widget.loadAllDataModel);
+                    ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
+                      Get.to(
+                        TrackScreen(
+                          deviceId: gpsData[1][0].deviceId,
+                          gpsData: gpsData[1][0],
+                          truckNo: widget.loadAllDataModel.truckNo,
+                          totalDistance: gpsData[3],
+                          // imei: gpsData[1][0],
+                          // online: widget.device.status == "online" ? true : false,
+                          online: true,
+                          active: true,
+                        ),
+                      );
+                    }
                     );
+
                   },
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(right: space_1),
-                        child: widget.truckApproved
+                        child: true
                             ? Container()
                             : Image(
                                 height: 16,
@@ -149,17 +117,21 @@ class _TrackButtonState extends State<TrackButton> {
                     MaterialStateProperty.all<Color>(darkBlueColor),
               ),
               onPressed: () async {
-                Get.to(
-                  TrackScreen(
-                    deviceId: widget.gpsData.deviceId,
-                    gpsData: widget.gpsData,
-                    truckNo: widget.TruckNo,
-                    totalDistance: widget.totalDistance,
-                    imei: widget.imei,
-                    // online: widget.device.status == "online" ? true : false,
-                    online: true,
-                    active: true,
-                  ),
+                ongoingTruckGpsData = OngoingTruckGpsData(widget.loadAllDataModel);
+                ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
+                  Get.to(
+                    TrackScreen(
+                      deviceId: gpsData[1][0].deviceId,
+                      gpsData: gpsData[1][0],
+                      truckNo: widget.loadAllDataModel.truckNo,
+                      totalDistance: gpsData[3],
+                      // imei: gpsData[1][0],
+                      // online: widget.device.status == "online" ? true : false,
+                      online: true,
+                      active: true,
+                    ),
+                  );
+                }
                 );
               },
               child: Container(
@@ -168,7 +140,7 @@ class _TrackButtonState extends State<TrackButton> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(right: space_1),
-                      child: widget.truckApproved
+                      child: true
                           ? Container()
                           : Image(
                               height: 16,
