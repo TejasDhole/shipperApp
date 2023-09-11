@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/responsive.dart';
 import 'package:sizer/sizer.dart';
 import '../controller/shipperIdController.dart';
 import '../functions/add_user_functions.dart';
@@ -21,20 +22,21 @@ class _AddUserState extends State<AddUser> {
   bool isError = false;
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   String selectedRole = "employee";
-
+  
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Dialog(
       insetPadding: EdgeInsets.zero,
       child: FractionallySizedBox(
-        widthFactor: 0.5,
+        widthFactor: Responsive.isMobile(context) ? 0.9 : 0.5,
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.45,
-                maxWidth: MediaQuery.of(context).size.width *
-                    0.7 // Adjust the height as needed
-                ),
+                maxHeight: Responsive.isMobile(context) ?  screenHeight * 0.4  : screenHeight * 0.45,
+                maxWidth:  screenWidth * 0.7 ),
             child: Form(
               key: _formKey,
               child: Column(
@@ -51,17 +53,18 @@ class _AddUserState extends State<AddUser> {
                           style: GoogleFonts.montserrat(
                               color: darkBlueTextColor,
                               fontWeight: FontWeight.w500,
-                              fontSize: kIsWeb ? 4.75.sp : 16.sp),
+                              fontSize: Responsive.isMobile(context) ? 14.sp : 4.75.sp),
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                            flex: 837,
+                            flex: 817,
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 54.0, top: 30, bottom: 30),
+                              padding: Responsive.isMobile(context) ? 
+                              const EdgeInsets.only(left: 20.0, top: 30, bottom: 30) 
+                              : const EdgeInsets.only(left: 54.0, top: 30, bottom: 30),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: 'Email',
@@ -89,31 +92,34 @@ class _AddUserState extends State<AddUser> {
                             ),
                           ),
                           Expanded(
-                              flex: 163,
+                              flex: 183,
                               child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 15, right: 50.0),
+                                margin: Responsive.isMobile(context) 
+                                ? const EdgeInsets.only(left: 15, right: 15.0)
+                                : const EdgeInsets.only(left: 15, right: 50.0),
                                 height: 50,
-                                width: 30,
+                                width: 22,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(2),
                                     color: darkBlueTextColor),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Icon(
+                                child: Padding(
+                                  padding: Responsive.isMobile(context) 
+                                  ? EdgeInsets.symmetric(horizontal: screenWidth * 0.005) 
+                                  : const EdgeInsets.all(12.0),
+                                  child: const Icon(
                                       size: 25, Icons.add, color: Colors.white),
                                 ),
                               ))
                         ],
                       ),
                       SizedBox(
-                        height: 1.9.h,
+                        height: Responsive.isMobile(context) ? 0.005.h :  1.9.h,
                       ),
                       Container(
                         height: 55,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 265.0, vertical: 10.0),
+                          padding:  EdgeInsets.symmetric(
+                              horizontal: Responsive.isMobile(context) ? screenWidth * 0.20 : 265.0, vertical: Responsive.isMobile(context)? 3.0 : 10.0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

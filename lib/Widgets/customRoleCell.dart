@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/responsive.dart';
 
 class CustomRole extends StatefulWidget {
   final String selectedRole;
@@ -19,7 +20,7 @@ class _CustomRoleState extends State<CustomRole> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: 250,
+      width: Responsive.isMobile(context) ? 120 :  250,
       decoration: BoxDecoration(
         border: Border.all(color: greyShade),
       ),

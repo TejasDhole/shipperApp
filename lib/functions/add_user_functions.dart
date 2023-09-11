@@ -164,7 +164,7 @@ Future<String?> getShipperId(String? mail) async {
                       builder: (context) => HomeScreenWeb(
                         index: screens.indexOf(employeeListScreen),
                         selectedIndex:
-                            screens.indexOf(accountVerificationStatusScreen),
+                            screens.indexOf(employeeListScreen),
                       ),
                     ),
                   )
