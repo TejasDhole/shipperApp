@@ -15,7 +15,7 @@ getOngoingDataWithPageNo(int i) async {
   List<OngoingCardModel> modelList = [];
 
   http.Response response = await http.get(Uri.parse(
-      '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
+      '$bookingApiUrl?postLoadId=${shipperIdController.ownerShipperId.value}&completed=false&cancel=false&pageNo=$i'));
   // '$bookingApiUrl?postLoadId=transporter:81a794cd-08fa-455c-9727-eaf12279410b&completed=false&cancel=false&pageNo=$i'));
 
   var jsonData = json.decode(response.body);

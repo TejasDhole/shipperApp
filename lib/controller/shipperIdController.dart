@@ -2,6 +2,11 @@ import 'package:get/get.dart';
 
 class ShipperIdController extends GetxController {
   RxString shipperId = "".obs;
+  RxString ownerShipperId = "".obs;
+
+  void updateOwnerShipperId(String newValue) {
+    ownerShipperId.value = newValue;
+  }
 
   void updateShipperId(String newValue) {
     shipperId.value = newValue;

@@ -21,7 +21,7 @@ getShipperIdFromCompanyDatabase() async {
         .toString()
         .substring(6, snapshot.value.toString().length - 1);
     // the data we received will be in form of "{sid: shipper:abed1234..........}"
-    shipperIdController.updateShipperId(
+    shipperIdController.updateOwnerShipperId(
         sid); // After getting the shipper id we are updating the shipper Id through out the app
   } else {
     debugPrint(
