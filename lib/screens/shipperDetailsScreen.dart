@@ -113,14 +113,6 @@ class _ShipperDetailsState extends State<ShipperDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            //TrackButton(truckApproved: widget.trackApproved!),
-                            TrackButton(
-                              truckApproved: widget.trackApproved!,
-                              TruckNo: widget.vehicleNo,
-                              DriverName: widget.driverName,
-                              gpsData: widget.gpsDataList[0],
-                              totalDistance: widget.totalDistance,
-                            ),
                             CallButton(
                               directCall: false,
                               transporterPhoneNum: widget.transporterPhoneNum,

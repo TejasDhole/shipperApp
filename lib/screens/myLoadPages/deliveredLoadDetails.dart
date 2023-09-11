@@ -50,9 +50,6 @@ class DeliveredLoadDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TrackButton(
-                              truckApproved: trackIndicator!,
-                            ),
                             CallButton(
                               directCall: false,
                               driverPhoneNum: loadALlDataModel.driverPhoneNum,

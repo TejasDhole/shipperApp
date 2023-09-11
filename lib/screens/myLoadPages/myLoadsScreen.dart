@@ -76,7 +76,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
             Row(
               children: [
                 Expanded(
-                    flex: 5,
+                    flex: (Responsive.isMobile(context))?8:5,
                     child: TextField(
                       controller: searchTextController,
                       onChanged: (value) {
@@ -115,7 +115,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                                   BorderSide(color: truckGreen, width: 1.5))),
                     )),
                 Expanded(
-                  flex: 4,
+                  flex: (Responsive.isMobile(context))?2:4,
                   child: Container(),
                 )
               ],
