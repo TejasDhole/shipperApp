@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shipper_app/controller/previewUploadedImage.dart';
+import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/TransporterOrders/docUploadBtn3.dart';
 import '/constants/colors.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
 import '/language/localization_service.dart';
@@ -48,11 +52,15 @@ class _docInputEWBillState extends State<docInputEWBill> {
   bool showAddMoreDoc = true;
   var jsonresponse;
   var docLinks = [];
-
+  String? viewImage;
+  PreviewUploadedImage previewUploadedImage = Get.put(PreviewUploadedImage());
   String? currentLang;
 
-  String addDocImageEng = "assets/images/AddDocumentImg.png";
-  String addDocImageHindi = "assets/images/AddDocumentImgHindi2.png";
+  String addDocImageEng = "assets/images/uploadImage.png";
+  String addDocImageHindi = "assets/images/uploadImage.png";
+
+  String addDocImageEngMobile = "assets/images/AddDocumentImg.png";
+  String addDocImageHindiMobile = "assets/images/AddDocumentImgHindi.png";
 
   String addMoreDocImageEng = "assets/images/AddMoreDocImg.png";
   String addMoreDocImageHindi = "assets/images/AddMoreDocImgHindi.png";
@@ -60,9 +68,9 @@ class _docInputEWBillState extends State<docInputEWBill> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "E");
-    setState(() {
-      docLinks = docLinks;
-    });
+    previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+
+    previewUploadedImage.updateIndex(0);
     print(docLinks);
     if (docLinks.isNotEmpty) {
       setState(() {
@@ -101,6 +109,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
       setState(() {
         addDocImageEng = addDocImageHindi;
         addMoreDocImageEng = addMoreDocImageHindi;
+        addDocImageEngMobile = addDocImageHindiMobile;
       });
     }
 
@@ -110,120 +119,249 @@ class _docInputEWBillState extends State<docInputEWBill> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
+      child: SizedBox(
+        height: 170,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              color: darkBlueColor,
-              child: Padding(
-                padding: EdgeInsets.only(left: 30, top: 6, bottom: 6),
-                child: Text(
-                  "Upload EWAY Bill".tr,
-                  style: TextStyle(
-                    color: white,
-                    fontSize: size_7,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: space_2,
-            ),
-            Container(
-              height: 120,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  !showUploadedDocs
-                      ? Flexible(
-                          flex: 2,
-                          child: uploadedDocs(
-                            docLinks: docLinks,
-                            verified: verified,
-                          ),
-                        )
-                      : Flexible(
-                          child: Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(right: 3, top: 4),
-                                height: 120,
-                                width: 180,
-                                child: verified
-                                    ? Image(
-                                        image: AssetImage(
-                                            "assets/images/verifiedDoc.png"))
-                                    : docUploadbtn2(
-                                        assetImage: addDocImageEng,
-                                        onPressed: () async {
-                                          widget.providerData.EwayBillPhotoFile !=
-                                                  null
-                                              ? Get.to(ImageDisplay(
-                                                  providerData: widget
-                                                      .providerData
-                                                      .EwayBillPhotoFile,
-                                                  imageName: 'EwayBillPhoto64',
-                                                ))
-                                              : showUploadedDocs
-                                                  ? showPickerDialog(
-                                                      widget.providerData
-                                                          .updateEwayBillPhoto,
-                                                      widget.providerData
-                                                          .updateEwayBillPhotoStr,
-                                                      context)
-                                                  : null;
-                                        },
-                                        imageFile: widget
-                                            .providerData.EwayBillPhotoFile,
-                                      ),
-                              ),
-                            ],
-                          ),
+            Responsive.isMobile(context)
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: darkBlueColor,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 30, top: 6, bottom: 6),
+                      child: Text(
+                        "Upload EWAY Bill".tr,
+                        style: TextStyle(
+                          color: white,
+                          fontSize: size_7,
                         ),
-                  showAddMoreDoc
-                      ? (widget.providerData.EwayBillPhotoFile == null)
-                          ? Flexible(
-                              child: Container(
-                                height: 110,
-                                width: 170,
-                                child: docUploadbtn2(
-                                  assetImage: addMoreDocImageEng,
-                                  onPressed: () async {
-                                    if (widget.providerData.EwayBillPhotoFile ==
-                                        null) {
-                                      showPickerDialog(
-                                          widget
-                                              .providerData.updateEwayBillPhoto,
-                                          widget.providerData
-                                              .updateEwayBillPhotoStr,
-                                          context);
-                                    }
-                                  },
-                                  imageFile: null,
-                                ),
-                                // ],
-                              ),
-                            )
-                          : Container()
-                      : Container(),
-                ],
-              ),
-            ),
-            // showUploadedDocs
-
-            docLinks.length > 0
-                ? Text(
-                    "( Uploaded )".tr,
-                    style: TextStyle(color: black),
+                      ),
+                    ),
                   )
                 : Container(),
+            Responsive.isMobile(context)
+                ? Container()
+                : Stack(children: [
+                    docLinks.isNotEmpty
+                        ? SizedBox(
+                            height: 320,
+                            width: 730,
+                            child: Obx(() {
+                              return Image.network(
+                                previewUploadedImage.previewImage.toString(),
+                              );
+                            }),
+                          )
+                        : Container(),
+                  ]),
+            Responsive.isMobile(context)
+                ? Container()
+                : SizedBox(
+                    height: space_12,
+                  ),
+            Responsive.isMobile(context)
+                ? Container(
+                    height: 120,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        !showUploadedDocs
+                            ? Flexible(
+                                flex: 2,
+                                child: uploadedDocs(
+                                  docLinks: docLinks,
+                                  verified: verified,
+                                ),
+                              )
+                            : Flexible(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 120,
+                                      width: 180,
+                                      child: verified
+                                          ? Image(
+                                              image: AssetImage(
+                                                  "assets/images/verifiedDoc.png"))
+                                          : docUploadbtn2(
+                                              assetImage: addDocImageEngMobile,
+                                              onPressed: () async {
+                                                widget.providerData
+                                                            .EwayBillPhotoFile !=
+                                                        null
+                                                    ? Get.to(ImageDisplay(
+                                                        providerData: widget
+                                                            .providerData
+                                                            .EwayBillPhotoFile,
+                                                        imageName:
+                                                            'EwayBillPhoto64',
+                                                      ))
+                                                    : showUploadedDocs
+                                                        ? showPickerDialog(
+                                                            widget.providerData
+                                                                .updateEwayBillPhoto,
+                                                            widget.providerData
+                                                                .updateEwayBillPhotoStr,
+                                                            context)
+                                                        : null;
+                                              },
+                                              imageFile: widget.providerData
+                                                  .EwayBillPhotoFile,
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        docLinks.length < 4
+                            ? showAddMoreDoc
+                                ? (widget.providerData.EwayBillPhotoFile ==
+                                        null)
+                                    ? Flexible(
+                                        child: Container(
+                                          height: 110,
+                                          width: 170,
+                                          child: docUploadbtn2(
+                                            assetImage: addMoreDocImageEng,
+                                            onPressed: () async {
+                                              if (widget.providerData
+                                                      .EwayBillPhotoFile ==
+                                                  null) {
+                                                showPickerDialog(
+                                                    widget.providerData
+                                                        .updateEwayBillPhoto,
+                                                    widget.providerData
+                                                        .updateEwayBillPhotoStr,
+                                                    context);
+                                              }
+                                            },
+                                            imageFile: null,
+                                          ),
+                                          // ],
+                                        ),
+                                      )
+                                    : Container()
+                                : Container()
+                            : Container(),
+                      ],
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      !showUploadedDocs
+                          ? Center(
+                              child: uploadedDocs(
+                                docLinks: docLinks,
+                                verified: verified,
+                              ),
+                            )
+                          : Stack(
+                              children: [
+                                Container(
+                                    margin:
+                                        const EdgeInsets.only(right: 3, top: 4),
+                                    height: 420,
+                                    width: 878,
+                                    child: verified
+                                        ? const Image(
+                                            image: AssetImage(
+                                                "assets/images/verifiedDoc.png"))
+                                        : docUploadbtn2(
+                                            assetImage: addDocImageEng,
+                                            onPressed: () async {
+                                              widget.providerData
+                                                          .EwayBillPhotoFile !=
+                                                      null
+                                                  ? Get.to(ImageDisplay(
+                                                      providerData: widget
+                                                          .providerData
+                                                          .EwayBillPhotoFile,
+                                                      imageName:
+                                                          'EwayBillPhoto64',
+                                                    ))
+                                                  : showUploadedDocs
+                                                      ? showPickerDialog(
+                                                          widget.providerData
+                                                              .updateEwayBillPhoto,
+                                                          widget.providerData
+                                                              .updateEwayBillPhotoStr,
+                                                          context)
+                                                      : null;
+                                            },
+                                            imageFile: widget
+                                                .providerData.EwayBillPhotoFile,
+                                          )),
+                              ],
+                            ),
+                      docLinks.length < 4 && docLinks.isNotEmpty
+                          ? showAddMoreDoc
+                              ? (widget.providerData.EwayBillPhotoFile == null)
+                                  ? SizedBox(
+                                      height: 120,
+                                      width: 180,
+                                      child: docUploadbtn3(
+                                        assetImage: addMoreDocImageEng,
+                                        onPressed: () async {
+                                          if (widget.providerData
+                                                  .EwayBillPhotoFile ==
+                                              null) {
+                                            showPickerDialog(
+                                                widget.providerData
+                                                    .updateEwayBillPhoto,
+                                                widget.providerData
+                                                    .updateEwayBillPhotoStr,
+                                                context);
+                                          }
+                                        },
+                                        imageFile: null,
+                                      ),
+                                    )
+                                  : Container()
+                              : Container()
+                          : Container(),
+                    ],
+                  ),
+            Responsive.isMobile(context)
+                ? Container()
+                : SizedBox(
+                    height: space_8,
+                  ),
+            docLinks.isNotEmpty
+                ? Responsive.isMobile(context)
+                    ? Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "( Uploaded )".tr,
+                          style: TextStyle(color: black),
+                        ),
+                      )
+                    : SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              int i = previewUploadedImage.index.value;
+                              if (previewUploadedImage.index <
+                                  docLinks.length) {
+                                previewUploadedImage.updatePreviewImage(
+                                    docLinks[i++].toString());
+
+                                previewUploadedImage.updateIndex(i++);
+                              }
+                            },
+                            child: Text("Next"),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    truckGreen // Set the background color here
+                                )))
+                : Container()
           ],
         ),
       ),
-      // ),
     );
   }
 
@@ -237,7 +375,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
             child: Wrap(
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
                         topLeft: Radius.circular(20)),
@@ -245,12 +383,12 @@ class _docInputEWBillState extends State<docInputEWBill> {
                   ),
                   width: 240,
                   // color: white,
-                  child: new ListTile(
+                  child: ListTile(
                       textColor: black,
                       iconColor: black,
                       // selectedColor: darkBlueColor,
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text("Gallery".tr),
+                      leading: const Icon(Icons.photo_library),
+                      title: Text("Gallery".tr),
                       onTap: () async {
                         await getImageFromGallery2(
                             functionToUpdate, strToUpdate, context);
@@ -258,7 +396,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                       }),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(20),
                         bottomLeft: Radius.circular(20)),
@@ -268,7 +406,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                   child: ListTile(
                     textColor: black,
                     iconColor: black,
-                    leading: Icon(Icons.photo_camera),
+                    leading: const Icon(Icons.photo_camera),
                     title: Text("Camera".tr),
                     onTap: () async {
                       await getImageFromCamera2(
