@@ -130,9 +130,12 @@ class _AddUserState extends State<AddUser> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
+                                //Add the user
                                 await AddUserFunctions().addUser(phoneOrMail,
                                     shipperIdController.companyName.value,
                                     context: context, role: selectedRole);
+                                //Send email to the same user
+                                AddUserFunctions().sendEmailToEmployee(phoneOrMail, shipperIdController.name.value);
                               }
                             },
                             child: Row(
