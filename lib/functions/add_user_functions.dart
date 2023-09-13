@@ -61,6 +61,25 @@ class AddUserFunctions {
     }
   }
 
+//This functionn is used to send the email to the invited user
+  sendEmailToEmployee(String mail, String name) async {
+    final String sendInviteMail = dotenv.get("sendInviteEmailUrl");
+    final Map<String, dynamic> params = {
+      "receiverMailId": mail,
+      "senderName": name
+    };
+
+    http.Response response = await http.post(Uri.parse(sendInviteMail),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(params));
+
+    if (response.statusCode == 200) {
+      debugPrint("Email Successfully Sent");
+    }
+  }
+
   getUserByPhone(String phoneNumber) async {
     final String uidApiPhone = dotenv.get("getUidByPhoneNumber");
     http.Response response =
@@ -79,44 +98,46 @@ class AddUserFunctions {
     }
   }
 
-//This function is used to fetch the shipperId of the invited user 
-Future<String?> getShipperId(String? mail) async {
-  final String shipperApi = dotenv.get("shipperApiUrl");
-  http.Response response = await http.get(Uri.parse("$shipperApi?emailId=$mail"),
-  headers: <String,String>{
-    'Content-Type' : 'application/json; charset = UTF-8'
-  },);
+//This function is used to fetch the shipperId of the invited user
+  Future<String?> getShipperId(String? mail) async {
+    final String shipperApi = dotenv.get("shipperApiUrl");
+    http.Response response = await http.get(
+      Uri.parse("$shipperApi?emailId=$mail"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset = UTF-8'
+      },
+    );
 
-  if (response.statusCode == 200) {
-    var jsonData = json.decode(response.body);
-    if (jsonData is List && jsonData.isNotEmpty) {
-      var firstShipper = jsonData[0];
-      if (firstShipper["shipperId"] != null) {
-        return firstShipper["shipperId"];
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      if (jsonData is List && jsonData.isNotEmpty) {
+        var firstShipper = jsonData[0];
+        if (firstShipper["shipperId"] != null) {
+          return firstShipper["shipperId"];
+        }
       }
     }
+    return null;
   }
-  return null;
-}
 
 // This function is used to change the company name of the user(whom we are adding) with the owner's company name
-  updateCompanyName(String? phoneOrMail,String companyName) async {
+  updateCompanyName(String? phoneOrMail, String companyName) async {
     String? sid;
     final String shipperApi = dotenv.get("shipperApiUrl");
     sid = await getShipperId(phoneOrMail!);
-    final Map<String, dynamic> userData = {
-      'companyName': companyName
-    };
-    http.Response response = await http.put(Uri.parse("$shipperApi/$sid"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(userData),);
+    final Map<String, dynamic> userData = {'companyName': companyName};
+    http.Response response = await http.put(
+      Uri.parse("$shipperApi/$sid"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
     debugPrint(response.body);
-    if(response.statusCode == 200 || response.statusCode == 201){
+    if (response.statusCode == 200 || response.statusCode == 201) {
       debugPrint("companyName Changed");
-    }else{
-     debugPrint("companyName not Changed");
+    } else {
+      debugPrint("companyName not Changed");
     }
   }
 
@@ -163,8 +184,7 @@ Future<String?> getShipperId(String? mail) async {
                     MaterialPageRoute(
                       builder: (context) => HomeScreenWeb(
                         index: screens.indexOf(employeeListScreen),
-                        selectedIndex:
-                            screens.indexOf(accountVerificationStatusScreen),
+                        selectedIndex: screens.indexOf(employeeListScreen),
                       ),
                     ),
                   )
@@ -185,32 +205,34 @@ Future<String?> getShipperId(String? mail) async {
   }
 
 //This function is used to fetch the role of the current user who is logged in.
-  Future<bool> getCurrentUserRole(String? userEmail) async{
+  Future<bool> getCurrentUserRole(String? userEmail) async {
     String? uid;
     final bool role;
     uid = await getUserByMail(userEmail!);
     //print(_fetchUserRole(uid));
-    role = await _fetchUserRole(uid) ;
+    role = await _fetchUserRole(uid);
     return role;
   }
 
 //Fetch the role of the user from the firebase.
-Future<bool> _fetchUserRole(uid) async {
-  DatabaseReference ref = FirebaseDatabase.instance.ref();
-  String userRole = " ";
-  final employeeRef = await ref.child(
-      "companies/${shipperIdController.companyName.value.capitalizeFirst}/members/$uid").get();
-  try{ 
-    if(employeeRef.exists){
-      debugPrint(employeeRef.value as String?);
-      userRole = employeeRef.value.toString();
-      if(userRole == 'owner'){
-        return true;
+  Future<bool> _fetchUserRole(uid) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref();
+    String userRole = " ";
+    final employeeRef = await ref
+        .child(
+            "companies/${shipperIdController.companyName.value.capitalizeFirst}/members/$uid")
+        .get();
+    try {
+      if (employeeRef.exists) {
+        debugPrint(employeeRef.value as String?);
+        userRole = employeeRef.value.toString();
+        if (userRole == 'owner') {
+          return true;
+        }
       }
-    }}catch (error) {
+    } catch (error) {
       debugPrint("Error Occurred while fetching user data: $error");
     }
-  return false;
-}
-
+    return false;
+  }
 }

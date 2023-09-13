@@ -16,7 +16,7 @@ getDeliveredDataWithPageNo(int i) async {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   List<DeliveredCardModel> modelList = [];
   http.Response response = await http.get(Uri.parse(
-      '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=true&cancel=false&pageNo=$i'));
+      '$bookingApiUrl?postLoadId=${shipperIdController.ownerShipperId.value}&completed=true&cancel=false&pageNo=$i'));
 
   var jsonData = json.decode(response.body);
 

@@ -12,6 +12,7 @@ import 'package:shipper_app/functions/add_user_functions.dart';
 import 'package:shipper_app/functions/fetchUserData.dart';
 import 'package:shipper_app/functions/get_role_of_employee.dart';
 import 'package:shipper_app/models/company_users_model.dart';
+import 'package:shipper_app/responsive.dart';
 import '../constants/colors.dart';
 import '../constants/fontSize.dart';
 import '../constants/fontWeights.dart';
@@ -22,7 +23,7 @@ import '../models/popup_model_for_employee_card.dart';
 //TODO: This card is used to display the employee name/uid and role in the company and also we can edit the role as well as delete the employee from company database
 class EmployeeCard extends StatelessWidget {
   CompanyUsers companyUsersModel;
-
+  
   EmployeeCard({Key? key, required this.companyUsersModel}) : super(key: key);
 
   List<Map<String, dynamic>> employeeDataList = [];
@@ -34,6 +35,7 @@ class EmployeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = Responsive.isMobile(context);
     return FutureBuilder(
       future: fetchUserData(companyUsersModel.uid),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -49,7 +51,104 @@ class EmployeeCard extends StatelessWidget {
             'Email': email,
             'Role': role,
           };
-          return Row(
+          return Responsive.isMobile(context)   
+              ? Container(width: 70, height : 170, margin: const EdgeInsets.only(top: 1, bottom : 40, left: 13, right: 13),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3.0), 
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), 
+                    spreadRadius: 2, 
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), 
+                  ),
+                ],
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [ 
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0,right: 16.0, top: 14.0,bottom: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '$name',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kLiveasyColor,
+                            fontSize: 15,
+                            fontFamily: 'Montserrat'),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            bool Role = await _fetchUserRole(); 
+                            if(Role){
+                              removeUser(context, '$email');
+                            }else{
+                              showNotAllowedPopup(context);
+                            }
+                          },
+                          child: const Image(image: AssetImage('assets/icons/deleteIcon.png')))
+                      ],
+                    ),
+                  ), 
+                  Padding(
+                    padding: const EdgeInsets.only(left:16.0,right: 16.0,top:2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Email',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: sideBarTextColor
+                          )
+                        ),
+                        Text(
+                          '$email',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: kLiveasyColor,
+                            fontSize: 15,
+                            fontFamily: 'Montserrat'),
+                        )
+                      ],
+                    ),
+                  ), 
+                  Padding(
+                    padding: const EdgeInsets.only(left:16.0,right: 16.0,top:4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Role",
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                            color: sideBarTextColor
+                          )
+                        ),
+                        Container(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: CustomRole(
+                                selectedRole: '$role',
+                                roleChanged: (newRole) async{
+                                    bool Role = await _fetchUserRole(); 
+                                      if(Role){
+                                        updateUser(context, newRole);
+                                      }else{
+                                        showNotAllowedPopup(context);
+                                      }
+                                }),
+                          ),
+                      ],
+                    ),
+                  )
+                  ]),
+              ):
+            
+              Row(
               children: [
                 Expanded(
                     flex: 4,
@@ -194,7 +293,8 @@ class EmployeeCard extends StatelessWidget {
 Future<bool> _fetchUserRole() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   //fetching the email, the user has entered while signing in with Google
-  String storedEmail = prefs.getString('userEmail')?? 'employee';
+  String storedEmail = prefs.getString('userEmail') ?? "";
+  debugPrint(storedEmail + 'No email found');
   //fetching the role of the user wh0 is currently logged in
   bool userRole = await AddUserFunctions().getCurrentUserRole(storedEmail);
   return userRole;

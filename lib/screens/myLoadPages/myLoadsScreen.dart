@@ -241,7 +241,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
       });
     }
     http.Response response = await http.get(Uri.parse(
-        '$loadApiUrl?postLoadId=${shipperIdController.shipperId.value}&pageNo=$i'));
+        '$loadApiUrl?postLoadId=${shipperIdController.ownerShipperId.value}&pageNo=$i'));
     var jsonData = json.decode(response.body);
     for (var json in jsonData) {
       LoadDetailsScreenModel loadDetailsScreenModel = LoadDetailsScreenModel();
