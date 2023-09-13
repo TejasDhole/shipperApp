@@ -17,8 +17,7 @@ import 'dart:io';
 import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
-//import 'getDocApiCallVerify.dart';
-//import 'getDocumentApiCall.dart';
+
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 
@@ -57,10 +56,11 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "W");
-    previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+    if (docLinks.isNotEmpty) {
+      previewUploadedImage.updatePreviewImage(docLinks[0].toString());
 
-    previewUploadedImage.updateIndex(0);
-    print(docLinks);
+      previewUploadedImage.updateIndex(0);
+    }
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -76,7 +76,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
 
   verifiedCheck() async {
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "W");
-    print(jsonresponse);
+
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -92,7 +92,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
     bookid = widget.bookingId;
 
     currentLang = LocalizationService().getCurrentLocale().toString();
-    print(currentLang);
+
     if (currentLang == "hi_IN") {
       setState(() {
         addDocImageEng = addDocImageHindi;
@@ -106,9 +106,10 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: 170,
+        height: screenHeight * 0.25,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -151,7 +152,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                   ),
             Responsive.isMobile(context)
                 ? Container(
-                    height: 120,
+                    height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,8 +170,8 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(right: 3, top: 4),
-                                      height: 120,
-                                      width: 180,
+                                      height: 130,
+                                      width: 170,
                                       child: verified
                                           ? Image(
                                               image: AssetImage(
@@ -210,7 +211,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                                         null)
                                     ? Flexible(
                                         child: Container(
-                                          height: 110,
+                                          height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
                                             assetImage: addMoreDocImageEng,
@@ -437,17 +438,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.gallery
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       bytes = await Io.File(pickedFile!.path).readAsBytes();
@@ -478,17 +469,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.gallery
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       bytes = kIsWeb

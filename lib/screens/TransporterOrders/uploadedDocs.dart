@@ -77,23 +77,12 @@ class _uploadedDocsState extends State<uploadedDocs> {
   }
 
   void _saveNetworkImage(String path) async {
-    // String path =
-    //     'https://image.shutterstock.com/image-photo/montreal-canada-july-11-2019-600w-1450023539.jpg';
-    // GallerySaver.saveImage(path, albumName: "Liveasy").then((bool? success) {
-    //   setState(() {
-    //     print('Image is saved');
-    //     progressBar = false;
-    //     downloaded = true;
-    //     downloading = false;
-    //   });
-    // });
     var response = await Dio()
         .get(path, options: Options(responseType: ResponseType.bytes));
     final result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
         name: "Liveasy");
-    print(result);
   }
 
   @override
@@ -105,8 +94,8 @@ class _uploadedDocsState extends State<uploadedDocs> {
                   ? Flexible(
                       child: Container(
                         margin: const EdgeInsets.only(right: 3, top: 4),
-                        height: 120,
-                        width: 180,
+                        height: 110,
+                        width: 170,
                         child: const Image(
                           image: AssetImage("assets/images/verifiedDoc.png"),
                         ),
@@ -137,7 +126,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                     color: whiteBackgroundColor,
                                     margin:
                                         const EdgeInsets.only(right: 3, top: 4),
-                                    height: 120,
+                                    height: 130,
                                     width: 180,
                                     child: Image.network(
                                       widget.docLinks[0].toString(),
@@ -181,7 +170,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                     color: whiteBackgroundColor,
                                     margin:
                                         const EdgeInsets.only(right: 3, top: 4),
-                                    height: 120,
+                                    height: 130,
                                     width: 180,
                                     child: Image.network(
                                       widget.docLinks[1].toString(),
@@ -225,7 +214,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                     color: whiteBackgroundColor,
                                     margin:
                                         const EdgeInsets.only(right: 3, top: 4),
-                                    height: 120,
+                                    height: 130,
                                     width: 180,
                                     child: Image.network(
                                       widget.docLinks[2].toString(),
@@ -269,7 +258,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                     color: whiteBackgroundColor,
                                     margin:
                                         const EdgeInsets.only(right: 3, top: 4),
-                                    height: 120,
+                                    height: 130,
                                     width: 180,
                                     child: Image.network(
                                       widget.docLinks[3].toString(),
@@ -536,7 +525,11 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       });
                     },
                     onTap: () async {
-                      _saveNetworkImage(widget.docLinks[i].toString());
+                      try {
+                        _saveNetworkImage(widget.docLinks[i].toString());
+                      } catch (e) {
+                        print("\n Bhai yah essa hai  sahi jagah check \n");
+                      }
                     },
                   ),
                 ),

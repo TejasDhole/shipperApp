@@ -56,10 +56,12 @@ class _docInputLrState extends State<docInputLr> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "L");
-    previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+    if (docLinks.isNotEmpty) {
+      previewUploadedImage.updatePreviewImage(docLinks[0].toString());
 
-    previewUploadedImage.updateIndex(0);
-    // print(docLinks);
+      previewUploadedImage.updateIndex(0);
+    }
+
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -76,7 +78,7 @@ class _docInputLrState extends State<docInputLr> {
   verifiedCheck() async {
     print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
-    print("from verifiedCheck ${jsonresponse}");
+
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -89,10 +91,10 @@ class _docInputLrState extends State<docInputLr> {
   @override
   void initState() {
     super.initState();
-    print("current selected language :- ");
+
     print(LocalizationService().getCurrentLocale());
     currentLang = LocalizationService().getCurrentLocale().toString();
-    print(currentLang);
+
     if (currentLang == "hi_IN") {
       // to change the image selecting image according to the language.
       setState(() {
@@ -110,9 +112,10 @@ class _docInputLrState extends State<docInputLr> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: 170,
+        height: screenHeight * 0.25,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -155,7 +158,7 @@ class _docInputLrState extends State<docInputLr> {
                   ),
             Responsive.isMobile(context)
                 ? Container(
-                    height: 120,
+                    height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,8 +176,8 @@ class _docInputLrState extends State<docInputLr> {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(right: 3, top: 4),
-                                      height: 120,
-                                      width: 180,
+                                      height: 130,
+                                      width: 170,
                                       child: verified
                                           ? Image(
                                               image: AssetImage(
@@ -211,7 +214,7 @@ class _docInputLrState extends State<docInputLr> {
                                 ? (widget.providerData.LrPhotoFile == null)
                                     ? Flexible(
                                         child: Container(
-                                          height: 110,
+                                          height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
                                             assetImage: addMoreDocImageEng,
@@ -430,17 +433,7 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.camera
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.camera);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.camera);
       bytes = kIsWeb
@@ -472,18 +465,7 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.gallery
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      // picker = ImagePicker();
-      // pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      // bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       // print("pickedFile!.path ${pickedFile!.path}");

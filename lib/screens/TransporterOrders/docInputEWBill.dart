@@ -10,11 +10,8 @@ import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
 import '/language/localization_service.dart';
 import '/screens/TransporterOrders/documentUploadScreen.dart';
-//import '/screens/TransporterOrders/postDocumentApiCall.dart';
-//import '/screens/TransporterOrders/putDocumentApiCall.dart';
 import '/screens/TransporterOrders/uploadedDocs.dart';
-//import '/screens/TransporterOrders/uploadedDocuments.dart';
-//import '/widgets/buttons/uploadBtn.dart';
+
 import '../../constants/radius.dart';
 import '../../widgets/accountVerification/image_display.dart';
 import 'docUploadBtn2.dart';
@@ -24,9 +21,7 @@ import '/functions/getImageFromGallery.dart';
 import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
-//import 'getDocApiCallVerify.dart';
-//import 'getDocName.dart';
-//import 'getDocumentApiCall.dart';
+
 import 'package:flutter/foundation.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
@@ -68,9 +63,11 @@ class _docInputEWBillState extends State<docInputEWBill> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "E");
-    previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+    if (docLinks.isNotEmpty) {
+      previewUploadedImage.updatePreviewImage(docLinks[0].toString());
 
-    previewUploadedImage.updateIndex(0);
+      previewUploadedImage.updateIndex(0);
+    }
     print(docLinks);
     if (docLinks.isNotEmpty) {
       setState(() {
@@ -87,7 +84,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
 
   verifiedCheck() async {
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "E");
-    print(jsonresponse);
+
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -104,7 +101,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
     bookid = widget.bookingId;
 
     currentLang = LocalizationService().getCurrentLocale().toString();
-    print(currentLang);
+
     if (currentLang == "hi_IN") {
       setState(() {
         addDocImageEng = addDocImageHindi;
@@ -118,9 +115,10 @@ class _docInputEWBillState extends State<docInputEWBill> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: 170,
+        height: screenHeight * 0.25,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -163,7 +161,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                   ),
             Responsive.isMobile(context)
                 ? Container(
-                    height: 120,
+                    height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,8 +180,8 @@ class _docInputEWBillState extends State<docInputEWBill> {
                                     Container(
                                       margin: const EdgeInsets.only(
                                           right: 3, top: 4),
-                                      height: 120,
-                                      width: 180,
+                                      height: 130,
+                                      width: 170,
                                       child: verified
                                           ? Image(
                                               image: AssetImage(
@@ -223,7 +221,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                                         null)
                                     ? Flexible(
                                         child: Container(
-                                          height: 110,
+                                          height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
                                             assetImage: addMoreDocImageEng,
@@ -241,7 +239,6 @@ class _docInputEWBillState extends State<docInputEWBill> {
                                             },
                                             imageFile: null,
                                           ),
-                                          // ],
                                         ),
                                       )
                                     : Container()
@@ -442,17 +439,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.camera
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.camera);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.camera);
       bytes = kIsWeb
@@ -484,17 +471,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.gallery
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       bytes = kIsWeb

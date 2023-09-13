@@ -105,8 +105,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       var response = await postDocumentApiCall(datanew);
       if (response == "put") {
         dataput = {"documents": datanew["documents"]};
-        print("dataput");
-        print(dataput);
+
         response =
             await putDocumentApiCall(dataput, widget.bookingId.toString());
       }
@@ -130,19 +129,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
     var jsonresponse;
     var docLinks = [];
     var availDocs = [];
-
-    // verifiedCheckPod() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "P");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataPod(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -183,8 +169,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
+
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
         } else {
@@ -204,20 +189,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
         await uploadFirstPod();
       }
     }
-
-    // Lr :-
-    // verifiedCheckLr() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "L");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataLr(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -257,8 +228,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
+
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
           // setState(() {
@@ -282,20 +252,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
         await uploadFirstLr();
       }
     }
-
-    // EwayBill :-
-    // verifiedCheckEwayBill() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "E");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataEwayBill(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -362,20 +318,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       }
     }
 
-    // WeightReceipt :-
-    // verifiedCheckWeightReceipt() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "W");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
-
     mapAvaildataWeightReceipt(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
         var doc1 = {
@@ -441,20 +383,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
         await uploadFirstWeightReceipt();
       }
     }
-
-    // Future<File?>
-    // _cropImage({required File? imageFile}) async {
-    //   CroppedFile? croppedFile =
-    //       await ImageCropper().cropImage(sourcePath: imageFile!.path);
-
-    //   if (croppedFile == null) {
-    //     return null;
-    //   }
-    //   // providerData.updateLrPhoto(croppedFile.path as File);
-    //   // final bytes = await Io.File(croppedFile.path).readAsBytes();
-    //   // String img64 = base64Encode(bytes); // croppedFile.path;
-    //   // providerData.updateLrPhotoStr(img64);
-    // }
 
     return WillPopScope(
       onWillPop: () async {
@@ -558,14 +486,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                               )
                             : Container(),
                         Row(children: [
-                          // Flexible(
-                          //     child: ElevatedButton(
-                          //   child: Text("Edit"),
-                          //   onPressed: () async {
-                          //     await _cropImage(
-                          //         imageFile: providerData.LrPhotoFile);
-                          //   },
-                          // )),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -1249,18 +1169,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       ),
                                     ),
                                   ),
-                                  //For Track button
-                                  // navigateToTrackScreen(
-                                  //   truckApproved: true,
-                                  //   bookingDate: widget.bookingDate,
-                                  //   bookingId: widget.bookingId,
-                                  //   loadingPoint: widget.loadingPoint,
-                                  //   unloadingPoint: widget.unloadingPoint,
-                                  //   gpsData: widget.gpsDataList[0],
-                                  //   TruckNo: widget.truckNo,
-                                  //   totalDistance: widget.totalDistance,
-                                  //   // device: widget.device,
-                                  // ),
+
                                   const SizedBox(
                                     height: 50,
                                   ),
@@ -2019,41 +1928,3 @@ class _documentUploadScreenState extends State<documentUploadScreen>
     );
   }
 }
-
-//help button
-// Flexible(
-//                                           flex: 1,
-//                                           child: GestureDetector(
-//                                             onTap: () {
-//                                               Navigator.push(
-//                                                 context,
-//                                                 MaterialPageRoute(
-//                                                     builder: (context) =>
-//                                                         const HelpScreen()),
-//                                               );
-//                                             },
-//                                             child: Row(
-//                                               children: [
-//                                                 Container(
-//                                                   height: space_5,
-//                                                   width: space_5,
-//                                                   decoration: const BoxDecoration(
-//                                                       image: DecorationImage(
-//                                                           image: AssetImage(
-//                                                               "assets/icons/help_ic.png"))),
-//                                                 ),
-//                                                 SizedBox(
-//                                                   width: space_1,
-//                                                 ),
-//                                                 Text(
-//                                                   'help'.tr,
-//                                                   // AppLocalizations.of(context)!.help,
-//                                                   style: TextStyle(
-//                                                       fontSize: size_10,
-//                                                       color: darkBlueColor,
-//                                                       fontWeight: boldWeight),
-//                                                 ),
-//                                               ],
-//                                             ),
-//                                           ),
-//                                         ),

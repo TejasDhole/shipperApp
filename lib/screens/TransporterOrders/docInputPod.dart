@@ -59,13 +59,13 @@ class _docInputPodState extends State<docInputPod> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "P");
-    previewUploadedImage.updatePreviewImage(docLinks[0].toString());
-
-    previewUploadedImage.updateIndex(0);
-    print("docLinks :-");
-    print(docLinks);
     if (docLinks.isNotEmpty) {
-      // print(docLinks);
+      previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+
+      previewUploadedImage.updateIndex(0);
+    }
+
+    if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
       });
@@ -97,7 +97,7 @@ class _docInputPodState extends State<docInputPod> {
     bookid = widget.bookingId;
 
     currentLang = LocalizationService().getCurrentLocale().toString();
-    print(currentLang);
+
     if (currentLang == "hi_IN") {
       setState(() {
         addDocImageEng = addDocImageHindi;
@@ -111,9 +111,10 @@ class _docInputPodState extends State<docInputPod> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: 170,
+        height: screenHeight * 0.25,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -125,7 +126,7 @@ class _docInputPodState extends State<docInputPod> {
                       padding:
                           const EdgeInsets.only(left: 30, top: 6, bottom: 6),
                       child: Text(
-                        "Upload Lorry Reciept".tr,
+                        "Upload POD (Pahoch)".tr,
                         style: TextStyle(
                           color: white,
                           fontSize: size_7,
@@ -156,7 +157,7 @@ class _docInputPodState extends State<docInputPod> {
                   ),
             Responsive.isMobile(context)
                 ? Container(
-                    height: 120,
+                    height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,8 +175,8 @@ class _docInputPodState extends State<docInputPod> {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(right: 3, top: 4),
-                                      height: 120,
-                                      width: 180,
+                                      height: 130,
+                                      width: 170,
                                       child: verified
                                           ? Image(
                                               image: AssetImage(
@@ -213,7 +214,7 @@ class _docInputPodState extends State<docInputPod> {
                                 ? (widget.providerData.PodPhotoFile == null)
                                     ? Flexible(
                                         child: Container(
-                                          height: 110,
+                                          height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
                                             assetImage: addMoreDocImageEng,
