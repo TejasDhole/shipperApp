@@ -76,7 +76,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
             Row(
               children: [
                 Expanded(
-                    flex: 5,
+                    flex: (Responsive.isMobile(context))?8:5,
                     child: TextField(
                       controller: searchTextController,
                       onChanged: (value) {
@@ -115,7 +115,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                                   BorderSide(color: truckGreen, width: 1.5))),
                     )),
                 Expanded(
-                  flex: 4,
+                  flex: (Responsive.isMobile(context))?2:4,
                   child: Container(),
                 )
               ],
@@ -241,7 +241,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
       });
     }
     http.Response response = await http.get(Uri.parse(
-        '$loadApiUrl?postLoadId=${shipperIdController.shipperId.value}&pageNo=$i'));
+        '$loadApiUrl?postLoadId=${shipperIdController.ownerShipperId.value}&pageNo=$i'));
     var jsonData = json.decode(response.body);
     for (var json in jsonData) {
       LoadDetailsScreenModel loadDetailsScreenModel = LoadDetailsScreenModel();

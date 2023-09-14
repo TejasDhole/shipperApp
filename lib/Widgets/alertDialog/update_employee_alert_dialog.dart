@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/responsive.dart';
 import '../../screens/employee_list_with_roles_screen.dart';
 import '../../Web/screens/home_web.dart';
 import '../../constants/screens.dart';
@@ -32,11 +33,11 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
-      contentPadding: const EdgeInsets.only(
-          left: 90,
-          right: 90,
-          top: 90,
-          bottom: 45), // Adjust the padding as needed
+      contentPadding:  EdgeInsets.only(
+          left: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09,
+          right: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09,
+          top: screenHeight * 0.1,
+          bottom: screenHeight * 0.05), // Adjust the padding as needed
       content: SingleChildScrollView(
         child: Column(
           children: [
@@ -49,7 +50,7 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
       ),
       actions: [
         Container(
-          width: screenWidth * 0.06,
+          width: Responsive.isMobile(context) ? screenWidth * 0.2 : screenWidth * 0.06,
           padding: EdgeInsets.only(bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -67,7 +68,7 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
         ),
         Padding(
           padding: EdgeInsets.only(
-              right: screenWidth * 0.08, bottom: screenHeight * 0.09),
+              right: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.1, bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

@@ -229,11 +229,7 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TrackButton(
-                        gpsData: widget.gpsDataList[0],
-                        truckApproved: true,
-                        TruckNo: widget.loadAllDataModel.truckNo,
-                        totalDistance: widget.totalDistance,
-                        device: widget.device,
+                        loadAllDataModel: widget.loadAllDataModel,
                       ),
                       CompletedButtonOrders(
                           bookingId:

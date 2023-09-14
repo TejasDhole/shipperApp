@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/responsive.dart';
 import '../screens/employee_list_with_roles_screen.dart';
 import '../../Web/screens/home_web.dart';
 import '../../constants/screens.dart';
@@ -28,14 +29,19 @@ class _RemoveEmployeeState extends State<RemoveEmployee> {
     double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       contentPadding:
-          const EdgeInsets.only(left: 110, right: 110, top: 110, bottom: 45),
+          EdgeInsets.only(
+            left: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09, 
+            right: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09, 
+            top: screenHeight * 0.07 , 
+            bottom: screenHeight * 0.03
+          ),
       content: Text("Are you sure you want to\ndelete ?",
           textAlign: TextAlign.center,
           style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500, color: darkBlueTextColor)),
       actions: <Widget>[
         Container(
-          width: screenWidth * 0.07,
+          width: Responsive.isMobile(context) ? screenWidth * 0.2 : screenWidth * 0.06,
           padding: EdgeInsets.only(bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -74,9 +80,9 @@ class _RemoveEmployeeState extends State<RemoveEmployee> {
         ),
         Padding(
           padding: EdgeInsets.only(
-              right: screenWidth * 0.08, bottom: screenHeight * 0.09),
+              right: Responsive.isMobile(context) ? screenWidth * 0.17 : screenWidth * 0.08, bottom: screenHeight * 0.09),
           child: Container(
-            width: screenWidth * 0.07,
+            width: Responsive.isMobile(context) ? screenWidth * 0.2 : screenWidth * 0.07,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

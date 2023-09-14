@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/functions/get_role_of_employee.dart';
+import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import '/constants/colors.dart';
 import '/controller/navigationIndexController.dart';
 import '/controller/shipperIdController.dart';
@@ -45,7 +46,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   var screens = [
     HomeScreen(),
     PostLoadScreen(),
-    AccountPageUtil(),
+    EmployeeListRolesScreen(),
   ];
 
   @override
@@ -157,7 +158,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   activeIcon: BottomNavigationIconWidget(
                     iconPath: "activeAccountIcon.png",
                   ),
-                  label: ('account'.tr
+                  label: ('Team'.tr
                       // AppLocalizations.of(context)!.account
                       ),
                 ),

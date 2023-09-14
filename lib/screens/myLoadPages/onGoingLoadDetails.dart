@@ -51,7 +51,7 @@ class OnGoingLoadDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             TrackButton(
-                              truckApproved: trackIndicator!,
+                              loadAllDataModel: loadALlDataModel,
                             ),
                             CallButton(
                               directCall: false,

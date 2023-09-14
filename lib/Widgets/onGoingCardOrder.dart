@@ -193,7 +193,6 @@ class OngoingCardOrders extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      TrackButton(truckApproved: false),
                       CompletedButtonOrders(
                           bookingId: bookingId, fontSize: size_7),
                     ],
