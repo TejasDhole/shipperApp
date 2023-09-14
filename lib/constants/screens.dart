@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
-import 'package:shipper_app/screens/accountScreens/account_verification_web_screen.dart';
+import 'package:shipper_app/screens/accountScreens/account_details.dart';
 import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
 import '../Web/screens/web_dashboard.dart';

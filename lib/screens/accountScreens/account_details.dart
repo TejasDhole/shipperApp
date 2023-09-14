@@ -1,16 +1,16 @@
-import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/functions/shipperApis/updateUserDetails.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/Widgets/accountWidgets/label_text.dart';
 import '../../Widgets/headingTextWidget.dart';
 import '../../constants/colors.dart';
 import '../../constants/spaces.dart';
 import '../../controller/shipperIdController.dart';
-import 'package:http/http.dart' as http;
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -21,8 +21,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class AccountVerificationWebScreenState extends State<AccountScreen> {
-  final _formKey = GlobalKey<FormState>();
-  late ShipperIdController shipperIdController;
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
+  GetStorage sidstorage = GetStorage('ShipperIDStorage');
   late TextEditingController shipperuniqueIdController;
   late TextEditingController nameController;
   late TextEditingController roleController;
@@ -31,25 +31,25 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
   late TextEditingController companyNameController;
 
   bool isEditing = false;
-  bool changesMade = true;
-  bool hasValidationError = false;
 
   @override
   void initState() {
     super.initState();
-    shipperIdController = Get.find();
+
     nameController =
         TextEditingController(text: shipperIdController.name.value);
     roleController = TextEditingController(
         text: shipperIdController.isOwner.value ? 'Owner' : 'Employee');
-    emailController =
-        TextEditingController(text: shipperIdController.emailId.value);
+    emailController = TextEditingController(
+        text: FirebaseAuth.instance.currentUser!.email.toString());
+
     phoneNumberController =
         TextEditingController(text: shipperIdController.mobileNum.value);
     companyNameController =
         TextEditingController(text: shipperIdController.companyName.value);
     shipperuniqueIdController =
         TextEditingController(text: shipperIdController.shipperId.value);
+    setState(() {});
   }
 
   @override
@@ -342,11 +342,35 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isEditing = false;
-                            });
-                            // Save logic here
+                          onPressed: () async {
+                            if (nameController.text.isNotEmpty &&
+                                companyNameController.text.isNotEmpty) {
+                              try {
+                                await updateUserDetails(
+                                  uniqueID: shipperuniqueIdController.text,
+                                  name: nameController.text,
+                                  companyName: companyNameController.text,
+                                );
+
+                                // Update the controller values
+
+                                shipperIdController
+                                    .updateName(nameController.text);
+                                shipperIdController.updateCompanyName(
+                                    companyNameController.text);
+                                sidstorage.write("name", nameController.text);
+                                sidstorage.write(
+                                    "companyName", companyNameController.text);
+                                setState(() {
+                                  isEditing = false;
+                                });
+                              } catch (e) {
+                                print('Error updating user details: $e');
+                              }
+                            } else {
+                              showMySnackBar(
+                                  context, "write Comapny name or name");
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 40),
@@ -434,20 +458,14 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                   setState(() {
                                     // Toggle the editing state
                                     isEditing = !isEditing;
-                                    changesMade = false;
+
                                     if (!isEditing) {
                                       // Save the edited values to the controller when editing is done
                                       shipperIdController.name.value =
                                           nameController.text;
-                                      // shipperIdController.isOwner.value =
-                                      //     roleController.text == 'true';
-                                      shipperIdController.emailId.value =
-                                          emailController.text;
-                                      shipperIdController.mobileNum.value =
-                                          phoneNumberController.text;
+
                                       shipperIdController.companyName.value =
                                           companyNameController.text;
-                                      // Add logic to save the edited values to the backend/database
                                     }
                                   });
                                 },
@@ -580,7 +598,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               child: LabelTextWidget(
                                 controller: roleController,
                                 isEditing: false,
-                                // editMode: isEditing,
                                 labelText: 'Role',
                               ),
                             ),
@@ -598,7 +615,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           child: LabelTextWidget(
                             controller: emailController,
                             isEditing: false,
-                            // editMode: isEditing,
                             labelText: 'Email',
                           ),
                         ),
@@ -653,22 +669,8 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           ),
                           ElevatedButton(
                             onPressed: () async {
-                              setState(() {
-                                isEditing = false;
-                              });
-                              hasValidationError = false;
-                              if (true) {
-                                _formKey.currentState
-                                    ?.save(); // Save form fields
-
-                                if (nameController.text.isEmpty ||
-                                    companyNameController.text.isEmpty) {
-                                  setState(() {
-                                    hasValidationError =
-                                        true; // Set validation error
-                                  });
-                                  return; // Exit the function
-                                }
+                              if (nameController.text.isNotEmpty &&
+                                  companyNameController.text.isNotEmpty) {
                                 try {
                                   await updateUserDetails(
                                     uniqueID: shipperuniqueIdController.text,
@@ -682,13 +684,18 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                       .updateName(nameController.text);
                                   shipperIdController.updateCompanyName(
                                       companyNameController.text);
-                                  shipperIdController
-                                      .updateEmailId(emailController.text);
-                                  shipperIdController.updateMobileNum(
-                                      phoneNumberController.text);
+                                  sidstorage.write("name", nameController.text);
+                                  sidstorage.write("companyName",
+                                      companyNameController.text);
+                                  setState(() {
+                                    isEditing = false;
+                                  });
                                 } catch (e) {
                                   print('Error updating user details: $e');
                                 }
+                              } else {
+                                showMySnackBar(
+                                    context, "update Compamy and Name");
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -712,10 +719,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                     shipperIdController.name.value;
                                 companyNameController.text =
                                     shipperIdController.companyName.value;
-                                emailController.text =
-                                    shipperIdController.emailId.value;
-                                phoneNumberController.text =
-                                    shipperIdController.mobileNum.value;
                               });
                             },
                             style: ElevatedButton.styleFrom(
@@ -738,33 +741,5 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
               ),
             ),
           );
-  }
-}
-
-Future<void> updateUserDetails({
-  // required String token,
-  required String uniqueID,
-  required String name,
-  required String companyName,
-}) async {
-  final String shipperApiUrl = dotenv.get('shipperApiUrl');
-  final url = Uri.parse('$shipperApiUrl/$uniqueID');
-
-  final body = {
-    'shipperName': name,
-    'companyName': companyName,
-  };
-
-  final headers = {
-    'Content-Type': 'application/json',
-  };
-
-  final response =
-      await http.put(url, headers: headers, body: jsonEncode(body));
-
-  if (response.statusCode == 200) {
-    print('User details updated successfully');
-  } else {
-    print('Failed to update user details');
   }
 }
