@@ -7,6 +7,7 @@ import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/functions/shipperApis/updateUserDetails.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/Widgets/accountWidgets/label_text.dart';
+import 'package:shipper_app/screens/add_user_screen.dart';
 import '../../Widgets/headingTextWidget.dart';
 import '../../constants/colors.dart';
 import '../../constants/spaces.dart';
@@ -230,7 +231,11 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       const SizedBox(width: 10),
                       ElevatedButton(
                         onPressed: () {
-                          // Your onPressed logic here
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const AddUser();
+                              });
                         },
                         style: ElevatedButton.styleFrom(
                           primary: const Color(0xFF152968),
@@ -492,7 +497,11 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               const SizedBox(width: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  // Your onPressed logic here
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const AddUser();
+                                      });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(70, 38),
