@@ -26,56 +26,13 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
   bool downloading = false;
 
   void _saveNetworkImage(String path) async {
-    // String path =
-    //     'https://image.shutterstock.com/image-photo/montreal-canada-july-11-2019-600w-1450023539.jpg';
-    // GallerySaver.saveImage(path, albumName: "Liveasy").then((bool? success) {
-    //   setState(() {
-    //     print('Image is saved');
-    //     progressBar = false;
-    //     downloaded = true;
-    //     downloading = false;
-    //   });
-    // });
-
     var response = await Dio()
         .get(path, options: Options(responseType: ResponseType.bytes));
     final result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(response.data),
         quality: 60,
         name: "Liveasy");
-    print(result);
   }
-
-  // ReceivePort _port = ReceivePort();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   IsolateNameServer.registerPortWithName(
-  //       _port.sendPort, 'downloader_send_port');
-  //   _port.listen((dynamic data) {
-  //     String id = data[0];
-  //     DownloadTaskStatus status = data[1];
-  //     int progress = data[2];
-  //     setState(() {});
-  //   });
-
-  //   FlutterDownloader.registerCallback(downloadCallback);
-  // }
-
-  // @override
-  // void dispose() {
-  //   IsolateNameServer.removePortNameMapping('downloader_send_port');
-  //   super.dispose();
-  // }
-
-  // static void downloadCallback(
-  //     String id, DownloadTaskStatus status, int progress) {
-  //   final SendPort? send =
-  //       IsolateNameServer.lookupPortByName('downloader_send_port');
-  //   send!.send([id, status, progress]);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -164,14 +121,6 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
               ),
             ),
             Row(children: [
-              // Flexible(
-              //     child: ElevatedButton(
-              //   child: Text("Edit"),
-              //   onPressed: () async {
-              //     await _cropImage(
-              //         imageFile: providerData.LrPhotoFile);
-              //   },
-              // )),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -230,98 +179,14 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                           });
                         },
                         onTap: () async {
-                          _saveNetworkImage(widget.docLink.toString());
-
-                          // final status = await Permission.storage.request();
-                          // if (status.isGranted) {
-                          //   final externalDir =
-                          //       await path.getExternalStorageDirectory();
-
-                          // Directory? directory;
-                          // // try {
-                          // if (Platform.isAndroid) {
-                          //   if (status.isGranted) {
-                          //     directory =
-                          //         await path.getExternalStorageDirectory();
-                          // String newPath = "";
-                          // //     print(directory);
-                          // List<String> paths = externalDir!.path.split("/");
-                          // for (int x = 1; x < paths.length; x++) {
-                          //   String folder = paths[x];
-                          //   if (folder != "Android") {
-                          //     setState(() {
-                          //       newPath += "/" + folder;
-                          //     });
-                          //   } else {
-                          //     break;
-                          //   }
-                          //     }
-                          //     print(directory);
-                          //     newPath = newPath + "/LiveasyApp";
-                          //     directory = Directory(newPath);
-                          //     print(directory);
-                          //   } else {
-                          //     // return false;
-                          //   }
-                          // } else {
-                          //   print(directory);
-                          //   final permis =
-                          //       await Permission.photos.request();
-                          //   if (permis.isGranted) {
-                          //     print(directory);
-                          //     directory =
-                          //         await path.getTemporaryDirectory();
-                          //     print(directory);
-                          //   } else {
-                          //     // return false;
-                          //   }
-                          // }
-
-                          // if (!await directory!.exists()) {
-                          //   print(directory);
-                          //   await directory.create(recursive: true);
-                          //   print(directory);
-                          // }
-                          // if (await directory!.exists()) {
-                          //   print(directory);
-                          //   File saveFile = File(directory.path +
-                          //       "/$widget.docLink.toString()");
-
-                          // if (newPath.isNotEmpty)
-                          // final taskId = await FlutterDownloader.enqueue(
-                          //   url: widget.docLink.toString(),
-                          //   // headers: {}, // optional: header send with url (auth token etc)
-                          //   savedDir: externalDir.path,
-                          //   // externalDir!.path,
-                          //   // directory.toString(),
-                          //   // "Internal storage/DCIM/",
-                          //   // externalDir!.path,
-                          //   showNotification:
-                          //       true, // show download progress in status bar (for Android)
-                          //   openFileFromNotification: true,
-                          // );
-
-                          // await FlutterDownloader.registerCallback(
-                          //     downloadCallback); // callback is a top-level or static function
-
-                          // }
-                          // }
+                          try {
+                            _saveNetworkImage(widget.docLink.toString());
+                          } catch (e) {
+                            print("\n Bhai  sahi jagah check \n");
+                          }
                         },
                       ),
                     )),
-                // downloading
-                //     ? Padding(
-                //         padding: const EdgeInsets.only(bottom: 5),
-                //         child: Text("( Downloading.... )".tr),
-                //       )
-                //     : Container(),
-                // downloaded
-                //     ? Padding(
-                //         padding: const EdgeInsets.only(bottom: 5.0),
-                //         child: Text("( Downloaded )".tr),
-                //       )
-                //     : Container(),,
-                // )),
               ),
             ]),
           ],

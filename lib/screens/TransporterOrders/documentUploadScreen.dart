@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -66,10 +67,10 @@ class documentUploadScreen extends StatefulWidget {
   _documentUploadScreenState createState() => _documentUploadScreenState();
 }
 
-class _documentUploadScreenState extends State<documentUploadScreen> {
+class _documentUploadScreenState extends State<documentUploadScreen>
+    with TickerProviderStateMixin {
   bool progressBar = false;
-  // bool? pod1 = false;
-  // bool podother = false;
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -81,9 +82,10 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     Get.put(ShipperIdController());
     var providerData = Provider.of<ProviderData>(context);
-
+    _tabController = TabController(length: 4, vsync: this);
     //Pod :-
 
     late Map
@@ -103,8 +105,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
       var response = await postDocumentApiCall(datanew);
       if (response == "put") {
         dataput = {"documents": datanew["documents"]};
-        print("dataput");
-        print(dataput);
+
         response =
             await putDocumentApiCall(dataput, widget.bookingId.toString());
       }
@@ -128,19 +129,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
     var jsonresponse;
     var docLinks = [];
     var availDocs = [];
-
-    // verifiedCheckPod() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "P");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataPod(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -181,8 +169,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
+
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
         } else {
@@ -202,20 +189,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
         await uploadFirstPod();
       }
     }
-
-    // Lr :-
-    // verifiedCheckLr() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "L");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataLr(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -255,8 +228,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
+
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
           // setState(() {
@@ -280,20 +252,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
         await uploadFirstLr();
       }
     }
-
-    // EwayBill :-
-    // verifiedCheckEwayBill() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "E");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
 
     mapAvaildataEwayBill(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
@@ -360,20 +318,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
       }
     }
 
-    // WeightReceipt :-
-    // verifiedCheckWeightReceipt() async {
-    //   jsonresponse =
-    //       await getDocApiCallVerify(widget.bookingId.toString(), "W");
-    //   print(jsonresponse);
-    //   // if (jsonresponse == true) {
-    //   //   setState(() {
-    //   //     verified = true;
-    //   //   });
-    //   // } else {
-    //   //   verified = false;
-    //   // }
-    // }
-
     mapAvaildataWeightReceipt(int i, String docname) async {
       if (i == 0 || i == 1 || i == 2 || i == 3) {
         var doc1 = {
@@ -439,20 +383,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
         await uploadFirstWeightReceipt();
       }
     }
-
-    // Future<File?>
-    // _cropImage({required File? imageFile}) async {
-    //   CroppedFile? croppedFile =
-    //       await ImageCropper().cropImage(sourcePath: imageFile!.path);
-
-    //   if (croppedFile == null) {
-    //     return null;
-    //   }
-    //   // providerData.updateLrPhoto(croppedFile.path as File);
-    //   // final bytes = await Io.File(croppedFile.path).readAsBytes();
-    //   // String img64 = base64Encode(bytes); // croppedFile.path;
-    //   // providerData.updateLrPhotoStr(img64);
-    // }
 
     return WillPopScope(
       onWillPop: () async {
@@ -556,14 +486,6 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                               )
                             : Container(),
                         Row(children: [
-                          // Flexible(
-                          //     child: ElevatedButton(
-                          //   child: Text("Edit"),
-                          //   onPressed: () async {
-                          //     await _cropImage(
-                          //         imageFile: providerData.LrPhotoFile);
-                          //   },
-                          // )),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -1247,18 +1169,7 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       ),
                                     ),
                                   ),
-                                  //For Track button
-                                  // navigateToTrackScreen(
-                                  //   truckApproved: true,
-                                  //   bookingDate: widget.bookingDate,
-                                  //   bookingId: widget.bookingId,
-                                  //   loadingPoint: widget.loadingPoint,
-                                  //   unloadingPoint: widget.unloadingPoint,
-                                  //   gpsData: widget.gpsDataList[0],
-                                  //   TruckNo: widget.truckNo,
-                                  //   totalDistance: widget.totalDistance,
-                                  //   // device: widget.device,
-                                  // ),
+
                                   const SizedBox(
                                     height: 50,
                                   ),
@@ -1790,400 +1701,225 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
                                       ),
                                     ),
                                   ),
+
+                                  Responsive.isMobile(context)
+                                      ? Column(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_4, space_2, space_4, 0),
+                                              child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Loading Documents".tr,
+                                                    style: TextStyle(
+                                                        color: grey,
+                                                        fontSize: size_9,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
+                                                  )),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_4, space_1, space_4, 0),
+                                              child: Text(
+                                                "Upload Loadoing document photos for advanced payment"
+                                                    .tr,
+                                                style: const TextStyle(
+                                                    color: grey),
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    space_4,
+                                                    space_4,
+                                                    space_4,
+                                                    0),
+                                                child: docInputLr(
+                                                    providerData: providerData,
+                                                    bookingId:
+                                                        widget.bookingId)),
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    space_4,
+                                                    space_4,
+                                                    space_4,
+                                                    0),
+                                                child: docInputEWBill(
+                                                    providerData: providerData,
+                                                    bookingId:
+                                                        widget.bookingId)),
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    space_4,
+                                                    space_4,
+                                                    space_4,
+                                                    0),
+                                                child: docInputWgtReceipt(
+                                                  providerData: providerData,
+                                                  bookingId: widget.bookingId,
+                                                )),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_4, space_4, space_4, 0),
+                                              child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Uploading Documents".tr,
+                                                    style: TextStyle(
+                                                        color: grey,
+                                                        fontSize: size_9,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
+                                                  )),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_4, space_1, space_4, 0),
+                                              child: Text(
+                                                "Upload unloadoing document photos for final payment"
+                                                    .tr,
+                                                style: const TextStyle(
+                                                    color: grey),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_4,
+                                                  space_4,
+                                                  space_4,
+                                                  space_4),
+                                              child: docInputPod(
+                                                providerData: providerData,
+                                                bookingId: widget.bookingId,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Column(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_6, 0, space_6, 0),
+                                              child: Container(
+                                                child: TabBar(
+                                                    controller: _tabController,
+                                                    labelColor: blueTitleColor,
+                                                    tabs: [
+                                                      Tab(
+                                                        child: Text(
+                                                          "Lorry Receipt ",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                normalWeight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Tab(
+                                                        child: Text(
+                                                          "EWAY Bill ",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                normalWeight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Tab(
+                                                        child: Text(
+                                                          "Weight Receipt ",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                normalWeight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Tab(
+                                                        child: Text(
+                                                          "POD\n(Pahoch)",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                normalWeight,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ]),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  space_6, 0, space_6, space_6),
+                                              child: Container(
+                                                  width: double.maxFinite,
+                                                  height: 600,
+                                                  child: Center(
+                                                    child: TabBarView(
+                                                      controller:
+                                                          _tabController,
+                                                      children: [
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    space_4,
+                                                                    space_4,
+                                                                    space_4,
+                                                                    0),
+                                                            child: docInputLr(
+                                                                providerData:
+                                                                    providerData,
+                                                                bookingId: widget
+                                                                    .bookingId)),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    space_4,
+                                                                    space_4,
+                                                                    space_4,
+                                                                    0),
+                                                            child: docInputEWBill(
+                                                                providerData:
+                                                                    providerData,
+                                                                bookingId: widget
+                                                                    .bookingId)),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    space_4,
+                                                                    space_4,
+                                                                    space_4,
+                                                                    0),
+                                                            child:
+                                                                docInputWgtReceipt(
+                                                              providerData:
+                                                                  providerData,
+                                                              bookingId: widget
+                                                                  .bookingId,
+                                                            )),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4),
+                                                          child: docInputPod(
+                                                            providerData:
+                                                                providerData,
+                                                            bookingId: widget
+                                                                .bookingId,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+
                                   const SizedBox(height: 30),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 50.0, right: 50),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                            "Lorry Recipt",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                            "EWAY Bill",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                            "Weight Recipt",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                            "POD (Pahoch)",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-//Might Be usefull
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(
-                                  //       space_4, space_4, space_4, 0),
-                                  //   child: Container(
-                                  //     height: 70,
-                                  //     color: darkBlueColor,
-                                  //     width: MediaQuery.of(context).size.width,
-                                  //     child: Row(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.start,
-                                  //       crossAxisAlignment:
-                                  //           CrossAxisAlignment.center,
-                                  //       children: [
-                                  //         const Padding(
-                                  //           padding: EdgeInsets.only(left: 15),
-                                  //           child: Image(
-                                  //               image: AssetImage(
-                                  //                   "assets/icons/MaleUser.png")),
-                                  //         ),
-                                  //         Padding(
-                                  //           padding:
-                                  //               const EdgeInsets.only(left: 16),
-                                  //           child: Text(
-                                  //             widget.transporterName.toString(),
-                                  //             style: TextStyle(
-                                  //                 color: white,
-                                  //                 fontSize: size_8,
-                                  //                 fontWeight: mediumBoldWeight),
-                                  //           ),
-                                  //         ),
-                                  //         // Flexible(
-                                  //         //   flex: 2,
-                                  //         //   child: Align(
-                                  //         //     alignment: Alignment.centerRight,
-                                  //         //     child: Padding(
-                                  //         //       padding: EdgeInsets.only(
-                                  //         //           left: 55,
-                                  //         //           right: 15,
-                                  //         //           top: 10,
-                                  //         //           bottom: 10),
-                                  //         //       child:
-                                  //         //       callBtn(
-                                  //         //         directCall: true,
-                                  //         //         name: widget.transporterName
-                                  //         //             .toString(),
-                                  //         //         phoneNum: widget
-                                  //         //             .transporterPhoneNum
-                                  //         //             .toString(),
-                                  //         //       ),
-                                  //         //     ),
-                                  //         //   ),
-                                  //         // ),
-                                  //         // Expanded(
-                                  //         //   child: Container(
-                                  //         //       child: Column
-                                  //         //     )
-                                  //         // )
-                                  //         Expanded(
-                                  //             child: Container(
-                                  //                 // color: Colors.deepOrange,
-                                  //                 margin: const EdgeInsets.only(
-                                  //                   top: 10,
-                                  //                   bottom: 10,
-                                  //                   right: 15,
-                                  //                 ),
-                                  //                 child: Column(
-                                  //                     // mainAxisAlignment: MainAxisAlignment.end,
-                                  //                     children: [
-                                  //                       Container(
-                                  //                         alignment: Alignment
-                                  //                             .centerRight,
-                                  //                         child: callBtn(
-                                  //                           directCall: true,
-                                  //                           name: widget
-                                  //                               .transporterName
-                                  //                               .toString(),
-                                  //                           phoneNum: widget
-                                  //                               .transporterPhoneNum
-                                  //                               .toString(),
-                                  //                         ),
-                                  //                       )
-                                  //                     ])))
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: size_2,
-                                  // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(
-                                  //       space_4, space_4, space_4, 0),
-                                  //   child: Align(
-                                  //     alignment: Alignment.centerLeft,
-                                  //     child: Text(
-                                  //       "Truck & Driver".tr,
-                                  //       style: TextStyle(
-                                  //           color: grey,
-                                  //           fontWeight: boldWeight,
-                                  //           fontSize: size_10),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: space_5,
-                                  // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(
-                                  //       space_4, 0, space_4, 0),
-                                  //   child: Container(
-                                  //     height: 70,
-                                  //     color: darkBlueColor,
-                                  //     width: MediaQuery.of(context).size.width,
-                                  //     child: Row(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.start,
-                                  //       crossAxisAlignment:
-                                  //           CrossAxisAlignment.center,
-                                  //       children: [
-                                  //         const Padding(
-                                  //           padding: EdgeInsets.only(left: 15),
-                                  //           child: Image(
-                                  //               image: AssetImage(
-                                  //                   "assets/icons/deliveryTruck.png")),
-                                  //         ),
-                                  //         Padding(
-                                  //           padding:
-                                  //               const EdgeInsets.only(left: 16),
-                                  //           child: Text(
-                                  //             widget.truckNo.toString(),
-                                  //             // "TN 09 JP 1234",
-                                  //             style: TextStyle(
-                                  //                 color: white,
-                                  //                 fontSize: size_8,
-                                  //                 fontWeight: mediumBoldWeight),
-                                  //           ),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: size_2,
-                                  // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(
-                                  //       space_4, 0, space_4, 0),
-                                  //   child: Container(
-                                  //     color: darkBlueColor,
-                                  //     width: MediaQuery.of(context).size.width,
-                                  //     child: Row(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.start,
-                                  //       crossAxisAlignment:
-                                  //           CrossAxisAlignment.start,
-                                  //       children: [
-                                  //         const Padding(
-                                  //           padding: EdgeInsets.only(
-                                  //               top: 11, left: 15),
-                                  //           child: Image(
-                                  //               image: AssetImage(
-                                  //                   "assets/icons/MaleUser.png")),
-                                  //         ),
-                                  //         Padding(
-                                  //           padding: const EdgeInsets.only(
-                                  //               left: 11, top: 5, bottom: 5),
-                                  //           child: Column(
-                                  //             crossAxisAlignment:
-                                  //                 CrossAxisAlignment.start,
-                                  //             children: [
-                                  //               Padding(
-                                  //                 padding:
-                                  //                     const EdgeInsets.all(5),
-                                  //                 child: Text(
-                                  //                   widget.driverName
-                                  //                       .toString(),
-                                  //                   // "Rajpal Sharma",
-                                  //                   style: TextStyle(
-                                  //                       color: white,
-                                  //                       fontSize: size_8,
-                                  //                       fontWeight:
-                                  //                           mediumBoldWeight),
-                                  //                 ),
-                                  //               ),
-                                  //               Padding(
-                                  //                 padding:
-                                  //                     const EdgeInsets.all(5),
-                                  //                 child: Text(
-                                  //                   widget.driverPhoneNum
-                                  //                       .toString(),
-                                  //                   // "7894561230",
-                                  //                   style: TextStyle(
-                                  //                       color: white,
-                                  //                       fontSize: size_8),
-                                  //                 ),
-                                  //               ),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //         // Flexible(
-                                  //         //   flex: 2,
-                                  //         //   child: Align(
-                                  //         //     alignment: Alignment.centerRight,
-                                  //         //     child: Padding(
-                                  //         //       padding: EdgeInsets.only(
-                                  //         //           left: 35,
-                                  //         //           right: 15,
-                                  //         //           top: 10,
-                                  //         //           bottom: 10),
-                                  //         //       child:
-                                  //         //     ),
-                                  //         //   ),
-                                  //         // ),
-                                  //         // Container(
-                                  //         //   // alignment: Alignment.centerRight,
-                                  //         //   // color: Colors.deepOrange,
-                                  //         //   child:
-                                  //         //   callBtn(
-                                  //         //     directCall: true,
-                                  //         //     name: widget.driverName
-                                  //         //         .toString(),
-                                  //         //     phoneNum: widget
-                                  //         //         .driverPhoneNum
-                                  //         //         .toString(),
-                                  //         //   ),
-                                  //         // )
-                                  //         Expanded(
-                                  //             child: Container(
-                                  //                 // color: Colors.deepOrange,
-                                  //                 margin: const EdgeInsets.only(
-                                  //                   top: 10,
-                                  //                   bottom: 10,
-                                  //                   right: 15,
-                                  //                 ),
-                                  //                 child: Column(
-                                  //                     // mainAxisAlignment: MainAxisAlignment.end,
-                                  //                     children: [
-                                  //                       Container(
-                                  //                         alignment: Alignment
-                                  //                             .centerRight,
-                                  //                         child: callBtn(
-                                  //                           directCall: true,
-                                  //                           name: widget
-                                  //                               .driverName
-                                  //                               .toString(),
-                                  //                           phoneNum: widget
-                                  //                               .driverPhoneNum
-                                  //                               .toString(),
-                                  //                         ),
-                                  //                       )
-                                  //                     ])))
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  const SizedBox(height: 30),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Upload Documents".tr,
-                                        style: TextStyle(
-                                            color: grey,
-                                            fontWeight: boldWeight,
-                                            fontSize: size_10),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_2, space_4, 0),
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Loading Documents".tr,
-                                          style: TextStyle(
-                                              color: grey,
-                                              fontSize: size_9,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        )),
-                                  ),
-                                  // Text("Uploading Documents"),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_1, space_4, 0),
-                                    child: Text(
-                                      "Upload Loadoing document photos for advanced payment"
-                                          .tr,
-                                      style: const TextStyle(color: grey),
-                                    ),
-                                  ),
-
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          space_4, space_4, space_4, 0),
-                                      child: docInputLr(
-                                          providerData: providerData,
-                                          bookingId: widget.bookingId)),
-
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          space_4, space_4, space_4, 0),
-                                      child: docInputEWBill(
-                                          providerData: providerData,
-                                          bookingId: widget.bookingId)),
-
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          space_4, space_4, space_4, 0),
-                                      child: docInputWgtReceipt(
-                                        providerData: providerData,
-                                        bookingId: widget.bookingId,
-                                      )),
-
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Uploading Documents".tr,
-                                          style: TextStyle(
-                                              color: grey,
-                                              fontSize: size_9,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        )),
-                                  ),
-                                  // Text("Uploading Documents"),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_1, space_4, 0),
-                                    child: Text(
-                                      "Upload unloadoing document photos for final payment"
-                                          .tr,
-                                      style: const TextStyle(color: grey),
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, space_4),
-                                    child: docInputPod(
-                                      providerData: providerData,
-                                      bookingId: widget.bookingId,
-                                    ),
-                                  ),
-
-                                  const SizedBox(
-                                    height: 40,
-                                  )
                                 ],
                               ),
                             ),
@@ -2192,41 +1928,3 @@ class _documentUploadScreenState extends State<documentUploadScreen> {
     );
   }
 }
-
-//help button
-// Flexible(
-//                                           flex: 1,
-//                                           child: GestureDetector(
-//                                             onTap: () {
-//                                               Navigator.push(
-//                                                 context,
-//                                                 MaterialPageRoute(
-//                                                     builder: (context) =>
-//                                                         const HelpScreen()),
-//                                               );
-//                                             },
-//                                             child: Row(
-//                                               children: [
-//                                                 Container(
-//                                                   height: space_5,
-//                                                   width: space_5,
-//                                                   decoration: const BoxDecoration(
-//                                                       image: DecorationImage(
-//                                                           image: AssetImage(
-//                                                               "assets/icons/help_ic.png"))),
-//                                                 ),
-//                                                 SizedBox(
-//                                                   width: space_1,
-//                                                 ),
-//                                                 Text(
-//                                                   'help'.tr,
-//                                                   // AppLocalizations.of(context)!.help,
-//                                                   style: TextStyle(
-//                                                       fontSize: size_10,
-//                                                       color: darkBlueColor,
-//                                                       fontWeight: boldWeight),
-//                                                 ),
-//                                               ],
-//                                             ),
-//                                           ),
-//                                         ),

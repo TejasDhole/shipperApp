@@ -14,6 +14,7 @@ class LogoutDialogue extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
@@ -29,19 +30,23 @@ class LogoutDialogue extends StatelessWidget {
                   fontWeight: mediumBoldWeight),
               textAlign: TextAlign.center),
         ),
+        content: Container(
+          width: screenWidth * 0.1,
+          height: screenHeight * 0.03,
+        ),
         actions: <Widget>[
-          Container(
-            width: screenWidth * 0.1,
-            height: screenHeight * 0.17,
-          ),
-          LogoutOkButton(),
-          SizedBox(
-            width: space_2,
-          ),
-          CancelLogoutButton(),
-          SizedBox(
-            width: space_25,
-            height: space_10,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LogoutOkButton(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CancelLogoutButton(),
+              ),
+            ],
           )
         ]);
   }

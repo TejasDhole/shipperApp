@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/controller/previewUploadedImage.dart';
+import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/TransporterOrders/docUploadBtn3.dart';
 import 'package:image_picker/image_picker.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -41,9 +44,11 @@ class _docInputLrState extends State<docInputLr> {
   var jsonresponse;
   var docLinks = [];
   String? currentLang;
-
-  String addDocImageEng = "assets/images/AddDocumentImg.png";
-  String addDocImageHindi = "assets/images/AddDocumentImgHindi2.png";
+  PreviewUploadedImage previewUploadedImage = Get.put(PreviewUploadedImage());
+  String addDocImageEng = "assets/images/uploadImage.png";
+  String addDocImageHindi = "assets/images/uploadImage.png";
+  String addDocImageEngMobile = "assets/images/AddDocumentImg.png";
+  String addDocImageHindiMobile = "assets/images/AddDocumentImgHindi2.png";
 
   String addMoreDocImageEng = "assets/images/AddMoreDocImg.png";
   String addMoreDocImageHindi = "assets/images/AddMoreDocImgHindi.png";
@@ -51,10 +56,12 @@ class _docInputLrState extends State<docInputLr> {
   uploadedCheck() async {
     docLinks = [];
     docLinks = await getDocumentApiCall(bookid.toString(), "L");
-    setState(() {
-      docLinks = docLinks;
-    });
-    // print(docLinks);
+    if (docLinks.isNotEmpty) {
+      previewUploadedImage.updatePreviewImage(docLinks[0].toString());
+
+      previewUploadedImage.updateIndex(0);
+    }
+
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -71,7 +78,7 @@ class _docInputLrState extends State<docInputLr> {
   verifiedCheck() async {
     print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
-    print("from verifiedCheck ${jsonresponse}");
+
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -84,15 +91,16 @@ class _docInputLrState extends State<docInputLr> {
   @override
   void initState() {
     super.initState();
-    print("current selected language :- ");
+
     print(LocalizationService().getCurrentLocale());
     currentLang = LocalizationService().getCurrentLocale().toString();
-    print(currentLang);
+
     if (currentLang == "hi_IN") {
       // to change the image selecting image according to the language.
       setState(() {
         addDocImageEng = addDocImageHindi;
         addMoreDocImageEng = addMoreDocImageHindi;
+        addDocImageEngMobile = addDocImageHindiMobile;
       });
     }
 
@@ -104,172 +112,246 @@ class _docInputLrState extends State<docInputLr> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Material(
-      child: Center(
+      child: SizedBox(
+        height: screenHeight * 0.25,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              color: darkBlueColor,
-              child: Padding(
-                padding: EdgeInsets.only(left: 30, top: 6, bottom: 6),
-                child: Text(
-                  "Upload LR".tr,
-                  style: TextStyle(
-                    color: white,
-                    fontSize: size_7,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: space_2,
-            ),
-            Container(
-              height: 120,
-              child: Row(
-                // mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  !showUploadedDocs
-                      ? Flexible(
-                          flex: 2,
-                          child: uploadedDocs(
-                            docLinks: docLinks,
-                            verified: verified,
-                          ),
-                        )
-                      : Flexible(
-                          child: Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(right: 3, top: 4),
-                                height: 120,
-                                width: 180,
-                                child: verified
-                                    ? Image(
-                                        image: AssetImage(
-                                            "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
-                                    : docUploadbtn2(
-                                        // text1: "( Click Here to add".tr,
-                                        // text2: "documents / Photos )".tr,
-                                        assetImage: addDocImageEng,
-                                        onPressed: () async {
-                                          widget.providerData.LrPhotoFile !=
-                                                  null
-                                              ? Get.to(ImageDisplay(
-                                                  providerData: widget
-                                                      .providerData.LrPhotoFile,
-                                                  imageName: 'LrPhoto64',
-                                                ))
-                                              : showUploadedDocs
-                                                  ? showPickerDialog(
-                                                      widget.providerData
-                                                          .updateLrPhoto,
-                                                      widget.providerData
-                                                          .updateLrPhotoStr,
-                                                      context)
-                                                  : null;
-                                        },
-                                        imageFile:
-                                            widget.providerData.LrPhotoFile,
-                                      ),
-                              ),
-                            ],
-                          ),
+            Responsive.isMobile(context)
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: darkBlueColor,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 30, top: 6, bottom: 6),
+                      child: Text(
+                        "Upload Lorry Reciept".tr,
+                        style: TextStyle(
+                          color: white,
+                          fontSize: size_7,
                         ),
-                  showAddMoreDoc
-                      // ? (docLinks.isEmpty
-                      ? (widget.providerData.LrPhotoFile == null)
-                          ? Flexible(
-                              child: Container(
-                                height: 110,
-                                width: 170,
-                                child: docUploadbtn2(
-                                  assetImage: addMoreDocImageEng,
-                                  onPressed: () async {
-                                    if (widget.providerData.LrPhotoFile ==
-                                        null) {
-                                      // showUploadedDocs
-                                      //     ?
-                                      showPickerDialog(
-                                          widget.providerData.updateLrPhoto,
-                                          widget.providerData.updateLrPhotoStr,
-                                          context);
-                                      // : null;
-                                    }
-                                  },
-                                  imageFile: null,
-                                ),
-                              ),
-                            )
-                          : Container()
-                      : Container(),
-                  // :
-                  // (!(docCount >= availDocs.length && removeAddMore))
-                  // ?
-                  // Flexible(
-                  //     // flex: 2,
-                  //     // child: Stack(
-                  //     //   children: [
-                  //     child: Container(
-                  //       height: 110,
-                  //       width: 170,
-                  //       child: docUploadbtn2(
-                  //         // text1: "( Click Here to add more".tr,
-                  //         // text2: "documents )".tr,
-                  //         assetImage:
-                  //             "assets/images/AddMoreDocImg.png",
-                  //         onPressed: () async {
-                  //           if (widget.providerData.LrPhotoFile ==
-                  //               null)
-                  //           // ? Get.to(ImageDisplay(
-                  //           //     providerData: widget.providerData.EwayBillPhotoFile2,
-                  //           //     imageName: 'EwayBill2Photo64',
-                  //           //   ))
-                  //           // :
-                  //           {
-                  //             // showUploadedDocs
-                  //             //     ?
-                  //             showPickerDialog(
-                  //                 widget.providerData.updateLrPhoto,
-                  //                 widget.providerData
-                  //                     .updateLrPhotoStr,
-                  //                 context);
-                  //             setState(() {
-                  //               docCount++;
-                  //             });
-                  //             if (docCount < availDocs.length) {
-                  //               setState(() {
-                  //                 removeAddMore = false;
-                  //               });
-                  //             }
-                  //             // : null;
-                  //           }
-                  //         },
-                  //         imageFile: null,
-                  //         // widget.providerData.EwayBillPhotoFile,
-                  //       ),
-                  //       // ],
-                  //     ),
-                  //   ))
-                  // : Container())
-                  // : Container(),
-                ],
-              ),
-            ),
-            docLinks.length > 0
-                ? Text(
-                    "( Uploaded )".tr,
-                    style: TextStyle(color: black),
+                      ),
+                    ),
                   )
                 : Container(),
+            Responsive.isMobile(context)
+                ? Container()
+                : Stack(children: [
+                    docLinks.isNotEmpty
+                        ? SizedBox(
+                            height: 320,
+                            width: 730,
+                            child: Obx(() {
+                              return Image.network(
+                                previewUploadedImage.previewImage.toString(),
+                              );
+                            }),
+                          )
+                        : Container(),
+                  ]),
+            Responsive.isMobile(context)
+                ? Container()
+                : SizedBox(
+                    height: space_12,
+                  ),
+            Responsive.isMobile(context)
+                ? Container(
+                    height: 130,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        !showUploadedDocs
+                            ? Flexible(
+                                flex: 2,
+                                child: uploadedDocs(
+                                  docLinks: docLinks,
+                                  verified: verified,
+                                ),
+                              )
+                            : Flexible(
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 3, top: 4),
+                                      height: 130,
+                                      width: 170,
+                                      child: verified
+                                          ? Image(
+                                              image: AssetImage(
+                                                  "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
+                                          : docUploadbtn2(
+                                              assetImage: addDocImageEngMobile,
+                                              onPressed: () async {
+                                                widget.providerData.LrPhotoFile !=
+                                                        null
+                                                    ? Get.to(ImageDisplay(
+                                                        providerData: widget
+                                                            .providerData
+                                                            .LrPhotoFile,
+                                                        imageName: 'LrPhoto64',
+                                                      ))
+                                                    : showUploadedDocs
+                                                        ? showPickerDialog(
+                                                            widget.providerData
+                                                                .updateLrPhoto,
+                                                            widget.providerData
+                                                                .updateLrPhotoStr,
+                                                            context)
+                                                        : null;
+                                              },
+                                              imageFile: widget
+                                                  .providerData.LrPhotoFile,
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        docLinks.length < 4
+                            ? showAddMoreDoc
+                                ? (widget.providerData.LrPhotoFile == null)
+                                    ? Flexible(
+                                        child: Container(
+                                          height: 116,
+                                          width: 170,
+                                          child: docUploadbtn2(
+                                            assetImage: addMoreDocImageEng,
+                                            onPressed: () async {
+                                              if (widget.providerData
+                                                      .LrPhotoFile ==
+                                                  null) {
+                                                showPickerDialog(
+                                                    widget.providerData
+                                                        .updateLrPhoto,
+                                                    widget.providerData
+                                                        .updateLrPhotoStr,
+                                                    context);
+                                                // : null;
+                                              }
+                                            },
+                                            imageFile: null,
+                                          ),
+                                        ),
+                                      )
+                                    : Container()
+                                : Container()
+                            : Container()
+                      ],
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      !showUploadedDocs
+                          ? uploadedDocs(
+                              docLinks: docLinks,
+                              verified: verified,
+                            )
+                          : Stack(
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.only(right: 3, top: 4),
+                                  height: 420,
+                                  width: 878,
+                                  child: verified
+                                      ? const Image(
+                                          image: AssetImage(
+                                              "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
+                                      : docUploadbtn2(
+                                          assetImage: addDocImageEng,
+                                          onPressed: () async {
+                                            widget.providerData.LrPhotoFile !=
+                                                    null
+                                                ? Get.to(ImageDisplay(
+                                                    providerData: widget
+                                                        .providerData
+                                                        .LrPhotoFile,
+                                                    imageName: 'LrPhoto64',
+                                                  ))
+                                                : showUploadedDocs
+                                                    ? showPickerDialog(
+                                                        widget.providerData
+                                                            .updateLrPhoto,
+                                                        widget.providerData
+                                                            .updateLrPhotoStr,
+                                                        context)
+                                                    : null;
+                                          },
+                                          imageFile:
+                                              widget.providerData.LrPhotoFile,
+                                        ),
+                                ),
+                              ],
+                            ),
+                      docLinks.length < 4 && docLinks.isNotEmpty
+                          ? showAddMoreDoc
+                              ? (widget.providerData.LrPhotoFile == null)
+                                  ? Flexible(
+                                      child: Container(
+                                        height: 120,
+                                        width: 180,
+                                        child: docUploadbtn3(
+                                          assetImage: addMoreDocImageEng,
+                                          onPressed: () async {
+                                            if (widget
+                                                    .providerData.LrPhotoFile ==
+                                                null) {
+                                              showPickerDialog(
+                                                  widget.providerData
+                                                      .updateLrPhoto,
+                                                  widget.providerData
+                                                      .updateLrPhotoStr,
+                                                  context);
+                                            }
+                                          },
+                                          imageFile: null,
+                                        ),
+                                      ),
+                                    )
+                                  : Container()
+                              : Container()
+                          : Container(),
+                    ],
+                  ),
+            Responsive.isMobile(context)
+                ? Container()
+                : SizedBox(
+                    height: space_8,
+                  ),
+            docLinks.isNotEmpty
+                ? Responsive.isMobile(context)
+                    ? Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "( Uploaded )".tr,
+                          style: TextStyle(color: black),
+                        ),
+                      )
+                    : SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              int i = previewUploadedImage.index.value;
+                              if (previewUploadedImage.index <
+                                  docLinks.length) {
+                                previewUploadedImage.updatePreviewImage(
+                                    docLinks[i++].toString());
+
+                                previewUploadedImage.updateIndex(i++);
+                              }
+                            },
+                            child: Text("Next"),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    truckGreen // Set the background color here
+                                )))
+                : Container()
           ],
         ),
       ),
-      // ),
     );
   }
 
@@ -351,17 +433,7 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.camera
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(source: ImageSource.camera);
-      //   bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.camera);
       bytes = kIsWeb
@@ -393,18 +465,7 @@ class _docInputLrState extends State<docInputLr> {
       final picker;
       var pickedFile;
       final bytes;
-      // if(kIsWeb) {
-      //   picker = ImagePickerPlugin();
-      //   picker = ImagePicker();
-      //   pickedFile = await picker.pickImage(
-      //       source: ImageSource.gallery
-      //   );
-      //   bytes = await pickedFile.readAsBytes();
-      // } else {
-      // picker = ImagePicker();
-      // pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      // bytes = await Io.File(pickedFile!.path).readAsBytes();
-      // }
+
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
       // print("pickedFile!.path ${pickedFile!.path}");

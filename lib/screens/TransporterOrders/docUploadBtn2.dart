@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '/constants/colors.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
@@ -20,41 +21,67 @@ class docUploadbtn2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      width: 130,
-      alignment: Alignment.center,
-
-      child: GestureDetector(
-        child: imageFile == null
-            ? Center(
-                child: Image(image: AssetImage(assetImage)),
-              )
-            : Stack(
-                children: [
-                  Center(
-                      child: imageFile != null
-                          ? Image(image: Image.file(imageFile).image)
-                          : Container()),
-                  Center(
-                    child: imageFile == null
-                        ? Center(
-                            child: Container(),
-                          )
-                        : Center(
-                            child: Text(
-                              "Tap to Open",
-                              style: TextStyle(
-                                  fontSize: size_6, color: liveasyGreen),
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          child: imageFile == null
+              ? Center(child: Image(image: AssetImage(assetImage)))
+              : Stack(
+                  children: [
+                    Center(
+                        child: imageFile != null
+                            ? Image(image: Image.file(imageFile).image)
+                            : Container()),
+                    Center(
+                      child: imageFile == null
+                          ? Center(
+                              child: Container(),
+                            )
+                          : Center(
+                              child: Text(
+                                "Tap to Open",
+                                style: TextStyle(
+                                    fontSize: size_6, color: liveasyGreen),
+                              ),
                             ),
-                          ),
+                    ),
+                  ],
+                ),
+          onTap: onPressed,
+        ),
+        Responsive.isMobile(context)
+            ? Container()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: space_5,
                   ),
+                  Text(
+                    "Drag and Drop or Choose file to upload",
+                    style: TextStyle(
+                      fontWeight: normalWeight,
+                      color: bidBackground,
+                      fontSize: size_12,
+                    ),
+                  ),
+                  SizedBox(
+                    height: space_5,
+                  ),
+                  Text(
+                    "JPEG or PNG",
+                    style: TextStyle(
+                      fontWeight: normalWeight,
+                      color: bidBackground,
+                      fontSize: size_9,
+                    ),
+                  )
                 ],
-              ),
-        // )
-        //         ),
-        onTap: onPressed,
-      ),
-      // ],
-    );
+              )
+      ],
+    )
+        // ],
+        );
   }
 }
