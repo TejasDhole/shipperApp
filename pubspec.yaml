@@ -161,9 +161,8 @@ flutter:
     - assets/images/truckTypeImage/
     - assets/background/
     - assets/icons/navigationIcons/
-# uncomment .env and .env_production file once you have added those file in root directory and then run pub get.
-#    - .env
-#    - .env_production
+    - .env
+    - .env_production
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
