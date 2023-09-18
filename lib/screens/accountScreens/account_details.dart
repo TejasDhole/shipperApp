@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shipper_app/Widgets/headingTextWidget.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/functions/shipperApis/updateUserDetails.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/Widgets/accountWidgets/label_text.dart';
 import 'package:shipper_app/screens/add_user_screen.dart';
-import '../../Widgets/headingTextWidget.dart';
 import '../../constants/colors.dart';
 import '../../constants/spaces.dart';
 import '../../controller/shipperIdController.dart';
@@ -72,15 +72,12 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
               backgroundColor: darkBlueColor,
               title: Row(
                 children: [
-                  // Liveasy Logo
                   Image.asset(
                     'assets/icons/liveasyicon.png',
                     width: 20,
                     height: 20,
                   ),
                   const SizedBox(width: 12),
-
-                  // Liveasy Text
                   const Text(
                     'Liveasy',
                     style: TextStyle(
@@ -91,11 +88,8 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                 ],
               ),
               actions: [
-                // Drawer Icon
                 IconButton(
-                  onPressed: () {
-                    // Open the drawer or implement your desired logic
-                  },
+                  onPressed: () {},
                   icon: const Icon(
                     Icons.menu,
                   ),
@@ -116,16 +110,13 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           fontSize: 16),
                     ),
                   ),
-                  // Linear Gradient Container
                   Stack(
-                    // alignment: Alignment.topLeft,
                     children: [
                       Container(
                         height: 125,
                         padding: EdgeInsets.zero,
                         margin: const EdgeInsets.only(top: 5, bottom: 5),
                         decoration: const BoxDecoration(
-                          // color: Colors.greenAccent,
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -154,22 +145,16 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
-                            colors: [
-                              Color(0xFFE6E4E4), // Starting color: #E6E4E4
-                              Color(0xFFFFFFFF)
-                              // Ending color: #F1F0F0
-                            ],
+                            colors: [Color(0xFFE6E4E4), Color(0xFFFFFFFF)],
                           ),
                         ),
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: IconButton(
-                            onPressed: () {
-                              // Handle back arrow onPressed
-                            },
-                            icon: Image.asset(
-                              "assets/icons/accountarrow.png",
-                              width: 100,
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.keyboard_backspace,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -183,8 +168,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white, width: 3.0),
                             shape: BoxShape.circle,
-                            color:
-                                const Color(0xFFAD8EE0), // Circle profile color
+                            color: const Color(0xFFAD8EE0),
                           ),
                           child: const Center(
                             child: Icon(
@@ -197,7 +181,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       ),
                     ],
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -261,14 +244,13 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                   const SizedBox(
                     height: 18,
                   ),
-                  // User Details as List Tiles
                   ListTile(
                     subtitle: Container(
                       height: isEditing ? 60 : 55,
                       padding: const EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: LabelTextWidget(
+                        child: LabelText(
                           isEditing: isEditing,
                           labelText: 'Name',
                           controller: nameController,
@@ -282,7 +264,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: LabelTextWidget(
+                        child: LabelText(
                           controller: roleController,
                           isEditing: false,
                           labelText: 'Role',
@@ -296,7 +278,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: LabelTextWidget(
+                        child: LabelText(
                           controller: emailController,
                           isEditing: false,
                           labelText: 'Email',
@@ -313,7 +295,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerLeft,
-                              child: LabelTextWidget(
+                              child: LabelText(
                                 controller: phoneNumberController,
                                 isEditing: false,
                                 labelText: 'Phone Number',
@@ -330,7 +312,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: LabelTextWidget(
+                        child: LabelText(
                           controller: companyNameController,
                           labelText: 'Company Name',
                           isEditing: isEditing,
@@ -338,10 +320,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Save and Cancel Buttons
                   if (isEditing)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -356,8 +335,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                   name: nameController.text,
                                   companyName: companyNameController.text,
                                 );
-
-                                // Update the controller values
 
                                 shipperIdController
                                     .updateName(nameController.text);
@@ -392,7 +369,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                             setState(() {
                               isEditing = false;
                             });
-                            // Reset form logic here
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 40),
@@ -437,14 +413,12 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                     ),
                     const SizedBox(height: 20),
                     Stack(
-                      // alignment: Alignment.topLeft,
                       children: [
                         Container(
                           height: 150,
                           padding: EdgeInsets.zero,
                           margin: const EdgeInsets.only(top: 5, bottom: 5),
                           decoration: const BoxDecoration(
-                            // color: Colors.greenAccent,
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
@@ -461,11 +435,9 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    // Toggle the editing state
                                     isEditing = !isEditing;
 
                                     if (!isEditing) {
-                                      // Save the edited values to the controller when editing is done
                                       shipperIdController.name.value =
                                           nameController.text;
 
@@ -505,8 +477,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(70, 38),
-                                  primary: const Color(
-                                      0xFF152968), // Background color for "Send Invite" button
+                                  primary: const Color(0xFF152968),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -547,11 +518,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
-                              colors: [
-                                Color(0xFFE6E4E4), // Starting color: #E6E4E4
-                                Color(0xFFFFFFFF)
-                                // Ending color: #F1F0F0
-                              ],
+                              colors: [Color(0xFFE6E4E4), Color(0xFFFFFFFF)],
                             ),
                           ),
                         ),
@@ -565,8 +532,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               border:
                                   Border.all(color: Colors.white, width: 4.0),
                               shape: BoxShape.circle,
-                              color: const Color(
-                                  0xFFAD8EE0), // Circle profile color
+                              color: const Color(0xFFAD8EE0),
                             ),
                             child: const Center(
                               child: Icon(
@@ -589,11 +555,10 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               height: isEditing ? 60 : 55,
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
-                                child: LabelTextWidget(
+                                child: LabelText(
                                   controller: nameController,
                                   isEditing: isEditing,
                                   labelText: 'Name',
-                                  // editMode: isEditing,
                                 ),
                               ),
                             ),
@@ -604,7 +569,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                             subtitle: Container(
                               height: isEditing ? 60 : 55,
                               padding: const EdgeInsets.all(8.0),
-                              child: LabelTextWidget(
+                              child: LabelText(
                                 controller: roleController,
                                 isEditing: false,
                                 labelText: 'Role',
@@ -621,7 +586,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: LabelTextWidget(
+                          child: LabelText(
                             controller: emailController,
                             isEditing: false,
                             labelText: 'Email',
@@ -640,7 +605,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: LabelTextWidget(
+                                child: LabelText(
                                   controller: phoneNumberController,
                                   isEditing: false,
                                   labelText: 'Phone Numebr',
@@ -656,7 +621,7 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: LabelTextWidget(
+                                child: LabelText(
                                   controller: companyNameController,
                                   isEditing: isEditing,
                                   labelText: 'Company Name',
@@ -686,8 +651,6 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                                     name: nameController.text,
                                     companyName: companyNameController.text,
                                   );
-
-                                  // Update the controller values
 
                                   shipperIdController
                                       .updateName(nameController.text);
@@ -731,12 +694,10 @@ class AccountVerificationWebScreenState extends State<AccountScreen> {
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                              primary:
-                                  Colors.white, // Set white background color
-                              onPrimary: Colors.red, // Set red text color
+                              primary: Colors.white,
+                              onPrimary: Colors.red,
                               side: const BorderSide(
-                                  color: Colors.red,
-                                  width: 2.0), // Set red side border
+                                  color: Colors.red, width: 2.0),
                             ),
                             child: const Text(
                               'Cancel',

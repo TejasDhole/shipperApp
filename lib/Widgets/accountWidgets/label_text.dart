@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shipper_app/constants/colors.dart';
 
-class LabelTextWidget extends StatelessWidget {
+class LabelText extends StatelessWidget {
   final String labelText;
   final bool isEditing;
   final VoidCallback? onPressed;
   final TextEditingController controller;
 
-  const LabelTextWidget({
+  const LabelText({
     required this.labelText,
     required this.isEditing,
     this.onPressed,
@@ -26,7 +27,7 @@ class LabelTextWidget extends StatelessWidget {
         labelStyle: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF152968),
+          color: darkBlueColor,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
@@ -50,7 +51,7 @@ class LabelTextWidget extends StatelessWidget {
         // Use textAlign property
         alignLabelWithHint: true,
       ),
-      cursorColor: const Color(0xFF152968),
+      cursorColor: darkBlueColor,
       // Center the text within the TextFormField
       textAlign: TextAlign.center,
     );
