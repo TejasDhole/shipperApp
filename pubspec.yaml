@@ -161,7 +161,7 @@ flutter:
     - assets/images/truckTypeImage/
     - assets/background/
     - assets/icons/navigationIcons/
-    - .env
+#    - .env
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,0 +1,56 @@
+name: Deploy to Firebase Hosting on merge
+'on':
+  push:
+    branches:
+      - dev
+jobs:
+  build_and_deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+        env:
+          SHIPPERAPIURL: ${{ vars.SHIPPERAPIURL }}
+          BIDDINGAPIURL: ${{ vars.BIDDINGAPIURL }}
+          BOOKINGAPIURL: ${{ vars.BOOKINGAPIURL }}
+          BUYGPSAPIURL: ${{ vars.BUYGPSAPIURL }}
+          DOCUMENTAPIURL: ${{ vars.DOCUMENTAPIURL }}
+          DRIVERAPIURL: ${{ vars.DRIVERAPIURL }}
+          GETUID: ${{ vars.GETUID }}
+          GETUIDBYMAIL: ${{ vars.GETUIDBYMAIL }}
+          GETUIDBYPHONENUMBER: ${{ vars.GETUIDBYPHONENUMBER }}
+          GPSAPIURL: ${{ vars.GPSAPIURL }}
+          IDFYACCOUNTID: ${{ vars.IDFYACCOUNTID }}
+          IDFYAPIKEY: ${{ vars.IDFYAPIKEY }}
+          IDFYKEY_ID: ${{ vars.IDFYKEY_ID }}
+          IDFYOU_ID: ${{ vars.IDFYOU_ID }}
+          IDFYSECRET_KEY: ${{ vars.IDFYSECRET_KEY }}
+          INSTALLERAPI: ${{ vars.INSTALLERAPI }}
+          LOADAPIURL: ${{ vars.LOADAPIURL }}
+          MAPKEY: ${{ vars.MAPKEY }}
+          MAPKEYNEW: ${{ vars.MAPKEYNEW }}
+          MAPKEYOLD: ${{ vars.MAPKEYOLD }}
+          ONESIGNALAPIKEY: ${{ vars.ONESIGNALAPIKEY }}
+          ONESIGNALAPPID: ${{ vars.ONESIGNALAPPID }}
+          PLACEAUTOCOMPLETEPROXY: ${{ vars.PLACEAUTOCOMPLETEPROXY }}
+          RAPIDKEY: ${{ vars.RAPIDKEY }}
+          ROUTEDATAAPIURL: ${{ vars.ROUTEDATAAPIURL }}
+          ROUTEHISTORYAPIURL: ${{ vars.ROUTEHISTORYAPIURL }}
+          SHAREURL: ${{ vars.SHAREURL }}
+          TRACCARAPI: ${{ vars.TRACCARAPI }}
+          TRACCARPASS: ${{ vars.TRACCARPASS }}
+          TRACCARUSER: ${{ vars.TRACCARUSER }}
+          TRANSPORTERAPIURL: ${{ vars.TRANSPORTERAPIURL }}
+          TRUCKAPIURL: ${{ vars.TRUCKAPIURL }}
+          UIDBYPHONENUMBER: ${{ vars.UIDBYPHONENUMBER }}
+          WEBHOOKURL: ${{ vars.WEBHOOKURL }}
+      - run: flutter build web
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SHIPPERWEBAPP }}'
+          channelId: live
+          projectId: shipperwebapp
