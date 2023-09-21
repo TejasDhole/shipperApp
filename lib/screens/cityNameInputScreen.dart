@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/borderWidth.dart';
+import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -35,6 +37,9 @@ class CityNameInputScreen extends StatefulWidget {
 }
 
 class _CityNameInputScreenState extends State<CityNameInputScreen> {
+  TextEditingController txtAddressController = TextEditingController();
+  TextEditingController txtCityController = TextEditingController();
+  TextEditingController txtStateController = TextEditingController();
   late final FocusNode focus;
   int selectedItemIndex = -1;
   SpeechToText _speechToText = SpeechToText();
@@ -274,16 +279,28 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                 ),
               ),
               locationCard != null
-                  ? (Responsive.isMobile(context)) // for mobile keyboard operations is not required.
+                  ? (Responsive.isMobile(
+                          context)) // for mobile keyboard operations is not required.
                       ? FutureBuilder(
                           future: locationCard,
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
-                              if (snapshot.data == null ||
-                                  snapshot.data.isEmpty) {
+                              if ((controller.text == null ||
+                                      controller.text.isEmpty) &&
+                                  (snapshot.data == null ||
+                                      snapshot.data.isEmpty)) {
                                 return Container();
+                              } else if ((controller.text != null ||
+                                      controller.text.isNotEmpty) &&
+                                  (snapshot.data == null ||
+                                      snapshot.data.isEmpty)) {
+                                return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 40,
+                                    ),
+                                    child: AddMissionLocationButton(context));
                               }
                               return Container(
                                 margin: EdgeInsets.only(top: 10),
@@ -339,9 +356,17 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                       AsyncSnapshot snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
-                                      if (snapshot.data == null ||
-                                          snapshot.data.isEmpty) {
+                                      if ((controller.text == null ||
+                                              controller.text.isEmpty) &&
+                                          (snapshot.data == null ||
+                                              snapshot.data.isEmpty)) {
                                         return Container();
+                                      } else if ((controller.text != null ||
+                                              controller.text.isNotEmpty) &&
+                                          (snapshot.data == null ||
+                                              snapshot.data.isEmpty)) {
+                                        return AddMissionLocationButton(
+                                            context);
                                       }
                                       return Container(
                                         height: Get.height * 0.40,
@@ -451,6 +476,243 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                   : Container()
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget AddMissionLocationButton(context) {
+    return Container(
+      child: Center(
+        child: TextButton(
+          child: Text(
+            'Add Missing Address',
+            style: TextStyle(
+              fontWeight: mediumBoldWeight,
+              color: white,
+              fontSize: size_8,
+            ),
+          ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(truckGreen),
+            padding: MaterialStatePropertyAll(
+                EdgeInsets.symmetric(horizontal: 30, vertical: 30)),
+            mouseCursor: MaterialStatePropertyAll(SystemMouseCursors.click),
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  elevation: 10,
+                  content: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Enter Address',
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontSize: size_10,
+                              fontFamily: 'Montserrat'),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          controller: txtAddressController,
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontFamily: 'Montserrat',
+                              fontSize: size_8),
+                          textAlign: TextAlign.center,
+                          cursorColor: kLiveasyColor,
+                          cursorWidth: 1,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: borderLightColor, width: 1.5)),
+                              hintText: 'Enter Area Name/ Road No/ Address',
+                              hintStyle: TextStyle(
+                                  color: borderLightColor,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: size_8),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: truckGreen, width: 1.5))),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Enter City',
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontSize: size_10,
+                              fontFamily: 'Montserrat'),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          controller: txtCityController,
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontFamily: 'Montserrat',
+                              fontSize: size_8),
+                          textAlign: TextAlign.center,
+                          cursorColor: kLiveasyColor,
+                          cursorWidth: 1,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: borderLightColor, width: 1.5)),
+                              hintText: 'Enter City',
+                              hintStyle: TextStyle(
+                                  color: borderLightColor,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: size_8),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: truckGreen, width: 1.5))),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Enter State',
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontSize: size_10,
+                              fontFamily: 'Montserrat'),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          controller: txtStateController,
+                          style: TextStyle(
+                              color: kLiveasyColor,
+                              fontFamily: 'Montserrat',
+                              fontSize: size_8),
+                          textAlign: TextAlign.center,
+                          cursorColor: kLiveasyColor,
+                          cursorWidth: 1,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: borderLightColor, width: 1.5)),
+                              hintText: 'Enter State',
+                              hintStyle: TextStyle(
+                                  color: borderLightColor,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: size_8),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero,
+                                  borderSide: BorderSide(
+                                      color: truckGreen, width: 1.5))),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                String address = txtAddressController.text;
+                                String city = txtCityController.text;
+                                String state = txtStateController.text;
+
+                                if (address.isNotEmpty &&
+                                    address != null &&
+                                    city.isNotEmpty &&
+                                    city != null &&
+                                    state.isNotEmpty &&
+                                    state != null) {
+                                  Navigator.of(context).pop();
+                                  selectSuggestedLocation(
+                                      context, address, null, city, state);
+                                }
+                              },
+                              child: Text(
+                                'Ok',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white),
+                              ),
+                              style: ButtonStyle(
+                                  mouseCursor: MaterialStatePropertyAll(
+                                      SystemMouseCursors.click),
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            color: truckGreen,
+                                            width: 2,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)))),
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 5,
+                                          bottom: 8)),
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(truckGreen)),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            OutlinedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white),
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(red),
+                                  mouseCursor: MaterialStatePropertyAll(
+                                      SystemMouseCursors.click),
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            color: red,
+                                            width: 2,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)))),
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                          top: 5,
+                                          bottom: 8)),
+                                )),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );
