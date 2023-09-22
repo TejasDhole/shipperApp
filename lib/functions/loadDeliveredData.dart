@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
+import 'package:shipper_app/functions/transporterApis/transporterApiCalls.dart';
+import 'package:shipper_app/models/transporterModel.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/deliveredCardModel.dart';
 import '/models/driverModel.dart';
@@ -11,43 +13,32 @@ import 'loadApiCalls.dart';
 Future<DeliveredCardModel> loadAllDeliveredData(bookingModel) async {
   final LoadApiCalls loadApiCalls = LoadApiCalls();
 
-  final ShipperApiCalls shipperApiCalls = ShipperApiCalls();
+  final TransporterApiCalls transporterApiCalls = TransporterApiCalls();
 
-  final TruckApiCalls truckApiCalls = TruckApiCalls();
-
-  DriverModel driverModel = DriverModel();
-
+  //fetch load details from load api
   Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId);
-  ShipperModel transporterModel =
-      await shipperApiCalls.getDataByShipperId(bookingModel.shipperId);
 
-  Map truckData = await truckApiCalls.getDataByTruckId(bookingModel.truckId[0]);
-  if (truckData['driverId'] != "NA") {
-    driverModel = await getDriverByDriverId(driverId: truckData['driverId']);
-  } else {
-    driverModel.driverId = 'NA';
-    driverModel.transporterId = 'NA';
-    driverModel.phoneNum = 'NA';
-    driverModel.driverName = 'NA';
-    driverModel.truckId = 'NA';
-  }
+  //fetch details of transporter using transporter id.
+  TransporterModel transporterModel = await transporterApiCalls
+      .getDataByTransporterId(bookingModel.transporterId);
 
+  //place all the data into DeliveredCardModel and displaying the completed loads.
   DeliveredCardModel loadALLDataModel = DeliveredCardModel();
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
   loadALLDataModel.bookingId = bookingModel.bookingId;
   loadALLDataModel.completedDate = bookingModel.completedDate;
+  loadALLDataModel.deviceId = bookingModel.deviceId;
   loadALLDataModel.loadingPointCity = loadData['loadingPointCity'];
   loadALLDataModel.unloadingPointCity = loadData['unloadingPointCity'];
   loadALLDataModel.companyName = transporterModel.companyName;
-  loadALLDataModel.transporterPhoneNum = transporterModel.shipperPhoneNum;
-  loadALLDataModel.transporterLocation = transporterModel.shipperLocation;
-  loadALLDataModel.transporterName = transporterModel.shipperName;
+  loadALLDataModel.transporterPhoneNum = transporterModel.transporterPhoneNum;
+  loadALLDataModel.transporterLocation = transporterModel.transporterLocation;
+  loadALLDataModel.transporterName = transporterModel.transporterName;
   loadALLDataModel.companyApproved = transporterModel.companyApproved;
-  loadALLDataModel.truckNo = truckData['truckNo'];
-  loadALLDataModel.truckType = truckData['truckType'];
-  loadALLDataModel.imei = truckData['imei'];
-  loadALLDataModel.driverName = driverModel.driverName;
-  loadALLDataModel.driverPhoneNum = driverModel.phoneNum;
+  loadALLDataModel.truckNo = bookingModel.truckId[0];
+  loadALLDataModel.truckType = loadData['truckType'];
+  loadALLDataModel.driverName = bookingModel.driverName;
+  loadALLDataModel.driverPhoneNum = bookingModel.driverPhoneNum;
   loadALLDataModel.rate = bookingModel.rate.toString();
   loadALLDataModel.unitValue = bookingModel.unitValue;
   loadALLDataModel.noOfTrucks = loadData['noOfTrucks'];

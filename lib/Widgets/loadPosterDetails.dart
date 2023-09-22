@@ -28,9 +28,7 @@ class LoadPosterDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     // print(MediaQuery.of(context).size.height);
     String? image;
-    image = (imageUrl == "no profile"
-        ? "assets/images/defaultDriverImage.png"
-        : imageUrl);
+    image = "assets/images/defaultDriverImage.png";
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.225,
@@ -141,7 +139,9 @@ class LoadPosterDetails extends StatelessWidget {
               SizedBox(
                 height: space_1 + 1,
               ),
-              loadPosterCompanyApproved! ? VerifiedWidget() : UnverifiedWidget()
+              loadPosterCompanyApproved ?? false
+                  ? VerifiedWidget()
+                  : UnverifiedWidget()
             ],
           ),
         ],
