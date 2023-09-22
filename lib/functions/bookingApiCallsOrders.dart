@@ -38,7 +38,7 @@ class BookingApiCallsOrders {
         bookingModel.bookingDate =
             json['bookingDate'] != null ? json['bookingDate'] : 'NA';
         bookingModel.loadId = json['loadId'] != null ? json['loadId'] : 'NA';
-        bookingModel.shipperId =
+        bookingModel.transporterId =
             json['transporterId'] != null ? json['transporterId'] : 'NA';
         bookingModel.truckId = json['truckId'] != null ? json['truckId'] : 'NA';
         bookingModel.cancel = json['cancel'] != null ? json['cancel'] : false;
@@ -78,7 +78,7 @@ class BookingApiCallsOrders {
           bookingModel.bookingDate =
               json['bookingDate'] != null ? json['bookingDate'] : 'NA';
           bookingModel.loadId = json['loadId'] != null ? json['loadId'] : 'NA';
-          bookingModel.shipperId =
+          bookingModel.transporterId =
               json['transporterId'] != null ? json['transporterId'] : 'NA';
           bookingModel.truckId =
               json['truckId'] != null ? json['truckId'] : 'NA';
