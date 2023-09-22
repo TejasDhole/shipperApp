@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/constants/colors.dart';
 
 //update user details Fuction
 
@@ -35,10 +35,10 @@ Future<void> updateUserDetails({
 
 void showMySnackBar(BuildContext context, String message) {
   final snackBar = SnackBar(
-    backgroundColor: Colors.black,
+    backgroundColor: black,
     content: Text(
       message,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: white),
     ),
   );
 
