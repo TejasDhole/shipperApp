@@ -25,12 +25,12 @@ class BackButtonWidget extends StatelessWidget {
                     index: 1000,
                   ),
                 ));
-          } else {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => previousPage,
-                ));
+          }else { 
+            Navigator.pushReplacement(  
+              context, 
+              MaterialPageRoute(
+                builder: (context) => previousPage,
+              ));
           }
         } else {
           Get.back();
