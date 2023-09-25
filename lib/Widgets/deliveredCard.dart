@@ -69,20 +69,10 @@ class DeliveredCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool small = true;
-    double textFontSize;
-    if (MediaQuery.of(context).size.width > 1099 &&
-        MediaQuery.of(context).size.width < 1400) {
-      small = true;
-    } else {
-      small = false;
-    }
-    if (small) {
-      textFontSize = 12;
-    } else {
-      textFontSize = 16;
-    }
-
+    double textFontSize = (MediaQuery.of(context).size.width > 1099 &&
+            MediaQuery.of(context).size.width < 1400)
+        ? 12
+        : 16;
     if (model.companyName == null) {
       model.companyName = "NA";
     }
