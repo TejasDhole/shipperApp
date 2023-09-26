@@ -40,8 +40,8 @@ class BookingApiCalls {
         print(bookingModel.bookingDate);
         bookingModel.loadId = json['loadId'];
         print(bookingModel.loadId);
-        bookingModel.shipperId = json['transporterId'];
-        print(bookingModel.shipperId);
+        bookingModel.transporterId = json['transporterId'];
+        print(bookingModel.transporterId);
         bookingModel.truckId = json['truckId'];
         print(bookingModel.truckId);
         bookingModel.cancel = json['cancel'];
@@ -76,7 +76,7 @@ class BookingApiCalls {
         bookingModel.bookingId = json['bookingId'];
         bookingModel.postLoadId = json['postLoadId'];
         bookingModel.loadId = json['loadId'];
-        bookingModel.shipperId = json['transporterId'];
+        bookingModel.transporterId = json['transporterId'];
         bookingModel.truckId = json['truckId'];
         bookingModel.cancel = json['cancel'];
         bookingModel.completed = json['completed'];

@@ -26,7 +26,7 @@ getOngoingDataWithPageNo(int i) async {
     bookingModel.bookingId = json['bookingId'];
     bookingModel.postLoadId = json['postLoadId'];
     bookingModel.loadId = json['loadId'];
-    bookingModel.shipperId = json['postLoadId'];
+    bookingModel.transporterId = json['postLoadId'];
     bookingModel.truckId = json['truckId'];
     bookingModel.cancel = json['cancel'];
     bookingModel.completed = json['completed'];

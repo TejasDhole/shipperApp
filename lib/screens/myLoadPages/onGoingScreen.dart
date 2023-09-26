@@ -123,7 +123,9 @@ class _OngoingScreenState extends State<OngoingScreen> {
     } else {
       searchedLoadList = modelList;
     }
-    setState(() {});
+    if(mounted){
+      setState(() {});
+    }
   }
 
   String removeTrailingSpaces(String input) {

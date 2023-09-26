@@ -4,6 +4,7 @@ import '/controller/shipperIdController.dart';
 import '/functions/loadDeliveredData.dart';
 import '/models/BookingModel.dart';
 import 'package:http/http.dart' as http;
+
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -27,14 +28,19 @@ getDeliveredDataWithPageNo(int i) async {
     bookingModel.bookingId = json['bookingId'];
     bookingModel.postLoadId = json['postLoadId'];
     bookingModel.loadId = json['loadId'];
-    bookingModel.shipperId = json['transporterId'];
+    bookingModel.transporterId = json['transporterId'];
     bookingModel.truckId = json['truckId'];
     bookingModel.cancel = json['cancel'];
     bookingModel.completed = json['completed'];
+    bookingModel.driverName = json['driverName'];
+    bookingModel.driverPhoneNum = json['driverPhoneNum'];
     bookingModel.completedDate =
         json['completedDate'] != null ? json['completedDate'] : "NA";
     bookingModel.rate = json['rate'] != null ? json['rate'].toString() : 'NA';
     bookingModel.unitValue = json['unitValue'];
+    bookingModel.deviceId = int.parse(json['deviceId']);
+
+    //Booking api doesn't contains details of loads and transporters, therefor loadAllDeliveredData being used
     var loadAllDataModel = await loadAllDeliveredData(bookingModel);
     modelList.add(loadAllDataModel);
   }
