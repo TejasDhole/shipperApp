@@ -80,13 +80,6 @@ class _TruckStatusState extends State<TruckStatus> {
                                 color: const Color(0xFFB60000)),
                           ),
                         ]),
-                        /*   DottedLine(
-                          direction: Axis.vertical,
-                          lineLength: 108,
-                          lineThickness: 1.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.black,
-                        )*/
                         Container(
                             height: 108,
                             width: 2,
@@ -99,8 +92,8 @@ class _TruckStatusState extends State<TruckStatus> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                width:
-                                    MediaQuery.of(context).size.width / 4 - 74,
+                                width: 300,
+                                // MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_2),
                                 alignment: Alignment.centerLeft,
@@ -150,8 +143,8 @@ class _TruckStatusState extends State<TruckStatus> {
                               ),
                             ),
                             Container(
-                                width:
-                                    MediaQuery.of(context).size.width / 4 - 74,
+                                width: 300,
+                                // MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_1),
                                 alignment: Alignment.centerLeft,
@@ -226,8 +219,8 @@ class _TruckStatusState extends State<TruckStatus> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                width:
-                                    MediaQuery.of(context).size.width / 4 - 74,
+                                width: 300,
+                                // MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_2),
                                 alignment: Alignment.centerLeft,
@@ -277,8 +270,8 @@ class _TruckStatusState extends State<TruckStatus> {
                               ),
                             ),
                             Container(
-                                width:
-                                    MediaQuery.of(context).size.width / 4 - 74,
+                                width: 300,
+                                // MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_1),
                                 alignment: Alignment.centerLeft,

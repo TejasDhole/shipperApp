@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
@@ -87,6 +88,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     return Responsive.isMobile(context)
         ? Row(
             children: [
@@ -319,8 +321,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[0].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[0].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -354,8 +358,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[1].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[1].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -389,8 +395,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[2].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[2].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -424,8 +432,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[3].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[3].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -439,6 +449,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
   }
 
   Future<void> _imageDownload(BuildContext context, int i) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     return showDialog<void>(
         context: context,
         builder: (context) {
@@ -486,8 +497,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                     Container(
                       constraints: const BoxConstraints(minHeight: 100),
                       color: whiteBackgroundColor,
-                      child: Image.network(
-                        widget.docLinks[i].toString(),
+                      child: Image(
+                        image: NetworkImage(
+                          "$proxyServer${widget.docLinks[i].toString()}",
+                        ),
                       ),
                     ),
                   ],
@@ -525,11 +538,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       });
                     },
                     onTap: () async {
-                      try {
-                        _saveNetworkImage(widget.docLinks[i].toString());
-                      } catch (e) {
-                        print("\n Bhai yah essa hai  sahi jagah check \n");
-                      }
+                      _saveNetworkImage(widget.docLinks[i].toString());
                     },
                   ),
                 ),

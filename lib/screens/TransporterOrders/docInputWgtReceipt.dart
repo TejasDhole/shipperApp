@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
 import 'package:shipper_app/responsive.dart';
@@ -106,6 +107,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
@@ -138,9 +140,9 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                             height: 320,
                             width: 730,
                             child: Obx(() {
-                              return Image.network(
-                                previewUploadedImage.previewImage.toString(),
-                              );
+                              return Image.network(Uri.encodeFull(
+                                "$proxyServer${previewUploadedImage.previewImage.toString()}",
+                              ));
                             }),
                           )
                         : Container(),

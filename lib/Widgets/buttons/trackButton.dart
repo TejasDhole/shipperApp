@@ -10,6 +10,7 @@ import 'package:shipper_app/functions/ongoingTrackUtils/getTraccarSummaryByDevic
 import 'package:shipper_app/models/gpsDataModel.dart';
 import 'package:shipper_app/models/onGoingCardModel.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/trackScreenMobile.dart';
 import '../../functions/shipperApis/shipperApiCalls.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -60,7 +61,8 @@ class _TrackButtonState extends State<TrackButton> {
                         MaterialStateProperty.all<Color>(darkBlueColor),
                   ),
                   onPressed: () async {
-                    ongoingTruckGpsData = OngoingTruckGpsData(widget.loadAllDataModel);
+                    ongoingTruckGpsData =
+                        OngoingTruckGpsData(widget.loadAllDataModel);
                     ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
                       Get.to(
                         TrackScreen(
@@ -68,15 +70,11 @@ class _TrackButtonState extends State<TrackButton> {
                           gpsData: gpsData[1][0],
                           truckNo: widget.loadAllDataModel.truckNo,
                           totalDistance: gpsData[3],
-                          // imei: gpsData[1][0],
-                          // online: widget.device.status == "online" ? true : false,
                           online: true,
                           active: true,
                         ),
                       );
-                    }
-                    );
-
+                    });
                   },
                   child: Row(
                     children: [
@@ -117,22 +115,20 @@ class _TrackButtonState extends State<TrackButton> {
                     MaterialStateProperty.all<Color>(darkBlueColor),
               ),
               onPressed: () async {
-                ongoingTruckGpsData = OngoingTruckGpsData(widget.loadAllDataModel);
+                ongoingTruckGpsData =
+                    OngoingTruckGpsData(widget.loadAllDataModel);
                 ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
                   Get.to(
-                    TrackScreen(
+                    TrackScreenMobile(
                       deviceId: gpsData[1][0].deviceId,
                       gpsData: gpsData[1][0],
                       truckNo: widget.loadAllDataModel.truckNo,
                       totalDistance: gpsData[3],
-                      // imei: gpsData[1][0],
-                      // online: widget.device.status == "online" ? true : false,
                       online: true,
                       active: true,
                     ),
                   );
-                }
-                );
+                });
               },
               child: Container(
                 margin: EdgeInsets.only(left: space_2),
