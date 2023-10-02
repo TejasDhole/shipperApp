@@ -72,6 +72,8 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
     }
     return Scaffold(
       backgroundColor: white,
+      floatingActionButton: nextButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -270,7 +272,6 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
             const SizedBox(
               height: 60,
             ),
-            nextButton(),
           ],
         ),
       ),
