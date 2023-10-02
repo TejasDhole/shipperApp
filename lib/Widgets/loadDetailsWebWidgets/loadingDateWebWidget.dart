@@ -28,6 +28,11 @@ class LoadingDateWebWidgetState extends State<LoadingDateWebWidget> {
       _textEditingController.text = providerData.scheduleLoadingDate;
       _selectedDay =
           DateFormat.yMMMMd('en_US').parse(providerData.scheduleLoadingDate);
+    } else {
+      _selectedDay = DateTime.now();
+      _textEditingController.text =
+          DateFormat.yMMMMd('en_US').format(_selectedDay!).toString();
+      providerData.updateScheduleLoadingDate(_textEditingController.text);
     }
 
     return Expanded(
@@ -43,132 +48,137 @@ class LoadingDateWebWidgetState extends State<LoadingDateWebWidget> {
             FocusScope.of(context).unfocus();
           },
           onTap: () {
-            setState(() {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return StatefulBuilder(
-                    builder: (context, setState) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        content: Container(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                            height: MediaQuery.of(context).size.height * 0.588,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            padding: EdgeInsets.all(10),
-                            child: TableCalendar(
-                              selectedDayPredicate: (day) {
-                                return isSameDay(_selectedDay, day);
-                              },
-                              onDaySelected: (selectedDay, focusedDay) {
-                                if (!isSameDay(_selectedDay, selectedDay)) {
-                                  setState(() {
-                                    providerData.updateResetActive(false);
-                                    _selectedDay = selectedDay;
-                                    _focusedDay = focusedDay;
-                                    _textEditingController.text =
-                                        DateFormat.yMMMMd('en_US')
-                                            .format(_selectedDay!)
-                                            .toString();
-                                    providerData.updateScheduleLoadingDate(
-                                        _textEditingController.text);
-                                    Navigator.of(context).pop();
-                                  });
-                                }
-                              },
-                              eventLoader: (day) {
-                                return (isSameDay(DateTime.now(), day))
-                                    ? [DateTime.now()]
-                                    : [];
-                              },
-                              calendarFormat: _calendarFormat,
-                              focusedDay: _focusedDay,
-                              firstDay: DateTime.now(),
-                              lastDay: DateTime.utc(DateTime.now().year,
-                                  DateTime.now().month, DateTime.now().day + 5),
-                              headerStyle: HeaderStyle(
-                                headerPadding: EdgeInsets.only(
-                                    left: 20, right: 20, top: 10, bottom: 10),
-                                leftChevronIcon: Image.asset(
-                                    'assets/images/calendar_previous.png'),
-                                rightChevronIcon: Image.asset(
-                                    'assets/images/calendar_next.png'),
-                                formatButtonVisible: false,
-                                titleTextStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 20),
-                                titleCentered: true,
-                              ),
-                              calendarStyle: CalendarStyle(
-                                  markersAutoAligned: false,
-                                  markersAlignment: Alignment.topRight,
-                                  markerMargin: EdgeInsets.all(10),
-                                  markersMaxCount: 1,
-                                  canMarkersOverflow: false,
-                                  outsideDecoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  weekendDecoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  disabledDecoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  defaultDecoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  selectedDecoration: BoxDecoration(
-                                    color: truckGreen,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  selectedTextStyle: TextStyle(
+            if (mounted) {
+              setState(() {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return StatefulBuilder(
+                      builder: (context, setState) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.zero,
+                          content: Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.588,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              padding: EdgeInsets.all(10),
+                              child: TableCalendar(
+                                selectedDayPredicate: (day) {
+                                  return isSameDay(_selectedDay, day);
+                                },
+                                onDaySelected: (selectedDay, focusedDay) {
+                                  if (!isSameDay(_selectedDay, selectedDay)) {
+                                    setState(() {
+                                      providerData.updateResetActive(false);
+                                      _selectedDay = selectedDay;
+                                      _focusedDay = focusedDay;
+                                      _textEditingController.text =
+                                          DateFormat.yMMMMd('en_US')
+                                              .format(_selectedDay!)
+                                              .toString();
+                                      providerData.updateScheduleLoadingDate(
+                                          _textEditingController.text);
+                                      Navigator.of(context).pop();
+                                    });
+                                  }
+                                },
+                                eventLoader: (day) {
+                                  return (isSameDay(DateTime.now(), day))
+                                      ? [DateTime.now()]
+                                      : [];
+                                },
+                                calendarFormat: _calendarFormat,
+                                focusedDay: _focusedDay,
+                                firstDay: DateTime.now(),
+                                lastDay: DateTime.utc(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day + 5),
+                                headerStyle: HeaderStyle(
+                                  headerPadding: EdgeInsets.only(
+                                      left: 20, right: 20, top: 10, bottom: 10),
+                                  leftChevronIcon: Image.asset(
+                                      'assets/images/calendar_previous.png'),
+                                  rightChevronIcon: Image.asset(
+                                      'assets/images/calendar_next.png'),
+                                  formatButtonVisible: false,
+                                  titleTextStyle: TextStyle(
+                                      color: Colors.black,
                                       fontFamily: 'Montserrat',
-                                      color: Colors.white),
-                                  defaultTextStyle:
-                                      TextStyle(fontFamily: 'Montserrat'),
-                                  weekendTextStyle:
-                                      TextStyle(fontFamily: 'Montserrat'),
-                                  withinRangeTextStyle:
-                                      TextStyle(color: Colors.black),
-                                  disabledTextStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Montserrat'),
-                                  outsideTextStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Montserrat'),
-                                  isTodayHighlighted: false,
-                                  markerSize: 4,
-                                  markerDecoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: (isSameDay(
-                                              _selectedDay, DateTime.now()))
-                                          ? Colors.white
-                                          : truckGreen)),
-                            )),
-                      );
-                    },
-                  );
-                },
-              );
-            });
+                                      fontSize: 20),
+                                  titleCentered: true,
+                                ),
+                                calendarStyle: CalendarStyle(
+                                    markersAutoAligned: false,
+                                    markersAlignment: Alignment.topRight,
+                                    markerMargin: EdgeInsets.all(10),
+                                    markersMaxCount: 1,
+                                    canMarkersOverflow: false,
+                                    outsideDecoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    weekendDecoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    disabledDecoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    defaultDecoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    selectedDecoration: BoxDecoration(
+                                      color: truckGreen,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    selectedTextStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        color: Colors.white),
+                                    defaultTextStyle:
+                                        TextStyle(fontFamily: 'Montserrat'),
+                                    weekendTextStyle:
+                                        TextStyle(fontFamily: 'Montserrat'),
+                                    withinRangeTextStyle:
+                                        TextStyle(color: Colors.black),
+                                    disabledTextStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: 'Montserrat'),
+                                    outsideTextStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: 'Montserrat'),
+                                    isTodayHighlighted: false,
+                                    markerSize: 4,
+                                    markerDecoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (isSameDay(
+                                                _selectedDay, DateTime.now()))
+                                            ? Colors.white
+                                            : truckGreen)),
+                              )),
+                        );
+                      },
+                    );
+                  },
+                );
+              });
+            }
           },
           decoration: InputDecoration(
               border: OutlineInputBorder(
