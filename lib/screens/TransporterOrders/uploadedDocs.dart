@@ -130,8 +130,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[0].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[0].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -174,8 +176,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[1].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[1].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -218,8 +222,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[2].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[2].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -262,8 +268,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[3].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[3].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -510,7 +518,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 150, right: 150, bottom: 10, top: 10),
+                    left: 100, right: 100, bottom: 10, top: 10),
                 child: ClipRRect(
                   child: InkWell(
                     child: Container(

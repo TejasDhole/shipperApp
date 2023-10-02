@@ -44,7 +44,7 @@ class _TrackButtonState extends State<TrackButton> {
 
   @override
   Widget build(BuildContext context) {
-    return (kIsWeb && Responsive.isDesktop(context))
+    return (Responsive.isDesktop(context))
         ? Expanded(
             child: FittedBox(
               fit: BoxFit.scaleDown,
