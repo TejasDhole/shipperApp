@@ -41,6 +41,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   TextEditingController txtCityController = TextEditingController();
   TextEditingController txtStateController = TextEditingController();
   late final FocusNode focus;
+  late final FocusNode focusTextField;
   int selectedItemIndex = -1;
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
@@ -52,10 +53,10 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   void initState() {
     super.initState();
     focus = FocusNode();
+    focusTextField = FocusNode();
+    focusTextField.requestFocus();
     logger = Logger();
     async_method();
-    // getMMIToken();
-    // logger.i("back from mmitoken");
     _initSpeech();
   }
 
@@ -63,6 +64,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
   void dispose() {
     // TODO: implement dispose
     focus.dispose();
+    focusTextField.dispose();
     super.dispose();
   }
 
@@ -234,9 +236,9 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  autofocus: true,
+                  focusNode: focusTextField,
                   controller: controller,
-                  // onChanged: widget.onChanged,
+                  enableInteractiveSelection: false,
                   onChanged: (String value) {
                     setState(() {
                       if (widget.page == "postLoad") {
@@ -300,7 +302,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                     padding: EdgeInsets.symmetric(
                                       vertical: 40,
                                     ),
-                                    child: AddMissionLocationButton(context));
+                                    child: AddMissingLocationButton(context));
                               }
                               return Container(
                                 margin: EdgeInsets.only(top: 10),
@@ -365,7 +367,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                               controller.text.isNotEmpty) &&
                                           (snapshot.data == null ||
                                               snapshot.data.isEmpty)) {
-                                        return AddMissionLocationButton(
+                                        return AddMissingLocationButton(
                                             context);
                                       }
                                       return Container(
@@ -424,15 +426,42 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                         .data[selectedItemIndex]
                                                         .placeStateName);
                                               }
+                                            } else if (value.logicalKey ==
+                                                    LogicalKeyboardKey
+                                                        .backspace &&
+                                                value is RawKeyUpEvent) {
+                                              if (controller.text.isNotEmpty) {
+                                                String txt =
+                                                    controller.text.toString();
+                                                txt = txt.substring(
+                                                    0, txt.length - 1);
+                                                controller.text = txt;
+                                                setState(() {
+                                                  locationCard = fillCityGoogle(
+                                                      controller.text,
+                                                      currentPosition);
+                                                });
+                                              }
+                                            } else if (value.logicalKey.keyId >=
+                                                    32 &&
+                                                value.logicalKey.keyId <= 126 &&
+                                                value is RawKeyUpEvent) {
+                                              String txt =
+                                                  controller.text.toString();
+                                              txt += value.data.keyLabel
+                                                  .toString();
+                                              controller.text = txt;
+                                              setState(() {
+                                                locationCard = fillCityGoogle(
+                                                    controller.text,
+                                                    currentPosition);
+                                              });
                                             }
                                           },
                                           child: ListView.separated(
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
                                             reverse: false,
-                                            // padding: EdgeInsets.symmetric(
-                                            //   horizontal: space_2,
-                                            // ),
                                             itemCount: snapshot.data.length,
                                             itemBuilder: (context, index) =>
                                                 AutoFillDataDisplayCard(
@@ -481,7 +510,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     );
   }
 
-  Widget AddMissionLocationButton(context) {
+  Widget AddMissingLocationButton(context) {
     return Container(
       child: Center(
         child: TextButton(
