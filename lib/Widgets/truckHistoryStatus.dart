@@ -200,13 +200,6 @@ class _TruckStatusState extends State<TruckStatus> {
                             ),
                           ),
                         ]),
-                        /*     DottedLine(
-                          direction: Axis.vertical,
-                          lineLength: 108,
-                          lineThickness: 1.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.black,
-                        )*/
                         Container(
                             height: 76,
                             width: 2,
@@ -220,7 +213,6 @@ class _TruckStatusState extends State<TruckStatus> {
                           children: [
                             Container(
                                 width: 300,
-                                // MediaQuery.of(context).size.width / 4 - 74,
                                 margin: EdgeInsets.fromLTRB(
                                     space_3, 0, space_1, space_2),
                                 alignment: Alignment.centerLeft,

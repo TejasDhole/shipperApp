@@ -1,9 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/spaces.dart';
@@ -28,7 +28,6 @@ class _uploadedDocsState extends State<uploadedDocs> {
   bool i2 = false;
   bool i3 = false;
   bool i4 = false;
-  bool progressBar = false;
   bool downloaded = false;
   bool downloading = false;
   PreviewUploadedImage previewUploadedImage = Get.put(PreviewUploadedImage());
@@ -78,12 +77,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
   }
 
   void _saveNetworkImage(String path) async {
-    var response = await Dio()
-        .get(path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: "Liveasy");
+    await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
   }
 
   @override
@@ -525,7 +519,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       color: const Color(0xFF09B778),
                       height: space_10,
                       child: Center(
-                        child: progressBar
+                        child: downloading
                             ? const CircularProgressIndicator(
                                 color: white,
                               )
@@ -541,12 +535,12 @@ class _uploadedDocsState extends State<uploadedDocs> {
                     ),
                     onTapUp: (value) {
                       setState(() {
-                        progressBar = true;
                         downloading = true;
                       });
                     },
                     onTap: () async {
-                      _saveNetworkImage(widget.docLinks[i].toString());
+                      _saveNetworkImage(
+                          "$proxyServer${widget.docLinks[i].toString()}");
                     },
                   ),
                 ),
