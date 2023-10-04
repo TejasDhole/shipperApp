@@ -344,13 +344,10 @@ class _docInputEWBillState extends State<docInputEWBill> {
                         child: ElevatedButton(
                             onPressed: () {
                               int i = previewUploadedImage.index.value;
-                              if (previewUploadedImage.index <
-                                  docLinks.length) {
-                                previewUploadedImage.updatePreviewImage(
-                                    docLinks[i++].toString());
-
-                                previewUploadedImage.updateIndex(i++);
-                              }
+                              i = (i + 1) % docLinks.length;
+                              previewUploadedImage
+                                  .updatePreviewImage(docLinks[i].toString());
+                              previewUploadedImage.updateIndex(i);
                             },
                             child: Text("Next"),
                             style: ElevatedButton.styleFrom(

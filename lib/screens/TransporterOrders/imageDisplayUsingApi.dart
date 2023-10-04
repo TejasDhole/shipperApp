@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
@@ -27,13 +29,16 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
   bool downloading = false;
 
   void _saveNetworkImage(String path) async {
-    var response = await Dio()
-        .get(path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: "Liveasy");
-
+    if (kIsWeb) {
+      await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
+    } else {
+      var response = await Dio()
+          .get(path, options: Options(responseType: ResponseType.bytes));
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 60,
+          name: "Liveasy");
+    }
     setState(() {
       downloading = false;
       downloaded = true;
