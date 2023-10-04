@@ -114,7 +114,7 @@ class _docInputLrState extends State<docInputLr> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: screenHeight * 0.25,
+        height: screenHeight * 0.3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

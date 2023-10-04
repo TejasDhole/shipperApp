@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -116,8 +117,7 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                       constraints: BoxConstraints(minHeight: 100),
                       color: whiteBackgroundColor,
                       child: Image.network(
-                        widget.docLink.toString(),
-                      ),
+                          "$proxyServer${widget.docLink.toString()}"),
                     ),
                   ],
                 ),
