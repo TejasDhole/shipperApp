@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/Widgets/trackScreenDetailsMobileWidget.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
@@ -26,7 +27,7 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class TrackScreen extends StatefulWidget {
+class TrackScreenMobile extends StatefulWidget {
   final GpsDataModel gpsData;
   final String? truckNo;
   final int? deviceId;
@@ -35,7 +36,7 @@ class TrackScreen extends StatefulWidget {
   bool active;
   bool? online;
 
-  TrackScreen(
+  TrackScreenMobile(
       {required this.gpsData,
       required this.truckNo,
       required this.deviceId,
@@ -45,10 +46,11 @@ class TrackScreen extends StatefulWidget {
       required this.active});
 
   @override
-  _TrackScreenState createState() => _TrackScreenState();
+  _TrackScreenMobileState createState() => _TrackScreenMobileState();
 }
 
-class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
+class _TrackScreenMobileState extends State<TrackScreenMobile>
+    with WidgetsBindingObserver {
   final Set<Polyline> _polyline = {};
   Map<PolylineId, Polyline> polylines = {};
   late GoogleMapController _googleMapController;
@@ -133,8 +135,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   var lockState;
   var col1 = const Color(0xff878787);
   var col2 = const Color(0xffFF5C00);
-
-  //variable for show running / stop status
   var totalStatus = "";
 
   bool loading_map = false;
@@ -152,21 +152,17 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     loading = false;
     to = now.toIso8601String();
     newGPSData.add(widget.gpsData);
-
     logger.i("newGPSData");
     print("${newGPSData}");
     try {
       initfunction();
-
       initfunction2();
       EasyLoading.dismiss();
       lastlatLngMarker =
           LatLng(newGPSData.last.latitude, newGPSData.last.longitude);
       camPosition = CameraPosition(target: lastlatLngMarker, zoom: zoom);
-      //To make the truck look running and for the speed to change in every 10 seconds
       timer = Timer.periodic(Duration(minutes: 0, seconds: 10),
           (Timer t) => onActivityExecuted2());
-      //To update the trackscreen fully
       timer2 = Timer.periodic(
           Duration(minutes: 45, seconds: 0), (Timer t) => onActivityExecuted());
     } catch (e) {
@@ -208,11 +204,8 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   getAddress(var gpsData) async {
     var address = await getStoppageAddressLatLong(
         gpsData.last.latitude, gpsData.last.longitude);
-
     return address;
   }
-
-  //function is called every five minute to get updated history
 
   getTruckHistoryAfter() {
     var logger = Logger();
@@ -227,6 +220,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   // function is called to make the truck look running
   getTruckHistoryForSpeed() {
     var logger = Logger();
+
     polylineCoordinates =
         getPoylineCoordinates(gpsDataHistory, polylineCoordinates);
     polylineCoordinates
@@ -247,7 +241,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     }
     averagelat = averagelat / gpsStoppage.length;
     averagelon = averagelon / gpsStoppage.length;
-
     futureGroup.close();
     await futureGroup.future;
   }
@@ -257,7 +250,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     var stoppageTime;
     var stoplatlong;
     var duration;
-
     LatLng? latlong;
     latlong = LatLng(gpsStoppage.latitude, gpsStoppage.longitude);
     stoplatlong = latlong;
@@ -290,7 +282,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         },
       ));
     });
-    // }
   }
 
   _addPolyLine() {
@@ -369,9 +360,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       totalStatus = getLastUpdate(
           gpsStoppageHistory, now.toIso8601String(), widget.active);
     });
-
     addstops(gpsStoppageHistory);
-
     getTruckHistory();
     iconthenmarker();
     zoomin();
@@ -389,8 +378,10 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     });
   }
 
+  //called when clicked on custom button
   void initfunctionAfterChange() async {
     logger.i("It is in init function after change function");
+
     var f = getDataHistory(newGPSData.last.deviceId, from, to);
     var s = getStoppageHistory(newGPSData.last.deviceId, from, to);
     var newGpsDataHistory = await f;
@@ -411,7 +402,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   }
 
   // function called every 45 minuts to get updated
-
   void iconthenmarker() {
     logger.i("in Icon maker function");
     BitmapDescriptor.fromAssetImage(
@@ -431,6 +421,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     to = now.toIso8601String();
     customMarkers = [];
     polylines = {};
+
     initfunctionAfterChange();
     getTruckHistoryAfter();
     iconthenmarker();
@@ -531,7 +522,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
         });
         break;
     }
-
     setState(() {
       loading = false;
       istDate1 = new DateFormat("yyyy-MM-dd hh:mm:ss")
@@ -540,8 +530,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
       istDate2 = new DateFormat("yyyy-MM-dd hh:mm:ss")
           .parse(endTime)
           .subtract(const Duration(hours: 5, minutes: 30));
-      // print(
-      //     "selected date 1 ${istDate1.toIso8601String()} and ${istDate2.toIso8601String()}");
     });
     EasyLoading.instance
       ..indicatorType = EasyLoadingIndicatorType.ring
@@ -554,7 +542,6 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
     EasyLoading.show(
       status: "Loading...",
     );
-
     //Run all APIs using new Date Range
     customMarkers = [];
     from = istDate1.toIso8601String();
@@ -601,13 +588,13 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
           },
           child: Stack(
             children: <Widget>[
-              // Mapp
               Positioned(
-                right: 0,
-                top: space_13,
+                left: 0,
+                top: -250,
+                bottom: 0,
                 child: Container(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    height: MediaQuery.of(context).size.height - space_13,
+                    width: MediaQuery.of(context).size.width,
+                    height: height,
                     child: Stack(children: <Widget>[
                       loading_map && loadmap2 && loadmap3 ||
                               !(widget.online!) &&
@@ -689,10 +676,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                         width: 300,
                         offset: 0,
                       ),
-                      // Map Button
                       Positioned(
-                        left: 20,
-                        top: 20,
+                        left: 10,
+                        top: 325,
                         child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -709,10 +695,11 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                       borderRadius:
                                           const BorderRadius.horizontal(
                                               left: Radius.circular(5)),
-                                      boxShadow: const [
+                                      boxShadow: [
                                         BoxShadow(
-                                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                                          offset: Offset(
+                                          color: const Color.fromRGBO(
+                                              0, 0, 0, 0.25),
+                                          offset: const Offset(
                                             0,
                                             4,
                                           ),
@@ -758,10 +745,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                               ],
                             )),
                       ),
-                      // Zoom In Button
                       Positioned(
                         right: 10,
-                        bottom: 100,
+                        bottom: height / 2 + 90,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -787,10 +773,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // Zoom out Button
                       Positioned(
                         right: 10,
-                        bottom: 50,
+                        bottom: height / 2 + 40,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -798,7 +783,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                             child: const Icon(Icons.zoom_out,
-                                size: 22, color: darkBlueColor),
+                                size: 22, color: Color(0xFF152968)),
                             onPressed: () {
                               setState(() {
                                 this.zoom = this.zoom - 0.5;
@@ -816,10 +801,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // stack button
                       Positioned(
                         right: 10,
-                        bottom: 150,
+                        bottom: height / 2 + 150,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -867,9 +851,81 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
+                      Positioned(
+                        right: 10,
+                        top: 325,
+                        child: Container(
+                          height: 40,
+                          width: 110,
+                          alignment: Alignment.centerRight,
+                          decoration: const BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.19),
+                                  offset: Offset(
+                                    0,
+                                    5.33,
+                                  ),
+                                  blurRadius: 9.33,
+                                  spreadRadius: 0.0,
+                                ),
+                              ]),
+                          child: DropdownButton(
+                            underline: Container(),
+                            hint: const Padding(
+                              padding: EdgeInsets.only(right: 12.0),
+                              child: Text('24 hours'),
+                            ),
+                            icon: Container(
+                              width: 36,
+                              child: Row(children: [
+                                Expanded(
+                                  child: Container(
+                                    width: 36,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      color: darkBlueColor,
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(8),
+                                        bottomRight: Radius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Icon(Icons.keyboard_arrow_down,
+                                        size: 15, color: white),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            style: TextStyle(
+                                color: shareImageTextColor,
+                                fontSize: size_6,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400),
+                            // Not necessary for Option 1
+                            value: _selectedLocation,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedLocation = newValue.toString();
+                              });
+                              customSelection(_selectedLocation);
+                            },
+                            items: _locations.map((location) {
+                              return DropdownMenuItem(
+                                child: Container(
+                                    //  width: 74,
+                                    child: new Text(location.tr)),
+                                value: location,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ])),
               ),
-              //Header
               Positioned(
                   top: 0,
                   child: Container(
@@ -880,89 +936,39 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           width: MediaQuery.of(context).size.width,
                           height: space_13,
                           color: white,
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    space_3, 10, space_3, 0),
+                                margin:
+                                    EdgeInsets.fromLTRB(space_3, 0, space_3, 0),
                                 child: Header(
                                     reset: false,
                                     text: "${widget.truckNo} ",
                                     backButton: true),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: DropdownButton(
-                                  underline: Container(),
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            bottomLeft: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: const Text('24 hours')),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 45),
+                                child: Container(
+                                  child: Text(
+                                    "( $totalStatus )",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  icon: Container(
-                                    width: 36,
-                                    child: Row(children: [
-                                      Expanded(
-                                        child: Container(
-                                          width: 36,
-                                          height: 40,
-                                          decoration: const BoxDecoration(
-                                            color: darkBlueColor,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(8),
-                                              bottomRight: Radius.circular(8),
-                                            ),
-                                          ),
-                                          child: const Icon(
-                                              Icons.keyboard_arrow_down,
-                                              size: 15,
-                                              color: white),
-                                        ),
-                                      ),
-                                    ]),
-                                  ),
-                                  style: TextStyle(
-                                      color: shareImageTextColor,
-                                      fontSize: size_6,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400),
-                                  // Not necessary for Option 1
-                                  value: _selectedLocation,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _selectedLocation = newValue.toString();
-                                    });
-                                    customSelection(_selectedLocation);
-                                  },
-                                  items: _locations.map((location) {
-                                    return DropdownMenuItem(
-                                      child: Container(
-                                          child: new Text(location.tr)),
-                                      value: location,
-                                    );
-                                  }).toList(),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ]))),
-              //Details
               AnimatedPositioned(
                 curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 200),
-                top: space_13,
+                duration: Duration(milliseconds: 200),
                 left: 0,
-                child: TrackScreenDetails(
+                bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
+                child: TrackScreenDetailsMobile(
                   finalDistance: widget.totalDistance,
                   gpsData: newGPSData,
                   dateRange: selectedDate,

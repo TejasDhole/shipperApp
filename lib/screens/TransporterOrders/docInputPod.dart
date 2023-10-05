@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
@@ -111,10 +112,11 @@ class _docInputPodState extends State<docInputPod> {
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: screenHeight * 0.25,
+        height: screenHeight * 0.3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -143,9 +145,9 @@ class _docInputPodState extends State<docInputPod> {
                             height: 320,
                             width: 730,
                             child: Obx(() {
-                              return Image.network(
-                                previewUploadedImage.previewImage.toString(),
-                              );
+                              return Image.network(Uri.encodeFull(
+                                "$proxyServer${previewUploadedImage.previewImage.toString()}",
+                              ));
                             }),
                           )
                         : Container(),
@@ -339,13 +341,10 @@ class _docInputPodState extends State<docInputPod> {
                         child: ElevatedButton(
                             onPressed: () {
                               int i = previewUploadedImage.index.value;
-                              if (previewUploadedImage.index <
-                                  docLinks.length) {
-                                previewUploadedImage.updatePreviewImage(
-                                    docLinks[i++].toString());
-
-                                previewUploadedImage.updateIndex(i++);
-                              }
+                              i = (i + 1) % docLinks.length;
+                              previewUploadedImage
+                                  .updatePreviewImage(docLinks[i].toString());
+                              previewUploadedImage.updateIndex(i);
                             },
                             child: Text("Next"),
                             style: ElevatedButton.styleFrom(

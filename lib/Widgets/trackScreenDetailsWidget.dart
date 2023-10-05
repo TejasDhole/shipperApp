@@ -14,20 +14,15 @@ import 'package:url_launcher/url_launcher.dart';
 import '../screens/nearbyPlacesScreen.dart';
 
 class TrackScreenDetails extends StatefulWidget {
-  // final String? driverNum;
   final String? TruckNo;
-//  final String? driverName;
   DateTimeRange? dateRange;
   var gpsData;
-  // var gpsTruckRoute;
   var gpsDataHistory;
   var gpsStoppageHistory;
   var stops;
   var totalRunningTime;
   var totalStoppedTime;
   var deviceId;
-  //var truckId;
-  // var totalDistance;
   var imei;
   var recentStops;
   var finalDistance;
@@ -35,19 +30,14 @@ class TrackScreenDetails extends StatefulWidget {
   TrackScreenDetails({
     required this.finalDistance,
     required this.gpsData,
-    // required this.gpsTruckRoute,
     required this.gpsDataHistory,
     required this.gpsStoppageHistory,
-    //  required this.driverNum,
     required this.dateRange,
     required this.TruckNo,
-    //  required this.driverName,
     required this.stops,
     required this.totalRunningTime,
     required this.totalStoppedTime,
     required this.deviceId,
-    //required this.truckId,
-    // required this.totalDistance,
     this.imei,
     this.recentStops,
   });
@@ -98,10 +88,8 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
     setState(() {
       finalDistance = widget.finalDistance;
       gpsStoppageHistory = widget.gpsStoppageHistory;
-
       recentStops = widget.recentStops;
       gpsData = widget.gpsData;
-      // gpsTruckRoute = widget.gpsTruckRoute;
       gpsDataHistory = widget.gpsDataHistory;
       gpsStoppageHistory = widget.gpsStoppageHistory;
       stops = widget.stops;
@@ -109,16 +97,11 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
       totalStoppedTime = widget.totalStoppedTime;
       latitude = gpsData.last.latitude;
       longitude = gpsData.last.longitude;
-
-      //  status = getStatus(newGPSData, gpsStoppageHistory);
-      //  gpsTruckRoute = getStopList(gpsTruckRoute, yesterday, now);
     });
   }
 
   initFunction() {
     distanceCalculation(yesterday.toIso8601String(), now.toIso8601String());
-    // distancecalculation(widget.dateRange!.start.toIso8601String(),
-    //     widget.dateRange!.end.toIso8601String());
   }
 
   getValue() {
@@ -429,7 +412,6 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
         //Contains Bottom Buttons
         Container(
             alignment: Alignment.center,
-            // padding: EdgeInsets.only(left: 15, right: 15),
             margin: EdgeInsets.fromLTRB(0, space_1, 0, space_1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -473,7 +455,6 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                 Column(children: [
                   DynamicLinkService(
                     deviceId: widget.deviceId,
-                    // truckId: widget.truckId,
                     truckNo: widget.TruckNo,
                   ),
                   const SizedBox(
@@ -504,7 +485,6 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                       foregroundColor: bidBackground,
                       child: const Icon(Icons.play_circle_outline, size: 30),
                       onPressed: () {
-                        //Checking value of gpsDataHistory, if it's null then waiting until The value not get
                         getValue();
                         if (waiting) {
                           Get.to(
@@ -524,11 +504,9 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                               address: gpsData.last.address,
                               gpsTruckHistory: gpsDataHistory,
                               truckNo: widget.TruckNo,
-                              //    routeHistory: gpsTruckRoute,
                               gpsData: gpsData,
                               dateRange: widget.dateRange.toString(),
                               gpsStoppageHistory: gpsStoppageHistory,
-                              //   totalDistance: totalDistance,
                               totalRunningTime: totalRunningTime,
                               totalStoppedTime: totalStoppedTime,
                             ));
@@ -543,11 +521,9 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                             address: gpsData.last.address,
                             gpsTruckHistory: gpsDataHistory,
                             truckNo: widget.TruckNo,
-                            //    routeHistory: gpsTruckRoute,
                             gpsData: gpsData,
                             dateRange: widget.dateRange.toString(),
                             gpsStoppageHistory: gpsStoppageHistory,
-                            //   totalDistance: totalDistance,
                             totalRunningTime: totalRunningTime,
                             totalStoppedTime: totalStoppedTime,
                           ));
@@ -585,7 +561,6 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                       onPressed: () {
                         Get.to(TruckHistoryScreen(
                           truckNo: widget.TruckNo,
-                          //   gpsTruckRoute: widget.gpsTruckRoute,
                           dateRange: widget.dateRange.toString(),
                           deviceId: widget.deviceId,
                           selectedLocation: selectedLocation,
@@ -594,8 +569,6 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
                           totalDistance: totalDistance,
                           gpsDataHistory: widget.gpsDataHistory,
                           gpsStoppageHistory: widget.gpsStoppageHistory,
-                          //     latitude: latitude,
-                          //      longitude: longitude,
                         ));
                       },
                     ),
@@ -618,57 +591,3 @@ class _TrackScreenDetailsState extends State<TrackScreenDetails> {
     );
   }
 }
-
-//Ignition
-// Container(
-//                               margin: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-//                               child: Row(
-//                                   mainAxisAlignment: MainAxisAlignment.start,
-//                                   //  textDirection:
-//                                   crossAxisAlignment: CrossAxisAlignment.center,
-//                                   children: [
-//                                     Image.asset(
-//                                       'assets/icons/circle-outline-with-a-central-dot.png',
-//                                       color: bidBackground,
-//                                       width: 11,
-//                                       height: 11,
-//                                     ),
-//                                     const SizedBox(width: 10),
-//                                     Container(
-//                                       alignment: Alignment.centerLeft,
-//                                       child: Text('ignition'.tr,
-//                                           softWrap: true,
-//                                           style: TextStyle(
-//                                               color: black,
-//                                               fontSize: 12,
-//                                               fontStyle: FontStyle.normal,
-//                                               fontWeight: regularWeight)),
-//                                     ),
-//                                     (gpsData.last.ignition)
-//                                         ? Container(
-//                                             alignment: Alignment.centerLeft,
-//                                             //    width: 217,
-//                                             child: Text('on'.tr,
-//                                                 softWrap: true,
-//                                                 style: const TextStyle(
-//                                                     color: black,
-//                                                     fontSize: 12,
-//                                                     fontStyle: FontStyle.normal,
-//                                                     fontWeight:
-//                                                         FontWeight.bold)),
-//                                           )
-//                                         : Container(
-//                                             alignment: Alignment.centerLeft,
-//                                             //    width: 217,
-//                                             child: Text("off".tr,
-//                                                 softWrap: true,
-//                                                 style: const TextStyle(
-//                                                     color: black,
-//                                                     fontSize: 12,
-//                                                     fontStyle: FontStyle.normal,
-//                                                     fontWeight:
-//                                                         FontWeight.bold)),
-//                                           ),
-//                                     const SizedBox(),
-//                                   ]),
-//                             ),

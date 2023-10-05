@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'dart:ui' as ui;
 import 'package:custom_info_window/custom_info_window.dart';
-// import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -12,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/responsive.dart';
 import '../../Widgets/buttons/backButtonWidget.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
@@ -70,7 +70,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
   late LatLng lastlatLngMarker = LatLng(gpsData.last.lat, gpsData.last.lng);
   late CameraPosition camPosition;
   Completer<GoogleMapController> _controller = Completer();
-  // String googleAPiKey = FlutterConfig.get("mapKey");
   String googleAPiKey = dotenv.get('mapKey');
 
   late BitmapDescriptor pinLocationIconTruck;
@@ -141,14 +140,10 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
       });
       value = routeTime.length.toDouble();
     }
-    // stream.forEach((value) {
-    //   streamedData.add(value);
-    // });
   }
 
   initfunction() {
     var logger = Logger();
-    // logger.i("in initState 1 function");
     setState(() {
       gpsData = widget.gpsData;
       gpsTruckHistory = widget.gpsTruckHistory;
@@ -156,8 +151,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
       dateRange = widget.dateRange;
       totalRunningTime = widget.totalRunningTime;
       totalStoppedTime = widget.totalStoppedTime;
-      // fromDate = widget.fromDate;
-      // toDate = widget.toDate;
     });
 
     addstops(gpsStoppageHistory);
@@ -300,8 +293,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
                   setState(() {
                     print("value ${value.toString()}");
                     pinLocationIconTruck = value;
-                    // }),
-                    // setState(() {
                     markers[kMarkerId] = Marker(
                         markerId: kMarkerId,
                         position: latLng,
@@ -336,7 +327,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
 
   _getPolyline(List<LatLng> polylineCoordinates2) {
     var logger = Logger();
-    // logger.i("in polyline function 2");
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,
@@ -344,8 +334,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
       points: polylineCoordinates2,
       width: 2,
     );
-
-    //
     setState(() {
       polylines[id] = polyline;
     });
@@ -369,17 +357,6 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
     });
   }
 
-  loadData() {
-    // Locations.forEach((element) {
-    //   value = Locations.indexOf(element).toDouble();
-    //   sleep(Duration(seconds: 1));
-    // });
-    // streamedData.toList().forEach((element) {
-    //
-    //   newLocationUpdate(element);
-    // });
-  }
-
   void dispose() {
     logger.i("Activity is disposed");
     super.dispose();
@@ -390,631 +367,676 @@ class _PlayRouteHistoryState extends State<PlayRouteHistory>
     double height = MediaQuery.of(context).size.height;
     double threshold = 100;
 
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: white,
-          body: GestureDetector(
-            onTap: () {
-              setState(() {
-                showBottomMenu = !showBottomMenu;
-              });
-            },
-            onPanEnd: (details) {
-              if (details.velocity.pixelsPerSecond.dy > threshold) {
-                this.setState(() {
-                  showBottomMenu = false;
-                });
-              } else if (details.velocity.pixelsPerSecond.dy < -threshold) {
-                this.setState(() {
-                  showBottomMenu = true;
-                });
-              }
-            },
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  right: 0,
-                  top: space_13,
-                  child: Container(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      height: MediaQuery.of(context).size.height - space_13,
-                      child: Stack(children: <Widget>[
-                        Animarker(
-                          curve: Curves.easeIn,
-                          angleThreshold: 30,
-                          zoom: 11,
-                          useRotation: true,
-                          duration: Duration(milliseconds: 500),
-                          mapId: controller.future
-                              .then<int>((value) => value.mapId),
-                          //Grab Google Map Id
-                          markers: markers.values.toSet(),
-                          child: GoogleMap(
-                            markers: customMarkers.toSet(),
-                            polylines: Set.from(polylines.values),
-                            myLocationButtonEnabled: true,
-                            zoomControlsEnabled: false,
-                            initialCameraPosition: camPosition,
-                            compassEnabled: true,
-                            mapType: maptype,
-                            onMapCreated: (gController) async {
-                              subscription = stream.listen(
-                                (data) => {
-                                  // print("data"),
-                                  newLocationUpdate(data),
-                                  value = Locations.indexOf(data).toDouble(),
-                                },
-                              );
-                              controller.complete(gController);
-                              _customInfoWindowController.googleMapController =
-                                  gController;
-                            },
-                            gestureRecognizers: <
-                                Factory<OneSequenceGestureRecognizer>>{
-                              Factory<OneSequenceGestureRecognizer>(
-                                () => EagerGestureRecognizer(),
-                              ),
-                            },
-                          ),
-                        ),
-                        // Map Button
-                        Positioned(
-                          left: 20,
-                          top: 20,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 0.25,
+    return Responsive.isMobile(context)
+        ? SafeArea(
+            child: Scaffold(
+                backgroundColor: white,
+                body: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showBottomMenu = !showBottomMenu;
+                    });
+                  },
+                  onPanEnd: (details) {
+                    if (details.velocity.pixelsPerSecond.dy > threshold) {
+                      this.setState(() {
+                        showBottomMenu = false;
+                      });
+                    } else if (details.velocity.pixelsPerSecond.dy <
+                        -threshold) {
+                      this.setState(() {
+                        showBottomMenu = true;
+                      });
+                    }
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        left: 0,
+                        top: -75,
+                        bottom: 0,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Stack(children: <Widget>[
+                              Animarker(
+                                curve: Curves.easeIn,
+                                angleThreshold: 30,
+                                zoom: 11,
+                                useRotation: true,
+                                duration: Duration(milliseconds: 500),
+                                mapId: controller.future
+                                    .then<int>((value) => value.mapId),
+                                //Grab Google Map Id
+                                markers: markers.values.toSet(),
+                                child: GoogleMap(
+                                  markers: customMarkers.toSet(),
+                                  polylines: Set.from(polylines.values),
+                                  myLocationButtonEnabled: true,
+                                  zoomControlsEnabled: false,
+                                  initialCameraPosition: camPosition,
+                                  compassEnabled: true,
+                                  mapType: MapType.normal,
+                                  onMapCreated: (gController) async {
+                                    subscription = stream.listen(
+                                      (data) => {
+                                        newLocationUpdate(data),
+                                        value =
+                                            Locations.indexOf(data).toDouble(),
+                                      },
+                                    );
+                                    controller.complete(gController);
+                                    _customInfoWindowController
+                                        .googleMapController = gController;
+                                  },
+                                  gestureRecognizers: <Factory<
+                                      OneSequenceGestureRecognizer>>{
+                                    Factory<OneSequenceGestureRecognizer>(
+                                      () => EagerGestureRecognizer(),
+                                    ),
+                                  },
                                 ),
                               ),
-                              //  height: 40,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        color: col2,
-                                        borderRadius:
-                                            const BorderRadius.horizontal(
-                                                left: Radius.circular(5)),
-                                        boxShadow: [
-                                          const BoxShadow(
-                                            color:
-                                                Color.fromRGBO(0, 0, 0, 0.25),
-                                            offset: Offset(
-                                              0,
-                                              4,
+                            ])),
+                      ),
+
+                      //top bar
+                      AnimatedPositioned(
+                          curve: Curves.easeInOut,
+                          duration: Duration(milliseconds: 200),
+                          left: 0,
+                          child: Container(
+                              color: Color.fromRGBO(21, 41, 104, 1),
+                              height: 120,
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            FloatingActionButton(
+                                              heroTag: "btn1",
+                                              mini: true,
+                                              elevation: 0,
+                                              backgroundColor:
+                                                  const Color.fromRGBO(
+                                                      21, 41, 104, 1),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: const Icon(
+                                                  Icons
+                                                      .arrow_back_ios_new_rounded,
+                                                  color: Colors.white),
                                             ),
-                                            blurRadius: 4,
-                                            spreadRadius: 0.0,
-                                          ),
-                                        ]),
-                                    child: TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            this.maptype = MapType.normal;
-                                            col1 = const Color(0xff878787);
-                                            col2 = const Color(0xffFF5C00);
-                                          });
-                                        },
-                                        child: const Text(
-                                          'Map',
-                                          style: TextStyle(
+                                            Text(
+                                              "${widget.truckNo}",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 22,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        FloatingActionButton(
+                                          heroTag: "btn2",
+                                          elevation: 0,
+                                          backgroundColor:
+                                              Color.fromRGBO(21, 41, 104, 1),
+                                          child: Icon(
+                                            Icons.double_arrow_rounded,
                                             color: Colors.white,
                                           ),
-                                        )),
-                                  ),
-                                  Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: col1,
-                                      borderRadius:
-                                          const BorderRadius.horizontal(
-                                              right: Radius.circular(5)),
-                                      //  border: Border.all(color: Colors.black),
+                                          mini: true,
+                                          onPressed: () {},
+                                        )
+                                      ],
                                     ),
-                                    child: TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            this.maptype = MapType.satellite;
-                                            col2 = const Color(0xff878787);
-                                            col1 = const Color(0xffFF5C00);
-                                          });
-                                        },
-                                        child: const Text('Satellite',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ))),
-                                  )
-                                ],
-                              )
-                              /*        FloatingActionButton(
-                            heroTag: "btn1",
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            child: const Icon(Icons.my_location,
-                                size: 22, color: Color(0xFF152968)),
-                            onPressed: () {
-                              setState(() {
-                                this.maptype = (this.maptype == MapType.normal)
-                                    ? MapType.satellite
-                                    : MapType.normal;
-                              });
-                            },
-                          ),
-                            */
-                              ),
-                        ),
-                        // Zoom In Button
-                        Positioned(
-                          right: 10,
-                          bottom: 100,
-                          child: SizedBox(
-                            height: 40,
-                            child: FloatingActionButton(
-                              heroTag: "btn2",
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
-                              child: const Icon(Icons.zoom_in,
-                                  size: 22, color: Color(0xFF152968)),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                        // Zoom out Button
-                        Positioned(
-                          right: 10,
-                          bottom: 50,
-                          child: SizedBox(
-                            height: 40,
-                            child: FloatingActionButton(
-                              heroTag: "btn3",
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
-                              child: const Icon(Icons.zoom_out,
-                                  size: 22, color: Color(0xFF152968)),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                        // stack button
-                        Positioned(
-                          right: 10,
-                          bottom: 150,
-                          child: SizedBox(
-                            height: 40,
-                            child: FloatingActionButton(
-                              heroTag: "btn4",
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
-                              child: Container(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(
-                                  'assets/icons/layers.png',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              )),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ])),
-                ),
-
-                // Positioned(
-                //     top: 20,
-                //     left: 20,
-                //     child: FloatingActionButton(
-                //       backgroundColor: Colors.white,
-                //       onPressed: () => Navigator.pop(context),
-                //       child: Icon(Icons.arrow_back_ios_new_rounded,
-                //           color: Colors.black),
-                //     )),
-                // Positioned(
-                //   top: 0,
-                //   child: Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     color: white,
-                //     child: Column(
-                //         // mainAxisAlignment: MainAxisAlignment.start,
-                //         children: [
-                //           Container(
-                //             margin: EdgeInsets.fromLTRB(
-                //                 space_3, space_3, 0, space_3),
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.start,
-                //               children: [
-                //                 Header(
-                //                     reset: false,
-                //                     text: "${widget.truckNo}",
-                //                     backButton: true),
-                //               ],
-                //             ),
-                //           ),
-                //           Container(
-                //               margin: EdgeInsets.fromLTRB(
-                //                   space_9, space_2, 0, space_2),
-                //               child: Row(
-                //                   mainAxisAlignment: MainAxisAlignment.start,
-                //                   children: [
-                //                     Container(
-                //                         child: Column(
-                //                       children: [
-                //                         Row(children: [
-                //                           Image(
-                //                             image: AssetImage(
-                //                                 'assets/icons/distanceCovered.png'),
-                //                             height: 23,
-                //                           ),
-                //                           SizedBox(
-                //                             width: space_1,
-                //                           ),
-                //                           Container(
-                //                             alignment: Alignment.centerLeft,
-                //                             width: 170,
-                //                             child: Column(
-                //                               children: [
-                //                                 Row(
-                //                                   children: [
-                //                                     Text("travelled".tr + " ",
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: liveasyGreen,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                     Text(
-                //                                         "${(gpsData.last.distance / 1000).toStringAsFixed(2)} km",
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: black,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                   ],
-                //                                 ),
-                //                                 Row(
-                //                                   mainAxisAlignment:
-                //                                       MainAxisAlignment.start,
-                //                                   children: [
-                //                                     Text("$totalRunningTime ",
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: grey,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                   ],
-                //                                 )
-                //                               ],
-                //                             ),
-                //                           ),
-                //                         ]),
-                //                         SizedBox(
-                //                           height: space_3,
-                //                         ),
-                //                         Row(children: [
-                //                           Icon(Icons.pause, size: size_11),
-                //                           SizedBox(
-                //                             width: space_1,
-                //                           ),
-                //                           Container(
-                //                             alignment: Alignment.centerLeft,
-                //                             width: 170,
-                //                             child: Column(
-                //                               children: [
-                //                                 Row(
-                //                                   children: [
-                //                                     Text(
-                //                                         "${gpsStoppageHistory.length} ",
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: black,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                     Text("stops".tr,
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: red,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                   ],
-                //                                 ),
-                //                                 Row(
-                //                                   mainAxisAlignment:
-                //                                       MainAxisAlignment.start,
-                //                                   children: [
-                //                                     Text("$totalStoppedTime ",
-                //                                         softWrap: true,
-                //                                         style: TextStyle(
-                //                                             color: grey,
-                //                                             fontSize: size_6,
-                //                                             fontStyle: FontStyle
-                //                                                 .normal,
-                //                                             fontWeight:
-                //                                                 regularWeight)),
-                //                                   ],
-                //                                 )
-                //                               ],
-                //                             ),
-                //                           ),
-                //                         ]),
-                //                       ],
-                //                     )),
-                //                     SizedBox(width: space_1),
-                //                     Container(
-                //                       child: Column(
-                //                         children: [
-                //                           Text(
-                //                               "${(gpsData.last.speed).toStringAsFixed(2)}" +
-                //                                   "km/h".tr,
-                //                               style: TextStyle(
-                //                                   color: liveasyGreen,
-                //                                   fontSize: size_10,
-                //                                   fontStyle: FontStyle.normal,
-                //                                   fontWeight: regularWeight)),
-                //                           Text("status".tr,
-                //                               style: TextStyle(
-                //                                   color: black,
-                //                                   fontSize: size_6,
-                //                                   fontStyle: FontStyle.normal,
-                //                                   fontWeight: regularWeight))
-                //                         ],
-                //                       ),
-                //                     )
-                //                   ])),
-                //           SizedBox(
-                //             height: 8,
-                //           )
-                //         ]),
-                //   ),
-                // ),
-
-                //top bar
-                Positioned(
-                  top: 0,
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                      color: white,
-                      height: space_13,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      space_3, 10, space_3, 0),
-                                  child: Header(
-                                      reset: false,
-                                      // add variable for check status time or device
-                                      text: "${widget.truckNo} ",
-                                      backButton: true),
-                                ),
-                                //dropmenu[NOT Functional]
-                                // Container(
-                                //   margin: const EdgeInsets.fromLTRB(
-                                //       10, 0, 10, 10),
-                                //   child: DropdownButton(
-                                //     underline: Container(),
-                                //     hint: Padding(
-                                //       padding:
-                                //           const EdgeInsets.only(right: 12.0),
-                                //       child: Container(
-                                //           decoration: const BoxDecoration(
-                                //             borderRadius: BorderRadius.only(
-                                //               topLeft: Radius.circular(8),
-                                //               bottomLeft: Radius.circular(8),
-                                //             ),
-                                //           ),
-                                //           child: const Text('24 hours')),
-                                //     ),
-                                //     icon: Container(
-                                //       width: 36,
-                                //       child: Row(children: [
-                                //         Expanded(
-                                //           child: Container(
-                                //             width: 36,
-                                //             height: 40,
-                                //             decoration: const BoxDecoration(
-                                //               color: Color(0xff152968),
-                                //               borderRadius: BorderRadius.only(
-                                //                 topRight: Radius.circular(8),
-                                //                 bottomRight:
-                                //                     Radius.circular(8),
-                                //               ),
-                                //             ),
-                                //             child: const Icon(
-                                //                 Icons.keyboard_arrow_down,
-                                //                 size: 15,
-                                //                 color: white),
-                                //           ),
-                                //         ),
-                                //       ]),
-                                //     ),
-                                //     style: TextStyle(
-                                //         color: const Color(0xff3A3A3A),
-                                //         fontSize: size_6,
-                                //         fontStyle: FontStyle.normal,
-                                //         fontWeight: FontWeight.w400),
-                                //     // Not necessary for Option 1
-                                //     value: _selectedLocation,
-                                //     onChanged: (newValue) {
-                                //       setState(() {
-                                //         _selectedLocation =
-                                //             newValue.toString();
-                                //       });
-                                //       customSelection(_selectedLocation);
-                                //     },
-                                //     items: _locations.map((location) {
-                                //       return DropdownMenuItem(
-                                //         child: Container(
-                                //             //  width: 74,
-                                //             child: new Text(location.tr)),
-                                //         value: location,
-                                //       );
-                                //     }).toList(),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-
-                //bottom bar
-                AnimatedPositioned(
-                  curve: Curves.easeInOut,
-                  duration: Duration(milliseconds: 200),
-                  left: 0,
-                  top: space_13,
-                  // bottom: (showBottomMenu) ? -100 : -(height / 2.2),
-                  child: PlayRouteDetailsWidget(
-                    finalDistance: widget.finalDistance,
-                    totalStop: gpsStoppageHistory.length,
-                    address: widget.address,
-                    dateRange: dateRange,
-                    gpsData: gpsData,
-                    truckNo: widget.truckNo,
-                  ),
-                ),
-
-                //Add sliderbar
-                Positioned(
-                  top: MediaQuery.of(context).size.height / 2,
-                  left: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 3 - 50,
-                    height: 80,
-                    color: backgroundColor,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              top: -20,
-                              left: 10,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [BoxShadow(blurRadius: 5)],
-                                  color: Colors.white,
-                                ),
-                                padding: EdgeInsets.all(3),
-                                child: FloatingActionButton(
-                                  heroTag: "btn3",
-                                  backgroundColor:
-                                      Color.fromRGBO(21, 41, 104, 1),
-                                  mini: true,
-                                  onPressed: () {
-                                    print("-------------------->Pause button");
-                                    print("Paused----------------->$isPaused");
-                                    setState(() {
-                                      if (isPaused) {
-                                        subscription.resume();
-                                      } else {
-                                        subscription.pause();
-                                      }
-                                      isPaused = !isPaused;
-                                    });
-                                    //print(streamedData);
-                                  },
-                                  child: isPaused
-                                      ? Icon(Icons.play_arrow)
-                                      : Icon(Icons.pause),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                                left: 30,
-                                // bottom: 10,
-                                top: 8,
-                                child: Container(
-                                  // color: Colors.green,
-                                  width: MediaQuery.of(context).size.width / 3 -
-                                      70,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: Text(
-                                          "    ${widget.truckNo}",
+                                    Text(
+                                      "Run Time: $totalRunningTime",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Stop Time: $totalStoppedTime",
                                           style: TextStyle(
+                                            color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 12,
                                           ),
                                         ),
-                                      ),
-                                      Slider(
-                                        thumbColor: Colors.green,
-                                        activeColor: Colors.green,
-                                        min: 0,
-                                        max: Locations.length.toDouble(),
-                                        value: value,
-                                        divisions: 20,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            this.value = value;
-                                            print(Locations[value.toInt()]);
-                                          });
-                                          print(value);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            Positioned(
-                                right: -10,
-                                top: -15,
-                                child: FloatingActionButton(
-                                  heroTag: "btn4",
-                                  backgroundColor: Colors.white,
-                                  mini: true,
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                ))
-                          ],
+                                        Text(
+                                          "Total KM: ${widget.finalDistance}",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ))),
+
+                      //bottom bar
+                      AnimatedPositioned(
+                        curve: Curves.easeInOut,
+                        duration: Duration(milliseconds: 200),
+                        left: 0,
+                        bottom: (showBottomMenu) ? -100 : -(height / 2.2),
+                        child: PlayRouteDetailsWidget(
+                          finalDistance: widget.finalDistance,
+                          totalStop: gpsStoppageHistory.length,
+                          address: widget.address,
+                          dateRange: dateRange,
+                          gpsData: gpsData,
+                          truckNo: widget.truckNo,
                         ),
                       ),
-                    ),
+
+                      //Add sliderbar
+                      AnimatedPositioned(
+                          curve: Curves.easeInOut,
+                          duration: Duration(milliseconds: 200),
+                          bottom: (showBottomMenu)
+                              ? (Responsive.isMobile(context) ? 75 : 300)
+                              : (height / 40),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 80,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      top: -20,
+                                      left: 10,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          boxShadow: [BoxShadow(blurRadius: 5)],
+                                          color: Colors.white,
+                                        ),
+                                        padding: EdgeInsets.all(3),
+                                        child: FloatingActionButton(
+                                          heroTag: "btn3",
+                                          backgroundColor:
+                                              Color.fromRGBO(21, 41, 104, 1),
+                                          mini: true,
+                                          onPressed: () {
+                                            print(
+                                                "-------------------->Pause button");
+                                            print(
+                                                "Paused----------------->$isPaused");
+                                            setState(() {
+                                              if (isPaused) {
+                                                subscription.resume();
+                                              } else {
+                                                subscription.pause();
+                                              }
+                                              isPaused = !isPaused;
+                                            });
+                                          },
+                                          child: isPaused
+                                              ? Icon(Icons.play_arrow)
+                                              : Icon(Icons.pause),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        left: 70,
+                                        top: 8,
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .65,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 20),
+                                                child: Text(
+                                                  "${widget.truckNo}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                              Slider(
+                                                thumbColor: Colors.green,
+                                                activeColor: Colors.green,
+                                                min: 0,
+                                                max:
+                                                    Locations.length.toDouble(),
+                                                value: value,
+                                                divisions: 100,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    this.value = value;
+                                                    print(Locations[
+                                                        value.toInt()]);
+                                                  });
+                                                  print(value);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        )),
+                                    Positioned(
+                                        right: -10,
+                                        top: -15,
+                                        child: FloatingActionButton(
+                                          heroTag: "btn4",
+                                          backgroundColor: Colors.white,
+                                          mini: true,
+                                          onPressed: () {},
+                                          child: Icon(
+                                            Icons.cancel,
+                                            color: Colors.red,
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
+                      //MENU PLACE
+                    ],
                   ),
-                ),
-                //MENU PLACE
-              ],
-            ),
-          )),
-    );
+                )),
+          )
+        : SafeArea(
+            child: Scaffold(
+                backgroundColor: white,
+                body: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showBottomMenu = !showBottomMenu;
+                    });
+                  },
+                  onPanEnd: (details) {
+                    if (details.velocity.pixelsPerSecond.dy > threshold) {
+                      this.setState(() {
+                        showBottomMenu = false;
+                      });
+                    } else if (details.velocity.pixelsPerSecond.dy <
+                        -threshold) {
+                      this.setState(() {
+                        showBottomMenu = true;
+                      });
+                    }
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        right: 0,
+                        top: space_13,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            height:
+                                MediaQuery.of(context).size.height - space_13,
+                            child: Stack(children: <Widget>[
+                              Animarker(
+                                curve: Curves.easeIn,
+                                angleThreshold: 30,
+                                zoom: 11,
+                                useRotation: true,
+                                duration: Duration(milliseconds: 500),
+                                mapId: controller.future
+                                    .then<int>((value) => value.mapId),
+                                //Grab Google Map Id
+                                markers: markers.values.toSet(),
+                                child: GoogleMap(
+                                  markers: customMarkers.toSet(),
+                                  polylines: Set.from(polylines.values),
+                                  myLocationButtonEnabled: true,
+                                  zoomControlsEnabled: false,
+                                  initialCameraPosition: camPosition,
+                                  compassEnabled: true,
+                                  mapType: maptype,
+                                  onMapCreated: (gController) async {
+                                    subscription = stream.listen(
+                                      (data) => {
+                                        newLocationUpdate(data),
+                                        value =
+                                            Locations.indexOf(data).toDouble(),
+                                      },
+                                    );
+                                    controller.complete(gController);
+                                    _customInfoWindowController
+                                        .googleMapController = gController;
+                                  },
+                                  gestureRecognizers: <Factory<
+                                      OneSequenceGestureRecognizer>>{
+                                    Factory<OneSequenceGestureRecognizer>(
+                                      () => EagerGestureRecognizer(),
+                                    ),
+                                  },
+                                ),
+                              ),
+                              // Map Button
+                              Positioned(
+                                left: 20,
+                                top: 20,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 0.25,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: col2,
+                                              borderRadius:
+                                                  const BorderRadius.horizontal(
+                                                      left: Radius.circular(5)),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.25),
+                                                  offset: Offset(
+                                                    0,
+                                                    4,
+                                                  ),
+                                                  blurRadius: 4,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ]),
+                                          child: TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  this.maptype = MapType.normal;
+                                                  col1 =
+                                                      const Color(0xff878787);
+                                                  col2 =
+                                                      const Color(0xffFF5C00);
+                                                });
+                                              },
+                                              child: const Text(
+                                                'Map',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            color: col1,
+                                            borderRadius:
+                                                const BorderRadius.horizontal(
+                                                    right: Radius.circular(5)),
+                                          ),
+                                          child: TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  this.maptype =
+                                                      MapType.satellite;
+                                                  col2 =
+                                                      const Color(0xff878787);
+                                                  col1 =
+                                                      const Color(0xffFF5C00);
+                                                });
+                                              },
+                                              child: const Text('Satellite',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                  ))),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                              // Zoom In Button
+                              Positioned(
+                                right: 10,
+                                bottom: 100,
+                                child: SizedBox(
+                                  height: 40,
+                                  child: FloatingActionButton(
+                                    heroTag: "btn2",
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black,
+                                    child: const Icon(Icons.zoom_in,
+                                        size: 22, color: Color(0xFF152968)),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                              // Zoom out Button
+                              Positioned(
+                                right: 10,
+                                bottom: 50,
+                                child: SizedBox(
+                                  height: 40,
+                                  child: FloatingActionButton(
+                                    heroTag: "btn3",
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black,
+                                    child: const Icon(Icons.zoom_out,
+                                        size: 22, color: Color(0xFF152968)),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                              // stack button
+                              Positioned(
+                                right: 10,
+                                bottom: 150,
+                                child: SizedBox(
+                                  height: 40,
+                                  child: FloatingActionButton(
+                                    heroTag: "btn4",
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black,
+                                    child: Container(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset(
+                                        'assets/icons/layers.png',
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                    )),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                            ])),
+                      ),
+                      //top bar
+                      Positioned(
+                        top: 0,
+                        width: MediaQuery.of(context).size.width,
+                        child: Container(
+                            color: white,
+                            height: space_13,
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(
+                                            space_3, 10, space_3, 0),
+                                        child: Header(
+                                            reset: false,
+                                            // add variable for check status time or device
+                                            text: "${widget.truckNo} ",
+                                            backButton: true),
+                                      ),
+                                      //dropmenu[NOT Functional]
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ),
+                      //bottom bar
+                      AnimatedPositioned(
+                        curve: Curves.easeInOut,
+                        duration: Duration(milliseconds: 200),
+                        left: 0,
+                        top: space_13,
+                        child: PlayRouteDetailsWidget(
+                          finalDistance: widget.finalDistance,
+                          totalStop: gpsStoppageHistory.length,
+                          address: widget.address,
+                          dateRange: dateRange,
+                          gpsData: gpsData,
+                          truckNo: widget.truckNo,
+                        ),
+                      ),
+                      Positioned(
+                        top: MediaQuery.of(context).size.height / 2,
+                        left: 0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 3 - 50,
+                          height: 80,
+                          color: backgroundColor,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Positioned(
+                                    top: -20,
+                                    left: 10,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        boxShadow: const [
+                                          BoxShadow(blurRadius: 5)
+                                        ],
+                                        color: Colors.white,
+                                      ),
+                                      padding: const EdgeInsets.all(3),
+                                      child: FloatingActionButton(
+                                        heroTag: "btn3",
+                                        backgroundColor: const Color.fromRGBO(
+                                            21, 41, 104, 1),
+                                        mini: true,
+                                        onPressed: () {
+                                          print(
+                                              "-------------------->Pause button");
+                                          print(
+                                              "Paused----------------->$isPaused");
+                                          setState(() {
+                                            if (isPaused) {
+                                              subscription.resume();
+                                            } else {
+                                              subscription.pause();
+                                            }
+                                            isPaused = !isPaused;
+                                          });
+                                        },
+                                        child: isPaused
+                                            ? const Icon(Icons.play_arrow)
+                                            : const Icon(Icons.pause),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      left: 30,
+                                      top: 8,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    3 -
+                                                70,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20),
+                                              child: Text(
+                                                "    ${widget.truckNo}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                            Slider(
+                                              thumbColor: Colors.green,
+                                              activeColor: Colors.green,
+                                              min: 0,
+                                              max: Locations.length.toDouble(),
+                                              value: value,
+                                              divisions: 20,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  this.value = value;
+                                                  print(
+                                                      Locations[value.toInt()]);
+                                                });
+                                                print(value);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                  Positioned(
+                                      right: -10,
+                                      top: -15,
+                                      child: FloatingActionButton(
+                                        heroTag: "btn4",
+                                        backgroundColor: Colors.white,
+                                        mini: true,
+                                        onPressed: () {},
+                                        child: Icon(
+                                          Icons.cancel,
+                                          color: Colors.red,
+                                        ),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //MENU PLACE
+                    ],
+                  ),
+                )),
+          );
   }
 }

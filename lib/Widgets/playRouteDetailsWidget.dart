@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -199,17 +200,6 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
 
         Get.back();
         EasyLoading.dismiss();
-        /*      Get.to(PlayRouteHistory(
-          gpsTruckHistory: gpsTruckHistory,
-          truckNo: widget.truckNo,
-          gpsData: widget.gpsData,
-          dateRange: selectedDate.toString(),
-          gpsStoppageHistory: gpsStoppageHistory,
-          totalStoppedTime: totalStoppedTime,
-          totalRunningTime: totalRunningTime,
-          // locations: Locations,
-        ));
-    */
       } else {
         EasyLoading.dismiss();
         showDialog(
@@ -332,23 +322,10 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
         dateRange = "$startTime - $endTime";
         totalRunningTime = newTotalRunningTime;
         totalStoppedTime = newTotalStoppedTime;
-        // fromDate = yesterday.toString();
-        // toDate = today.toString();
       });
       // getLatLngList();
       Get.back();
       EasyLoading.dismiss();
-      /*    Get.to(PlayRouteHistory(
-        gpsTruckHistory: gpsTruckHistory,
-        truckNo: widget.truckNo,
-        gpsData: widget.gpsData,
-        dateRange: dateRange,
-        gpsStoppageHistory: gpsStoppageHistory,
-        totalStoppedTime: totalStoppedTime,
-        totalRunningTime: totalRunningTime,
-        // locations: Locations,
-      ));
- */
     } else {
       EasyLoading.dismiss();
       showDialog(
@@ -365,8 +342,8 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
     //add Ui
     return Container(
         color: white,
-        width: width / 3,
-        height: height,
+        width: Responsive.isMobile(context) ? width : width / 3,
+        height: Responsive.isMobile(context) ? height / 1.5 : height,
         child: Column(children: [
           Padding(
             padding: EdgeInsets.fromLTRB(
@@ -403,7 +380,6 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
                 ),
                 const Divider(
                   color: Color.fromRGBO(9, 183, 20, 1),
-                  // height: size_3,
                   thickness: 5,
                   indent: 10,
                   endIndent: 10,
@@ -414,162 +390,6 @@ class _PlayRouteDetailsWidgetState extends State<PlayRouteDetailsWidget> {
               ],
             ),
           ),
-          // Container(
-          //     child: Row(
-          //   children: [
-          //     Column(
-          //       children: [
-          //         Container(
-          //           margin: EdgeInsets.fromLTRB(0, space_5, 0, 0),
-          //           width: 117,
-          //           alignment: Alignment.centerLeft,
-          //           child: Text("from".tr,
-          //               textAlign: TextAlign.start,
-          //               style: TextStyle(
-          //                   color: black,
-          //                   fontSize: size_7,
-          //                   fontStyle: FontStyle.normal,
-          //                   fontWeight: regularWeight)),
-          //         ),
-          //         GestureDetector(
-          //           onTap: () {
-          //             _selectDate(context);
-          //           },
-          //           child: Row(
-          //             children: [
-          //               Container(
-          //                 width: 117,
-          //                 padding: EdgeInsets.fromLTRB(
-          //                     space_2, space_1, space_2, space_1),
-          //                 margin: EdgeInsets.fromLTRB(space_5, 0, 0, space_2),
-          //                 decoration: BoxDecoration(
-          //                   border: Border.all(color: black),
-          //                   borderRadius: BorderRadius.all(
-          //                     Radius.circular(3),
-          //                   ),
-          //                 ),
-          //                 child: Text("${start}",
-          //                     style: TextStyle(
-          //                         color: grey,
-          //                         fontSize: size_6,
-          //                         fontStyle: FontStyle.normal,
-          //                         fontWeight: regularWeight)),
-          //               ),
-          //               Container(
-          //                 margin: EdgeInsets.fromLTRB(space_2, 0, 0, space_2),
-          //                 alignment: Alignment.topCenter,
-          //                 child: Icon(Icons.calendar_today_outlined,
-          //                     color: black, size: 20),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //         Container(
-          //           margin: EdgeInsets.fromLTRB(0, space_2, 0, 0),
-          //           width: 117,
-          //           alignment: Alignment.centerLeft,
-          //           child: Text("to".tr,
-          //               textAlign: TextAlign.start,
-          //               style: TextStyle(
-          //                   color: black,
-          //                   fontSize: size_7,
-          //                   fontStyle: FontStyle.normal,
-          //                   fontWeight: regularWeight)),
-          //         ),
-          //         GestureDetector(
-          //           onTap: () {
-          //             _selectDate(context);
-          //           },
-          //           child: Row(
-          //             children: [
-          //               Container(
-          //                 width: 117,
-          //                 padding: EdgeInsets.fromLTRB(
-          //                     space_2, space_1, space_2, space_1),
-          //                 margin: EdgeInsets.fromLTRB(space_5, 0, 0, space_2),
-          //                 decoration: BoxDecoration(
-          //                   border: Border.all(color: black),
-          //                   borderRadius: BorderRadius.all(
-          //                     Radius.circular(3),
-          //                   ),
-          //                 ),
-          //                 child: Text("${end}",
-          //                     style: TextStyle(
-          //                         color: grey,
-          //                         fontSize: size_6,
-          //                         fontStyle: FontStyle.normal,
-          //                         fontWeight: regularWeight)),
-          //               ),
-          //               Container(
-          //                 margin: EdgeInsets.fromLTRB(space_2, 0, 0, space_2),
-          //                 alignment: Alignment.topCenter,
-          //                 child: Icon(Icons.calendar_today_outlined,
-          //                     color: black, size: 20),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //     Container(
-          //       height: 110,
-          //       alignment: Alignment.topLeft,
-          //       margin: EdgeInsets.fromLTRB(space_10, space_5, 0, 0),
-          //       child: DropdownButton(
-          //         hint: Text('custom'.tr),
-          //         style: TextStyle(
-          //             color: grey,
-          //             fontSize: size_7,
-          //             fontStyle: FontStyle.normal,
-          //             fontWeight: regularWeight),
-          //         // Not necessary for Option 1
-          //         value: _selectedLocation,
-          //         onChanged: (newValue) {
-          //           setState(() {
-          //             _selectedLocation = newValue.toString();
-          //           });
-          //           customSelection(_selectedLocation);
-          //         },
-          //         items: _locations.map((location) {
-          //           return DropdownMenuItem(
-          //             child: new Text(location),
-          //             value: location,
-          //           );
-          //         }).toList(),
-          //       ),
-          //     ),
-          //   ],
-          //   // ),
-          //   // GestureDetector(
-          //   //   onTap:(){
-          //   //     _selectDate(context);
-          //   //   },
-          //   //   child: Row(
-          //   //     children: [
-          //   //       Container(
-          //   //
-          //   //         width: 117,
-          //   //         padding: EdgeInsets.fromLTRB(space_2, space_1, space_2, space_1),
-          //   //         margin:  EdgeInsets.fromLTRB(space_6, 0, 0, 0),
-          //   //         decoration: BoxDecoration(
-          //   //           border: Border.all(color: black),
-          //   //           borderRadius: BorderRadius.all(
-          //   //             Radius.circular(3),
-          //   //           ),
-          //   //         ),
-          //   //         child: Text("${end}",
-          //   //             style: TextStyle(
-          //   //                 color: grey,
-          //   //                 fontSize: size_6,
-          //   //                 fontStyle: FontStyle.normal,
-          //   //                 fontWeight: regularWeight)
-          //   //         ),
-          //   //       ),
-          //   //
-          //   //     ],
-          //   //   ),
-          //   // ),
-          // ))
         ]));
   }
 }

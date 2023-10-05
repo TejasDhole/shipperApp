@@ -9,8 +9,7 @@ import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
 import '/language/localization_service.dart';
-//import '/screens/TransporterOrders/getDocApiCallVerify.dart';
-//import '/screens/TransporterOrders/getDocumentApiCall.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/screens/TransporterOrders/uploadedDocs.dart';
 import '../../widgets/accountVerification/image_display.dart';
 import 'docUploadBtn2.dart';
@@ -19,7 +18,6 @@ import 'dart:io';
 import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
-//import 'getDocName.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 
@@ -112,10 +110,11 @@ class _docInputLrState extends State<docInputLr> {
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: screenHeight * 0.25,
+        height: screenHeight * 0.3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -144,9 +143,9 @@ class _docInputLrState extends State<docInputLr> {
                             height: 320,
                             width: 730,
                             child: Obx(() {
-                              return Image.network(
-                                previewUploadedImage.previewImage.toString(),
-                              );
+                              return Image.network(Uri.encodeFull(
+                                "$proxyServer${previewUploadedImage.previewImage.toString()}",
+                              ));
                             }),
                           )
                         : Container(),
@@ -335,13 +334,10 @@ class _docInputLrState extends State<docInputLr> {
                         child: ElevatedButton(
                             onPressed: () {
                               int i = previewUploadedImage.index.value;
-                              if (previewUploadedImage.index <
-                                  docLinks.length) {
-                                previewUploadedImage.updatePreviewImage(
-                                    docLinks[i++].toString());
-
-                                previewUploadedImage.updateIndex(i++);
-                              }
+                              i = (i + 1) % docLinks.length;
+                              previewUploadedImage
+                                  .updatePreviewImage(docLinks[i].toString());
+                              previewUploadedImage.updateIndex(i);
                             },
                             child: Text("Next"),
                             style: ElevatedButton.styleFrom(

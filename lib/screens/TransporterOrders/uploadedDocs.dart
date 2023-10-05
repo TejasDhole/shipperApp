@@ -1,8 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/spaces.dart';
@@ -27,7 +28,6 @@ class _uploadedDocsState extends State<uploadedDocs> {
   bool i2 = false;
   bool i3 = false;
   bool i4 = false;
-  bool progressBar = false;
   bool downloaded = false;
   bool downloading = false;
   PreviewUploadedImage previewUploadedImage = Get.put(PreviewUploadedImage());
@@ -77,16 +77,12 @@ class _uploadedDocsState extends State<uploadedDocs> {
   }
 
   void _saveNetworkImage(String path) async {
-    var response = await Dio()
-        .get(path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: "Liveasy");
+    await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
   }
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     return Responsive.isMobile(context)
         ? Row(
             children: [
@@ -128,8 +124,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[0].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[0].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -172,8 +170,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[1].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[1].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -216,8 +216,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[2].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[2].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -260,8 +262,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                         const EdgeInsets.only(right: 3, top: 4),
                                     height: 130,
                                     width: 180,
-                                    child: Image.network(
-                                      widget.docLinks[3].toString(),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        "$proxyServer${widget.docLinks[3].toString()}",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -319,8 +323,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[0].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[0].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -354,8 +360,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[1].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[1].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -389,8 +397,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[2].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[2].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -424,8 +434,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                                       const EdgeInsets.only(right: 3, top: 4),
                                   height: 120,
                                   width: 180,
-                                  child: Image.network(
-                                    widget.docLinks[3].toString(),
+                                  child: Image(
+                                    image: NetworkImage(
+                                      "$proxyServer${widget.docLinks[3].toString()}",
+                                    ),
                                   ),
                                 ),
                               ),
@@ -439,6 +451,7 @@ class _uploadedDocsState extends State<uploadedDocs> {
   }
 
   Future<void> _imageDownload(BuildContext context, int i) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     return showDialog<void>(
         context: context,
         builder: (context) {
@@ -486,8 +499,10 @@ class _uploadedDocsState extends State<uploadedDocs> {
                     Container(
                       constraints: const BoxConstraints(minHeight: 100),
                       color: whiteBackgroundColor,
-                      child: Image.network(
-                        widget.docLinks[i].toString(),
+                      child: Image(
+                        image: NetworkImage(
+                          "$proxyServer${widget.docLinks[i].toString()}",
+                        ),
                       ),
                     ),
                   ],
@@ -497,14 +512,14 @@ class _uploadedDocsState extends State<uploadedDocs> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 150, right: 150, bottom: 10, top: 10),
+                    left: 100, right: 100, bottom: 10, top: 10),
                 child: ClipRRect(
                   child: InkWell(
                     child: Container(
                       color: const Color(0xFF09B778),
                       height: space_10,
                       child: Center(
-                        child: progressBar
+                        child: downloading
                             ? const CircularProgressIndicator(
                                 color: white,
                               )
@@ -520,16 +535,12 @@ class _uploadedDocsState extends State<uploadedDocs> {
                     ),
                     onTapUp: (value) {
                       setState(() {
-                        progressBar = true;
                         downloading = true;
                       });
                     },
                     onTap: () async {
-                      try {
-                        _saveNetworkImage(widget.docLinks[i].toString());
-                      } catch (e) {
-                        print("\n Bhai yah essa hai  sahi jagah check \n");
-                      }
+                      _saveNetworkImage(
+                          "$proxyServer${widget.docLinks[i].toString()}");
                     },
                   ),
                 ),

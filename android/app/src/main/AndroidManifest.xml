@@ -24,7 +24,8 @@
    <application
         android:label="Shipper App"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
 <!--       <provider-->
 <!--           android:name="androidx.core.content.FileProvider"-->
 <!--           android:authorities="${applicationId}.com.shekarmudaliyar.social_share"-->
