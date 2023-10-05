@@ -41,6 +41,7 @@ class _OngoingCardState extends State<OngoingCard> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -109,6 +110,7 @@ class _OngoingCardState extends State<OngoingCard> {
                     truckType: widget.loadAllDataModel.truckType,
                     productType: widget.loadAllDataModel.productType,
                     unitValue: widget.loadAllDataModel.unitValue,
+                    loadId: widget.loadAllDataModel.loadId,
                   ));
                 });
               },
@@ -267,6 +269,7 @@ class _OngoingCardState extends State<OngoingCard> {
                                   .getTruckGpsDetails()
                                   .then((gpsData) {
                                 Get.to(documentUploadScreen(
+                                   loadId: widget.loadAllDataModel.loadId,
                                   bookingId: widget.loadAllDataModel.bookingId
                                       .toString(),
                                   truckNo: widget.loadAllDataModel.truckNo,
@@ -296,6 +299,7 @@ class _OngoingCardState extends State<OngoingCard> {
                                   productType:
                                       widget.loadAllDataModel.productType,
                                   unitValue: widget.loadAllDataModel.unitValue,
+                                  
                                 ));
                               });
                             },
@@ -346,6 +350,7 @@ class _OngoingCardState extends State<OngoingCard> {
                   truckType: widget.loadAllDataModel.truckType,
                   productType: widget.loadAllDataModel.productType,
                   unitValue: widget.loadAllDataModel.unitValue,
+                   loadId: widget.loadAllDataModel.loadId,
                 ));
               });
             },

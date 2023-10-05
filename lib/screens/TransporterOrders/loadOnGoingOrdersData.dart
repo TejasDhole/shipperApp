@@ -29,6 +29,7 @@ Future<OngoingCardModel?> loadAllOnGoingOrdersData(
   OngoingCardModel loadALLDataModel = OngoingCardModel();
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
   loadALLDataModel.bookingId = bookingModel.bookingId;
+  loadALLDataModel.loadId = bookingModel.loadId;
   loadALLDataModel.completedDate = bookingModel.completedDate;
   loadALLDataModel.deviceId = bookingModel.deviceId;
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
