@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shipper_app/screens/accountScreens/account_details.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -116,7 +117,7 @@ class DrawerWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         selectItem(context, NavigationItem.MyAccount);
-                        navigationIndexController.updateIndex(2);
+                        Get.to(AccountScreen());
                       },
                       child: drawerMenuItem(
                           context: context,

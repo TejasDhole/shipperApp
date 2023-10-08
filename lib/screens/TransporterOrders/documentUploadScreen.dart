@@ -11,19 +11,16 @@ import '/constants/fontWeights.dart';
 import '/constants/spaces.dart';
 import '/controller/shipperIdController.dart';
 import '/providerClass/providerData.dart';
-//import '/screens/TransporterOrders/callBtn.dart';
 import '/screens/TransporterOrders/docInputEWBill.dart';
 import '/screens/TransporterOrders/docInputPod.dart';
 import '/screens/TransporterOrders/docInputWgtReceipt.dart';
 import '/screens/TransporterOrders/navigateToTrackScreen.dart';
-//import '/screens/TransporterOrders/postDocumentApiCall.dart';
-//import '/screens/TransporterOrders/putDocumentApiCall.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../HelpScreen.dart';
 import 'docInputLr.dart';
-//import 'getDocName.dart';
-//import 'getDocumentApiCall.dart';
+
 import '/functions/documentApi/getDocName.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 import '/functions/documentApi/postDocumentApiCall.dart';
@@ -99,10 +96,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
         datanew; // this map will contain the data to be posted using the post document api.
     datanew = {
       "entityId": widget.bookingId.toString(),
-      "documents": [
-        {}
-        // {"documentType": "documentType", "data": }
-      ],
+      "documents": [{}],
     };
     late Map dataput;
     // bool verified = false;
@@ -247,7 +241,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
           setState(() {
             availDocs = availDocs;
           });
-          print(availDocs);
           await assignDocNameLr(availDocs[0]);
           // await uploadDocumentApiCall();
           providerData.LrPhotoFile = null;
@@ -303,8 +296,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
         } else {
@@ -368,8 +359,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       setState(() {
         docLinks = docLinks;
       });
-      print("docLinks :-");
-      print(docLinks);
+
       if (docLinks.isNotEmpty) {
         if (docLinks.length == 4) {
         } else {
@@ -378,7 +368,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
           setState(() {
             availDocs = availDocs;
           });
-          print(availDocs);
+
           await assignDocNameWeightReceipt(availDocs[0]);
           // await uploadDocumentApiCall();
           providerData.WeightReceiptPhotoFile = null;

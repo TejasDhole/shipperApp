@@ -128,8 +128,6 @@ dependencies:
   webview_flutter: ^4.2.2
   dropdown_search: ^5.0.6
   table_calendar: ^3.0.9
-  timeline_tile: ^2.0.0
-  xml: ^6.3.0
 #  carp_background_location: ^3.0.1
 
 ## End of packages supported by only "Android"##

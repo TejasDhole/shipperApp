@@ -1,10 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -21,21 +25,29 @@ class imageDisplayUsingApi extends StatefulWidget {
 }
 
 class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
-  bool progressBar = false;
   bool downloaded = false;
   bool downloading = false;
 
   void _saveNetworkImage(String path) async {
-    var response = await Dio()
-        .get(path, options: Options(responseType: ResponseType.bytes));
-    final result = await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: "Liveasy");
+    if (kIsWeb) {
+      await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
+    } else {
+      var response = await Dio()
+          .get(path, options: Options(responseType: ResponseType.bytes));
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 60,
+          name: "Liveasy");
+    }
+    setState(() {
+      downloading = false;
+      downloaded = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    String proxyServer = dotenv.get('placeAutoCompleteProxy');
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -45,9 +57,6 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
               color: whiteBackgroundColor,
               child: Row(
                 children: [
-                  // Flexible(
-                  //   flex: 3,
-                  // child:
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -113,8 +122,7 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                       constraints: BoxConstraints(minHeight: 100),
                       color: whiteBackgroundColor,
                       child: Image.network(
-                        widget.docLink.toString(),
-                      ),
+                          "$proxyServer${widget.docLink.toString()}"),
                     ),
                   ],
                 ),
@@ -158,7 +166,7 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                           color: Color(0xFF09B778),
                           height: space_10,
                           child: Center(
-                            child: progressBar
+                            child: downloading
                                 ? CircularProgressIndicator(
                                     color: white,
                                   )
@@ -169,21 +177,16 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                                         fontSize: size_8,
                                         fontWeight: FontWeight.bold),
                                   ),
-                            // ),
                           ),
                         ),
                         onTapUp: (value) {
                           setState(() {
-                            progressBar = true;
                             downloading = true;
                           });
                         },
                         onTap: () async {
-                          try {
-                            _saveNetworkImage(widget.docLink.toString());
-                          } catch (e) {
-                            print("\n Bhai  sahi jagah check \n");
-                          }
+                          _saveNetworkImage(
+                              "$proxyServer${widget.docLink.toString()}");
                         },
                       ),
                     )),

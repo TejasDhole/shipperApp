@@ -50,9 +50,6 @@ class OnGoingLoadDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TrackButton(
-                              loadAllDataModel: loadALlDataModel,
-                            ),
                             CallButton(
                               directCall: false,
                               driverPhoneNum: loadALlDataModel.driverPhoneNum,

@@ -56,7 +56,7 @@ onGoingOrdersApiCall(int i) async {
         json['driverName'] != null ? json['driverName'] : 'NA';
     bookingModel.driverPhoneNum =
         json['driverPhoneNum'] != null ? json['driverPhoneNum'] : 'NA';
-    bookingModel.shipperId =
+    bookingModel.transporterId =
         json['transporterId'] != null ? json['transporterId'] : 'NA';
     bookingModel.driverPhoneNum =
         json['driverPhoneNum'] != null ? json['driverPhoneNum'] : 'NA';

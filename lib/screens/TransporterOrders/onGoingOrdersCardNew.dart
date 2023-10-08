@@ -230,9 +230,6 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      TrackButton(
-                        loadAllDataModel: widget.loadAllDataModel,
-                      ),
                       CompletedButtonOrders(
                           bookingId:
                               widget.loadAllDataModel.bookingId.toString(),

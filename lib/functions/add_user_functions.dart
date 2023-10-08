@@ -1,17 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shipper_app/functions/firebaseAuthentication/signIn.dart';
-import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
-import 'package:shipper_app/screens/accountScreens/accountVerificationStatusScreen.dart';
 import '../Widgets/alertDialog/CompletedDialog.dart';
 import '../Widgets/alertDialog/orderFailedAlertDialog.dart';
 import '../constants/screens.dart';
