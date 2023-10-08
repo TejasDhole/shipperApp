@@ -75,6 +75,8 @@ class _OngoingOrdersCardNewState extends State<onGoingOrdersCardNew> {
             Get.to(documentUploadScreen(
               bookingId: widget.loadAllDataModel.bookingId.toString(),
               truckNo: widget.loadAllDataModel.truckNo,
+              loadingPointCity: widget.loadAllDataModel.loadingPointCity,
+              unloadingPointCity: widget.loadAllDataModel.unloadingPointCity,
               loadingPoint: widget.loadAllDataModel.loadingPointCity,
               unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
               transporterName: widget.loadAllDataModel.shipperName,
