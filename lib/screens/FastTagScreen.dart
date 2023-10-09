@@ -234,19 +234,6 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  // Future<LatLng?> getCoordinatesFromPlaceName(String placeName) async {
-  //   try {
-  //     final locations = await locationFromAddress(placeName);
-  //     if (locations.isNotEmpty) {
-  //       final location = locations.first;
-  //       return LatLng(location.latitude, location.longitude);
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Error fetching coordinates: $e");
-  //   }
-  //   return null;
-  // }
-
   Future<LatLng?> getCoordinatesForWeb(String placename) async {
     try {
       final encodedAddress = Uri.encodeComponent(placename);
