@@ -31,7 +31,8 @@ class checkFastTag {
       return reversedList.cast<Map<String, dynamic>>();
     } else {
       debugPrint('API Error: ${response.statusCode} - ${response.body}');
-      throw Exception("No auth token is there, some error in the API");
+      throw Exception(
+          "The data is taking time to load. Please refresh the screen or go back to the previous screen and then try again.");
     }
   }
 

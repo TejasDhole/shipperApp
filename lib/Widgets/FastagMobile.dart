@@ -2,6 +2,7 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/Widgets/trackOngoing/TimelineTile.dart';
 import 'package:shipper_app/constants/colors.dart';
 
@@ -48,6 +49,7 @@ class _MobileMapState extends State<MobileMap> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: fastagAppBarColor,
@@ -93,7 +95,11 @@ class _MobileMapState extends State<MobileMap> {
                     widget.currentCameraPosition = position;
                   },
                   initialCameraPosition: widget.currentCameraPosition)
-              : const Center(child: CircularProgressIndicator()),
+              : Shimmer.fromColors(
+                 baseColor: lightGrey,
+            highlightColor: greyishWhiteColor,
+                child: Container(height: screenHeight,
+                  color: lightGrey,)),
           CustomInfoWindow(
             controller: widget.customInfoWindowController,
             height: 70,
@@ -282,7 +288,7 @@ class _MobileMapState extends State<MobileMap> {
                   controller: scrollController,
                   children: [
                     locationBottomSheet(context),
-                    returnTimeLine(context)
+                    Center(child: returnTimeLine(context))
                   ],
                 ),
               );
@@ -314,7 +320,7 @@ class _MobileMapState extends State<MobileMap> {
                     fontSize: screenHeight * 0.02,
                     color: Colors.white)),
             SizedBox(width: screenWidth * 0.03),
-            const Text('----------------------->',
+            const Text('---------------->',
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             SizedBox(width: screenWidth * 0.03),

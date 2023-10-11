@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/ongoingTrackUtils/FastTag.dart';
 import 'package:shipper_app/models/vehicleDetails.dart';
@@ -15,6 +16,7 @@ class VehicleDetailsScreen extends StatefulWidget {
 }
 
 class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
+  late bool isLoading = false;
   VehicleDetails? _vehicleDetails;
 
   @override
@@ -31,6 +33,9 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
     }).catchError((error) {
       // Handle the error, e.g., show an error message
       print("Error fetching vehicle details in init : $error");
+    });
+    setState(() {
+      isLoading = true;
     });
   }
 
@@ -55,7 +60,13 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
       });
     } else {
       debugPrint('data is not coming in this if check');
-      return const Center(child: CircularProgressIndicator());
+      return Shimmer.fromColors(
+          baseColor: lightGrey,
+          highlightColor: greyishWhiteColor,
+          child: Container(
+            height: screenHeight,
+            color: lightGrey,
+          ));
     }
 
     return Scaffold(

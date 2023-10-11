@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:shipper_app/functions/ongoingTrackUtils/FastTag.dart';
@@ -72,14 +73,18 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
   FutureBuilder<String> buildAddressWidget(
       double latitude, double longitude, BuildContext context) {
     bool isMobile = Responsive.isMobile(context);
+    double screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder<String>(
-      future: 
-      // isMobile
-      //     ? getAddress(latitude, longitude)
-           fetchAddressForWeb(latitude, longitude),
+      future: fetchAddressForWeb(latitude, longitude),
       builder: (context, addressSnapshot) {
         if (addressSnapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return Shimmer.fromColors(
+              baseColor: lightGrey,
+              highlightColor: greyishWhiteColor,
+              child: Container(
+                height: screenHeight,
+                color: lightGrey,
+              ));
         } else if (addressSnapshot.hasError) {
           return Text('Error: ${addressSnapshot.error}');
         } else {
@@ -96,12 +101,19 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder<List<dynamic>>(
       future: fetchLocations(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // You can return a loading indicator here
-          return const CircularProgressIndicator();
+          return Shimmer.fromColors(
+              baseColor: lightGrey,
+              highlightColor: greyishWhiteColor,
+              child: Container(
+                height: screenHeight,
+                color: lightGrey,
+              ));
         } else if (snapshot.hasError) {
           // Handle the error
           return Text('Error: ${snapshot.error}');
@@ -111,7 +123,13 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
         } else {
           final locations = snapshot.data;
           if (locations == null) {
-            return const Center(child: CircularProgressIndicator());
+            return Shimmer.fromColors(
+                baseColor: lightGrey,
+                highlightColor: greyishWhiteColor,
+                child: Container(
+                  height: screenHeight,
+                  color: lightGrey,
+                ));
           }
           return ListView.builder(
             itemCount: locations.length,
