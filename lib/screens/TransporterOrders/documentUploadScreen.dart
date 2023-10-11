@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Widgets/trackOngoing/TimelineTile.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/FastTagScreen.dart';
+import 'package:shipper_app/screens/vehicleDetailsScreen.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -33,7 +36,9 @@ class documentUploadScreen extends StatefulWidget {
   String? driverName;
   String? driverPhoneNum;
   String? loadingPoint;
+  String ? loadingPointCity;
   String? unloadingPoint;
+  String? unloadingPointCity;
   var gpsDataList;
   String? totalDistance;
   var device;
@@ -52,6 +57,8 @@ class documentUploadScreen extends StatefulWidget {
     this.driverPhoneNum,
     this.unloadingPoint,
     this.loadingPoint,
+    this.loadingPointCity,
+    this.unloadingPointCity,
     this.gpsDataList,
     this.totalDistance,
     this.device,
@@ -1159,7 +1166,22 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       ),
                                     ),
                                   ),
-
+                                  //Code Added By Aman From Here
+                                  ElevatedButton(onPressed: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MapScreen(loadingPoint: widget.loadingPoint, unloadingPoint: widget.unloadingPoint, truckNumber: widget.truckNo, loadingPointCity: widget.loadingPointCity, unloadingPointCity : widget.unloadingPointCity, )),
+                                    );
+                                  }, child: const Text('Check FastTag')),
+                                  const SizedBox(height: 10),
+                                  ElevatedButton(onPressed: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => VehicleDetailsScreen(truckNumber: widget.truckNo,)),
+                                    );
+                                  }, child: const Text('Vehicle Details')),
+                                  //Till here
+                                  
                                   const SizedBox(
                                     height: 50,
                                   ),
