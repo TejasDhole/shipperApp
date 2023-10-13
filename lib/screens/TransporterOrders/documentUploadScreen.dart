@@ -11,8 +11,6 @@ import '/providerClass/providerData.dart';
 import '/screens/TransporterOrders/docInputEWBill.dart';
 import '/screens/TransporterOrders/docInputPod.dart';
 import '/screens/TransporterOrders/docInputWgtReceipt.dart';
-import '/screens/TransporterOrders/navigateToTrackScreen.dart';
-
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../HelpScreen.dart';
@@ -22,7 +20,6 @@ import '/functions/documentApi/getDocName.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 import '/functions/documentApi/postDocumentApiCall.dart';
 import '/functions/documentApi/putDocumentApiCall.dart';
-import '/widgets/buttons/callBtn.dart';
 
 class documentUploadScreen extends StatefulWidget {
   String? bookingId;
@@ -1792,124 +1789,74 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                         )
                                       : Column(
                                           children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_6, 0, space_6, 0),
-                                              child: Container(
-                                                child: TabBar(
-                                                    controller: _tabController,
-                                                    labelColor: blueTitleColor,
-                                                    tabs: [
-                                                      Tab(
-                                                        child: Text(
-                                                          "Lorry Receipt ",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                normalWeight,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Tab(
-                                                        child: Text(
-                                                          "EWAY Bill ",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                normalWeight,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Tab(
-                                                        child: Text(
-                                                          "Weight Receipt ",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                normalWeight,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Tab(
-                                                        child: Text(
-                                                          "POD\n(Pahoch)",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                normalWeight,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ]),
-                                              ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      space_4,
+                                                      space_4,
+                                                      space_4,
+                                                      space_4),
+                                                  child: docInputLr(
+                                                      providerData:
+                                                          providerData,
+                                                      bookingId:
+                                                          widget.bookingId),
+                                                ),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            space_4,
+                                                            space_4,
+                                                            space_4,
+                                                            space_4),
+                                                    child: docInputEWBill(
+                                                        providerData:
+                                                            providerData,
+                                                        bookingId:
+                                                            widget.bookingId)),
+                                              ],
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_6, 0, space_6, space_6),
-                                              child: Container(
-                                                  width: double.maxFinite,
-                                                  height: 600,
-                                                  child: Center(
-                                                    child: TabBarView(
-                                                      controller:
-                                                          _tabController,
-                                                      children: [
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    space_4,
-                                                                    space_4,
-                                                                    space_4,
-                                                                    0),
-                                                            child: docInputLr(
-                                                                providerData:
-                                                                    providerData,
-                                                                bookingId: widget
-                                                                    .bookingId)),
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    space_4,
-                                                                    space_4,
-                                                                    space_4,
-                                                                    0),
-                                                            child: docInputEWBill(
-                                                                providerData:
-                                                                    providerData,
-                                                                bookingId: widget
-                                                                    .bookingId)),
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    space_4,
-                                                                    space_4,
-                                                                    space_4,
-                                                                    0),
-                                                            child:
-                                                                docInputWgtReceipt(
-                                                              providerData:
-                                                                  providerData,
-                                                              bookingId: widget
-                                                                  .bookingId,
-                                                            )),
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  space_4,
-                                                                  space_4,
-                                                                  space_4,
-                                                                  space_4),
-                                                          child: docInputPod(
-                                                            providerData:
-                                                                providerData,
-                                                            bookingId: widget
-                                                                .bookingId,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )),
+                                            const SizedBox(
+                                              height: 70,
                                             ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      space_4,
+                                                      space_4,
+                                                      space_4,
+                                                      space_4),
+                                                  child: docInputWgtReceipt(
+                                                    providerData: providerData,
+                                                    bookingId: widget.bookingId,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      space_4,
+                                                      space_4,
+                                                      space_4,
+                                                      space_4),
+                                                  child: docInputPod(
+                                                    providerData: providerData,
+                                                    bookingId: widget.bookingId,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            )
                                           ],
                                         ),
 
-                                  const SizedBox(height: 30),
+                                  const SizedBox(height: 50),
                                 ],
                               ),
                             ),

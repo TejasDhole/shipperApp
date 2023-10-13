@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
@@ -579,334 +580,326 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double threshold = 100;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: statusBarColor,
-        body: GestureDetector(
-          onTap: () {
-            setState(() {
-              showBottomMenu = !showBottomMenu;
-            });
-          },
-          onPanEnd: (details) {
-            if (details.velocity.pixelsPerSecond.dy > threshold) {
-              this.setState(() {
-                showBottomMenu = false;
-              });
-            } else if (details.velocity.pixelsPerSecond.dy < -threshold) {
-              this.setState(() {
-                showBottomMenu = true;
-              });
-            }
-          },
-          child: Stack(
-            children: <Widget>[
-              // Mapp
-              Positioned(
-                right: 0,
-                top: space_13,
-                child: Container(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    height: MediaQuery.of(context).size.height - space_13,
-                    child: Stack(children: <Widget>[
-                      loading_map && loadmap2 && loadmap3 ||
-                              !(widget.online!) &&
-                                  loading_map //condition to show loadingIndicator until routes and map is created
-                          ? Container()
-                          : Center(
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                child: const CircularProgressIndicator(
-                                  color: darkBlueColor,
-                                ),
-                              ),
-                            ),
-                      loadmap2 && loadmap3 ||
-                              !(widget
-                                  .online!) //condition to show loadingIndicator until route is created
-                          ? GoogleMap(
-                              onTap: (position) {
-                                _customInfoWindowController.hideInfoWindow!();
-                                _customDetailsInfoWindowController
-                                    .hideInfoWindow!();
-                              },
-                              onCameraMove: (position) {
-                                _customInfoWindowController.onCameraMove!();
-                                _customDetailsInfoWindowController
-                                    .onCameraMove!();
-                              },
-                              markers: customMarkers.toSet(),
-                              polylines: Set.from(polylines.values),
-                              myLocationButtonEnabled: true,
-                              zoomControlsEnabled: false,
-                              initialCameraPosition: camPosition,
-                              compassEnabled: true,
-                              mapType: maptype,
-                              onMapCreated: (GoogleMapController controller) {
-                                _controller.complete(controller);
-                                _customInfoWindowController
-                                    .googleMapController = controller;
-                                _customDetailsInfoWindowController
-                                    .googleMapController = controller;
-                                setState(() {
-                                  loading_map =
-                                      true; //variable is made true when map is created.
-                                });
-                              },
-                              gestureRecognizers:
-                                  <Factory<OneSequenceGestureRecognizer>>[
-                                new Factory<OneSequenceGestureRecognizer>(
-                                  () => new EagerGestureRecognizer(),
-                                ),
-                              ].toSet(),
-                            )
-                          : Center(
-                              child: Container(
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                color: Colors.white,
-                                child: Center(
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    child: const CircularProgressIndicator(
-                                      color: darkBlueColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                      CustomInfoWindow(
-                        controller: _customInfoWindowController,
-                        height: 110,
-                        width: 275,
-                        offset: 30,
-                      ),
-                      CustomInfoWindow(
-                        controller: _customDetailsInfoWindowController,
-                        height: 140,
-                        width: 300,
-                        offset: 0,
-                      ),
-                      // Map Button
-                      Positioned(
-                        left: 20,
-                        top: 20,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                                width: 0.25,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: col2,
-                                      borderRadius:
-                                          const BorderRadius.horizontal(
-                                              left: Radius.circular(5)),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                                          offset: Offset(
-                                            0,
-                                            4,
-                                          ),
-                                          blurRadius: 4,
-                                          spreadRadius: 0.0,
-                                        ),
-                                      ]),
-                                  child: TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          this.maptype = MapType.normal;
-                                          col1 = darkGreyColor;
-                                          col2 = const Color(0xffFF5C00);
-                                        });
-                                      },
-                                      child: const Text(
-                                        'Map',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      )),
-                                ),
-                                Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: col1,
-                                    borderRadius: const BorderRadius.horizontal(
-                                        right: Radius.circular(5)),
-                                  ),
-                                  child: TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          this.maptype = MapType.satellite;
-                                          col2 = darkGreyColor;
-                                          col1 = const Color(0xffFF5C00);
-                                        });
-                                      },
-                                      child: const Text('Satellite',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ))),
-                                )
-                              ],
-                            )),
-                      ),
-                      // Zoom In Button
-                      Positioned(
-                        right: 10,
-                        bottom: 100,
-                        child: SizedBox(
-                          height: 40,
-                          child: FloatingActionButton(
-                            heroTag: "btn2",
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            child: const Icon(Icons.zoom_in,
-                                size: 22, color: darkBlueColor),
-                            onPressed: () {
-                              setState(() {
-                                this.zoom = this.zoom + 0.5;
-                              });
-                              this
-                                  ._googleMapController
-                                  .animateCamera(CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      bearing: 0,
-                                      target: lastlatLngMarker,
-                                      zoom: this.zoom,
-                                    ),
-                                  ));
-                            },
-                          ),
-                        ),
-                      ),
-                      // Zoom out Button
-                      Positioned(
-                        right: 10,
-                        bottom: 50,
-                        child: SizedBox(
-                          height: 40,
-                          child: FloatingActionButton(
-                            heroTag: "btn3",
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            child: const Icon(Icons.zoom_out,
-                                size: 22, color: darkBlueColor),
-                            onPressed: () {
-                              setState(() {
-                                this.zoom = this.zoom - 0.5;
-                              });
-                              this
-                                  ._googleMapController
-                                  .animateCamera(CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      bearing: 0,
-                                      target: lastlatLngMarker,
-                                      zoom: this.zoom,
-                                    ),
-                                  ));
-                            },
-                          ),
-                        ),
-                      ),
-                      // stack button
-                      Positioned(
-                        right: 10,
-                        bottom: 150,
-                        child: SizedBox(
-                          height: 40,
-                          child: FloatingActionButton(
-                            heroTag: "btn4",
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            child: Container(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                'assets/icons/layers.png',
-                                width: 20,
-                                height: 20,
-                              ),
-                            )),
-                            onPressed: () {
-                              if (zoombutton) {
-                                setState(() {
-                                  this.zoom = 15;
-                                  zoombutton = false;
-                                });
-                                this._googleMapController.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                      CameraPosition(
-                                        bearing: 0,
-                                        target: lastlatLngMarker,
-                                        zoom: this.zoom,
-                                      ),
-                                    ));
-                              } else {
-                                setState(() {
-                                  this.zoom = 12;
-                                  zoombutton = true;
-                                });
-                                this._googleMapController.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                      CameraPosition(
-                                        bearing: 0,
-                                        target: LatLng(averagelat, averagelon),
-                                        zoom: this.zoom,
-                                      ),
-                                    ));
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ])),
-              ),
-              //Header
-              Positioned(
-                  top: 0,
-                  child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: white,
-                      child: Column(children: [
-                        Container(
+    return Responsive.isMobile(context)
+        ? SafeArea(
+            child: Scaffold(
+              backgroundColor: statusBarColor,
+              body: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showBottomMenu = !showBottomMenu;
+                  });
+                },
+                onPanEnd: (details) {
+                  if (details.velocity.pixelsPerSecond.dy > threshold) {
+                    this.setState(() {
+                      showBottomMenu = false;
+                    });
+                  } else if (details.velocity.pixelsPerSecond.dy < -threshold) {
+                    this.setState(() {
+                      showBottomMenu = true;
+                    });
+                  }
+                },
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: 0,
+                      top: -250,
+                      bottom: 0,
+                      child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: space_13,
-                          color: white,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    space_3, 10, space_3, 0),
-                                child: Header(
-                                    reset: false,
-                                    text: "${widget.truckNo} ",
-                                    backButton: true),
+                          height: height,
+                          child: Stack(children: <Widget>[
+                            loading_map && loadmap2 && loadmap3 ||
+                                    !(widget.online!) &&
+                                        loading_map //condition to show loadingIndicator until routes and map is created
+                                ? Container()
+                                : Center(
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      child: const CircularProgressIndicator(
+                                        color: darkBlueColor,
+                                      ),
+                                    ),
+                                  ),
+                            loadmap2 && loadmap3 ||
+                                    !(widget
+                                        .online!) //condition to show loadingIndicator until route is created
+                                ? GoogleMap(
+                                    onTap: (position) {
+                                      _customInfoWindowController
+                                          .hideInfoWindow!();
+                                      _customDetailsInfoWindowController
+                                          .hideInfoWindow!();
+                                    },
+                                    onCameraMove: (position) {
+                                      _customInfoWindowController
+                                          .onCameraMove!();
+                                      _customDetailsInfoWindowController
+                                          .onCameraMove!();
+                                    },
+                                    markers: customMarkers.toSet(),
+                                    polylines: Set.from(polylines.values),
+                                    myLocationButtonEnabled: true,
+                                    zoomControlsEnabled: false,
+                                    initialCameraPosition: camPosition,
+                                    compassEnabled: true,
+                                    mapType: maptype,
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      _controller.complete(controller);
+                                      _customInfoWindowController
+                                          .googleMapController = controller;
+                                      _customDetailsInfoWindowController
+                                          .googleMapController = controller;
+                                      setState(() {
+                                        loading_map =
+                                            true; //variable is made true when map is created.
+                                      });
+                                    },
+                                    gestureRecognizers:
+                                        <Factory<OneSequenceGestureRecognizer>>[
+                                      new Factory<OneSequenceGestureRecognizer>(
+                                        () => new EagerGestureRecognizer(),
+                                      ),
+                                    ].toSet(),
+                                  )
+                                : Center(
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.white,
+                                      child: Center(
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: darkBlueColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            CustomInfoWindow(
+                              controller: _customInfoWindowController,
+                              height: 110,
+                              width: 275,
+                              offset: 30,
+                            ),
+                            CustomInfoWindow(
+                              controller: _customDetailsInfoWindowController,
+                              height: 140,
+                              width: 300,
+                              offset: 0,
+                            ),
+                            Positioned(
+                              left: 10,
+                              top: 325,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                      width: 0.25,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            color: col2,
+                                            borderRadius:
+                                                const BorderRadius.horizontal(
+                                                    left: Radius.circular(5)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: const Color.fromRGBO(
+                                                    0, 0, 0, 0.25),
+                                                offset: const Offset(
+                                                  0,
+                                                  4,
+                                                ),
+                                                blurRadius: 4,
+                                                spreadRadius: 0.0,
+                                              ),
+                                            ]),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                this.maptype = MapType.normal;
+                                                col1 = darkGreyColor;
+                                                col2 = const Color(0xffFF5C00);
+                                              });
+                                            },
+                                            child: const Text(
+                                              'Map',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: col1,
+                                          borderRadius:
+                                              const BorderRadius.horizontal(
+                                                  right: Radius.circular(5)),
+                                        ),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                this.maptype =
+                                                    MapType.satellite;
+                                                col2 = darkGreyColor;
+                                                col1 = const Color(0xffFF5C00);
+                                              });
+                                            },
+                                            child: const Text('Satellite',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ))),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                            Positioned(
+                              right: 10,
+                              bottom: height / 2 + 90,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn2",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: const Icon(Icons.zoom_in,
+                                      size: 22, color: darkBlueColor),
+                                  onPressed: () {
+                                    setState(() {
+                                      this.zoom = this.zoom + 0.5;
+                                    });
+                                    this._googleMapController.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            bearing: 0,
+                                            target: lastlatLngMarker,
+                                            zoom: this.zoom,
+                                          ),
+                                        ));
+                                  },
+                                ),
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            ),
+                            Positioned(
+                              right: 10,
+                              bottom: height / 2 + 40,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn3",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: const Icon(Icons.zoom_out,
+                                      size: 22, color: Color(0xFF152968)),
+                                  onPressed: () {
+                                    setState(() {
+                                      this.zoom = this.zoom - 0.5;
+                                    });
+                                    this._googleMapController.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            bearing: 0,
+                                            target: lastlatLngMarker,
+                                            zoom: this.zoom,
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 10,
+                              bottom: height / 2 + 150,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn4",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: Container(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      'assets/icons/layers.png',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  )),
+                                  onPressed: () {
+                                    if (zoombutton) {
+                                      setState(() {
+                                        this.zoom = 15;
+                                        zoombutton = false;
+                                      });
+                                      this._googleMapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              bearing: 0,
+                                              target: lastlatLngMarker,
+                                              zoom: this.zoom,
+                                            ),
+                                          ));
+                                    } else {
+                                      setState(() {
+                                        this.zoom = 12;
+                                        zoombutton = true;
+                                      });
+                                      this._googleMapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              bearing: 0,
+                                              target: LatLng(
+                                                  averagelat, averagelon),
+                                              zoom: this.zoom,
+                                            ),
+                                          ));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 10,
+                              top: 325,
+                              child: Container(
+                                height: 40,
+                                width: 110,
+                                alignment: Alignment.centerRight,
+                                decoration: const BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(0, 0, 0, 0.19),
+                                        offset: Offset(
+                                          0,
+                                          5.33,
+                                        ),
+                                        blurRadius: 9.33,
+                                        spreadRadius: 0.0,
+                                      ),
+                                    ]),
                                 child: DropdownButton(
                                   underline: Container(),
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            bottomLeft: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: const Text('24 hours')),
+                                  hint: const Padding(
+                                    padding: EdgeInsets.only(right: 12.0),
+                                    child: Text('24 hours'),
                                   ),
                                   icon: Container(
                                     width: 36,
@@ -946,41 +939,494 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                   items: _locations.map((location) {
                                     return DropdownMenuItem(
                                       child: Container(
+                                          //  width: 74,
                                           child: new Text(location.tr)),
                                       value: location,
                                     );
                                   }).toList(),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ]))),
-              //Details
-              AnimatedPositioned(
-                curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 200),
-                top: space_13,
-                left: 0,
-                child: TrackScreenDetails(
-                  finalDistance: widget.totalDistance,
-                  gpsData: newGPSData,
-                  dateRange: selectedDate,
-                  TruckNo: widget.truckNo,
-                  gpsDataHistory: gpsDataHistory,
-                  gpsStoppageHistory: gpsStoppageHistory,
-                  stops: stoplatlong,
-                  totalRunningTime: totalRunningTime,
-                  totalStoppedTime: totalStoppedTime,
-                  deviceId: widget.deviceId,
-                  recentStops: gpsStoppageHistory,
-                  imei: widget.imei,
+                            ),
+                          ])),
+                    ),
+                    Positioned(
+                        top: 0,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: white,
+                            child: Column(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: space_13,
+                                color: white,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(
+                                          space_3, 0, space_3, 0),
+                                      child: Header(
+                                          reset: false,
+                                          text: "${widget.truckNo} ",
+                                          backButton: true),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 45),
+                                      child: Container(
+                                        child: Text(
+                                          "( $totalStatus )",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]))),
+                    AnimatedPositioned(
+                      curve: Curves.easeInOut,
+                      duration: Duration(milliseconds: 200),
+                      left: 0,
+                      bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
+                      child: TrackScreenDetails(
+                        finalDistance: widget.totalDistance,
+                        gpsData: newGPSData,
+                        dateRange: selectedDate,
+                        TruckNo: widget.truckNo,
+                        gpsDataHistory: gpsDataHistory,
+                        gpsStoppageHistory: gpsStoppageHistory,
+                        stops: stoplatlong,
+                        totalRunningTime: totalRunningTime,
+                        totalStoppedTime: totalStoppedTime,
+                        deviceId: widget.deviceId,
+                        recentStops: gpsStoppageHistory,
+                        imei: widget.imei,
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+              ),
+            ),
+          )
+        : SafeArea(
+            child: Scaffold(
+              backgroundColor: statusBarColor,
+              body: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showBottomMenu = !showBottomMenu;
+                  });
+                },
+                onPanEnd: (details) {
+                  if (details.velocity.pixelsPerSecond.dy > threshold) {
+                    this.setState(() {
+                      showBottomMenu = false;
+                    });
+                  } else if (details.velocity.pixelsPerSecond.dy < -threshold) {
+                    this.setState(() {
+                      showBottomMenu = true;
+                    });
+                  }
+                },
+                child: Stack(
+                  children: <Widget>[
+                    // Mapp
+                    Positioned(
+                      right: 0,
+                      top: space_13,
+                      child: Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          height: MediaQuery.of(context).size.height - space_13,
+                          child: Stack(children: <Widget>[
+                            loading_map && loadmap2 && loadmap3 ||
+                                    !(widget.online!) &&
+                                        loading_map //condition to show loadingIndicator until routes and map is created
+                                ? Container()
+                                : Center(
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      child: const CircularProgressIndicator(
+                                        color: darkBlueColor,
+                                      ),
+                                    ),
+                                  ),
+                            loadmap2 && loadmap3 ||
+                                    !(widget
+                                        .online!) //condition to show loadingIndicator until route is created
+                                ? GoogleMap(
+                                    onTap: (position) {
+                                      _customInfoWindowController
+                                          .hideInfoWindow!();
+                                      _customDetailsInfoWindowController
+                                          .hideInfoWindow!();
+                                    },
+                                    onCameraMove: (position) {
+                                      _customInfoWindowController
+                                          .onCameraMove!();
+                                      _customDetailsInfoWindowController
+                                          .onCameraMove!();
+                                    },
+                                    markers: customMarkers.toSet(),
+                                    polylines: Set.from(polylines.values),
+                                    myLocationButtonEnabled: true,
+                                    zoomControlsEnabled: false,
+                                    initialCameraPosition: camPosition,
+                                    compassEnabled: true,
+                                    mapType: maptype,
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      _controller.complete(controller);
+                                      _customInfoWindowController
+                                          .googleMapController = controller;
+                                      _customDetailsInfoWindowController
+                                          .googleMapController = controller;
+                                      setState(() {
+                                        loading_map =
+                                            true; //variable is made true when map is created.
+                                      });
+                                    },
+                                    gestureRecognizers:
+                                        <Factory<OneSequenceGestureRecognizer>>[
+                                      new Factory<OneSequenceGestureRecognizer>(
+                                        () => new EagerGestureRecognizer(),
+                                      ),
+                                    ].toSet(),
+                                  )
+                                : Center(
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.white,
+                                      child: Center(
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: darkBlueColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            CustomInfoWindow(
+                              controller: _customInfoWindowController,
+                              height: 110,
+                              width: 275,
+                              offset: 30,
+                            ),
+                            CustomInfoWindow(
+                              controller: _customDetailsInfoWindowController,
+                              height: 140,
+                              width: 300,
+                              offset: 0,
+                            ),
+                            // Map Button
+                            Positioned(
+                              left: 20,
+                              top: 20,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                      width: 0.25,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            color: col2,
+                                            borderRadius:
+                                                const BorderRadius.horizontal(
+                                                    left: Radius.circular(5)),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                color: Color.fromRGBO(
+                                                    0, 0, 0, 0.25),
+                                                offset: Offset(
+                                                  0,
+                                                  4,
+                                                ),
+                                                blurRadius: 4,
+                                                spreadRadius: 0.0,
+                                              ),
+                                            ]),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                this.maptype = MapType.normal;
+                                                col1 = darkGreyColor;
+                                                col2 = const Color(0xffFF5C00);
+                                              });
+                                            },
+                                            child: const Text(
+                                              'Map',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: col1,
+                                          borderRadius:
+                                              const BorderRadius.horizontal(
+                                                  right: Radius.circular(5)),
+                                        ),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                this.maptype =
+                                                    MapType.satellite;
+                                                col2 = darkGreyColor;
+                                                col1 = const Color(0xffFF5C00);
+                                              });
+                                            },
+                                            child: const Text('Satellite',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ))),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                            // Zoom In Button
+                            Positioned(
+                              right: 10,
+                              bottom: 100,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn2",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: const Icon(Icons.zoom_in,
+                                      size: 22, color: darkBlueColor),
+                                  onPressed: () {
+                                    setState(() {
+                                      this.zoom = this.zoom + 0.5;
+                                    });
+                                    this._googleMapController.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            bearing: 0,
+                                            target: lastlatLngMarker,
+                                            zoom: this.zoom,
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ),
+                            // Zoom out Button
+                            Positioned(
+                              right: 10,
+                              bottom: 50,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn3",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: const Icon(Icons.zoom_out,
+                                      size: 22, color: darkBlueColor),
+                                  onPressed: () {
+                                    setState(() {
+                                      this.zoom = this.zoom - 0.5;
+                                    });
+                                    this._googleMapController.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            bearing: 0,
+                                            target: lastlatLngMarker,
+                                            zoom: this.zoom,
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+                            ),
+                            // stack button
+                            Positioned(
+                              right: 10,
+                              bottom: 150,
+                              child: SizedBox(
+                                height: 40,
+                                child: FloatingActionButton(
+                                  heroTag: "btn4",
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  child: Container(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      'assets/icons/layers.png',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  )),
+                                  onPressed: () {
+                                    if (zoombutton) {
+                                      setState(() {
+                                        this.zoom = 15;
+                                        zoombutton = false;
+                                      });
+                                      this._googleMapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              bearing: 0,
+                                              target: lastlatLngMarker,
+                                              zoom: this.zoom,
+                                            ),
+                                          ));
+                                    } else {
+                                      setState(() {
+                                        this.zoom = 12;
+                                        zoombutton = true;
+                                      });
+                                      this._googleMapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              bearing: 0,
+                                              target: LatLng(
+                                                  averagelat, averagelon),
+                                              zoom: this.zoom,
+                                            ),
+                                          ));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ])),
+                    ),
+                    //Header
+                    Positioned(
+                        top: 0,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: white,
+                            child: Column(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: space_13,
+                                color: white,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(
+                                          space_3, 10, space_3, 0),
+                                      child: Header(
+                                          reset: false,
+                                          text: "${widget.truckNo} ",
+                                          backButton: true),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          10, 10, 10, 10),
+                                      child: DropdownButton(
+                                        underline: Container(),
+                                        hint: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 12.0),
+                                          child: Container(
+                                              decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(8),
+                                                  bottomLeft:
+                                                      Radius.circular(8),
+                                                ),
+                                              ),
+                                              child: const Text('24 hours')),
+                                        ),
+                                        icon: Container(
+                                          width: 36,
+                                          child: Row(children: [
+                                            Expanded(
+                                              child: Container(
+                                                width: 36,
+                                                height: 40,
+                                                decoration: const BoxDecoration(
+                                                  color: darkBlueColor,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(8),
+                                                    bottomRight:
+                                                        Radius.circular(8),
+                                                  ),
+                                                ),
+                                                child: const Icon(
+                                                    Icons.keyboard_arrow_down,
+                                                    size: 15,
+                                                    color: white),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                        style: TextStyle(
+                                            color: shareImageTextColor,
+                                            fontSize: size_6,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w400),
+                                        // Not necessary for Option 1
+                                        value: _selectedLocation,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            _selectedLocation =
+                                                newValue.toString();
+                                          });
+                                          customSelection(_selectedLocation);
+                                        },
+                                        items: _locations.map((location) {
+                                          return DropdownMenuItem(
+                                            child: Container(
+                                                child: new Text(location.tr)),
+                                            value: location,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]))),
+                    //Details
+                    AnimatedPositioned(
+                      curve: Curves.easeInOut,
+                      duration: const Duration(milliseconds: 200),
+                      top: space_13,
+                      left: 0,
+                      child: TrackScreenDetails(
+                        finalDistance: widget.totalDistance,
+                        gpsData: newGPSData,
+                        dateRange: selectedDate,
+                        TruckNo: widget.truckNo,
+                        gpsDataHistory: gpsDataHistory,
+                        gpsStoppageHistory: gpsStoppageHistory,
+                        stops: stoplatlong,
+                        totalRunningTime: totalRunningTime,
+                        totalStoppedTime: totalStoppedTime,
+                        deviceId: widget.deviceId,
+                        recentStops: gpsStoppageHistory,
+                        imei: widget.imei,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }

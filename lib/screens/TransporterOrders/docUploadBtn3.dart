@@ -23,7 +23,6 @@ class docUploadbtn3 extends StatelessWidget {
       height: 50,
       width: 130,
       alignment: Alignment.center,
-
       child: GestureDetector(
         child: imageFile == null
             ? Center(
@@ -50,11 +49,8 @@ class docUploadbtn3 extends StatelessWidget {
                   ),
                 ],
               ),
-        // )
-        //         ),
         onTap: onPressed,
       ),
-      // ],
     );
   }
 }
