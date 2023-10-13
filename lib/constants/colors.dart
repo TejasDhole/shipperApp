@@ -49,6 +49,10 @@ const Color darkBlueTextColor = Color.fromARGB(255, 21, 41, 104);
 const Color formBackground = Color.fromARGB(255, 245, 246, 250);
 const Color teamBar = Color.fromARGB(255, 245, 247, 251);
 const Color searchBar = Color.fromARGB(255, 143, 143, 143);
+const Color timelinesColor = Color.fromARGB(255, 47, 46, 65);
+const Color infoWindowColor = Color.fromARGB(255, 0, 0, 0);
+const Color vehicleDetailsText = Color.fromARGB(255, 9, 183, 120);
+const Color fastagAppBarColor = Color.fromARGB(255, 210, 210, 210);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 
