@@ -103,17 +103,9 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       ? Flexible(
                           child: GestureDetector(
                             onTap: () {
-                              // if (Responsive.isMobile(context)) {
                               Get.to(imageDisplayUsingApi(
                                 docLink: widget.docLinks[0].toString(),
                               ));
-                              // } else {
-                              //   previewUploadedImage.updatePreviewImage(
-                              //       widget.docLinks[0].toString());
-
-                              //   previewUploadedImage.updateIndex(0);
-                              //   imageDownload(context);
-                              // }
                             },
                             child: Stack(
                               children: [
@@ -149,17 +141,9 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       ? Flexible(
                           child: GestureDetector(
                             onTap: () {
-                              // if (Responsive.isMobile(context)) {
                               Get.to(imageDisplayUsingApi(
                                 docLink: widget.docLinks[1].toString(),
                               ));
-                              // } else {
-                              //   previewUploadedImage.updatePreviewImage(
-                              //       widget.docLinks[1].toString());
-
-                              //   previewUploadedImage.updateIndex(1);
-                              //   imageDownload(context);
-                              // }
                             },
                             child: Stack(
                               children: [
@@ -195,17 +179,9 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       ? Flexible(
                           child: GestureDetector(
                             onTap: () {
-                              // if (Responsive.isMobile(context)) {
                               Get.to(imageDisplayUsingApi(
                                 docLink: widget.docLinks[2].toString(),
                               ));
-                              // } else {
-                              //   previewUploadedImage.updatePreviewImage(
-                              //       widget.docLinks[2].toString());
-
-                              //   previewUploadedImage.updateIndex(2);
-                              //   imageDownload(context);
-                              // }
                             },
                             child: Stack(
                               children: [
@@ -241,17 +217,9 @@ class _uploadedDocsState extends State<uploadedDocs> {
                       ? Flexible(
                           child: GestureDetector(
                             onTap: () {
-                              // if (Responsive.isMobile(context)) {
                               Get.to(imageDisplayUsingApi(
                                 docLink: widget.docLinks[3].toString(),
                               ));
-                              // } else {
-                              //   previewUploadedImage.updatePreviewImage(
-                              //       widget.docLinks[3].toString());
-
-                              //   previewUploadedImage.updateIndex(3);
-                              //   imageDownload(context);
-                              // }
                             },
                             child: Stack(
                               children: [
@@ -288,170 +256,6 @@ class _uploadedDocsState extends State<uploadedDocs> {
             child: GestureDetector(
             onTap: () => imageDownload(context),
           ));
-    // : Row(
-    //     children: [
-    //       widget.verified
-    //           ? Flexible(
-    //               child: Container(
-    //                 margin: const EdgeInsets.only(right: 3, top: 4),
-    //                 height: 120,
-    //                 width: 180,
-    //                 child: const Image(
-    //                   image: AssetImage("assets/images/verifiedDoc.png"),
-    //                 ),
-    //               ),
-    //             )
-    //           : Container(),
-    //       widget.docLinks.isNotEmpty
-    //           ? i1
-    //               ? GestureDetector(
-    //                   onTap: () {
-    //                     // if (Responsive.isMobile(context)) {
-    //                     //   Get.to(imageDisplayUsingApi(
-    //                     //     docLink: widget.docLinks[0].toString(),
-    //                     //   ));
-    //                     // } else {
-    //                     previewUploadedImage.updatePreviewImage(
-    //                         widget.docLinks[0].toString());
-
-    //                     previewUploadedImage.updateIndex(0);
-    //                     imageDownload(context);
-    //                     // }
-    //                   },
-    //                   child: Stack(
-    //                     children: [
-    //                       Center(
-    //                         child: Container(
-    //                           color: whiteBackgroundColor,
-    //                           margin:
-    //                               const EdgeInsets.only(right: 3, top: 4),
-    //                           height: 120,
-    //                           width: 180,
-    //                           child: Image(
-    //                             image: NetworkImage(
-    //                               "$proxyServer${widget.docLinks[0].toString()}",
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 )
-    //               : Container()
-    //           : Container(),
-    //       widget.docLinks.length > 1
-    //           ? i2
-    //               ? GestureDetector(
-    //                   onTap: () {
-    //                     // if (Responsive.isMobile(context)) {
-    //                     //   Get.to(imageDisplayUsingApi(
-    //                     //     docLink: widget.docLinks[1].toString(),
-    //                     //   ));
-    //                     // } else {
-    //                     previewUploadedImage.updatePreviewImage(
-    //                         widget.docLinks[1].toString());
-
-    //                     previewUploadedImage.updateIndex(1);
-    //                     imageDownload(context);
-    //                     //  }
-    //                   },
-    //                   child: Stack(
-    //                     children: [
-    //                       Center(
-    //                         child: Container(
-    //                           color: whiteBackgroundColor,
-    //                           margin:
-    //                               const EdgeInsets.only(right: 3, top: 4),
-    //                           height: 120,
-    //                           width: 180,
-    //                           child: Image(
-    //                             image: NetworkImage(
-    //                               "$proxyServer${widget.docLinks[1].toString()}",
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 )
-    //               : Container()
-    //           : Container(),
-    //       widget.docLinks.length > 2
-    //           ? i3
-    //               ? GestureDetector(
-    //                   onTap: () {
-    //                     // if (Responsive.isMobile(context)) {
-    //                     //   Get.to(imageDisplayUsingApi(
-    //                     //     docLink: widget.docLinks[2].toString(),
-    //                     //   ));
-    //                     // } else {
-    //                     previewUploadedImage.updatePreviewImage(
-    //                         widget.docLinks[2].toString());
-
-    //                     previewUploadedImage.updateIndex(2);
-    //                     imageDownload(context);
-    //                     // }
-    //                   },
-    //                   child: Stack(
-    //                     children: [
-    //                       Center(
-    //                         child: Container(
-    //                           color: whiteBackgroundColor,
-    //                           margin:
-    //                               const EdgeInsets.only(right: 3, top: 4),
-    //                           height: 120,
-    //                           width: 180,
-    //                           child: Image(
-    //                             image: NetworkImage(
-    //                               "$proxyServer${widget.docLinks[2].toString()}",
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 )
-    //               : Container()
-    //           : Container(),
-    //       widget.docLinks.length > 3
-    //           ? i4
-    //               ? GestureDetector(
-    //                   onTap: () {
-    //                     // if (Responsive.isMobile(context)) {
-    //                     //   Get.to(imageDisplayUsingApi(
-    //                     //     docLink: widget.docLinks[3].toString(),
-    //                     //   ));
-    //                     // } else {
-    //                     previewUploadedImage.updatePreviewImage(
-    //                         widget.docLinks[3].toString());
-
-    //                     previewUploadedImage.updateIndex(3);
-    //                     imageDownload(context);
-    //                     // }
-    //                   },
-    //                   child: Stack(
-    //                     children: [
-    //                       Center(
-    //                         child: Container(
-    //                           color: whiteBackgroundColor,
-    //                           margin:
-    //                               const EdgeInsets.only(right: 3, top: 4),
-    //                           height: 120,
-    //                           width: 180,
-    //                           child: Image(
-    //                             image: NetworkImage(
-    //                               "$proxyServer${widget.docLinks[3].toString()}",
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 )
-    //               : Container()
-    //           : Container(),
-    //     ],
-    //   );
   }
 
   Future<void> imageDownload(BuildContext context) {
