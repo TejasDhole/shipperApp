@@ -7,11 +7,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shipper_app/functions/get_role_of_employee.dart';
+import 'package:shipper_app/functions/traccarCalls/createUserTraccar.dart';
 import '../create_company_database.dart';
 import '../shipperId_fromCompaniesDatabase.dart';
 import '/controller/shipperIdController.dart';
-import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 GetStorage sidstorage = GetStorage('ShipperIDStorage');
@@ -26,13 +25,6 @@ Future<String?> runShipperApiPost({
   String? userLocation,
 }) async {
   try {
-    // var mUser = FirebaseAuth.instance.currentUser;
-    // String? firebaseToken;
-    // await mUser!.getIdToken(true).then((value) {
-    //   // log(value);
-    //   firebaseToken = value;
-    // });
-
     ShipperIdController shipperIdController =
         Get.put(ShipperIdController(), permanent: true);
 
@@ -50,9 +42,6 @@ Future<String?> runShipperApiPost({
             "shipperLocation": address,
           };
 
-    print(data);
-
-    // print("printed from runShipperApiPost: ${Uri.parse(shipperApiUrl)}");
     String body = json.encode(data);
     final response = await http.post(Uri.parse(shipperApiUrl),
         headers: <String, String>{
@@ -61,19 +50,10 @@ Future<String?> runShipperApiPost({
         },
         body: body);
 
-    // print("response $response");
-    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%got the response");
 
-    if (!kIsWeb) {
-      FirebaseMessaging.instance.getToken().then((value) {
-        if (value != null) {
-          // log("firebase registration token =========> " + value);
-        }
-        //TODO : Have update or change traccar usage for shipper, Need to update by me
-        createTraccarUserAndNotifications(value, phoneNo);
-      });
+    if (FirebaseAuth.instance.currentUser != null) {
+      createUserTraccar(phoneNo);
     }
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
       if (decodedResponse["shipperId"] != null) {
@@ -138,7 +118,6 @@ Future<String?> runShipperApiPost({
         getShipperIdFromCompanyDatabase();
         return shipperId;
       } else {
-        // print("shipperId is null");
         return null;
       }
     } else {
@@ -146,7 +125,6 @@ Future<String?> runShipperApiPost({
       return null;
     }
   } catch (e) {
-    // print("in catch block*********************************************");
     print(e);
     return null;
   }

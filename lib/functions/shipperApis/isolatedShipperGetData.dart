@@ -8,11 +8,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/functions/traccarCalls/createUserTraccar.dart';
 import '../get_role_of_employee.dart';
 import '/controller/shipperIdController.dart';
+
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
-import '/functions/traccarCalls/createTraccarUserAndNotifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -38,14 +39,10 @@ Future<dynamic> apirun2() async {
           .replaceFirst("+91", ""));
   count = count + 1;
   print(count);
-  // print("response = ");
-  // print(response);
   if (response != null ||
       count == 5 ||
       FirebaseAuth.instance.currentUser == null) {
-    // setState(() {
     exe = false;
-    // });
   }
 
   return response;
@@ -56,14 +53,6 @@ GetStorage sidstorage = GetStorage('ShipperIDStorage');
 Future<String?> runShipperApiPostIsolated(
     {required String emailId, String? userLocation, String? phoneNo}) async {
   try {
-    // print("in the try block of api file");
-    // var mUser = FirebaseAuth.instance.currentUser;
-    // String? firebaseToken;
-    // await mUser!.getIdToken(true).then((value) {
-    //   // log(value);
-    //   firebaseToken = value;
-    // });
-
     ShipperIdController shipperIdController =
         Get.put(ShipperIdController(), permanent: true);
 
@@ -81,20 +70,10 @@ Future<String?> runShipperApiPostIsolated(
           // HttpHeaders.authorizationHeader: firebaseToken!
         },
         body: body);
-    // print(response.body);
-    // print("here api call stopped");
 
-    // print(FirebaseAuth.instance.currentUser != null && !kIsWeb);
-    if (FirebaseAuth.instance.currentUser != null && !kIsWeb) {
-      FirebaseMessaging.instance.getToken().then((value) {
-        if (value != null) {
-          log("firebase registration token =========> " + value);
-        }
-        createTraccarUserAndNotifications(value, phoneNo);
-      });
+    if (FirebaseAuth.instance.currentUser != null) {
+      createUserTraccar(phoneNo);
     }
-
-    // print("'from runShipperApiPostIsolated' response statue code: ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
@@ -102,8 +81,6 @@ Future<String?> runShipperApiPostIsolated(
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
-        // debugPrint(shipperId);
-        // debugPrint("*********************************************************$shipperId");
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
