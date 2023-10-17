@@ -580,10 +580,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double threshold = 100;
-    return
-        // Responsive.isMobile(context)
-        //     ?
-        SafeArea(
+    return SafeArea(
       child: Scaffold(
         backgroundColor: statusBarColor,
         body: GestureDetector(
@@ -807,7 +804,7 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                             child: const Icon(Icons.zoom_out,
-                                size: 22, color: Color(0xFF152968)),
+                                size: 22, color: darkBlueColor),
                             onPressed: () {
                               setState(() {
                                 this.zoom = this.zoom - 0.5;

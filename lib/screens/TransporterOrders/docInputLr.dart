@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_downloader_web/image_downloader_web.dart';
-import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
 import 'package:shipper_app/functions/uploadingDoc.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:image_picker/image_picker.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-import '/constants/spaces.dart';
 import '/language/localization_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/screens/TransporterOrders/uploadedDocs.dart';
@@ -41,8 +38,6 @@ class _docInputLrState extends State<docInputLr> {
   bool showUploadedDocs = true;
   bool verified = false;
   bool showAddMoreDoc = true;
-  bool downloaded = false;
-  bool downloading = false;
   var jsonresponse;
   var docLinks = [];
   String? currentLang;
@@ -108,10 +103,6 @@ class _docInputLrState extends State<docInputLr> {
 
     bookid = widget.bookingId.toString();
     uploadedCheck();
-  }
-
-  void _saveNetworkImage(String path) async {
-    await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
   }
 
   String? docType;
@@ -475,43 +466,5 @@ class _docInputLrState extends State<docInputLr> {
       strToUpdate(img64);
       setState(() {});
     }
-  }
-
-  Future<void> uploadDoc(BuildContext context, var onPressed, var imageFile) {
-    return showDialog<void>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: GestureDetector(
-              child: imageFile == null
-                  ? Center(
-                      child: Image(
-                          image: AssetImage("assets/images/uploadImage.png")),
-                    )
-                  : Stack(
-                      children: [
-                        Center(
-                            child: imageFile != null
-                                ? Image(image: Image.file(imageFile).image)
-                                : Container()),
-                        Center(
-                          child: imageFile == null
-                              ? Center(
-                                  child: Container(),
-                                )
-                              : Center(
-                                  child: Text(
-                                    "Tap to Open",
-                                    style: TextStyle(
-                                        fontSize: size_6, color: liveasyGreen),
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-              onTap: onPressed,
-            ),
-          );
-        });
   }
 }

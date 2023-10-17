@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
 import 'package:shipper_app/functions/uploadingDoc.dart';
 import 'package:shipper_app/responsive.dart';
-// import 'package:shipper_app/screens/TransporterOrders/docUploadBtn3.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-import '/constants/spaces.dart';
 import '/language/localization_service.dart';
 import '/screens/TransporterOrders/uploadedDocs.dart';
-// import '../../constants/radius.dart';
 import '../../widgets/accountVerification/image_display.dart';
 import 'docUploadBtn2.dart';
 import 'dart:convert';
 import 'dart:io';
-// import '/functions/getImageFromGallery.dart';
 import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
@@ -45,8 +39,6 @@ class _docInputEWBillState extends State<docInputEWBill> {
   bool showUploadedDocs = true;
   bool verified = false;
   bool showAddMoreDoc = true;
-  bool downloaded = false;
-  bool downloading = false;
   var jsonresponse;
   var docLinks = [];
   String? viewImage;
@@ -70,7 +62,6 @@ class _docInputEWBillState extends State<docInputEWBill> {
 
       previewUploadedImage.updateIndex(0);
     }
-    print(docLinks);
     if (docLinks.isNotEmpty) {
       setState(() {
         showUploadedDocs = false;
@@ -111,12 +102,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
         addDocImageEngMobile = addDocImageHindiMobile;
       });
     }
-
     uploadedCheck();
-  }
-
-  void _saveNetworkImage(String path) async {
-    await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
   }
 
   @override
@@ -147,7 +133,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                   )
                 : Container(),
             Responsive.isMobile(context)
-                ? Container(
+                ? SizedBox(
                     height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,7 +156,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                                       height: 130,
                                       width: 170,
                                       child: verified
-                                          ? Image(
+                                          ? const Image(
                                               image: AssetImage(
                                                   "assets/images/verifiedDoc.png"))
                                           : docUploadbtn2(
@@ -468,7 +454,6 @@ class _docInputEWBillState extends State<docInputEWBill> {
         strToUpdate(img64);
       } else {
         showDialog(context: context, builder: (context) => PermissionDialog());
-        // }
       }
     } else {
       final picker;
@@ -485,43 +470,5 @@ class _docInputEWBillState extends State<docInputEWBill> {
       strToUpdate(img64);
       setState(() {});
     }
-  }
-
-  Future<void> uploadDoc(BuildContext context, var onPressed, var imageFile) {
-    return showDialog<void>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: GestureDetector(
-              child: imageFile == null
-                  ? Center(
-                      child: Image(
-                          image: AssetImage("assets/images/uploadImage.png")),
-                    )
-                  : Stack(
-                      children: [
-                        Center(
-                            child: imageFile != null
-                                ? Image(image: Image.file(imageFile).image)
-                                : Container()),
-                        Center(
-                          child: imageFile == null
-                              ? Center(
-                                  child: Container(),
-                                )
-                              : Center(
-                                  child: Text(
-                                    "Tap to Open",
-                                    style: TextStyle(
-                                        fontSize: size_6, color: liveasyGreen),
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-              onTap: onPressed,
-            ),
-          );
-        });
   }
 }

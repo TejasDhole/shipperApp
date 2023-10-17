@@ -42,8 +42,6 @@ class _docInputPodState extends State<docInputPod> {
   bool showUploadedDocs = true;
   bool verified = false;
   bool showAddMoreDoc = true;
-  bool downloaded = false;
-  bool downloading = false;
   var jsonresponse;
   var docLinks = [];
 
@@ -525,7 +523,7 @@ class _docInputPodState extends State<docInputPod> {
                   child: ListTile(
                     textColor: black,
                     iconColor: black,
-                    leading: Icon(Icons.photo_camera),
+                    leading: const Icon(Icons.photo_camera),
                     title: Text("Camera".tr),
                     onTap: () async {
                       await getImageFromCamera2(
@@ -600,43 +598,5 @@ class _docInputPodState extends State<docInputPod> {
       strToUpdate(img64);
       setState(() {});
     }
-  }
-
-  Future<void> uploadDoc(BuildContext context, var onPressed, var imageFile) {
-    return showDialog<void>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: GestureDetector(
-              child: imageFile == null
-                  ? Center(
-                      child: Image(
-                          image: AssetImage("assets/images/uploadImage.png")),
-                    )
-                  : Stack(
-                      children: [
-                        Center(
-                            child: imageFile != null
-                                ? Image(image: Image.file(imageFile).image)
-                                : Container()),
-                        Center(
-                          child: imageFile == null
-                              ? Center(
-                                  child: Container(),
-                                )
-                              : Center(
-                                  child: Text(
-                                    "Tap to Open",
-                                    style: TextStyle(
-                                        fontSize: size_6, color: liveasyGreen),
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-              onTap: onPressed,
-            ),
-          );
-        });
   }
 }
