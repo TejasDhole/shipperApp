@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 Future<List<AutoFillMMIModel>> fillCity(String cityName) async {
   var logger = Logger();
 
-  // logger.i("fillcity called");
   if (cityName.length > 1) {
     List<AutoFillMMIModel> card = [];
     List<CityModel> citydetails = [];
@@ -13,6 +12,7 @@ Future<List<AutoFillMMIModel>> fillCity(String cityName) async {
         cityName); //spott api of rapid api is used for place autosuggestion.
     for (var i = 0; i < citydetails.length; i++) {
       AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+          placeId: '',
           placeName: "${citydetails[i].name}",
           placeCityName: "",
           placeStateName: "${citydetails[i].adminDivision1!.name}");

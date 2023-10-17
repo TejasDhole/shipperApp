@@ -71,6 +71,7 @@ Future<List<AutoFillMMIModel>> fillCityName(String cityName) async {
     List<AutoFillMMIModel> card = [];
     for (var json in address) {
       AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+          placeId: '',
           placeName: json[""],
           placeCityName: json["placeName"],
           placeStateName: json["placeAddress"]);
