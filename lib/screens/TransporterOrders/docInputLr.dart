@@ -73,7 +73,6 @@ class _docInputLrState extends State<docInputLr> {
   }
 
   verifiedCheck() async {
-    print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
 
     if (jsonresponse == true) {
@@ -88,8 +87,6 @@ class _docInputLrState extends State<docInputLr> {
   @override
   void initState() {
     super.initState();
-
-    print(LocalizationService().getCurrentLocale());
     currentLang = LocalizationService().getCurrentLocale().toString();
 
     if (currentLang == "hi_IN") {
@@ -290,15 +287,17 @@ class _docInputLrState extends State<docInputLr> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              docLinks.isNotEmpty
-                                  ? const Text("1+ Images ",
+                              docLinks.length == 1
+                                  ? const Text(" 1 Images",
                                       style: TextStyle(
                                         fontSize: 15,
                                       ))
-                                  : const Text(" No Images",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      )),
+                                  : docLinks.isNotEmpty
+                                      ? const Text("1+ Images ",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ))
+                                      : const Text(" No Image"),
                               const SizedBox(
                                 width: 70,
                               ),

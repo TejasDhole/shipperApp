@@ -168,8 +168,8 @@ Future<void> imageDownload(BuildContext context, var docLinks) {
                     children: [
                       Container(
                         margin: const EdgeInsets.all(30),
-                        height: 20,
-                        width: 20,
+                        height: 10,
+                        width: 10,
                         child: const CircularProgressIndicator(
                           color: darkBlueColor,
                         ),

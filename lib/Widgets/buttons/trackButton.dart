@@ -18,7 +18,6 @@ import '/constants/spaces.dart';
 import '/functions/mapUtils/getLoactionUsingImei.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/screens/trackScreen.dart';
-
 import 'package:logger/logger.dart';
 
 // ignore: must_be_immutable

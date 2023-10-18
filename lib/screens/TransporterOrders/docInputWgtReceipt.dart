@@ -287,15 +287,17 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              docLinks.isNotEmpty
-                                  ? const Text("1+ Images ",
+                              docLinks.length == 1
+                                  ? const Text(" 1 Images",
                                       style: TextStyle(
                                         fontSize: 15,
                                       ))
-                                  : const Text(" No Images",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      )),
+                                  : docLinks.isNotEmpty
+                                      ? const Text("1+ Images ",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ))
+                                      : const Text(" No Image"),
                               const SizedBox(
                                 width: 70,
                               ),

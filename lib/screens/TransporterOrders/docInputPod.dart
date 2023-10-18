@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
 import 'package:shipper_app/functions/uploadingDoc.dart';
@@ -106,10 +105,6 @@ class _docInputPodState extends State<docInputPod> {
     }
 
     uploadedCheck();
-  }
-
-  void _saveNetworkImage(String path) async {
-    await WebImageDownloader.downloadImageFromWeb(path, imageQuality: 0.5);
   }
 
   @override
@@ -297,15 +292,17 @@ class _docInputPodState extends State<docInputPod> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              docLinks.isNotEmpty
-                                  ? const Text("1+ Images ",
+                              docLinks.length == 1
+                                  ? const Text(" 1 Images",
                                       style: TextStyle(
                                         fontSize: 15,
                                       ))
-                                  : const Text(" No Images",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      )),
+                                  : docLinks.isNotEmpty
+                                      ? const Text("1+ Images ",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ))
+                                      : const Text(" No Image"),
                               const SizedBox(
                                 width: 70,
                               ),
