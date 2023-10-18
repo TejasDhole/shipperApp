@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
@@ -601,13 +602,18 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
           },
           child: Stack(
             children: <Widget>[
-              // Mapp
               Positioned(
-                right: 0,
-                top: space_13,
-                child: Container(
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    height: MediaQuery.of(context).size.height - space_13,
+                left: Responsive.isMobile(context) ? 0 : null,
+                right: Responsive.isMobile(context) ? null : 0,
+                top: Responsive.isMobile(context) ? -250 : space_13,
+                bottom: Responsive.isMobile(context) ? 0 : null,
+                child: SizedBox(
+                    width: Responsive.isMobile(context)
+                        ? MediaQuery.of(context).size.width
+                        : MediaQuery.of(context).size.width / 1.5,
+                    height: Responsive.isMobile(context)
+                        ? height
+                        : MediaQuery.of(context).size.height - space_13,
                     child: Stack(children: <Widget>[
                       loading_map && loadmap2 && loadmap3 ||
                               !(widget.online!) &&
@@ -689,10 +695,9 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                         width: 300,
                         offset: 0,
                       ),
-                      // Map Button
                       Positioned(
-                        left: 20,
-                        top: 20,
+                        left: Responsive.isMobile(context) ? 10 : 20,
+                        top: Responsive.isMobile(context) ? 325 : 20,
                         child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -758,10 +763,11 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                               ],
                             )),
                       ),
-                      // Zoom In Button
                       Positioned(
                         right: 10,
-                        bottom: 100,
+                        bottom: Responsive.isMobile(context)
+                            ? height / 2 + 90
+                            : 100,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -787,10 +793,10 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // Zoom out Button
                       Positioned(
                         right: 10,
-                        bottom: 50,
+                        bottom:
+                            Responsive.isMobile(context) ? height / 2 + 40 : 50,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -816,10 +822,11 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                      // stack button
                       Positioned(
                         right: 10,
-                        bottom: 150,
+                        bottom: Responsive.isMobile(context)
+                            ? height / 2 + 150
+                            : 150,
                         child: SizedBox(
                           height: 40,
                           child: FloatingActionButton(
@@ -867,46 +874,35 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                           ),
                         ),
                       ),
-                    ])),
-              ),
-              //Header
-              Positioned(
-                  top: 0,
-                  child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: white,
-                      child: Column(children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: space_13,
-                          color: white,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    space_3, 10, space_3, 0),
-                                child: Header(
-                                    reset: false,
-                                    text: "${widget.truckNo} ",
-                                    backButton: true),
-                              ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      Responsive.isMobile(context)
+                          ? Positioned(
+                              right: 10,
+                              top: 325,
+                              child: Container(
+                                height: 40,
+                                width: 110,
+                                alignment: Alignment.centerRight,
+                                decoration: const BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(0, 0, 0, 0.19),
+                                        offset: Offset(
+                                          0,
+                                          5.33,
+                                        ),
+                                        blurRadius: 9.33,
+                                        spreadRadius: 0.0,
+                                      ),
+                                    ]),
                                 child: DropdownButton(
                                   underline: Container(),
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8),
-                                            bottomLeft: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: const Text('24 hours')),
+                                  hint: const Padding(
+                                    padding: EdgeInsets.only(right: 12.0),
+                                    child: Text('24 hours'),
                                   ),
                                   icon: Container(
                                     width: 36,
@@ -946,22 +942,154 @@ class _TrackScreenState extends State<TrackScreen> with WidgetsBindingObserver {
                                   items: _locations.map((location) {
                                     return DropdownMenuItem(
                                       child: Container(
+                                          //  width: 74,
                                           child: new Text(location.tr)),
                                       value: location,
                                     );
                                   }).toList(),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ]))),
-              //Details
+                            )
+                          : Container(),
+                    ])),
+              ),
+              Responsive.isMobile(context)
+                  ? Positioned(
+                      top: 0,
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: white,
+                          child: Column(children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: space_13,
+                              color: white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        space_3, 0, space_3, 0),
+                                    child: Header(
+                                        reset: false,
+                                        text: "${widget.truckNo} ",
+                                        backButton: true),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 45),
+                                    child: Container(
+                                      child: Text(
+                                        "( $totalStatus )",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ])))
+                  : Container(),
+              Responsive.isMobile(context)
+                  ? Container()
+                  : Positioned(
+                      top: 0,
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: white,
+                          child: Column(children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: space_13,
+                              color: white,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        space_3, 10, space_3, 0),
+                                    child: Header(
+                                        reset: false,
+                                        text: "${widget.truckNo} ",
+                                        backButton: true),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        10, 10, 10, 10),
+                                    child: DropdownButton(
+                                      underline: Container(),
+                                      hint: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 12.0),
+                                        child: Container(
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(8),
+                                                bottomLeft: Radius.circular(8),
+                                              ),
+                                            ),
+                                            child: const Text('24 hours')),
+                                      ),
+                                      icon: Container(
+                                        width: 36,
+                                        child: Row(children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: 36,
+                                              height: 40,
+                                              decoration: const BoxDecoration(
+                                                color: darkBlueColor,
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(8),
+                                                  bottomRight:
+                                                      Radius.circular(8),
+                                                ),
+                                              ),
+                                              child: const Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  size: 15,
+                                                  color: white),
+                                            ),
+                                          ),
+                                        ]),
+                                      ),
+                                      style: TextStyle(
+                                          color: shareImageTextColor,
+                                          fontSize: size_6,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w400),
+                                      // Not necessary for Option 1
+                                      value: _selectedLocation,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _selectedLocation =
+                                              newValue.toString();
+                                        });
+                                        customSelection(_selectedLocation);
+                                      },
+                                      items: _locations.map((location) {
+                                        return DropdownMenuItem(
+                                          child: Container(
+                                              child: new Text(location.tr)),
+                                          value: location,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]))),
               AnimatedPositioned(
                 curve: Curves.easeInOut,
                 duration: const Duration(milliseconds: 200),
-                top: space_13,
+                top: Responsive.isMobile(context) ? null : space_13,
                 left: 0,
+                bottom: (showBottomMenu) ? 0 : -(height / 3) + 44,
                 child: TrackScreenDetails(
                   finalDistance: widget.totalDistance,
                   gpsData: newGPSData,

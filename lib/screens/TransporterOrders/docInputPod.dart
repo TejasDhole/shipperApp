@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
+import 'package:shipper_app/functions/uploadingDoc.dart';
 import 'package:shipper_app/responsive.dart';
-import 'package:shipper_app/screens/TransporterOrders/docUploadBtn3.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
 import '/constants/fontWeights.dart';
@@ -19,8 +19,6 @@ import 'dart:io';
 import '/widgets/alertDialog/permissionDialog.dart';
 import 'dart:io' as Io;
 import 'package:permission_handler/permission_handler.dart';
-//import 'getDocApiCallVerify.dart';
-//import 'getDocumentApiCall.dart';
 import '/functions/documentApi/getDocApiCallVerify.dart';
 import '/functions/documentApi/getDocumentApiCall.dart';
 
@@ -81,7 +79,6 @@ class _docInputPodState extends State<docInputPod> {
 
   verifiedCheck() async {
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "P");
-    print(jsonresponse);
     if (jsonresponse == true) {
       setState(() {
         verified = true;
@@ -116,7 +113,7 @@ class _docInputPodState extends State<docInputPod> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: screenHeight * 0.3,
+        height: Responsive.isMobile(context) ? screenHeight * 0.3 : 140,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -138,27 +135,7 @@ class _docInputPodState extends State<docInputPod> {
                   )
                 : Container(),
             Responsive.isMobile(context)
-                ? Container()
-                : Stack(children: [
-                    docLinks.isNotEmpty
-                        ? SizedBox(
-                            height: 320,
-                            width: 730,
-                            child: Obx(() {
-                              return Image.network(Uri.encodeFull(
-                                "$proxyServer${previewUploadedImage.previewImage.toString()}",
-                              ));
-                            }),
-                          )
-                        : Container(),
-                  ]),
-            Responsive.isMobile(context)
-                ? Container()
-                : SizedBox(
-                    height: space_12,
-                  ),
-            Responsive.isMobile(context)
-                ? Container(
+                ? SizedBox(
                     height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,11 +153,12 @@ class _docInputPodState extends State<docInputPod> {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(right: 3, top: 4),
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
                                       height: 130,
                                       width: 170,
                                       child: verified
-                                          ? Image(
+                                          ? const Image(
                                               image: AssetImage(
                                                   "assets/images/verifiedDoc.png"))
                                           : docUploadbtn2(
@@ -215,7 +193,7 @@ class _docInputPodState extends State<docInputPod> {
                             ? showAddMoreDoc
                                 ? (widget.providerData.PodPhotoFile == null)
                                     ? Flexible(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
@@ -242,90 +220,125 @@ class _docInputPodState extends State<docInputPod> {
                       ],
                     ),
                   )
-                : SizedBox(
-                    height: 450,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        !showUploadedDocs
-                            ? uploadedDocs(
-                                docLinks: docLinks,
-                                verified: verified,
-                              )
-                            : Stack(
-                                children: [
-                                  Container(
-                                    margin:
-                                        const EdgeInsets.only(right: 3, top: 4),
-                                    height: 420,
-                                    width: 878,
-                                    child: verified
-                                        ? const Image(
-                                            image: AssetImage(
-                                                "assets/images/verifiedDoc.png"))
-                                        : docUploadbtn2(
-                                            assetImage: addDocImageEng,
-                                            onPressed: () async {
-                                              widget.providerData
-                                                          .PodPhotoFile !=
-                                                      null
-                                                  ? Get.to(ImageDisplay(
-                                                      providerData: widget
-                                                          .providerData
-                                                          .PodPhotoFile,
-                                                      imageName: 'PodPhoto64',
-                                                    ))
-                                                  : showUploadedDocs
-                                                      ? showPickerDialog(
-                                                          widget.providerData
-                                                              .updatePodPhoto,
-                                                          widget.providerData
-                                                              .updatePodPhotoStr,
-                                                          context)
-                                                      : null;
-                                            },
-                                            imageFile: widget
-                                                .providerData.PodPhotoFile,
-                                          ),
-                                  ),
-                                ],
-                              ),
-                        docLinks.length < 4 && docLinks.isNotEmpty
-                            ? showAddMoreDoc
-                                ? (widget.providerData.PodPhotoFile == null)
-                                    ? Flexible(
-                                        child: SizedBox(
-                                          height: 110,
-                                          width: 170,
-                                          child: docUploadbtn3(
-                                            assetImage: addMoreDocImageEng,
-                                            onPressed: () async {
-                                              if (widget.providerData
-                                                      .PodPhotoFile ==
-                                                  null) {
-                                                showPickerDialog(
-                                                    widget.providerData
-                                                        .updatePodPhoto,
-                                                    widget.providerData
-                                                        .updatePodPhotoStr,
-                                                    context);
-                                              }
-                                            },
-                                            imageFile: null,
-                                          ),
-                                          // ],
-                                        ),
-                                      )
-                                    : Container()
-                                : Container()
-                            : Container(),
-                      ],
+                : Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: const BorderSide(
+                          color: Color.fromRGBO(0, 0, 255, 0.27), width: 2.0),
                     ),
-                  ),
-            Responsive.isMobile(context)
-                ? Container()
-                : SizedBox(
-                    height: space_8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Image(
+                                  image:
+                                      AssetImage("assets/icons/document.png")),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Text(
+                                "POD ",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: darkBlueColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 140,
+                              ),
+                              ElevatedButton(
+                                  onPressed: docLinks.isNotEmpty
+                                      ? () {
+                                          imageDownload(context, docLinks);
+                                        }
+                                      : null,
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: Color(0xff000066),
+                                            width: 2.0)),
+                                  ),
+                                  child: const Text(
+                                    "View POD",
+                                    style: TextStyle(color: Color(0xff000066)),
+                                  ))
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              docLinks.isNotEmpty
+                                  ? Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 30,
+                                      width: 55,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[0].toString()}",
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              docLinks.length == 1
+                                  ? const Text(" 1 Images",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ))
+                                  : docLinks.isNotEmpty
+                                      ? const Text("1+ Images ",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ))
+                                      : const Text(" No Image"),
+                              const SizedBox(
+                                width: 70,
+                              ),
+                              GestureDetector(
+                                  child: const Image(
+                                      image: AssetImage(
+                                          "assets/images/uploadImage.png")),
+                                  onTap: () {
+                                    if (widget.providerData.PodPhotoFile ==
+                                        null) {
+                                      showPickerDialog(
+                                          widget.providerData.updatePodPhoto,
+                                          widget.providerData.updatePodPhotoStr,
+                                          context);
+                                    } else {
+                                      widget.providerData.PodPhotoFile != null
+                                          ? Get.to(ImageDisplay(
+                                              providerData: widget
+                                                  .providerData.PodPhotoFile,
+                                              imageName: 'PodPhoto64',
+                                            ))
+                                          : showUploadedDocs
+                                              ? showPickerDialog(
+                                                  widget.providerData
+                                                      .updatePodPhoto,
+                                                  widget.providerData
+                                                      .updatePodPhotoStr,
+                                                  context)
+                                              : null;
+                                    }
+                                  })
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
             docLinks.isNotEmpty
                 ? Responsive.isMobile(context)
@@ -333,24 +346,10 @@ class _docInputPodState extends State<docInputPod> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "( Uploaded )".tr,
-                          style: TextStyle(color: black),
+                          style: const TextStyle(color: black),
                         ),
                       )
-                    : SizedBox(
-                        width: 100,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              int i = previewUploadedImage.index.value;
-                              i = (i + 1) % docLinks.length;
-                              previewUploadedImage
-                                  .updatePreviewImage(docLinks[i].toString());
-                              previewUploadedImage.updateIndex(i);
-                            },
-                            child: Text("Next"),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    truckGreen // Set the background color here
-                                )))
+                    : Container()
                 : Container(),
             verified //to show the payment details after the pod documents are verified.
                 ? Column(
@@ -481,7 +480,6 @@ class _docInputPodState extends State<docInputPod> {
           ],
         ),
       ),
-      // ),
     );
   }
 
@@ -489,9 +487,7 @@ class _docInputPodState extends State<docInputPod> {
     showDialog(
         context: context,
         builder: (BuildContext bc) {
-          return
-              // child:
-              Dialog(
+          return Dialog(
             child: Wrap(
               children: <Widget>[
                 Container(
@@ -502,11 +498,9 @@ class _docInputPodState extends State<docInputPod> {
                     color: white,
                   ),
                   width: 240,
-                  // color: white,
                   child: ListTile(
                       textColor: black,
                       iconColor: black,
-                      // selectedColor: darkBlueColor,
                       leading: const Icon(Icons.photo_library),
                       title: Text("Gallery".tr),
                       onTap: () async {
@@ -526,7 +520,7 @@ class _docInputPodState extends State<docInputPod> {
                   child: ListTile(
                     textColor: black,
                     iconColor: black,
-                    leading: Icon(Icons.photo_camera),
+                    leading: const Icon(Icons.photo_camera),
                     title: Text("Camera".tr),
                     onTap: () async {
                       await getImageFromCamera2(
@@ -538,7 +532,6 @@ class _docInputPodState extends State<docInputPod> {
               ],
             ),
           );
-          // );
         });
   }
 

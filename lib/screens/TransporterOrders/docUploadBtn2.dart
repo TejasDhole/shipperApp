@@ -50,38 +50,7 @@ class docUploadbtn2 extends StatelessWidget {
                 ),
           onTap: onPressed,
         ),
-        Responsive.isMobile(context)
-            ? Container()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: space_5,
-                  ),
-                  Text(
-                    "Drag and Drop or Choose file to upload",
-                    style: TextStyle(
-                      fontWeight: normalWeight,
-                      color: bidBackground,
-                      fontSize: size_12,
-                    ),
-                  ),
-                  SizedBox(
-                    height: space_5,
-                  ),
-                  Text(
-                    "JPEG or PNG",
-                    style: TextStyle(
-                      fontWeight: normalWeight,
-                      color: bidBackground,
-                      fontSize: size_9,
-                    ),
-                  )
-                ],
-              )
       ],
-    )
-        // ],
-        );
+    ));
   }
 }

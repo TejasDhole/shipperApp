@@ -2,12 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/controller/previewUploadedImage.dart';
+import 'package:shipper_app/functions/uploadingDoc.dart';
 import 'package:shipper_app/responsive.dart';
-import 'package:shipper_app/screens/TransporterOrders/docUploadBtn3.dart';
 import 'package:image_picker/image_picker.dart';
 import '/constants/colors.dart';
 import '/constants/fontSize.dart';
-import '/constants/spaces.dart';
 import '/language/localization_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/screens/TransporterOrders/uploadedDocs.dart';
@@ -74,7 +73,6 @@ class _docInputLrState extends State<docInputLr> {
   }
 
   verifiedCheck() async {
-    print("verifiedCheck called");
     jsonresponse = await getDocApiCallVerify(bookid.toString(), "L");
 
     if (jsonresponse == true) {
@@ -89,8 +87,6 @@ class _docInputLrState extends State<docInputLr> {
   @override
   void initState() {
     super.initState();
-
-    print(LocalizationService().getCurrentLocale());
     currentLang = LocalizationService().getCurrentLocale().toString();
 
     if (currentLang == "hi_IN") {
@@ -114,7 +110,7 @@ class _docInputLrState extends State<docInputLr> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: SizedBox(
-        height: screenHeight * 0.3,
+        height: Responsive.isMobile(context) ? screenHeight * 0.3 : 140,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -136,27 +132,7 @@ class _docInputLrState extends State<docInputLr> {
                   )
                 : Container(),
             Responsive.isMobile(context)
-                ? Container()
-                : Stack(children: [
-                    docLinks.isNotEmpty
-                        ? SizedBox(
-                            height: 320,
-                            width: 730,
-                            child: Obx(() {
-                              return Image.network(Uri.encodeFull(
-                                "$proxyServer${previewUploadedImage.previewImage.toString()}",
-                              ));
-                            }),
-                          )
-                        : Container(),
-                  ]),
-            Responsive.isMobile(context)
-                ? Container()
-                : SizedBox(
-                    height: space_12,
-                  ),
-            Responsive.isMobile(context)
-                ? Container(
+                ? SizedBox(
                     height: 130,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,11 +150,12 @@ class _docInputLrState extends State<docInputLr> {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(right: 3, top: 4),
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
                                       height: 130,
                                       width: 170,
                                       child: verified
-                                          ? Image(
+                                          ? const Image(
                                               image: AssetImage(
                                                   "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
                                           : docUploadbtn2(
@@ -191,7 +168,7 @@ class _docInputLrState extends State<docInputLr> {
                                                             .providerData
                                                             .LrPhotoFile,
                                                         imageName: 'LrPhoto64',
-                                                      ))
+                                                      )) // naming image of Lorry Receipt in numeric order
                                                     : showUploadedDocs
                                                         ? showPickerDialog(
                                                             widget.providerData
@@ -212,7 +189,7 @@ class _docInputLrState extends State<docInputLr> {
                             ? showAddMoreDoc
                                 ? (widget.providerData.LrPhotoFile == null)
                                     ? Flexible(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 116,
                                           width: 170,
                                           child: docUploadbtn2(
@@ -227,7 +204,6 @@ class _docInputLrState extends State<docInputLr> {
                                                     widget.providerData
                                                         .updateLrPhotoStr,
                                                     context);
-                                                // : null;
                                               }
                                             },
                                             imageFile: null,
@@ -240,85 +216,124 @@ class _docInputLrState extends State<docInputLr> {
                       ],
                     ),
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      !showUploadedDocs
-                          ? uploadedDocs(
-                              docLinks: docLinks,
-                              verified: verified,
-                            )
-                          : Stack(
-                              children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.only(right: 3, top: 4),
-                                  height: 420,
-                                  width: 878,
-                                  child: verified
-                                      ? const Image(
-                                          image: AssetImage(
-                                              "assets/images/verifiedDoc.png")) // to show verified document image if uploaded doucments get verified.
-                                      : docUploadbtn2(
-                                          assetImage: addDocImageEng,
-                                          onPressed: () async {
-                                            widget.providerData.LrPhotoFile !=
-                                                    null
-                                                ? Get.to(ImageDisplay(
-                                                    providerData: widget
-                                                        .providerData
-                                                        .LrPhotoFile,
-                                                    imageName: 'LrPhoto64',
-                                                  ))
-                                                : showUploadedDocs
-                                                    ? showPickerDialog(
-                                                        widget.providerData
-                                                            .updateLrPhoto,
-                                                        widget.providerData
-                                                            .updateLrPhotoStr,
-                                                        context)
-                                                    : null;
-                                          },
-                                          imageFile:
-                                              widget.providerData.LrPhotoFile,
-                                        ),
+                : Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: const BorderSide(
+                          color: Color.fromRGBO(0, 0, 255, 0.27), width: 2.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Image(
+                                  image:
+                                      AssetImage("assets/icons/document.png")),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Text(
+                                "Lorry Receipt",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: darkBlueColor,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
-                      docLinks.length < 4 && docLinks.isNotEmpty
-                          ? showAddMoreDoc
-                              ? (widget.providerData.LrPhotoFile == null)
-                                  ? Flexible(
-                                      child: Container(
-                                        height: 120,
-                                        width: 180,
-                                        child: docUploadbtn3(
-                                          assetImage: addMoreDocImageEng,
-                                          onPressed: () async {
-                                            if (widget
-                                                    .providerData.LrPhotoFile ==
-                                                null) {
-                                              showPickerDialog(
+                              ),
+                              const SizedBox(
+                                width: 60,
+                              ),
+                              ElevatedButton(
+                                  onPressed: docLinks.isNotEmpty
+                                      ? () {
+                                          imageDownload(context, docLinks);
+                                        }
+                                      : null,
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: kLiveasyColor, width: 2.0)),
+                                  ),
+                                  child: const Text(
+                                    "View Lorry Receipt",
+                                    style: TextStyle(color: kLiveasyColor),
+                                  ))
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              docLinks.isNotEmpty
+                                  ? Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 30,
+                                      width: 55,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[0].toString()}",
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              docLinks.length == 1
+                                  ? const Text(" 1 Images",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ))
+                                  : docLinks.isNotEmpty
+                                      ? const Text("1+ Images ",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ))
+                                      : const Text(" No Image"),
+                              const SizedBox(
+                                width: 70,
+                              ),
+                              GestureDetector(
+                                  child: const Image(
+                                      image: AssetImage(
+                                          "assets/images/uploadImage.png")),
+                                  onTap: () {
+                                    if (widget.providerData.LrPhotoFile ==
+                                        null) {
+                                      showPickerDialog(
+                                          widget.providerData.updateLrPhoto,
+                                          widget.providerData.updateLrPhotoStr,
+                                          context);
+                                    } else {
+                                      widget.providerData.LrPhotoFile != null
+                                          ? Get.to(ImageDisplay(
+                                              providerData: widget
+                                                  .providerData.LrPhotoFile,
+                                              imageName: 'LrPhoto64',
+                                            ))
+                                          : showUploadedDocs
+                                              ? showPickerDialog(
                                                   widget.providerData
                                                       .updateLrPhoto,
                                                   widget.providerData
                                                       .updateLrPhotoStr,
-                                                  context);
-                                            }
-                                          },
-                                          imageFile: null,
-                                        ),
-                                      ),
-                                    )
-                                  : Container()
-                              : Container()
-                          : Container(),
-                    ],
-                  ),
-            Responsive.isMobile(context)
-                ? Container()
-                : SizedBox(
-                    height: space_8,
+                                                  context)
+                                              : null;
+                                    }
+                                  })
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
             docLinks.isNotEmpty
                 ? Responsive.isMobile(context)
@@ -326,25 +341,11 @@ class _docInputLrState extends State<docInputLr> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "( Uploaded )".tr,
-                          style: TextStyle(color: black),
+                          style: const TextStyle(color: black),
                         ),
                       )
-                    : SizedBox(
-                        width: 100,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              int i = previewUploadedImage.index.value;
-                              i = (i + 1) % docLinks.length;
-                              previewUploadedImage
-                                  .updatePreviewImage(docLinks[i].toString());
-                              previewUploadedImage.updateIndex(i);
-                            },
-                            child: Text("Next"),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    truckGreen // Set the background color here
-                                )))
-                : Container()
+                    : Container()
+                : Container(),
           ],
         ),
       ),
@@ -355,10 +356,7 @@ class _docInputLrState extends State<docInputLr> {
     showDialog(
         context: context,
         builder: (BuildContext bc) {
-          return
-              // child:
-              Dialog(
-            // shape:
+          return Dialog(
             child: Wrap(
               children: <Widget>[
                 Container(
@@ -369,11 +367,9 @@ class _docInputLrState extends State<docInputLr> {
                     color: white,
                   ),
                   width: 240,
-                  // color: white,
                   child: ListTile(
                       textColor: black,
                       iconColor: black,
-                      // selectedColor: darkBlueColor,
                       leading: const Icon(Icons.photo_library),
                       title: Text("Gallery".tr),
                       onTap: () async {
@@ -405,7 +401,6 @@ class _docInputLrState extends State<docInputLr> {
               ],
             ),
           );
-          // );
         });
   }
 
@@ -423,7 +418,6 @@ class _docInputLrState extends State<docInputLr> {
         setState(() {});
       } else {
         showDialog(context: context, builder: (context) => PermissionDialog());
-        // }
       }
     } else {
       final picker;
@@ -455,7 +449,6 @@ class _docInputLrState extends State<docInputLr> {
         strToUpdate(img64);
       } else {
         showDialog(context: context, builder: (context) => PermissionDialog());
-        // }
       }
     } else {
       final picker;
@@ -464,7 +457,6 @@ class _docInputLrState extends State<docInputLr> {
 
       picker = ImagePicker();
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      // print("pickedFile!.path ${pickedFile!.path}");
       bytes = kIsWeb
           ? await pickedFile.readAsBytes()
           : await Io.File(pickedFile!.path).readAsBytes();

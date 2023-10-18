@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-// import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 getDocName(String bookingId, String docType) async {
@@ -23,17 +22,12 @@ getDocName(String bookingId, String docType) async {
   var docNames = [];
   var available = [];
   try {
-    final String documentApiUrl =
-        // FlutterConfig.get('documentApiUrl').toString();
-        dotenv.get('documentApiUrl');
+    final String documentApiUrl = dotenv.get('documentApiUrl');
 
     final response = await http.get(Uri.parse("$documentApiUrl/$bookingId"));
 
-    print(response.body);
     jsonData = json.decode(response.body);
-    print(response.body);
     for (var jsondata in jsonData["documents"]) {
-      print(jsondata["documentType"]);
       if (jsondata["documentType"][0] == docType) {
         docNames.add(jsondata["documentType"]);
         print("docNames :- ");
@@ -90,11 +84,8 @@ getDocName(String bookingId, String docType) async {
         }
       }
     }
-    print("availabe docs names :- ");
-    print(available);
     return available;
   } catch (e) {
-    print(e.toString());
     return e.toString();
   }
 }
