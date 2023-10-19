@@ -71,9 +71,6 @@ Future<String?> runShipperApiPostIsolated(
         },
         body: body);
 
-    if (FirebaseAuth.instance.currentUser != null) {
-      createUserTraccar(phoneNo);
-    }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
@@ -132,7 +129,11 @@ Future<String?> runShipperApiPostIsolated(
               .updateJmtToken(decodedResponse["token"].toString());
         }
         getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
-        getShipperIdFromCompanyDatabase();
+        await getShipperIdFromCompanyDatabase();
+
+        if (FirebaseAuth.instance.currentUser != null) {
+          createUserTraccar(phoneNo);
+        }
         return shipperId;
       } else {
         return null;
