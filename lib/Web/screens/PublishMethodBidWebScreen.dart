@@ -8,16 +8,19 @@ import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/Widgets/addTransporterWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/BiddingDateTime.dart';
+import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/functions/shipperApis/TransporterListFromShipperApi.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 
 import 'package:shipper_app/constants/spaces.dart';
+import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
 
 class PublishMethodBidWebScreen extends StatefulWidget {
   final publishMethod;
@@ -32,14 +35,17 @@ class PublishMethodBidWebScreen extends StatefulWidget {
 class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
   var transporterList = [];
   var selectedTransporterList = [];
+  String controllerTxt = '';
   bool setSelectedTransporterList = true;
   bool enableFinishButton = false;
+  AddLocationDrawerToggleController addLocationDrawerToggleController =
+      Get.put(AddLocationDrawerToggleController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTransporterListFromShipperApi();
+    getTransporterListFromShipperApi('');
   }
 
   refresh(bool allowToRefresh) {
@@ -50,14 +56,16 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
     }
   }
 
-  getTransporterListFromShipperApi() async {
+  getTransporterListFromShipperApi(String txt) async {
     await TransporterListFromShipperApi()
-        .getTransporterListFromShipperApi()
+        .getTransporterListFromShipperApi(txt)
         .then((value) {
-      setState(() {
-        transporterList = [...value];
-        setSelectedTransporterList = true;
-      });
+      if (mounted) {
+        setState(() {
+          transporterList = [...value];
+          setSelectedTransporterList = true;
+        });
+      }
     });
   }
 
@@ -166,159 +174,195 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             (widget.publishMethod == 'Bid')
-                ? Row(
-                    children: [
-                      BiddingDateTime(
+                ? Row(children: [
+                    Expanded(
+                      child: BiddingDateTime(
                         refreshParent: refresh,
+                        width: 0.32,
                       ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      PublishBidSearchTextFieldWidget(),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  elevation: 10,
-                                  content:
-                                      addTransporter(context, transporterList),
-                                );
-                              },
-                            ).then(
-                                (value) => getTransporterListFromShipperApi());
-                          },
-                          child: Container(
-                            height: 50,
-                            child: Center(
-                              child: Text('Add Transporter',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: size_7)),
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(truckGreen),
-                            mouseCursor: MaterialStatePropertyAll<MouseCursor>(
-                                SystemMouseCursors.click),
-                            padding: MaterialStatePropertyAll<EdgeInsets>(
-                                EdgeInsets.only(
-                                    left: 20, right: 20, top: 10, bottom: 10)),
-                            shape:
-                                MaterialStatePropertyAll<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.zero),
-                                        side: BorderSide(
-                                          color: truckGreen,
-                                          width: 2,
-                                        ))),
-                            textStyle: MaterialStatePropertyAll<TextStyle>(
-                                TextStyle(
-                                    color: truckGreen,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: size_6)),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                    ),
+                  ])
                 : Container(),
             SizedBox(
               height: 20,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: InputDecorator(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                        color: truckGreen,
-                        width: 2,
-                      )),
-                      contentPadding: EdgeInsets.all(20),
-                      label: Container(
-                        padding: EdgeInsets.only(left: 10),
-                        width: 200,
-                        child: Row(
-                          children: [
-                            Text(
-                              'Transporter',
-                              style: TextStyle(
-                                  color: truckGreen,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: size_10),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Image.asset(
-                                    'assets/images/filter.png',
-                                    fit: BoxFit.contain,
-                                    filterQuality: FilterQuality.high,
-                                  )),
-                            )
-                          ],
-                        ),
-                      )),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return (transporterList.isEmpty)
-                          ? Container()
-                          : CheckboxListTile(
-                              contentPadding:
-                                  EdgeInsets.only(left: 40, right: 20),
-                              value: selectedTransporterList
-                                  .contains(transporterList[index]),
-                              onChanged: (value) {
-                                setState(() {
-                                  if (value!) {
-                                    selectedTransporterList
-                                        .add(transporterList[index]);
-                                  } else {
-                                    selectedTransporterList
-                                        .remove(transporterList[index]);
-                                  }
-                                });
-                              },
-                              side: BorderSide(width: 2, color: truckGreen),
-                              mouseCursor: SystemMouseCursors.click,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(2))),
-                              fillColor:
-                                  MaterialStatePropertyAll<Color>(truckGreen),
-                              title: Text(
-                                transporterList[index][1],
+            Row(
+              children: [
+                PublishBidSearchTextFieldWidget(),
+                SizedBox(
+                  width: 40,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () {
+                      addLocationDrawerToggleController
+                          .toggleAddTransporter(true);
+                    },
+                    child: Container(
+                      height: 50,
+                      child: Center(
+                        child: Text('Add Transporter',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: size_8,
+                                letterSpacing: 2)),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(truckGreen),
+                      mouseCursor: MaterialStatePropertyAll<MouseCursor>(
+                          SystemMouseCursors.click),
+                      padding: MaterialStatePropertyAll<EdgeInsets>(
+                          EdgeInsets.only(
+                              left: 20, right: 20, top: 10, bottom: 10)),
+                      shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              side: BorderSide(
+                                color: truckGreen,
+                                width: 2,
+                              ))),
+                      textStyle: MaterialStatePropertyAll<TextStyle>(TextStyle(
+                          color: truckGreen,
+                          fontFamily: 'Montserrat',
+                          fontSize: size_6)),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: Obx(() {
+                    if (addLocationDrawerToggleController
+                            .searchTransporterText.value !=
+                        controllerTxt) {
+                      controllerTxt = addLocationDrawerToggleController
+                          .searchTransporterText.value;
+                      getTransporterListFromShipperApi(controllerTxt);
+                    }
+                    return (addLocationDrawerToggleController
+                            .addTransporter.value)
+                        ? addTransporter(context, transporterList)
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Transporters',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: truckGreen,
                                     fontFamily: 'Montserrat',
                                     fontSize: size_10),
                               ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                            );
-                    },
-                    itemCount: transporterList.length,
-                  )),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      border: Border.all(
+                                          color: borderLightColor, width: 1)),
+                                  child: (transporterList.length == 0)
+                                      ? Center(
+                                          child: Text(
+                                            'No Transporter Found!!',
+                                            style: TextStyle(
+                                                color: black,
+                                                fontFamily: 'Montserrat',
+                                                fontSize: size_10),
+                                          ),
+                                        )
+                                      : GridView.builder(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          padding: const EdgeInsets.all(10),
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  crossAxisSpacing: 20,
+                                                  mainAxisSpacing: 0,
+                                                  mainAxisExtent: 50),
+                                          itemBuilder: (context, index) {
+                                            return (transporterList.isEmpty)
+                                                ? Container()
+                                                : CheckboxListTile(
+                                                    contentPadding:
+                                                        EdgeInsets.only(
+                                                            left: 40,
+                                                            right: 20),
+                                                    value:
+                                                        selectedTransporterList
+                                                            .contains(
+                                                                transporterList[
+                                                                    index]),
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        if (value!) {
+                                                          if (widget
+                                                                  .publishMethod !=
+                                                              'Bid') {
+                                                            selectedTransporterList
+                                                                .clear();
+                                                          }
+                                                          selectedTransporterList
+                                                              .add(
+                                                                  transporterList[
+                                                                      index]);
+                                                        } else {
+                                                          selectedTransporterList
+                                                              .remove(
+                                                                  transporterList[
+                                                                      index]);
+                                                        }
+                                                      });
+                                                    },
+                                                    side: BorderSide(
+                                                        width: 2,
+                                                        color: truckGreen),
+                                                    mouseCursor:
+                                                        SystemMouseCursors
+                                                            .click,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    2))),
+                                                    fillColor:
+                                                        MaterialStatePropertyAll<
+                                                            Color>(truckGreen),
+                                                    title: Text(
+                                                      transporterList[index][1],
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontSize: size_10),
+                                                    ),
+                                                    controlAffinity:
+                                                        ListTileControlAffinity
+                                                            .leading,
+                                                  );
+                                          },
+                                          itemCount: transporterList.length,
+                                        ),
+                                ),
+                              ),
+                            ],
+                          );
+                  })),
             )
           ],
         ),

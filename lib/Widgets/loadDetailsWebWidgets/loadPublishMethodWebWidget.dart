@@ -36,17 +36,21 @@ class _LoadPublishMethodWebWidgetState
     return Container(
       child: DropdownSearch<String>(
         onChanged: (value) {
-          if (value == publishMethods[0]) {
-            Get.to(() => PublishMethodBidWebScreen(
-                  publishMethod: value,
-                ));
+          if (value == publishMethods[0] || value == publishMethods[2]) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                      content: Container(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          height: MediaQuery.of(context).size.width * 0.8,
+                          child: PublishMethodBidWebScreen(
+                            publishMethod: value,
+                          )));
+                });
           } else if (value == publishMethods[1]) {
             providerData.updatePublishMethod(value);
             setState(() {});
-          } else if (value == publishMethods[2]) {
-            Get.to(() => PublishMethodBidWebScreen(
-                  publishMethod: value,
-                ));
           }
           widget.refreshParent(true);
         },
