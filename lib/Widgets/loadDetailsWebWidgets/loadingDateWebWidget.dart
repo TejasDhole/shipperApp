@@ -32,7 +32,9 @@ class LoadingDateWebWidgetState extends State<LoadingDateWebWidget> {
       _selectedDay = DateTime.now();
       _textEditingController.text =
           DateFormat.yMMMMd('en_US').format(_selectedDay!).toString();
-      providerData.updateScheduleLoadingDate(_textEditingController.text);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        providerData.updateScheduleLoadingDate(_textEditingController.text);
+      });
     }
 
     return Expanded(

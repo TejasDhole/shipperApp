@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:shipper_app/Widgets/showSnackBarTop.dart';
+import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:http/http.dart' as http;
 
-void updateShipperTransporterList(transporterList, diaLogContext) async {
+void updateShipperTransporterList(transporterList, dialogContext) async {
   try {
+    AddLocationDrawerToggleController addLocationDrawerToggleController =
+        Get.put(AddLocationDrawerToggleController());
     ShipperIdController shipperIdController = Get.put(ShipperIdController());
     String shipperId = shipperIdController.shipperId.value;
     Map<String, dynamic> data = {
@@ -23,9 +28,12 @@ void updateShipperTransporterList(transporterList, diaLogContext) async {
       },
     );
     if (response.statusCode == HttpStatus.ok) {
-      Navigator.of(diaLogContext).pop();
+      showSnackBar("Transporter added Successfully!!", truckGreen,
+          Icon(Icons.check_circle_outline_outlined), dialogContext);
+      addLocationDrawerToggleController.toggleAddTransporter(false);
     }
   } catch (e) {
-    print('error $e');
+    showSnackBar("Something went wrong!!", deleteButtonColor,
+        Icon(Icons.report_gmailerrorred_outlined), dialogContext);
   }
 }

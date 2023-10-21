@@ -9,8 +9,9 @@ import 'package:table_calendar/table_calendar.dart';
 
 class BiddingDateTime extends StatefulWidget {
   final Function(bool) refreshParent;
+  final double width;
 
-  const BiddingDateTime({super.key, required this.refreshParent});
+  const BiddingDateTime({super.key, required this.refreshParent, required this.width});
 
   @override
   State<BiddingDateTime> createState() => _BiddingDateTimeState();
@@ -18,7 +19,8 @@ class BiddingDateTime extends StatefulWidget {
 
 class _BiddingDateTimeState extends State<BiddingDateTime> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _biddingDateTextEditingController = TextEditingController();
+  final TextEditingController _biddingTimeTextEditingController = TextEditingController();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -125,7 +127,7 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
           ? '0${picked!.minute.toString()}'
           : picked!.minute.toString();
       Time_Day = '$dayHour : $dayMinute $dayPeriod';
-      _textEditingController.text = '$Date_Time ; $Time_Day';
+      _biddingTimeTextEditingController.text = '$Time_Day';
       widget.refreshParent(true);
     });
   }
@@ -155,53 +157,57 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
       String dayMinute = (picked!.minute.toString().length == 1)
           ? '0${picked!.minute.toString()}'
           : picked!.minute.toString();
-      String Time_Day = '$dayHour : $dayMinute $dayPeriod';
+      Time_Day = '$dayHour : $dayMinute $dayPeriod';
 
-      _textEditingController.text = '$Date_Time ; $Time_Day';
+      _biddingDateTextEditingController.text = '$Date_Time';
+      _biddingTimeTextEditingController.text = '$Time_Day';
     }
 
-    return Expanded(
-      flex: 4,
-      child: Container(
-        child: TextField(
-          controller: _textEditingController,
-          style: TextStyle(
-              color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
-          textAlign: TextAlign.center,
-          showCursor: false,
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () {
-            setState(() {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return StatefulBuilder(
-                    builder: (context, setState) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        content: Container(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                            height: MediaQuery.of(context).size.height * 0.588,
-                            decoration: BoxDecoration(
-                                color: white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            padding: EdgeInsets.all(10),
-                            child: TableCalendar(
-                              selectedDayPredicate: (day) {
-                                return isSameDay(_selectedDay, day);
-                              },
-                              onDaySelected: (selectedDay, focusedDay) {
-                                if (!isSameDay(_selectedDay, selectedDay)) {
-                                  setState(() {
-                                    _selectedDay = selectedDay;
-                                    _focusedDay = focusedDay;
-                                    Date_Time = DateFormat.yMMMMd('en_US')
-                                        .format(_selectedDay!)
-                                        .toString();
-                                    if (Date_Time != null) {
-                                      Navigator.of(context).pop();
-                                      timePicker().then((value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width * widget.width,
+          child: TextField(
+            controller: _biddingDateTextEditingController,
+            style: TextStyle(
+                color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
+            textAlign: TextAlign.center,
+            showCursor: false,
+            mouseCursor: SystemMouseCursors.click,
+            onTap: () {
+              setState(() {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return StatefulBuilder(
+                      builder: (context, setState) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.zero,
+                          content: Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.588,
+                              decoration: BoxDecoration(
+                                  color: white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              padding: EdgeInsets.all(10),
+                              child: TableCalendar(
+                                selectedDayPredicate: (day) {
+                                  return isSameDay(_selectedDay, day);
+                                },
+                                onDaySelected: (selectedDay, focusedDay) {
+                                  if (!isSameDay(_selectedDay, selectedDay)) {
+                                    setState(() {
+                                      _selectedDay = selectedDay;
+                                      _focusedDay = focusedDay;
+                                      Date_Time = DateFormat.yMMMMd('en_US')
+                                          .format(_selectedDay!)
+                                          .toString();
+                                      if (Date_Time != null) {
+                                        _biddingDateTextEditingController.text = '$Date_Time';
+                                        print(Date_Time);
+                                        print(Time_Day);
                                         if (Date_Time != null &&
                                             Time_Day != null &&
                                             Date_Time!.isNotEmpty &&
@@ -210,126 +216,178 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
                                               Date_Time,
                                               '${picked!.hour}:${picked!.minute}');
                                         }
-                                      });
-                                    }
-                                  });
-                                }
-                              },
-                              eventLoader: (day) {
-                                return (isSameDay(DateTime.now(), day))
-                                    ? [DateTime.now()]
-                                    : [];
-                              },
-                              calendarFormat: _calendarFormat,
-                              focusedDay: _focusedDay,
-                              firstDay: DateTime.now(),
-                              lastDay: DateTime.utc(DateTime.now().year,
-                                  DateTime.now().month, DateTime.now().day + 5),
-                              headerStyle: HeaderStyle(
-                                headerPadding: EdgeInsets.only(
-                                    left: 20, right: 20, top: 10, bottom: 10),
-                                leftChevronIcon: Image.asset(
-                                    'assets/images/calendar_previous.png'),
-                                rightChevronIcon: Image.asset(
-                                    'assets/images/calendar_next.png'),
-                                formatButtonVisible: false,
-                                titleTextStyle: TextStyle(
-                                    color: black,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 20),
-                                titleCentered: true,
-                              ),
-                              calendarStyle: CalendarStyle(
-                                  markersAutoAligned: false,
-                                  markersAlignment: Alignment.topRight,
-                                  markerMargin: EdgeInsets.all(10),
-                                  markersMaxCount: 1,
-                                  canMarkersOverflow: false,
-                                  outsideDecoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  weekendDecoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  disabledDecoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  defaultDecoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  selectedDecoration: BoxDecoration(
-                                    color: truckGreen,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(2)),
-                                  ),
-                                  selectedTextStyle: TextStyle(
-                                      fontFamily: 'Montserrat', color: white),
-                                  defaultTextStyle:
-                                      TextStyle(fontFamily: 'Montserrat'),
-                                  weekendTextStyle:
-                                      TextStyle(fontFamily: 'Montserrat'),
-                                  withinRangeTextStyle: TextStyle(color: black),
-                                  disabledTextStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontFamily: 'Montserrat'),
-                                  outsideTextStyle: TextStyle(
-                                      color: unselectedGrey,
-                                      fontFamily: 'Montserrat'),
-                                  isTodayHighlighted: false,
-                                  markerSize: 4,
-                                  markerDecoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: (isSameDay(
-                                              _selectedDay, DateTime.now()))
-                                          ? white
-                                          : truckGreen)),
-                            )),
-                      );
-                    },
-                  );
-                },
-              );
-            });
-          },
-          decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: borderLightColor, width: 1.5)),
-              hintText: 'Choose Date and Time',
-              hintStyle: TextStyle(
+                                        widget.refreshParent(true);
+                                        Navigator.of(context).pop();
+                                      }
+                                    });
+                                  }
+                                },
+                                eventLoader: (day) {
+                                  return (isSameDay(DateTime.now(), day))
+                                      ? [DateTime.now()]
+                                      : [];
+                                },
+                                calendarFormat: _calendarFormat,
+                                focusedDay: _focusedDay,
+                                firstDay: DateTime.now(),
+                                lastDay: DateTime.utc(DateTime.now().year,
+                                    DateTime.now().month, DateTime.now().day + 5),
+                                headerStyle: HeaderStyle(
+                                  headerPadding: EdgeInsets.only(
+                                      left: 20, right: 20, top: 10, bottom: 10),
+                                  leftChevronIcon: Image.asset(
+                                      'assets/images/calendar_previous.png'),
+                                  rightChevronIcon: Image.asset(
+                                      'assets/images/calendar_next.png'),
+                                  formatButtonVisible: false,
+                                  titleTextStyle: TextStyle(
+                                      color: black,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 20),
+                                  titleCentered: true,
+                                ),
+                                calendarStyle: CalendarStyle(
+                                    markersAutoAligned: false,
+                                    markersAlignment: Alignment.topRight,
+                                    markerMargin: EdgeInsets.all(10),
+                                    markersMaxCount: 1,
+                                    canMarkersOverflow: false,
+                                    outsideDecoration: BoxDecoration(
+                                      color: white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    weekendDecoration: BoxDecoration(
+                                      color: white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    disabledDecoration: BoxDecoration(
+                                      color: white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    defaultDecoration: BoxDecoration(
+                                      color: white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    selectedDecoration: BoxDecoration(
+                                      color: truckGreen,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                    selectedTextStyle: TextStyle(
+                                        fontFamily: 'Montserrat', color: white),
+                                    defaultTextStyle:
+                                        TextStyle(fontFamily: 'Montserrat'),
+                                    weekendTextStyle:
+                                        TextStyle(fontFamily: 'Montserrat'),
+                                    withinRangeTextStyle: TextStyle(color: black),
+                                    disabledTextStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: 'Montserrat'),
+                                    outsideTextStyle: TextStyle(
+                                        color: unselectedGrey,
+                                        fontFamily: 'Montserrat'),
+                                    isTodayHighlighted: false,
+                                    markerSize: 4,
+                                    markerDecoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (isSameDay(
+                                                _selectedDay, DateTime.now()))
+                                            ? white
+                                            : truckGreen)),
+                              )),
+                        );
+                      },
+                    );
+                  },
+                );
+              });
+            },
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: borderLightColor, width: 1.5)),
+                hintText: 'Choose Date',
+                hintStyle: TextStyle(
+                    color: borderLightColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: size_8),
+                label: Text('Bidding end Date',
+                    style: TextStyle(
+                        color: kLiveasyColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: size_10,
+                        fontWeight: FontWeight.w600),
+                    selectionColor: kLiveasyColor),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: Icon(
+                  Icons.calendar_month,
                   color: borderLightColor,
-                  fontFamily: 'Montserrat',
-                  fontSize: size_8),
-              label: Text('Bidding end Date and Time',
-                  style: TextStyle(
-                      color: kLiveasyColor,
-                      fontFamily: 'Montserrat',
-                      fontSize: size_10,
-                      fontWeight: FontWeight.w600),
-                  selectionColor: kLiveasyColor),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: Icon(
-                Icons.calendar_month,
-                color: borderLightColor,
-              ),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: truckGreen, width: 1.5))),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: truckGreen, width: 1.5))),
+          ),
         ),
-      ),
+        SizedBox(width: 10,),
+        Container(
+          width: MediaQuery.of(context).size.width * widget.width,
+          child: TextField(
+            controller: _biddingTimeTextEditingController,
+            style: TextStyle(
+                color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
+            textAlign: TextAlign.center,
+            showCursor: false,
+            mouseCursor: SystemMouseCursors.click,
+            onTap: () {
+              setState(() {
+                timePicker().then((value) {
+                      if (Date_Time != null &&
+                          Time_Day != null &&
+                          Date_Time!.isNotEmpty &&
+                          Time_Day!.isNotEmpty) {
+                        providerData.updateBiddingEndDateTime(
+                            Date_Time,
+                            '${picked!.hour}:${picked!.minute}');
+                      }
+                    });
+              });
+            },
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: borderLightColor, width: 1.5)),
+                hintText: 'Choose Time',
+                hintStyle: TextStyle(
+                    color: borderLightColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: size_8),
+                label: Text('Bidding end Time',
+                    style: TextStyle(
+                        color: kLiveasyColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: size_10,
+                        fontWeight: FontWeight.w600),
+                    selectionColor: kLiveasyColor),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: Icon(
+                  Icons.watch_later_outlined,
+                  color: borderLightColor,
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: truckGreen, width: 1.5))),
+          ),
+        ),
+      ],
     );
   }
 }

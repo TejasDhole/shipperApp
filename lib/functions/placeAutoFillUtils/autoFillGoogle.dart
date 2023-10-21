@@ -59,6 +59,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
       address = address["predictions"];
       for (var json in address) {
         List<String> result = json["description"]!.split(",");
+        String place_Id = json["place_id"]!;
         int resultLength = 0;
         for (var r in result) {
           resultLength++;
@@ -78,6 +79,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
           } else {
             //Example --> Kolkata, WestBengal then placeName : Kolkata, addresscomponent1: "", placeCityName: Kolkata, placeStateName: West Bengal
             AutoFillMMIModel locationCardsModal = AutoFillMMIModel(
+                placeId: place_Id,
                 placeName: "${result[0].toString()}",
                 placeCityName: "${result[0].toString()}",
                 // placeStateName: json["placeAddress"]\
@@ -92,6 +94,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
             //placeName: kolkata, addresscomponent1:"", placeCityName: kolkata, placeStateName: West Bengal, India
 
             AutoFillMMIModel locationCardsModal = AutoFillMMIModel(
+                placeId: place_Id,
                 placeName: "${result[0].toString()}",
                 placeCityName: "${result[0].toString()}",
                 // placeStateName: json["placeAddress"]\
@@ -102,6 +105,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
             //Example: Jadavpur, Kolkata, West Bengal
             //placeName: Jadavpur, addresscomponent1:"", placeCityName: kolkata, placeStateName: West Bengal
             AutoFillMMIModel locationCardsModal = AutoFillMMIModel(
+                placeId: place_Id,
                 placeName: "${result[0].toString()}",
                 placeCityName: "${result[1].toString()}",
                 // placeStateName: json["placeAddress"]\
@@ -119,6 +123,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
               }
 
               AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+                  placeId: place_Id,
                   placeName: "${result[0].toString()}",
                   addresscomponent1: addressDetail == null
                       ? "${result[resultLength - 1].toString()}"
@@ -133,6 +138,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
               }
 
               AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+                  placeId: place_Id,
                   placeName: "${result[0].toString()}",
                   addresscomponent1:
                       addressDetail == null ? " " : "$addressDetail",
@@ -145,6 +151,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
                 result[resultLength - 1].toString() == " india" ||
                 result[resultLength - 1].toString() == " INDIA") {
               AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+                  placeId: place_Id,
                   placeName: "${result[0].toString()}",
                   placeCityName: "${result[resultLength - 3].toString()}",
                   placeStateName:
@@ -152,6 +159,7 @@ Future<List<AutoFillMMIModel>> fillCityGoogle(
               card.add(locationCardsModal);
             } else {
               AutoFillMMIModel locationCardsModal = new AutoFillMMIModel(
+                  placeId: place_Id,
                   placeName: "${result[0].toString()}",
                   addresscomponent1: "${result[1].toString()}",
                   placeCityName: "${result[2].toString()}",

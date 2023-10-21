@@ -6,6 +6,7 @@ import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart
 import 'package:shipper_app/constants/borderWidth.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/functions/selectedLocationPostLoad.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -157,52 +158,6 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     });
   }
 
-  selectSuggestedLocation(
-      context, placeName, addressName, cityName, stateName) {
-    //Update selected location on provider data and back to previous screen based on widget.valueType
-    ProviderData providerData =
-        Provider.of<ProviderData>(context, listen: false);
-    if (widget.valueType == "Loading Point") {
-      providerData.updateLoadingPointFindLoad(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    } else if (widget.valueType == "Unloading Point") {
-      providerData.updateUnloadingPointFindLoad(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    } else if (widget.valueType == "Loading point" ||
-        widget.valueType == "Loading point 1") {
-      providerData.updateLoadingPointPostLoad(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    } else if (widget.valueType == "Loading point 2") {
-      providerData.updateLoadingPointPostLoad2(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    } else if (widget.valueType == "Unloading point" ||
-        widget.valueType == "Unloading point 1") {
-      providerData.updateUnloadingPointPostLoad(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    } else if (widget.valueType == "Unloading point 2") {
-      providerData.updateUnloadingPointPostLoad2(
-          place: addressName == null ? placeName : '$placeName, $addressName',
-          city: cityName,
-          state: stateName);
-      Get.back();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     focus.requestFocus();
@@ -329,12 +284,14 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                           snapshot.data[index].placeStateName,
                                           index,
                                           selectedItemIndex, () {
-                                    selectSuggestedLocation(
+                                    selectedLocationPostLoad(
                                         context,
                                         snapshot.data[index].placeName,
                                         snapshot.data[index].addresscomponent1,
                                         snapshot.data[index].placeCityName,
-                                        snapshot.data[index].placeStateName);
+                                        snapshot.data[index].placeStateName,
+                                        widget.valueType);
+                                    Get.back();
                                   }),
                                   separatorBuilder:
                                       (BuildContext context, int index) {
@@ -411,7 +368,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                               if (selectedItemIndex != -1 &&
                                                   selectedItemIndex <
                                                       snapshot.data.length) {
-                                                selectSuggestedLocation(
+                                                selectedLocationPostLoad(
                                                     context,
                                                     snapshot
                                                         .data[selectedItemIndex]
@@ -424,7 +381,9 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                         .placeCityName,
                                                     snapshot
                                                         .data[selectedItemIndex]
-                                                        .placeStateName);
+                                                        .placeStateName,
+                                                    widget.valueType);
+                                                Get.back();
                                               }
                                             } else if (value.logicalKey ==
                                                     LogicalKeyboardKey
@@ -475,7 +434,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                         .placeStateName,
                                                     index,
                                                     selectedItemIndex, () {
-                                              selectSuggestedLocation(
+                                              selectedLocationPostLoad(
                                                   context,
                                                   snapshot
                                                       .data[index].placeName,
@@ -484,7 +443,9 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                   snapshot.data[index]
                                                       .placeCityName,
                                                   snapshot.data[index]
-                                                      .placeStateName);
+                                                      .placeStateName,
+                                                  widget.valueType);
+                                              Get.back();
                                             }),
                                             separatorBuilder:
                                                 (BuildContext context,
@@ -670,8 +631,9 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                     state.isNotEmpty &&
                                     state != null) {
                                   Navigator.of(context).pop();
-                                  selectSuggestedLocation(
-                                      context, address, null, city, state);
+                                  selectedLocationPostLoad(context, address,
+                                      null, city, state, widget.valueType);
+                                  Get.back();
                                 }
                               },
                               child: Text(

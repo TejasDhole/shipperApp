@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsCommentWidget.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/BiddingDateTime.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingDateWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingTimeWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/moveLoadConfirmationScreenButtonWidget.dart';
@@ -60,7 +61,7 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
     ProviderData providerData = Provider.of<ProviderData>(context);
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -240,6 +241,23 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                               SizedBox(height: 40),
                               LoadPublishMethodWebWidget(
                                   refreshParent: refresh),
+                              Visibility(
+                                visible: (providerData.publishMethod == 'Bid' &&
+                                        providerData.biddingEndTime != null &&
+                                        providerData
+                                            .biddingEndTime!.isNotEmpty &&
+                                        providerData.biddingEndDate != null &&
+                                        providerData.biddingEndDate!.isNotEmpty)
+                                    ? true
+                                    : false,
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 40),
+                                    BiddingDateTime(
+                                        refreshParent: refresh, width: 0.402),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: 40),
                               LoadDetailsCommentWidget(),
                               SizedBox(height: 40),

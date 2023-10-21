@@ -105,9 +105,10 @@ class LoadConfirmationScreenButton extends StatelessWidget {
               providerData.comment,
               (providerData.loadTransporterList.isEmpty)
                   ? null
-                  : providerData.loadTransporterList);
+                  : providerData.loadTransporterList,
+              providerData.biddingEndDate,
+              providerData.biddingEndTime);
 
-          print("loadId $loadId");
           if (loadId != null) {
             showDialog(
               context: context,

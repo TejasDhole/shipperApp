@@ -9,7 +9,7 @@ class TransporterListFromShipperApi {
   final String shipperApiUrl = dotenv.get('shipperApiUrl');
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
-  Future getTransporterListFromShipperApi() async {
+  Future getTransporterListFromShipperApi(String txt) async {
     try {
       String shipperId = shipperIdController.shipperId.value;
 
@@ -23,12 +23,22 @@ class TransporterListFromShipperApi {
       if (response.statusCode == 200 || response.statusCode == 201) {
         var body = jsonDecode(response.body);
         var transporterList = body['transporterList'];
-        return transporterList;
+        if (txt == '') {
+          return transporterList;
+        } else {
+          txt = txt.toLowerCase();
+          var filteredTransporterList = [];
+          for (List transporter in transporterList) {
+            if (transporter[1].toString().toLowerCase().contains(txt)) {
+              filteredTransporterList.add(transporter);
+            }
+          }
+          return filteredTransporterList;
+        }
       } else {
         return [];
       }
     } catch (e) {
-      print(e);
       return [];
     }
   }

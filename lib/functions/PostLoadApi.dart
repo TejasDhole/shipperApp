@@ -31,7 +31,9 @@ Future<String?> postLoadAPi(
     scheduleLoadingDate,
     publishMethod,
     comment,
-    loadTransporterList) async {
+    loadTransporterList,
+    biddingEndDate,
+    biddingEndTime) async {
   PostLoadErrorController postLoadErrorController =
       Get.put(PostLoadErrorController());
   try {
@@ -60,7 +62,9 @@ Future<String?> postLoadAPi(
       "loadingTime": scheduleLoadingTime,
       "publishMethod": publishMethod,
       "comment": comment,
-      "transporterList": loadTransporterList
+      "transporterList": loadTransporterList,
+      "biddingEndDate": biddingEndDate,
+      "biddingEndTime": biddingEndTime
     };
 
     String body = json.encode(data);
