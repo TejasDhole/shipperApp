@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/FastTagScreen.dart';
 import 'package:shipper_app/screens/vehicleDetailsScreen.dart';
@@ -80,6 +81,9 @@ class _documentUploadScreenState extends State<documentUploadScreen>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    bool isMobile = Responsive.isMobile(context);
     Get.put(ShipperIdController());
     var providerData = Provider.of<ProviderData>(context);
     _tabController = TabController(length: 4, vsync: this);
@@ -1141,123 +1145,170 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       ),
                                     ),
                                   ),
-                                  //Code Added By Aman From Here
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => MapScreen(
-                                                    loadingPoint:
-                                                        widget.loadingPoint,
-                                                    unloadingPoint:
-                                                        widget.unloadingPoint,
-                                                    truckNumber: widget.truckNo,
-                                                    loadingPointCity:
-                                                        widget.loadingPointCity,
-                                                    unloadingPointCity: widget
-                                                        .unloadingPointCity,
-                                                  )),
-                                        );
-                                      },
-                                      child: const Text('Check FastTag')),
-                                  const SizedBox(height: 10),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  VehicleDetailsScreen(
-                                                    truckNumber: widget.truckNo,
-                                                  )),
-                                        );
-                                      },
-                                      child: const Text('Vehicle Details')),
-                                  //Till here
-
+                                                                
                                   const SizedBox(
                                     height: 50,
                                   ),
                                   //from to widget
                                   Padding(
-                                    padding: const EdgeInsets.all(30.0),
-                                    child: Material(
-                                      elevation: 5,
-                                      child: SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              10,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    90,
-                                                right: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    90),
-                                            child: Container(
-                                              color: Colors.white,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(20.0),
-                                                child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
+                                      padding: EdgeInsets.all(isMobile ? 20.0 : 30.0),
+                                      child: Material(
+                                        elevation: 5,
+                                        child: SizedBox(
+                                            height: isMobile ? screenHeight/7 : screenHeight/ 5,
+                                            width : screenWidth * 0.9,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:   screenHeight / 100  ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(vertical : 20.0, horizontal : isMobile ? screenHeight * 0.001 :  screenWidth * 0.01),
+                                                  child: Column(
                                                     children: [
-                                                      Text(
-                                                        "${widget.loadingPoint}",
-                                                        style: const TextStyle(
-                                                          color: Color.fromRGBO(
-                                                              9, 183, 120, 1),
-                                                          fontSize: 20,
-                                                        ),
+                                                      Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            Text(
+                                                              "${widget.loadingPoint}",
+                                                              style:
+                                                                  TextStyle(
+                                                                color: okButtonColor,
+                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              // rectangle429199w (1:2)
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width /
+                                                                  2,
+                                                              height: 7,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  begin:
+                                                                      Alignment(
+                                                                          -1, -1),
+                                                                  end: Alignment(
+                                                                      1, -1),
+                                                                  colors: <Color>[
+                                                                    Color(
+                                                                        0xff09b778),
+                                                                    Color(
+                                                                        0xffec4a4a)
+                                                                  ],
+                                                                  stops: <double>[
+                                                                    0,
+                                                                    1
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "${widget.unloadingPoint}",
+                                                              style:
+                                                                  TextStyle(
+                                                                color: diffDeleteButtonColor,
+                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
+                                                              ),
+                                                            ),
+                                                          ]),
+                                                      const Divider(
+                                                        thickness: 2,
                                                       ),
-                                                      Container(
-                                                        // rectangle429199w (1:2)
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            2,
-                                                        height: 7,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
-                                                            begin: Alignment(
-                                                                -1, -1),
-                                                            end: Alignment(
-                                                                1, -1),
-                                                            colors: <Color>[
-                                                              Color(0xff09b778),
-                                                              Color(0xffec4a4a)
-                                                            ],
-                                                            stops: <double>[
-                                                              0,
-                                                              1
-                                                            ],
-                                                          ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(left: isMobile ? screenHeight * 0.001 : screenWidth * 0.03, top : isMobile ? screenHeight * 0.013 : screenHeight * 0.03),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              VehicleDetailsScreen(
+                                                                                truckNumber: widget.truckNo,
+                                                                              )),
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          screenWidth *
+                                                                              0.004),
+                                                                  height: isMobile ? screenHeight * 0.03 : screenHeight * 0.04,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  width:
+                                                                      isMobile ? screenHeight * 0.065 :  screenWidth * 0.07,
+                                                                  decoration:
+                                                                      const BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(2)),
+                                                                    color:
+                                                                        trackButtonColor,
+                                                                  ),
+                                                                  child: Text(
+                                                                      'Track',
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize: isMobile ? screenWidth * 0.035 : screenHeight * 0.02,
+                                                                          color : white,
+                                                                          fontWeight: FontWeight.w500
+                                                                        )
+                                                                      )
+                                                              ),
+                                                            ),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Navigator
+                                                                    .push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          MapScreen(
+                                                                            loadingPoint: widget.loadingPoint,
+                                                                            unloadingPoint: widget.unloadingPoint,
+                                                                            truckNumber: widget.truckNo,
+                                                                            loadingPointCity: widget.loadingPointCity,
+                                                                            unloadingPointCity: widget.unloadingPointCity,
+                                                                          )
+                                                                          ),
+                                                                );
+                                                              },
+                                                              child:
+                                                                  Container(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal: screenWidth *
+                                                                              0.005),
+                                                                      height: isMobile ? screenHeight * 0.03 : screenHeight * 0.04,
+                                                                      width: isMobile ? screenHeight * 0.07 :  screenWidth * 0.09,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(2)),
+                                                                        color: trackButtonColor,
+                                                                      ),
+                                                                      child: Image.asset(
+                                                                          'assets/icons/fastag.png')),
+                                                            ),  
+                                                          ],
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        "${widget.unloadingPoint}",
-                                                        style: const TextStyle(
-                                                          color: Color.fromRGBO(
-                                                              237, 74, 74, 1),
-                                                          fontSize: 20,
-                                                        ),
-                                                      ),
-                                                    ]),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          )),
+                                            )),
+                                      ),
                                     ),
-                                  ),
                                   const SizedBox(
                                     height: 25,
                                   ),

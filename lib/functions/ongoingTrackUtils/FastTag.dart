@@ -21,9 +21,12 @@ class checkFastTag {
     );
 
     debugPrint(response.statusCode.toString());
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      debugPrint(response.body);
+    final Map<String, dynamic> jsonResponse = json.decode(response.body);
+    final String errCode = jsonResponse['response'][0]['response']
+          ['vehicle']['errCode'];
+    if (errCode == "000") {
+      // final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      // debugPrint(response.body);
       final List<dynamic> txnList = jsonResponse['response'][0]['response']
           ['vehicle']['vehltxnList']['txn'];
 
@@ -31,8 +34,9 @@ class checkFastTag {
       return reversedList.cast<Map<String, dynamic>>();
     } else {
       debugPrint('API Error: ${response.statusCode} - ${response.body}');
-      throw Exception(
-          "The data is taking time to load. Please refresh the screen or go back to the previous screen and then try again.");
+      return [];
+      // //throw Exception(
+      //     "The data is taking time to load. Please refresh the screen or go back to the previous screen and then try again.");
     }
   }
 

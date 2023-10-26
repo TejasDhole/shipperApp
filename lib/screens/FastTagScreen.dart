@@ -64,6 +64,7 @@ class _MapScreenState extends State<MapScreen> {
 
   final Set<Polyline> _polyline = {};
   bool isLoading = true;
+  bool timeout = false;
 
   @override
   void initState() {
@@ -231,8 +232,31 @@ class _MapScreenState extends State<MapScreen> {
     }
     setState(() {
       isLoading = false;
+      if(!isLoading && locations!.isEmpty ){ 
+        debugPrint("timneout true nhi hua");
+        timeout = true; 
+      }
     });
   }
+
+  void _retryFetchingData(){
+    setState(() {
+      isLoading = false;
+    });
+    // Retry fetching data
+    checkFastTag()
+        .getVehicleLocation(widget.truckNumber!)
+        .then((location) {
+      setState(() {
+        locations = location;
+        isLoading = false; // Data loaded successfully
+      });
+    }).catchError((error) {
+      print("Error fetching vehicle details : $error");
+      isLoading = true; // Data not loaded due to error
+    });
+  }
+
 
   Future<LatLng?> getCoordinatesForWeb(String placename) async {
     try {
@@ -279,6 +303,8 @@ class _MapScreenState extends State<MapScreen> {
     isMobile = Responsive.isMobile(context);
     if (isMobile) {
       return MobileMap(
+        retryCallBack: _retryFetchingData,
+        timeOut: timeout,
         isLoading: isLoading,
         location: locations,
         ToggleMaptype: ToggleMaptype,
@@ -290,13 +316,16 @@ class _MapScreenState extends State<MapScreen> {
         customInfoWindowController: customInfoWindowController,
         maptype: maptype,
         markers: _markers,
-        polyline: _polyline,
+        polyline: [_polyline],
         zoom: zoom,
         truckNumber: widget.truckNumber,
         zoombutton: zoombutton,
       );
     } else {
       return WebMap(
+        retryCallBack: _retryFetchingData,
+        timeOut: timeout,
+        location: locations,
         ToggleMaptype: ToggleMaptype,
         isLoading: isLoading,
         col1: col1,
@@ -306,7 +335,7 @@ class _MapScreenState extends State<MapScreen> {
         maptype: maptype,
         markers: _markers,
         truckNo: widget.truckNumber,
-        polyline: _polyline,
+        polyline:_polyline,
         zoom: zoom,
         zoombutton: zoombutton,
       );

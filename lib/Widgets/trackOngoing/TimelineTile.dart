@@ -23,12 +23,10 @@ class TimeLineWidget extends StatefulWidget {
 }
 
 class _TimeLineWidgetState extends State<TimeLineWidget> {
-  // final String vehicle = "CG07BC9186";
 
-  Future<List<dynamic>> fetchLocations() async {
-    final locations = await checkFastTag().getVehicleLocation(widget.vehicle!);
-    return locations;
-  }
+  Future<List<dynamic>?> fetchLocations() async {
+      return widget.location;
+    }
 
   Future<String> fetchAddressForWeb(double latitude, double longitude) async {
     final url =
@@ -101,8 +99,10 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('location from timeline : ${widget.location}');
     double screenHeight = MediaQuery.of(context).size.height;
-    return FutureBuilder<List<dynamic>>(
+   //rreturn Container();
+    return FutureBuilder<List<dynamic>?>(
       future: fetchLocations(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -135,6 +135,7 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
             itemCount: locations.length,
             itemBuilder: (context, index) {
               final location = locations[index];
+              print(location);
               final time = DateTime.parse(location['readerReadTime']);
               final indianTime = DateFormat('dd MMM yyyy, hh:mm a', 'en_US')
                   .format(time.toLocal());
