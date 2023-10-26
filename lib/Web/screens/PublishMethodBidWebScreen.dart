@@ -104,22 +104,10 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
       setSelectedTransporterList = false;
     }
 
-    if (widget.publishMethod == 'Bid') {
-      if (selectedTransporterList.isNotEmpty &&
-          providerData.biddingEndTime != null &&
-          providerData.biddingEndDate != null &&
-          providerData.biddingEndDate != '' &&
-          providerData.biddingEndTime != '') {
-        enableFinishButton = true;
-      } else {
-        enableFinishButton = false;
-      }
+    if (selectedTransporterList.isNotEmpty) {
+      enableFinishButton = true;
     } else {
-      if (selectedTransporterList.isNotEmpty) {
-        enableFinishButton = true;
-      } else {
-        enableFinishButton = false;
-      }
+      enableFinishButton = false;
     }
 
     return Scaffold(
