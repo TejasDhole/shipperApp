@@ -174,7 +174,7 @@ class _LoadTruckWeightSelectScreenWebState
                     ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(2))),
-                    fillColor: MaterialStatePropertyAll<Color>(truckGreen),
+                    activeColor: truckGreen,
                     controlAffinity: ListTileControlAffinity.leading,
                     secondary: Image.asset(
                         'assets/images/load_weight_boxes.png',

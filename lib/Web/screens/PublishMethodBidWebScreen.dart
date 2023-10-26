@@ -340,9 +340,7 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     2))),
-                                                    fillColor:
-                                                        MaterialStatePropertyAll<
-                                                            Color>(truckGreen),
+                                                    activeColor: truckGreen,
                                                     title: Text(
                                                       transporterList[index][1],
                                                       style: TextStyle(
