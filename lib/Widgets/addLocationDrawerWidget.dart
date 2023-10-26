@@ -390,17 +390,6 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     deleteButtonColor,
                                     Icon(Icons.warning),
                                     context);
-                              } else if (facilityController.pinCode.value ==
-                                      '' ||
-                                  facilityController.pinCode
-                                          .toString()
-                                          .length !=
-                                      6) {
-                                showSnackBar(
-                                    'Enter a valid PinCode !!!',
-                                    deleteButtonColor,
-                                    Icon(Icons.warning),
-                                    context);
                               } else {
                                 try {
                                   bool status = await createFacility();
