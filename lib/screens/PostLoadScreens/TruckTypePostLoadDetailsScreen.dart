@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
@@ -91,7 +92,11 @@ class _TruckTypePostLoadDetailsScreenState
         children: [
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
-              subTitle: 'What type of truck you require?'),
+              subTitle: 'What type of truck you require?',
+              visibleWidget: HomeScreenWeb(
+                index: 0,
+                selectedIndex: 0,
+              )),
           Container(
             height: 10,
             color: lineDividerColor,

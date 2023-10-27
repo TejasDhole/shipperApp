@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
@@ -47,7 +48,11 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
         children: [
           LoadDetailsHeader(
               title: 'Select Product Type',
-              subTitle: 'We need some details from you.'),
+              subTitle: 'We need some details from you.',
+              visibleWidget: HomeScreenWeb(
+                index: 0,
+                selectedIndex: 0,
+              )),
           Container(
             height: 10,
             color: lineDividerColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
@@ -46,7 +47,11 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
               children: [
                 LoadDetailsHeader(
                     title: 'Load Confirmation',
-                    subTitle: 'Review the load details'),
+                    subTitle: 'Review the load details',
+                    visibleWidget: HomeScreenWeb(
+                      index: 0,
+                      selectedIndex: 0,
+                    )),
                 Expanded(
                   child: Center(
                     child: SizedBox(

@@ -9,13 +9,19 @@ import 'package:shipper_app/responsive.dart';
 
 class LoadDetailsHeader extends StatelessWidget {
   String? title, subTitle;
+  var visibleWidget;
 
-  LoadDetailsHeader({super.key, required this.title, required this.subTitle});
+  LoadDetailsHeader(
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.visibleWidget});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0, // without card widget 'Material Widget required' will be thrown while running the application for android
+      elevation: 0,
+      // without card widget 'Material Widget required' will be thrown while running the application for android
       margin: EdgeInsets.all(0),
       child: Container(
         padding: EdgeInsets.only(
@@ -34,7 +40,8 @@ class LoadDetailsHeader extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Get.back();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => visibleWidget));
                   },
                   icon: Icon(
                     Icons.keyboard_backspace,
