@@ -225,6 +225,7 @@ Future<void> imageDownload(BuildContext context, var docLinks) {
                           onTap: () async {
                             _saveNetworkImage(
                                 "$proxyServer${previewUploadedImage.previewImage.toString()}");
+                            downloading = false;
                           },
                         ),
                       ),
@@ -251,8 +252,6 @@ Future<void> imageDownload(BuildContext context, var docLinks) {
                           ),
                           onTap: () {
                             Get.back();
-
-                            downloading = false;
                           },
                         ),
                       ),

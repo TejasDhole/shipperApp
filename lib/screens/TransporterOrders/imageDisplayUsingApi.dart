@@ -187,6 +187,7 @@ class _imageDisplayUsingApiState extends State<imageDisplayUsingApi> {
                         onTap: () async {
                           _saveNetworkImage(
                               "$proxyServer${widget.docLink.toString()}");
+                          downloading = false;
                         },
                       ),
                     )),
