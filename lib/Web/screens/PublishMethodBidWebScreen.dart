@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
@@ -117,6 +118,23 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Container(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  Expanded(child: Container()),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.xmark,
+                        color: black,
+                        size: 25,
+                      ))
+                ],
+              ),
+            ),
             (widget.publishMethod == 'Bid')
                 ? Row(children: [
                     Expanded(
