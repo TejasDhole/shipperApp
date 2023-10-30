@@ -184,6 +184,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                               } else {
                                 cityNameController.clear();
                               }
+                              cityNameController.moveCursorToEnd();
                               return Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
                                 child: TextField(
@@ -192,6 +193,16 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                       color: kLiveasyColor,
                                       fontFamily: 'Montserrat',
                                       fontSize: size_8),
+                                  onChanged: (value) {
+                                    if (cityNameController.text.isNotEmpty &&
+                                        cityNameController.text != null) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((_) {
+                                        facilityController.updateCity(
+                                            cityNameController.text);
+                                      });
+                                    }
+                                  },
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
