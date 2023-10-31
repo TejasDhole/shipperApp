@@ -28,12 +28,8 @@ class _moveLoadConfirmationScreenButtonWidgetState
         providerData.totalTyresValue != 0 &&
         providerData.scheduleLoadingDate != '' &&
         providerData.publishMethod != '') {
-      if (providerData.publishMethod == 'Bid' &&
-          providerData.biddingEndTime != null &&
-          providerData.biddingEndDate != null &&
-          providerData.loadTransporterList != []) {
-        enable = true;
-      } else if (providerData.publishMethod == 'Select' &&
+      if ((providerData.publishMethod == 'Bid' ||
+              providerData.publishMethod == 'Select') &&
           providerData.loadTransporterList != []) {
         enable = true;
         providerData.biddingEndTime = null;
