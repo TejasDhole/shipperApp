@@ -23,11 +23,16 @@ class TryAgain extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                  Padding(
-                    padding: EdgeInsets.only(top : isMobile ? screenHeight * 0.02 : 0, left : isMobile ? screenWidth * 0.04 : 0),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: skyBlue,
+                  InkWell(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(top : isMobile ? screenHeight * 0.02 : 0, left : isMobile ? screenWidth * 0.04 : 0),
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        color: skyBlue,
+                      ),
                     ),
                   ),
           Center(
@@ -35,7 +40,6 @@ class TryAgain extends StatelessWidget {
               margin : EdgeInsets.only(top : isMobile ? screenHeight * 0.15 : 0),
               color: Colors.amberAccent,
               child: Image.asset('assets/images/tryAgain.png',
-                  //color : Colors.amberAccent,
                   height: isMobile ? screenHeight * 0.4 : screenHeight * 0.8),
             ),
           ),

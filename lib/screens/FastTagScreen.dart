@@ -233,28 +233,19 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       isLoading = false;
       if(!isLoading && locations!.isEmpty ){ 
-        debugPrint("timneout true nhi hua");
         timeout = true; 
       }
     });
   }
 
+//After clicking on the TryAgain button, check whether the data is available now or not.
   void _retryFetchingData(){
     setState(() {
-      isLoading = false;
+      isLoading = true;
+      timeout = false;
     });
     // Retry fetching data
-    checkFastTag()
-        .getVehicleLocation(widget.truckNumber!)
-        .then((location) {
-      setState(() {
-        locations = location;
-        isLoading = false; // Data loaded successfully
-      });
-    }).catchError((error) {
-      print("Error fetching vehicle details : $error");
-      isLoading = true; // Data not loaded due to error
-    });
+    loadVehicleLocations(widget.truckNumber.toString());
   }
 
 
