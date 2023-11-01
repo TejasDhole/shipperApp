@@ -36,8 +36,6 @@ class _moveLoadConfirmationScreenButtonWidgetState
               providerData.publishMethod == 'Select') &&
           providerData.loadTransporterList != []) {
         enable = true;
-        providerData.biddingEndTime = null;
-        providerData.biddingEndDate = null;
       } else if (providerData.publishMethod == 'Contract') {
         enable = true;
         providerData.biddingEndTime = null;
