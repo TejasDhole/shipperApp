@@ -43,7 +43,6 @@ class checkFastTag {
       }
       return reversedList.cast<Map<String, dynamic>>();
     } else {
-      debugPrint('API Error: ${response.statusCode} - ${response.body}');
       return [];
     }
   }

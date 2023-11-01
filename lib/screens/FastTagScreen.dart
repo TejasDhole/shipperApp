@@ -307,7 +307,7 @@ class _MapScreenState extends State<MapScreen> {
         customInfoWindowController: customInfoWindowController,
         maptype: maptype,
         markers: _markers,
-        polyline: [_polyline],
+        polyline: _polyline,
         zoom: zoom,
         truckNumber: widget.truckNumber,
         zoombutton: zoombutton,
