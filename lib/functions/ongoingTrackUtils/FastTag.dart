@@ -6,6 +6,7 @@ import 'package:shipper_app/models/vehicleDetails.dart';
 import 'package:xml/xml.dart';
 
 class checkFastTag {
+  //Fetch the fastag location of any truck
   Future<List<dynamic>> getVehicleLocation(String vehicle) async {
     final String url = dotenv.get("fastTag");
 
@@ -21,21 +22,49 @@ class checkFastTag {
     );
 
     debugPrint(response.statusCode.toString());
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      debugPrint(response.body);
+    final Map<String, dynamic> jsonResponse = json.decode(response.body);
+    final String errCode =
+        jsonResponse['response'][0]['response']['vehicle']['errCode'];
+    //Here we are not directly checking the status code because of the response of the API
+    if (errCode == "000") {
       final List<dynamic> txnList = jsonResponse['response'][0]['response']
           ['vehicle']['vehltxnList']['txn'];
-
-      final reversedList = List.from(txnList.reversed);
+      //Reversing the list to get the data sorted according to the location time
+      var reversedList = List.from(txnList.reversed);
+      
+      for (int i = 0; i < reversedList.length; i++) {
+        //Here we are fetching the complete address of the the tollPlazaName with the latitude and longitude
+        //Coming in the response.
+        String address = await fetchAddressForWeb(
+          double.parse(reversedList[i]['tollPlazaGeocode'].split(',')[0]),
+          double.parse(reversedList[i]['tollPlazaGeocode'].split(',')[1]),
+        );
+        reversedList[i]['address'] = address;
+      }
       return reversedList.cast<Map<String, dynamic>>();
     } else {
-      debugPrint('API Error: ${response.statusCode} - ${response.body}');
-      throw Exception(
-          "The data is taking time to load. Please refresh the screen or go back to the previous screen and then try again.");
+      return [];
     }
   }
 
+
+//Fetch the address of any location with the latitude and longitude using the Google Place API
+//Because the geocoding package doesn't work for the web, it only works for iOS and Android.
+  Future<String> fetchAddressForWeb(double latitude, double longitude) async {
+    final url =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=${dotenv.get('mapKey')}';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == 'OK' && data['results'].isNotEmpty) {
+        final String address = data['results'][0]['formatted_address'];
+        return address.toString();
+      }
+    }
+    return 'Address not found';
+  }
+
+//Fetch details of any vehicle like driver name, registration number any many more
   Future<VehicleDetails> fetchVehicleDetails(String vehicleNumber) async {
     final String vahanApiUrl = dotenv.get('vahanUrl');
 

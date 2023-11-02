@@ -53,6 +53,8 @@ const Color timelinesColor = Color.fromARGB(255, 47, 46, 65);
 const Color infoWindowColor = Color.fromARGB(255, 0, 0, 0);
 const Color vehicleDetailsText = Color.fromARGB(255, 9, 183, 120);
 const Color fastagAppBarColor = Color.fromARGB(255, 210, 210, 210);
+const Color trackButtonColor = Color.fromARGB(255, 0, 0, 102);
+const Color skyBlue = Color.fromARGB(255, 5, 122, 247);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 
