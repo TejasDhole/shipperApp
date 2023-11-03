@@ -174,7 +174,7 @@ class _LoadTruckWeightSelectScreenWebState
                     ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(2))),
-                    fillColor: MaterialStatePropertyAll<Color>(truckGreen),
+                    activeColor: truckGreen,
                     controlAffinity: ListTileControlAffinity.leading,
                     secondary: Image.asset(
                         'assets/images/load_weight_boxes.png',
@@ -260,7 +260,11 @@ class _LoadTruckWeightSelectScreenWebState
         children: [
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
-              subTitle: 'What type of truck you require?'),
+              subTitle: 'What type of truck you require?',
+              visibleWidget: HomeScreenWeb(
+                index: 0,
+                selectedIndex: 0,
+              )),
           Expanded(
             child: Row(
               children: [

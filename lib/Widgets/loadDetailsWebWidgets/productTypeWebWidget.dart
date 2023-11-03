@@ -1,11 +1,13 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
 import 'package:shipper_app/screens/PostLoadScreens/ProductTypeSelectionScreen.dart';
 
@@ -36,7 +38,13 @@ class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
           showCursor: false,
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
-            Get.to(() => ProductTypeSelection());
+            Get.to(() => (kIsWeb)
+                ? HomeScreenWeb(
+                    visibleWidget: ProductTypeSelection(),
+                    index: 1000,
+                    selectedIndex: screens.indexOf(postLoadScreen),
+                  )
+                : ProductTypeSelection());
           },
           decoration: InputDecoration(
               border: OutlineInputBorder(

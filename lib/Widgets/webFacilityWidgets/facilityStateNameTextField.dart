@@ -103,6 +103,7 @@ class FacilityStateNameTextField extends StatelessWidget {
             },
             onSuggestionSelected: (selectedSuggestion) {
               facilityController.updateState(selectedSuggestion.toString());
+              facilityController.updateCountry('India');
             },
           ));
     });

@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
+import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 import 'package:shipper_app/variables/truckFilterVariablesForPostLoad.dart';
 
 import 'package:shipper_app/Web/screens/LoadTruckWeightSelectScreenWeb.dart';
@@ -91,7 +95,11 @@ class _TruckTypePostLoadDetailsScreenState
         children: [
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
-              subTitle: 'What type of truck you require?'),
+              subTitle: 'What type of truck you require?',
+              visibleWidget: HomeScreenWeb(
+                index: 0,
+                selectedIndex: 0,
+              )),
           Container(
             height: 10,
             color: lineDividerColor,
@@ -202,13 +210,32 @@ class _TruckTypePostLoadDetailsScreenState
                     providerData.resetOnNewType();
                     providerData.updatePassingWeightMultipleValue(empList);
                   }
-                  Get.to(() => LoadTruckWeightSelectScreenWeb(
-                        truckTypeName: truckName[index],
-                        minWeight: loadWeightTons[index][0],
-                        maxWeight: loadWeightTons[index][1],
-                        truckTypeValue:
-                            truckFilterVariables.truckTypeValueList[index],
-                      ));
+
+                  if (kIsWeb) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreenWeb(
+                                  visibleWidget: LoadTruckWeightSelectScreenWeb(
+                                    truckTypeName: truckName[index],
+                                    minWeight: loadWeightTons[index][0],
+                                    maxWeight: loadWeightTons[index][1],
+                                    truckTypeValue: truckFilterVariables
+                                        .truckTypeValueList[index],
+                                  ),
+                                  index: 1000,
+                                  selectedIndex:
+                                      screens.indexOf(postLoadScreen),
+                                )));
+                  } else {
+                    Get.to(() => LoadTruckWeightSelectScreenWeb(
+                          truckTypeName: truckName[index],
+                          minWeight: loadWeightTons[index][0],
+                          maxWeight: loadWeightTons[index][1],
+                          truckTypeValue:
+                              truckFilterVariables.truckTypeValueList[index],
+                        ));
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(

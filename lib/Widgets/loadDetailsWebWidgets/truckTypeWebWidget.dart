@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
 import 'package:shipper_app/screens/PostLoadScreens/TruckTypePostLoadDetailsScreen.dart';
 import 'package:shipper_app/variables/truckFilterVariablesForPostLoad.dart';
-
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 
@@ -63,7 +65,13 @@ class _TruckTypeWebWidgetState extends State<TruckTypeWebWidget> {
         showCursor: false,
         mouseCursor: SystemMouseCursors.click,
         onTap: () {
-          Get.to(() => TruckTypePostLoadDetailsScreen());
+          Get.to(() => (kIsWeb)
+              ? HomeScreenWeb(
+                  visibleWidget: TruckTypePostLoadDetailsScreen(),
+                  index: 1000,
+                  selectedIndex: screens.indexOf(postLoadScreen),
+                )
+              : TruckTypePostLoadDetailsScreen());
         },
         decoration: InputDecoration(
             border: OutlineInputBorder(

@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/providerClass/providerData.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 import 'package:shipper_app/screens/PostLoadScreens/loadConfirmation.dart';
 
 class moveLoadConfirmationScreenButtonWidget extends StatefulWidget {
@@ -28,16 +32,10 @@ class _moveLoadConfirmationScreenButtonWidgetState
         providerData.totalTyresValue != 0 &&
         providerData.scheduleLoadingDate != '' &&
         providerData.publishMethod != '') {
-      if (providerData.publishMethod == 'Bid' &&
-          providerData.biddingEndTime != null &&
-          providerData.biddingEndDate != null &&
+      if ((providerData.publishMethod == 'Bid' ||
+              providerData.publishMethod == 'Select') &&
           providerData.loadTransporterList != []) {
         enable = true;
-      } else if (providerData.publishMethod == 'Select' &&
-          providerData.loadTransporterList != []) {
-        enable = true;
-        providerData.biddingEndTime = null;
-        providerData.biddingEndDate = null;
       } else if (providerData.publishMethod == 'Contract') {
         enable = true;
         providerData.biddingEndTime = null;
@@ -62,7 +60,18 @@ class _moveLoadConfirmationScreenButtonWidgetState
       ),
       onPressed: () {
         if (enable) {
-          Get.to(() => LoadConfirmation());
+          Get.to(() => HomeScreenWeb(
+                index: 1000,
+                selectedIndex: screens.indexOf(postLoadScreen),
+                visibleWidget: LoadConfirmation(
+                  previousScreen: (kIsWeb)
+                      ? HomeScreenWeb(
+                          index: screens.indexOf(postLoadScreenTwo),
+                          selectedIndex: screens.indexOf(postLoadScreen),
+                        )
+                      : PostLoadScreenTwo(),
+                ),
+              ));
         }
       },
       child: Text(

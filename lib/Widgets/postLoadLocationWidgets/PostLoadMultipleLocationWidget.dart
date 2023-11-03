@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
@@ -11,7 +12,12 @@ Widget postLoadMultipleLocationWidget(context) {
     mainAxisSize: MainAxisSize.min,
     children: [
       LoadDetailsHeader(
-          title: 'Location Details', subTitle: 'Tell us your location details'),
+          title: 'Location Details',
+          subTitle: 'Tell us your location details',
+          visibleWidget: HomeScreenWeb(
+            index: 0,
+            selectedIndex: 0,
+          )),
       Container(
         height: 10,
         color: lineDividerColor,
@@ -26,14 +32,16 @@ Widget postLoadMultipleLocationWidget(context) {
           'Please be as specific as possible . Share your exact location',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: (Responsive.isMobile(context))?size_5:size_7,
+            fontSize: (Responsive.isMobile(context)) ? size_5 : size_7,
             fontFamily: 'Montserrat',
             color: white,
           ),
         )),
       ),
       Container(
-          height: (Responsive.isMobile(context))?MediaQuery.of(context).size.height * 0.7:MediaQuery.of(context).size.height * 0.5,
+          height: (Responsive.isMobile(context))
+              ? MediaQuery.of(context).size.height * 0.7
+              : MediaQuery.of(context).size.height * 0.5,
           child: PostLoadScreenMultiple()),
     ],
   );

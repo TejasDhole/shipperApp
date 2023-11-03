@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
@@ -104,75 +105,36 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
       setSelectedTransporterList = false;
     }
 
-    if (widget.publishMethod == 'Bid') {
-      if (selectedTransporterList.isNotEmpty &&
-          providerData.biddingEndTime != null &&
-          providerData.biddingEndDate != null &&
-          providerData.biddingEndDate != '' &&
-          providerData.biddingEndTime != '') {
-        enableFinishButton = true;
-      } else {
-        enableFinishButton = false;
-      }
+    if (selectedTransporterList.isNotEmpty) {
+      enableFinishButton = true;
     } else {
-      if (selectedTransporterList.isNotEmpty) {
-        enableFinishButton = true;
-      } else {
-        enableFinishButton = false;
-      }
+      enableFinishButton = false;
     }
 
     return Scaffold(
-      floatingActionButton: SizedBox(
-        height: space_8,
-        width: space_33,
-        child: TextButton(
-          style: ButtonStyle(
-            mouseCursor: MaterialStatePropertyAll((enableFinishButton)
-                ? SystemMouseCursors.click
-                : SystemMouseCursors.basic),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: (Responsive.isMobile(context))
-                  ? BorderRadius.circular(50)
-                  : BorderRadius.all(Radius.zero),
-            )),
-            backgroundColor: MaterialStateProperty.all<Color>(
-                (enableFinishButton) ? truckGreen : disableButtonColor),
-          ),
-          onPressed: () {
-            if (enableFinishButton) {
-              providerData.updateLoadTransporterList(selectedTransporterList);
-              providerData.updatePublishMethod(widget.publishMethod);
-              ((kIsWeb)
-                  ? Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomeScreenWeb(
-                                index: screens.indexOf(postLoadScreenTwo),
-                                selectedIndex: screens.indexOf(postLoadScreen),
-                              )))
-                  : Get.to(() => PostLoadScreenTwo()));
-            }
-          },
-          child: Text(
-            'Finish', // AppLocalizations.of(context)!.postLoad,
-            style: TextStyle(
-                fontWeight: mediumBoldWeight,
-                color: white,
-                fontSize: size_8,
-                fontFamily: 'Montserrat'),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Container(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  Expanded(child: Container()),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.xmark,
+                        color: black,
+                        size: 25,
+                      ))
+                ],
+              ),
+            ),
             (widget.publishMethod == 'Bid')
                 ? Row(children: [
                     Expanded(
@@ -241,7 +203,7 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
             Expanded(
               child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.75,
                   child: Obx(() {
                     if (addLocationDrawerToggleController
                             .searchTransporterText.value !=
@@ -340,9 +302,7 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     2))),
-                                                    fillColor:
-                                                        MaterialStatePropertyAll<
-                                                            Color>(truckGreen),
+                                                    activeColor: truckGreen,
                                                     title: Text(
                                                       transporterList[index][1],
                                                       style: TextStyle(
@@ -363,6 +323,51 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                             ],
                           );
                   })),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              height: space_8,
+              width: space_33,
+              child: TextButton(
+                style: ButtonStyle(
+                  mouseCursor: MaterialStatePropertyAll((enableFinishButton)
+                      ? SystemMouseCursors.click
+                      : SystemMouseCursors.basic),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: (Responsive.isMobile(context))
+                        ? BorderRadius.circular(50)
+                        : BorderRadius.all(Radius.zero),
+                  )),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      (enableFinishButton) ? truckGreen : disableButtonColor),
+                ),
+                onPressed: () {
+                  if (enableFinishButton) {
+                    providerData
+                        .updateLoadTransporterList(selectedTransporterList);
+                    providerData.updatePublishMethod(widget.publishMethod);
+                    ((kIsWeb)
+                        ? Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreenWeb(
+                                      index: screens.indexOf(postLoadScreenTwo),
+                                      selectedIndex:
+                                          screens.indexOf(postLoadScreen),
+                                    )))
+                        : Get.to(() => PostLoadScreenTwo()));
+                  }
+                },
+                child: Text(
+                  'Finish', // AppLocalizations.of(context)!.postLoad,
+                  style: TextStyle(
+                      fontWeight: mediumBoldWeight,
+                      color: white,
+                      fontSize: size_8,
+                      fontFamily: 'Montserrat'),
+                ),
+              ),
             )
           ],
         ),
