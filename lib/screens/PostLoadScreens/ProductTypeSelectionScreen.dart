@@ -53,10 +53,12 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
           LoadDetailsHeader(
               title: 'Select Product Type',
               subTitle: 'We need some details from you.',
-              visibleWidget: HomeScreenWeb(
-                index: 0,
-                selectedIndex: 0,
-              )),
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreenTwo),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : PostLoadScreenTwo()),
           Container(
             height: 10,
             color: lineDividerColor,
@@ -303,10 +305,13 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
                                 )),
                             Text(
                               productType[index],
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: kLiveasyColor,
                                   fontFamily: 'Montserrat',
-                                  fontSize: size_9),
+                                  fontSize: (Responsive.isTablet(context))
+                                      ? size_7
+                                      : size_9),
                               textAlign: TextAlign.left,
                             )
                           ],

@@ -17,9 +17,10 @@ import '/screens/PostLoadScreens/postloadnavigation.dart';
 
 // ignore: must_be_immutable
 class PostButtonLoad extends StatelessWidget {
+  var previousScreen;
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
-  PostButtonLoad({super.key});
+  PostButtonLoad({super.key, required this.previousScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -42,26 +43,23 @@ class PostButtonLoad extends StatelessWidget {
           providerData.resetPostLoadFilters();
           providerData.resetPostLoadScreenMultiple();
           providerData.updateEditLoad(false, "");
-          shipperIdController.companyStatus.value == 'verified'
-              ? kIsWeb
-                  ? Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomeScreenWeb(
-                                visibleWidget: PostLoadNav(
-                                    setChild:
-                                        postLoadMultipleLocationWidget(context),
-                                    index: 0),
-                                index: 1000,
-                                selectedIndex: screens.indexOf(postLoadScreen),
-                              )))
-                  : Get.to(() => PostLoadNav(
-                        setChild: postLoadMultipleLocationWidget(context),
-                        index: 0,
-                      ))
-              : showDialog(
-                  context: context,
-                  builder: (context) => VerifyAccountNotifyAlertDialog());
+          kIsWeb
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreenWeb(
+                            visibleWidget: PostLoadNav(
+                                setChild: postLoadMultipleLocationWidget(
+                                    context, previousScreen),
+                                index: 0),
+                            index: 1000,
+                            selectedIndex: screens.indexOf(postLoadScreen),
+                          )))
+              : Get.to(() => PostLoadNav(
+                    setChild:
+                        postLoadMultipleLocationWidget(context, previousScreen),
+                    index: 0,
+                  ));
         },
         child: Text(
           'postLoad'.tr,

@@ -96,10 +96,12 @@ class _TruckTypePostLoadDetailsScreenState
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
               subTitle: 'What type of truck you require?',
-              visibleWidget: HomeScreenWeb(
-                index: 0,
-                selectedIndex: 0,
-              )),
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreenTwo),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : PostLoadScreenTwo()),
           Container(
             height: 10,
             color: lineDividerColor,

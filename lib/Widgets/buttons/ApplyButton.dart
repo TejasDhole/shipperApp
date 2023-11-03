@@ -1,4 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/controller/shipperIdController.dart';
@@ -46,7 +50,15 @@ class ApplyButton extends StatelessWidget {
                   print(providerData.price.toString());
                   print(providerData.truckNumber.toString());
                   if (providerData.postLoadScreenTwoButton()) {
-                    Get.to(() => LoadConfirmation());
+                    Get.to(() => LoadConfirmation(
+                          previousScreen: (kIsWeb)
+                              ? HomeScreenWeb(
+                                  index: screens.indexOf(postLoadScreenTwo),
+                                  selectedIndex:
+                                      screens.indexOf(postLoadScreen),
+                                )
+                              : PostLoadScreenTwo(),
+                        ));
                   } else {
                     return null;
                   }

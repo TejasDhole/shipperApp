@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/navigationScreen.dart';
 import 'package:shipper_app/widgets/buttons/postLoadButton.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
@@ -20,7 +24,13 @@ class _WebDashBoardState extends State<WebDashBoard> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: PostButtonLoad(),
+      floatingActionButton: PostButtonLoad(
+          previousScreen: (kIsWeb)
+              ? HomeScreenWeb(
+                  index: 0,
+                  selectedIndex: 0,
+                )
+              : NavigationScreen()),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

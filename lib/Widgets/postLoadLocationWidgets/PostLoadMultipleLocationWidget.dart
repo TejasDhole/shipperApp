@@ -7,17 +7,14 @@ import 'package:shipper_app/constants/spaces.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenMultiple.dart';
 
-Widget postLoadMultipleLocationWidget(context) {
+Widget postLoadMultipleLocationWidget(context, previousScreen) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
       LoadDetailsHeader(
           title: 'Location Details',
           subTitle: 'Tell us your location details',
-          visibleWidget: HomeScreenWeb(
-            index: 0,
-            selectedIndex: 0,
-          )),
+          previousScreen: previousScreen),
       Container(
         height: 10,
         color: lineDividerColor,
