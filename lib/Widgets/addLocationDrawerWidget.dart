@@ -7,6 +7,7 @@ import 'package:shipper_app/Widgets/showSnackBarTop.dart';
 import 'package:shipper_app/Widgets/webFacilityWidgets/facilityAddressTextFieldWidget.dart';
 import 'package:shipper_app/Widgets/webFacilityWidgets/facilityPinCodeTextFieldWidget.dart';
 import 'package:shipper_app/Widgets/webFacilityWidgets/facilityStateNameTextField.dart';
+import 'package:shipper_app/Widgets/webFacilityWidgets/showMapAddressPicker.dart';
 import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/controller/facilityController.dart';
 import 'package:shipper_app/functions/traccarCalls/createGeoFence.dart';
@@ -112,7 +113,16 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                           width: 30,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: ShowMapAddressPicker(),
+                                  );
+                                },
+                              );
+                            },
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 15),
@@ -417,6 +427,8 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     facilityController.updateCity('');
                                     facilityController.updateAddress('');
                                     facilityController.updatePinCode('');
+                                    facilityController.updateFacilityLatLng(
+                                        '', '');
                                   } else {
                                     showSnackBar(
                                         'Something went Wrong, Try again Later!!!',

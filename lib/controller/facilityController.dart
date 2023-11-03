@@ -8,6 +8,8 @@ class FacilityController extends GetxController{
   RxString pinCode = ''.obs;
   RxString partyName = ''.obs;
   RxString placeId = ''.obs;
+  RxString lat = ''.obs;
+  RxString long = ''.obs;
   RxString facilityPopUpSearchText = ''.obs;
 
   updateAddress(String selectedAddress){
@@ -33,5 +35,9 @@ class FacilityController extends GetxController{
   }
   updateFacilityPopUpSearchText(String searchedText){
     facilityPopUpSearchText.value = searchedText;
+  }
+  updateFacilityLatLng(String lat, long){
+    this.lat.value = lat;
+    this.long.value = long;
   }
 }

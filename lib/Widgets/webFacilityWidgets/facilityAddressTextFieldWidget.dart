@@ -125,5 +125,6 @@ class FacilityAddressTextFieldWidget extends StatelessWidget {
       stateName = stateName.replaceAll(', India', '');
     }
     facilityController.updateState(stateName);
+    facilityController.updateFacilityLatLng('', '');
   }
 }
