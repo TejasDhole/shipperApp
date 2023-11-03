@@ -6,6 +6,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/buttons/repostButton.dart';
 import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:sizer/sizer.dart';
 import '../responsive.dart';
 import '/constants/colors.dart';
@@ -616,7 +617,14 @@ class MyLoadsCard extends StatelessWidget {
 
         print(providerData.editLoad); // true
         Get.to(PostLoadNav(
-          setChild: postLoadMultipleLocationWidget(context),
+          setChild: postLoadMultipleLocationWidget(
+              context,
+              (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreen),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : NavigationScreen()),
           index: 0,
         ));
         break;
