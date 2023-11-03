@@ -102,9 +102,11 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                                   ),
                               LoadConfirmationTemplate(
                                   value: (providerData.scheduleLoadingTime !=
-                                          '')
-                                      ? '${postLoadVariables.bookingDate.value} ; ${providerData.scheduleLoadingTime}'
-                                      : postLoadVariables.bookingDate.value,
+                                              '' &&
+                                          providerData.scheduleLoadingTime !=
+                                              'NA')
+                                      ? '${providerData.scheduleLoadingDate} ; ${providerData.scheduleLoadingTime}'
+                                      : providerData.scheduleLoadingDate,
                                   label: 'Scheduling Date & Time'
                                   // AppLocalizations.of(context)!.date
                                   ),
