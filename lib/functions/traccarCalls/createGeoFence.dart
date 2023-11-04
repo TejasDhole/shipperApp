@@ -8,10 +8,16 @@ import 'package:shipper_app/controller/shipperIdController.dart';
 createFacility() async {
   FacilityController facilityController = Get.put(FacilityController());
   //first fetch lat long of entered address using place_id
-  List<double> latLng = [0,0];
+  List<double> latLng = [0, 0];
 
-  if(facilityController.placeId.value != ''){
+  if (facilityController.placeId.value != '') {
     latLng = await getLatLong();
+  } else if (facilityController.lat.value.isNotEmpty &&
+      facilityController.long.value.isNotEmpty) {
+    latLng = [
+      double.parse(facilityController.lat.value),
+      double.parse(facilityController.long.value)
+    ];
   }
 
   //then create geo fence in user traccar account

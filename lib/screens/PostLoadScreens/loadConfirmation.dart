@@ -17,7 +17,9 @@ import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 
 class LoadConfirmation extends StatefulWidget {
-  const LoadConfirmation({Key? key}) : super(key: key);
+  var previousScreen;
+
+  LoadConfirmation({Key? key, required this.previousScreen});
 
   @override
   _LoadConfirmationState createState() => _LoadConfirmationState();
@@ -48,10 +50,7 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                 LoadDetailsHeader(
                     title: 'Load Confirmation',
                     subTitle: 'Review the load details',
-                    visibleWidget: HomeScreenWeb(
-                      index: 0,
-                      selectedIndex: 0,
-                    )),
+                    previousScreen: widget.previousScreen),
                 Expanded(
                   child: Center(
                     child: SizedBox(
@@ -103,9 +102,11 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                                   ),
                               LoadConfirmationTemplate(
                                   value: (providerData.scheduleLoadingTime !=
-                                          '')
-                                      ? '${postLoadVariables.bookingDate.value} ; ${providerData.scheduleLoadingTime}'
-                                      : postLoadVariables.bookingDate.value,
+                                              '' &&
+                                          providerData.scheduleLoadingTime !=
+                                              'NA')
+                                      ? '${providerData.scheduleLoadingDate} ; ${providerData.scheduleLoadingTime}'
+                                      : providerData.scheduleLoadingDate,
                                   label: 'Scheduling Date & Time'
                                   // AppLocalizations.of(context)!.date
                                   ),

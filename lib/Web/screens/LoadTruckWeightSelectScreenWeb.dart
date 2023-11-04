@@ -12,6 +12,7 @@ import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
+import 'package:shipper_app/screens/PostLoadScreens/TruckTypePostLoadDetailsScreen.dart';
 import 'home_web.dart';
 
 class LoadTruckWeightSelectScreenWeb extends StatefulWidget {
@@ -261,10 +262,13 @@ class _LoadTruckWeightSelectScreenWebState
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
               subTitle: 'What type of truck you require?',
-              visibleWidget: HomeScreenWeb(
-                index: 0,
-                selectedIndex: 0,
-              )),
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      visibleWidget: TruckTypePostLoadDetailsScreen(),
+                      index: 1000,
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : null),
           Expanded(
             child: Row(
               children: [
