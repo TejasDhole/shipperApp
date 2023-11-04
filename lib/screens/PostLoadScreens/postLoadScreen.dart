@@ -6,6 +6,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/trackAllScreen.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/controller/postLoadVariablesController.dart';
@@ -67,6 +68,14 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: (Responsive.isMobile(context))?size_10:size_15),
                       ),
+                      ElevatedButton(onPressed :(){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                              const TrackAllScreen()),
+                        );
+                      }, child: const Text('Track All')),
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,

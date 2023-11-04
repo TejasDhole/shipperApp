@@ -51,6 +51,10 @@ class BookingApiCalls {
         bookingModel.completedDate =
             json['completedDate'] != null ? json['completedDate'] : "NA";
         print(bookingModel.completedDate);
+        bookingModel.deviceId = int.tryParse(json['deviceId']);
+        print(bookingModel.deviceId);
+        bookingModel.loadingPointCity = json['loadingPointCity'];
+        bookingModel.unloadingPointCity = json['unloadingPointCity'];
         modelList.add(bookingModel);
       }
     }
