@@ -3,9 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/navigationScreen.dart';
 import 'package:shipper_app/screens/trackAllScreen.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -41,7 +44,13 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
       floatingActionButton: (kIsWeb &&
               (Responsive.isDesktop(context) || Responsive.isTablet(context)))
           ? null
-          : PostButtonLoad(),
+          : PostButtonLoad(
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreen),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : NavigationScreen()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -66,7 +75,9 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                             fontFamily: 'Montserrat',
                             color: kLiveasyColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: (Responsive.isMobile(context))?size_10:size_15),
+                            fontSize: (Responsive.isMobile(context))
+                                ? size_10
+                                : size_15),
                       ),
                       ElevatedButton(onPressed :(){
                         Navigator.push(
@@ -80,8 +91,16 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Visibility(
-                            visible: Responsive.isMobile(context)?false:true,
-                            child: PostButtonLoad(),
+                            visible:
+                                Responsive.isMobile(context) ? false : true,
+                            child: PostButtonLoad(
+                                previousScreen: (kIsWeb)
+                                    ? HomeScreenWeb(
+                                        index: screens.indexOf(postLoadScreen),
+                                        selectedIndex:
+                                            screens.indexOf(postLoadScreen),
+                                      )
+                                    : NavigationScreen()),
                           ),
                         ),
                       ),

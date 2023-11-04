@@ -249,7 +249,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
       loadDetailsScreenModel.loadingPointCity =
           json['loadingPointCity'] ?? 'NA';
       loadDetailsScreenModel.loadingPoint = json['loadingPoint'] ?? 'NA';
-      loadDetailsScreenModel.loadingPointState == json['loadingPointState'] ??
+      loadDetailsScreenModel.loadingPointState = json['loadingPointState'] ??
           'NA';
       loadDetailsScreenModel.loadingPointCity2 =
           json['loadingPointCity2'] ?? 'NA';
@@ -279,6 +279,9 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
       loadDetailsScreenModel.status = json['status'];
       loadDetailsScreenModel.scheduleLoadTime = json['loadingTime'] ?? 'NA';
       loadDetailsScreenModel.publishMethod = json['publishMethod'] ?? 'NA';
+      loadDetailsScreenModel.comment = json['comment'];
+      loadDetailsScreenModel.biddingEndDate = json['biddingEndDate'];
+      loadDetailsScreenModel.biddingEndTime = json['biddingEndTime'];
 
       if (mounted) {
         setState(() {

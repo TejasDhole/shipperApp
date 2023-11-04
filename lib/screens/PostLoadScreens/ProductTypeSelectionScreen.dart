@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/screens.dart';
 
 import 'package:shipper_app/providerClass/providerData.dart';
+import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 
 class ProductTypeSelection extends StatefulWidget {
   @override
@@ -47,7 +52,13 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
         children: [
           LoadDetailsHeader(
               title: 'Select Product Type',
-              subTitle: 'We need some details from you.'),
+              subTitle: 'We need some details from you.',
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreenTwo),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : PostLoadScreenTwo()),
           Container(
             height: 10,
             color: lineDividerColor,
@@ -93,8 +104,8 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               padding: const EdgeInsets.all(10),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: (Responsive.isMobile(context)) ? 1 : 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 0,
                   mainAxisExtent: 50),
@@ -271,23 +282,36 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
                               : LinearGradient(colors: [Colors.white, white]),
                         ),
                         padding: EdgeInsets.only(
-                            left: 40, right: 40, top: 10, bottom: 10),
+                            left: (Responsive.isTablet(context)) ? 20 : 40,
+                            right: (Responsive.isTablet(context)) ? 20 : 40,
+                            top: 10,
+                            bottom: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: (Responsive.isMobile(context))
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                                height: 30,
-                                width: 30,
+                                margin: EdgeInsets.only(
+                                    right: (Responsive.isMobile(context)
+                                        ? 40
+                                        : 0)),
+                                height:
+                                    (Responsive.isTablet(context)) ? 20 : 30,
+                                width: (Responsive.isTablet(context)) ? 20 : 30,
                                 child: Image.asset(
                                   'assets/images/load_grey_icon.png',
                                   fit: BoxFit.fill,
                                 )),
                             Text(
                               productType[index],
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: kLiveasyColor,
                                   fontFamily: 'Montserrat',
-                                  fontSize: size_9),
+                                  fontSize: (Responsive.isTablet(context))
+                                      ? size_7
+                                      : size_9),
                               textAlign: TextAlign.left,
                             )
                           ],

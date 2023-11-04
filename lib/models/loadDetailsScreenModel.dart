@@ -34,6 +34,8 @@ class LoadDetailsScreenModel {
   bool? loadPosterApproved;
   bool? loadPosterAccountVerificationInProgress;
   String? postLoadDate;
+  String? biddingEndDate;
+  String? biddingEndTime;
 
   LoadDetailsScreenModel(
       {this.loadId,
@@ -68,5 +70,6 @@ class LoadDetailsScreenModel {
       this.loadPosterCompanyApproved,
       this.loadPosterApproved,
       this.loadPosterAccountVerificationInProgress,
-      this.postLoadDate});
+      this.biddingEndDate,
+      this.biddingEndTime});
 }

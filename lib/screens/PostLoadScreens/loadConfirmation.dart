@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
@@ -16,7 +17,9 @@ import '/providerClass/providerData.dart';
 import 'package:provider/provider.dart';
 
 class LoadConfirmation extends StatefulWidget {
-  const LoadConfirmation({Key? key}) : super(key: key);
+  var previousScreen;
+
+  LoadConfirmation({Key? key, required this.previousScreen});
 
   @override
   _LoadConfirmationState createState() => _LoadConfirmationState();
@@ -46,7 +49,8 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
               children: [
                 LoadDetailsHeader(
                     title: 'Load Confirmation',
-                    subTitle: 'Review the load details'),
+                    subTitle: 'Review the load details',
+                    previousScreen: widget.previousScreen),
                 Expanded(
                   child: Center(
                     child: SizedBox(
@@ -98,9 +102,11 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                                   ),
                               LoadConfirmationTemplate(
                                   value: (providerData.scheduleLoadingTime !=
-                                          '')
-                                      ? '${postLoadVariables.bookingDate.value} ; ${providerData.scheduleLoadingTime}'
-                                      : postLoadVariables.bookingDate.value,
+                                              '' &&
+                                          providerData.scheduleLoadingTime !=
+                                              'NA')
+                                      ? '${providerData.scheduleLoadingDate} ; ${providerData.scheduleLoadingTime}'
+                                      : providerData.scheduleLoadingDate,
                                   label: 'Scheduling Date & Time'
                                   // AppLocalizations.of(context)!.date
                                   ),

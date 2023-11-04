@@ -12,6 +12,7 @@ import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
+import 'package:shipper_app/screens/PostLoadScreens/TruckTypePostLoadDetailsScreen.dart';
 import 'home_web.dart';
 
 class LoadTruckWeightSelectScreenWeb extends StatefulWidget {
@@ -174,7 +175,7 @@ class _LoadTruckWeightSelectScreenWebState
                     ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(2))),
-                    fillColor: MaterialStatePropertyAll<Color>(truckGreen),
+                    activeColor: truckGreen,
                     controlAffinity: ListTileControlAffinity.leading,
                     secondary: Image.asset(
                         'assets/images/load_weight_boxes.png',
@@ -260,7 +261,14 @@ class _LoadTruckWeightSelectScreenWebState
         children: [
           LoadDetailsHeader(
               title: 'Choose a Truck Type',
-              subTitle: 'What type of truck you require?'),
+              subTitle: 'What type of truck you require?',
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      visibleWidget: TruckTypePostLoadDetailsScreen(),
+                      index: 1000,
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : null),
           Expanded(
             child: Row(
               children: [

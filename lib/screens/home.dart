@@ -12,7 +12,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/constants/spaces.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/documentApi/getDocument.dart';
@@ -21,6 +23,7 @@ import 'package:shipper_app/functions/shipperApis/isolatedShipperGetData.dart';
 import 'package:shipper_app/functions/traccarDriverApiCalls.dart';
 import 'package:shipper_app/providerClass/drawerProviderClassData.dart';
 import 'package:shipper_app/screens/findLoadScreen.dart';
+import 'package:shipper_app/screens/navigationScreen.dart';
 import 'package:shipper_app/widgets/accountNotVerifiedWidget.dart';
 import 'package:shipper_app/widgets/bonusWidget.dart';
 import 'package:shipper_app/widgets/buttons/helpButton.dart';
@@ -47,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSwitched = false;
   final switchData = GetStorage();
   var companyStatus;
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SafeArea(
         child: Scaffold(
           key: _scaffoldKey,
-          floatingActionButton: PostButtonLoad(),
+          floatingActionButton: PostButtonLoad(
+              previousScreen: (kIsWeb)
+                  ? HomeScreenWeb(
+                      index: screens.indexOf(postLoadScreen),
+                      selectedIndex: screens.indexOf(postLoadScreen),
+                    )
+                  : NavigationScreen()),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           drawer: DrawerWidget(

@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/constants/borderWidth.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/functions/selectedLocationPostLoad.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
@@ -174,7 +176,8 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
             children: [
               LoadDetailsHeader(
                   title: 'Location Details',
-                  subTitle: 'Tell us your location details'),
+                  subTitle: 'Tell us your location details',
+                  previousScreen: null),
               Container(
                 height: 10,
                 color: lineDividerColor,

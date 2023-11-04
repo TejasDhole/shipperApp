@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
@@ -22,8 +21,21 @@ class LoadingTimeWebWidgetState extends State<LoadingTimeWebWidget> {
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
-    if (providerData.scheduleLoadingTime != '') {
-      _textEditingController.text = providerData.scheduleLoadingTime;
+    if (providerData.scheduleLoadingTime != '' &&
+        providerData.scheduleLoadingTime != 'NA') {
+      DateTime dateTime =
+          DateFormat.Hm().parse(providerData.scheduleLoadingTime);
+      picked = TimeOfDay.fromDateTime(dateTime);
+
+      //for textEditingController
+      String dayPeriod = (picked!.period == DayPeriod.am) ? 'AM' : 'PM';
+      String dayHour = (picked!.hourOfPeriod.toString().length == 1)
+          ? '0${picked!.hourOfPeriod.toString()}'
+          : picked!.hourOfPeriod.toString();
+      String dayMinute = (picked!.minute.toString().length == 1)
+          ? '0${picked!.minute.toString()}'
+          : picked!.minute.toString();
+      _textEditingController.text = '$dayHour : $dayMinute $dayPeriod';
     }
 
     return Expanded(
@@ -147,8 +159,8 @@ class LoadingTimeWebWidgetState extends State<LoadingTimeWebWidget> {
                   ? '0${picked!.minute.toString()}'
                   : picked!.minute.toString();
               _textEditingController.text = '$dayHour : $dayMinute $dayPeriod';
-              providerData.scheduleLoadingTime = _textEditingController.text;
-              print(providerData.scheduleLoadingTime);
+              providerData.scheduleLoadingTime =
+                  '${picked!.hour}:${picked!.minute}';
             });
           },
           decoration: InputDecoration(
