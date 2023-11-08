@@ -36,6 +36,8 @@ class LoadingTimeWebWidgetState extends State<LoadingTimeWebWidget> {
           ? '0${picked!.minute.toString()}'
           : picked!.minute.toString();
       _textEditingController.text = '$dayHour : $dayMinute $dayPeriod';
+    } else {
+      _textEditingController.clear();
     }
 
     return Expanded(

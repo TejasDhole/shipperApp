@@ -22,6 +22,8 @@ class _LoadDetailsCommentWidgetState extends State<LoadDetailsCommentWidget> {
     ProviderData providerData = Provider.of<ProviderData>(context);
     if (providerData.comment != '') {
       txtController.text = providerData.comment;
+    } else {
+      txtController.clear();
     }
     txtController
         .moveCursorToEnd(); // without this text will be inserted in backward

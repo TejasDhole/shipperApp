@@ -260,6 +260,11 @@ class _LoadTruckWeightSelectScreenWebState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LoadDetailsHeader(
+              reset: () {
+                List<String> empList = [];
+                selectedWeight.clear();
+                providerFunctionWeight(empList);
+              },
               title: 'Choose a Truck Type',
               subTitle: 'What type of truck you require?',
               previousScreen: (kIsWeb)
