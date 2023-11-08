@@ -100,7 +100,6 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                 ),
                 Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       OrderScreenNavigationBarButton(
                           text: 'my_loads'.tr,
@@ -119,14 +118,6 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                           pageController: pageController)
                     ],
                   ),
-                ),
-                Container(
-                  height: 5,
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                      gradient:
-                          LinearGradient(colors: [kLiveasyColor, truckGreen])),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.75,

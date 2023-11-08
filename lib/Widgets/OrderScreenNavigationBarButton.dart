@@ -17,39 +17,56 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
 
-    return TextButton(
-      onPressed: () {
-        providerData.updateUpperNavigatorIndex(value);
-        if (pageController.page == value) {
-          if (pageController.page == 0) {
-            pageController
-                .nextPage(
-                    duration: const Duration(milliseconds: 40),
-                    curve: Curves.easeIn)
-                .whenComplete(() => pageController.previousPage(
-                    duration: const Duration(milliseconds: 1),
-                    curve: Curves.easeIn));
-          } else {
-            pageController
-                .previousPage(
-                    duration: const Duration(milliseconds: 40),
-                    curve: Curves.easeIn)
-                .whenComplete(() => pageController.nextPage(
-                    duration: const Duration(milliseconds: 1),
-                    curve: Curves.easeIn));
-          }
-        } else {
-          pageController.jumpToPage(value);
-        }
-      },
-      child: Text(
-        text,
-        style: TextStyle(
-          color: providerData.upperNavigatorIndex == value
-              ? loadingPointTextColor
-              : locationLineColor,
-          fontWeight: FontWeight.w600,
-        ),
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              providerData.updateUpperNavigatorIndex(value);
+              if (pageController.page == value) {
+                if (pageController.page == 0) {
+                  pageController
+                      .nextPage(
+                          duration: const Duration(milliseconds: 40),
+                          curve: Curves.easeIn)
+                      .whenComplete(() => pageController.previousPage(
+                          duration: const Duration(milliseconds: 1),
+                          curve: Curves.easeIn));
+                } else {
+                  pageController
+                      .previousPage(
+                          duration: const Duration(milliseconds: 40),
+                          curve: Curves.easeIn)
+                      .whenComplete(() => pageController.nextPage(
+                          duration: const Duration(milliseconds: 1),
+                          curve: Curves.easeIn));
+                }
+              } else {
+                pageController.jumpToPage(value);
+              }
+            },
+            child: Text(
+              text,
+              style: TextStyle(
+                color: providerData.upperNavigatorIndex == value
+                    ? kLiveasyColor
+                    : locationLineColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Container(
+            height: 5,
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.only(top: 5, bottom: 5),
+            decoration: BoxDecoration(
+              color: providerData.upperNavigatorIndex == value
+                  ? kLiveasyColor
+                  : locationLineColor,
+            ),
+          )
+        ],
       ),
     );
   }
