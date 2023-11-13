@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/Widgets/facilitiesTableHeader.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
@@ -73,6 +74,7 @@ class _FacilitiesState extends State<Facilities> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,7 +98,7 @@ class _FacilitiesState extends State<Facilities> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 580,
+                width: screenWidth * 0.4,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -139,7 +141,8 @@ class _FacilitiesState extends State<Facilities> {
                     backgroundColor: MaterialStateProperty.all(Colors.white),
                     side: MaterialStateProperty.all(
                         const BorderSide(color: kLiveasyColor, width: 2.0)),
-                    minimumSize: MaterialStateProperty.all(const Size(230, 50)),
+                    minimumSize: MaterialStateProperty.all(
+                        Size(screenWidth * 0.175, 50)),
                   ),
                   child: const Text(
                     "+  Add Facility",
@@ -156,8 +159,61 @@ class _FacilitiesState extends State<Facilities> {
           future: fetchAllGeoFences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              // Data is still loading
-              return const CircularProgressIndicator();
+              return Shimmer.fromColors(
+                highlightColor: greyishWhiteColor,
+                baseColor: lightGrey,
+                child: SizedBox(
+                  height: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Center(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const VerticalDivider(color: Colors.grey, thickness: 1),
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const VerticalDivider(color: Colors.grey, thickness: 1),
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const VerticalDivider(color: Colors.grey, thickness: 1),
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             } else if (snapshot.connectionState == ConnectionState.done) {
               //print(snapshot.data);
               if (snapshot.hasError) {
@@ -240,59 +296,75 @@ class _FacilitiesState extends State<Facilities> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-              flex: 4,
-              child: Center(
-                  child: Text(
-                name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: size_8,
-                    fontWeight: mediumBoldWeight),
-              ))),
-          const VerticalDivider(color: greyShade, thickness: 1),
-          Expanded(
-              flex: 5,
-              child: Center(
-                  child: Text(
-                address,
+            flex: 4,
+            child: Center(
+              child: Text(
+                name ?? 'N/A',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: size_8,
                   fontWeight: mediumBoldWeight,
                 ),
-              ))),
+              ),
+            ),
+          ),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 5,
-              child: Center(
-                  child: Text(
-                '$city, $state',
+            flex: 5,
+            child: Center(
+              child: Text(
+                address ?? 'N/A',
                 textAlign: TextAlign.center,
-                selectionColor: sideBarTextColor,
                 style: TextStyle(
-                    color: Colors.black,
-                    fontSize: size_8,
-                    fontWeight: mediumBoldWeight),
-              ))),
+                  color: Colors.black,
+                  fontSize: size_8,
+                  fontWeight: mediumBoldWeight,
+                ),
+              ),
+            ),
+          ),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 2,
-              child: Center(
-                child: PopupMenuButton<PopUpMenuForFacility>(
-                    offset: Offset(0, space_2),
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(radius_2))),
-                    onSelected: (item) => onSelect(context, item, name, address,
-                        city, state, pincode, latlog, id),
-                    itemBuilder: (context) => [
-                          ...MenuItemFacility.listItem
-                              .map(showEachItem)
-                              .toList(),
-                        ]),
-              )),
+            flex: 5,
+            child: Center(
+              child: Text(
+                '${city ?? 'N/A'}, ${state ?? 'N/A'}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: size_8,
+                  fontWeight: mediumBoldWeight,
+                ),
+              ),
+            ),
+          ),
+          const VerticalDivider(color: greyShade, thickness: 1),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: PopupMenuButton<PopUpMenuForFacility>(
+                offset: Offset(0, space_2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(radius_2)),
+                ),
+                onSelected: (item) => onSelect(
+                  context,
+                  item,
+                  name ?? '',
+                  address ?? '',
+                  city ?? '',
+                  state ?? '',
+                  pincode,
+                  latlog,
+                  id,
+                ),
+                itemBuilder: (context) => [
+                  ...MenuItemFacility.listItem.map(showEachItem).toList(),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
