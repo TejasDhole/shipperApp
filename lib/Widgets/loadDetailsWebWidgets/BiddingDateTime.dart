@@ -320,7 +320,7 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
                     color: borderLightColor,
                     fontFamily: 'Montserrat',
                     fontSize: size_8),
-                label: Text('Bidding end Date',
+                label: Text('Bidding end Date (optional)',
                     style: TextStyle(
                         color: kLiveasyColor,
                         fontFamily: 'Montserrat',
@@ -370,7 +370,7 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
                     color: borderLightColor,
                     fontFamily: 'Montserrat',
                     fontSize: size_8),
-                label: Text('Bidding end Time',
+                label: Text('Bidding end Time (optional)',
                     style: TextStyle(
                         color: kLiveasyColor,
                         fontFamily: 'Montserrat',
