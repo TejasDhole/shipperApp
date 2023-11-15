@@ -261,9 +261,8 @@ class _LoadTruckWeightSelectScreenWebState
         children: [
           LoadDetailsHeader(
               reset: () {
-                List<String> empList = [];
                 selectedWeight.clear();
-                providerFunctionWeight(empList);
+                providerFunctionWeight(<String>[]);
               },
               title: 'Choose a Truck Type',
               subTitle: 'What type of truck you require?',

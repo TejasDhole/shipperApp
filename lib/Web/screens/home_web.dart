@@ -160,32 +160,36 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         appBar: AppBar(
           leading: null,
           backgroundColor: kLiveasyColor,
-          title: TextButton(
-            onPressed: () {
-              if (kIsWeb && Responsive.isMobile(context)) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreenWeb()));
-              }
-            },
-            child: SizedBox(
-              child: Row(
-                children: [
-                  const LiveasyLogoImage(),
-                  SizedBox(
-                    width: 0.5.w,
+          title: Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreenWeb()));
+                },
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      const LiveasyLogoImage(),
+                      SizedBox(
+                        width: 0.5.w,
+                      ),
+                      const Text(
+                        'Liveasy',
+                        style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Montserrat Bold",
+                            color: white),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Liveasy',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: Responsive.isMobile(context) ? 4.5.sp : 5.sp,
-                        color: white),
-                  ),
-                ],
+                ),
               ),
-            ),
+              const Expanded(child: const SizedBox())
+            ],
           ),
           actions: [
             SizedBox(
