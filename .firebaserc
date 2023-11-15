@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "shipperwebapp"
+  },
+  "targets": {
+    "shipperwebapp": {
+      "hosting": {
+        "shipperwebapp": [
+          "shipperwebapp"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
