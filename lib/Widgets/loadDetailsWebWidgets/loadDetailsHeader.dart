@@ -10,12 +10,14 @@ import 'package:shipper_app/responsive.dart';
 class LoadDetailsHeader extends StatelessWidget {
   String? title, subTitle;
   var previousScreen;
+  Function? reset;
 
   LoadDetailsHeader(
       {super.key,
       required this.title,
       required this.subTitle,
-      required this.previousScreen});
+      required this.previousScreen,
+      this.reset});
 
   @override
   Widget build(BuildContext context) {
@@ -85,34 +87,39 @@ class LoadDetailsHeader extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: (Responsive.isMobile(context)) ? 85 : 95,
-              child: IconButton(
-                  onPressed: () {
-                    print("hello");
-                  },
-                  icon: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.refresh,
-                        color: truckGreen,
-                        size: (Responsive.isMobile(context)) ? 15 : 20,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Reset",
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: truckGreen,
-                            fontSize: (Responsive.isMobile(context))
-                                ? size_7
-                                : size_8),
-                      )
-                    ],
-                  )),
+            Visibility(
+              visible: (reset != null) ? true : false,
+              child: Container(
+                width: (Responsive.isMobile(context)) ? 85 : 95,
+                child: IconButton(
+                    onPressed: () {
+                      if (reset != null) {
+                        reset!();
+                      }
+                    },
+                    icon: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.refresh,
+                          color: truckGreen,
+                          size: (Responsive.isMobile(context)) ? 15 : 20,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Reset",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: truckGreen,
+                              fontSize: (Responsive.isMobile(context))
+                                  ? size_7
+                                  : size_8),
+                        )
+                      ],
+                    )),
+              ),
             ),
           ],
         ),

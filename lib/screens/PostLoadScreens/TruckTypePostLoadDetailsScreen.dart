@@ -94,6 +94,13 @@ class _TruckTypePostLoadDetailsScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LoadDetailsHeader(
+              reset: () {
+                List<String> empList = [];
+                providerData.updateResetActive(true);
+                providerData.updateTruckTypeValue("");
+                providerData.resetOnNewType();
+                providerData.updatePassingWeightMultipleValue(empList);
+              },
               title: 'Choose a Truck Type',
               subTitle: 'What type of truck you require?',
               previousScreen: (kIsWeb)

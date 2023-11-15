@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/Widgets/addLocationDrawerWidget.dart';
@@ -40,7 +41,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  AddLocationDrawerToggleController addLocationDrawerToggleController = Get.put(AddLocationDrawerToggleController());
+  AddLocationDrawerToggleController addLocationDrawerToggleController =
+      Get.put(AddLocationDrawerToggleController());
 
   @override
   void initState() {
@@ -120,65 +122,74 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   @override
   Widget build(BuildContext context) {
-    if(Responsive.isMobile(context) && addLocationDrawerToggleController.drawerState.value == true){
+    if (Responsive.isMobile(context) &&
+        addLocationDrawerToggleController.drawerState.value == true) {
       addLocationDrawerToggleController.toggleDrawer(false);
     }
-    return Obx((){
-      if(addLocationDrawerToggleController.drawerState.value == true){
-        WidgetsBinding.instance.addPostFrameCallback((_){
+    return Obx(() {
+      if (addLocationDrawerToggleController.drawerState.value == true) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           scaffoldKey.currentState?.openEndDrawer();
         });
-      }
-      else{
+      } else {
         scaffoldKey.currentState?.closeEndDrawer();
       }
       return Scaffold(
         //TODO : Bottom Navigation Bar is only displayed when the screen size is in between sizes of mobile devices
         bottomNavigationBar: Responsive.isMobile(context)
             ? BottomNavigationBar(
-          selectedItemColor: kLiveasyColor,
-          unselectedItemColor: Colors.blueGrey,
-          showUnselectedLabels: true,
-          items: bottom_destinations,
-          currentIndex: _selectedIndex,
-          onTap: (updatedIndex) {
-            setState(() {
-              if (updatedIndex == 2 || updatedIndex == 3) {
-                _index = updatedIndex + 1;
-              } else {
-                _index = updatedIndex;
-              }
-              _selectedIndex = updatedIndex;
-            });
-          },
-        )
+                selectedItemColor: kLiveasyColor,
+                unselectedItemColor: Colors.blueGrey,
+                showUnselectedLabels: true,
+                items: bottom_destinations,
+                currentIndex: _selectedIndex,
+                onTap: (updatedIndex) {
+                  setState(() {
+                    if (updatedIndex == 2 || updatedIndex == 3) {
+                      _index = updatedIndex + 1;
+                    } else {
+                      _index = updatedIndex;
+                    }
+                    _selectedIndex = updatedIndex;
+                  });
+                },
+              )
             : null,
         key: scaffoldKey,
         endDrawer: AddLocationDrawerWidget(context: context),
         appBar: AppBar(
+          leading: null,
           backgroundColor: kLiveasyColor,
-          title: TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreenWeb()));
-            },
-            child: SizedBox(
-              child: Row(
-                children: [
-                  const LiveasyLogoImage(),
-                  SizedBox(
-                    width: 0.5.w,
+          title: Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreenWeb()));
+                },
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      const LiveasyLogoImage(),
+                      SizedBox(
+                        width: 0.5.w,
+                      ),
+                      const Text(
+                        'Liveasy',
+                        style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Montserrat Bold",
+                            color: white),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Liveasy',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: Responsive.isMobile(context) ? 4.5.sp : 5.sp,
-                        color: white),
-                  ),
-                ],
+                ),
               ),
-            ),
+              const Expanded(child: const SizedBox())
+            ],
           ),
           actions: [
             SizedBox(
@@ -221,7 +232,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                 child: TextButton.icon(
                     onPressed: () {
                       setState(() {
-                        _index = screens.indexOf(accountVerificationStatusScreen);
+                        _index =
+                            screens.indexOf(accountVerificationStatusScreen);
                       });
                     },
                     icon: const Icon(
@@ -238,128 +250,131 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
             //TODO : Similar to bottom navigation bar, Navigation rail is only displayed when it is not mobile screen
             Responsive.isMobile(context)
                 ? const SizedBox(
-              width: 0.01,
-            )
+                    width: 0.01,
+                  )
                 : Container(
-              child: Stack(
-                children: [
-                  Row(children: [
-                    Card(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.zero)),
-                      elevation: 5,
-                      shadowColor: Colors.grey,
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 100),
-                        height: MediaQuery.of(context).size.height,
-                        width: widthOfSideBar,
-                        child: Column(
-                          children: [
-                            SideExpandedItem(
-                                title: "Dashboard",
-                                icon: AssetImage(
-                                    'assets/images/shipper_web_dashboard.png')),
-                            const SizedBox(
-                              height: 20,
+                    child: Stack(
+                      children: [
+                        Row(children: [
+                          Card(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.zero)),
+                            elevation: 5,
+                            shadowColor: Colors.grey,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 100),
+                              height: MediaQuery.of(context).size.height,
+                              width: widthOfSideBar,
+                              child: Column(
+                                children: [
+                                  SideExpandedItem(
+                                      title: "Dashboard",
+                                      icon: AssetImage(
+                                          'assets/images/shipper_web_dashboard.png')),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "My Loads",
+                                      icon: AssetImage(
+                                          'assets/images/shipper_web_my_loads.png')),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "Invoice",
+                                      icon: AssetImage(
+                                          'assets/images/shipper_web_invoice.png')),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "Team",
+                                      icon: AssetImage(
+                                          'assets/images/shipper_web_account.png')),
+                                  SizedBox(
+                                    height: 100,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "Signout",
+                                      icon: AssetImage(
+                                          'assets/icons/signout.png')),
+                                  Expanded(
+                                      child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 30),
+                                              child: SideExpandedItem(
+                                                  title: "Liveasy",
+                                                  icon: AssetImage(
+                                                      'assets/images/shipper_liveasy_logo.png'))))),
+                                ],
+                              ),
+                              color: white,
                             ),
-                            SideExpandedItem(
-                                title: "My Loads",
-                                icon: AssetImage(
-                                    'assets/images/shipper_web_my_loads.png')),
-                            SizedBox(
-                              height: 20,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          )
+                        ]),
+                        Positioned(
+                          left: widthOfSideBar - 10,
+                          top: (MediaQuery.of(context).size.height -
+                                  AppBar().preferredSize.height) *
+                              0.45,
+                          height: 30,
+                          width: 30,
+                          child: Container(
+                            //padding: EdgeInsets.all(0),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
+                                borderRadius: BorderRadius.circular(50),
+                                color: white),
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (expandMode) {
+                                    expandMode = false;
+                                    widthOfSideBar = 110;
+                                  } else {
+                                    expandMode = true;
+                                    widthOfSideBar = 220;
+                                  }
+                                });
+                              },
+                              iconSize: 20,
+                              padding: EdgeInsets.zero,
+                              icon: Icon(
+                                  (expandMode)
+                                      ? Icons.arrow_back_ios_rounded
+                                      : Icons.arrow_forward_ios_rounded,
+                                  color: darkBlueTextColor,
+                                  size: 20),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    const MaterialStatePropertyAll<Color>(
+                                        white),
+                                side: MaterialStateProperty.all(
+                                  const BorderSide(
+                                      width: 1, color: Colors.black),
+                                ),
+                              ),
+                              hoverColor: Colors.transparent,
                             ),
-                            SideExpandedItem(
-                                title: "Invoice",
-                                icon: AssetImage(
-                                    'assets/images/shipper_web_invoice.png')),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            SideExpandedItem(
-                                title: "Team",
-                                icon: AssetImage(
-                                    'assets/images/shipper_web_account.png')),
-                            SizedBox(
-                              height: 100,
-                            ),
-                            SideExpandedItem(
-                                title: "Signout",
-                                icon:
-                                AssetImage('assets/icons/signout.png')),
-                            Expanded(
-                                child: Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Padding(
-                                        padding:
-                                        EdgeInsets.only(bottom: 30),
-                                        child: SideExpandedItem(
-                                            title: "Liveasy",
-                                            icon: AssetImage(
-                                                'assets/images/shipper_liveasy_logo.png'))))),
-                          ],
-                        ),
-                        color: white,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    )
-                  ]),
-                  Positioned(
-                    left: widthOfSideBar - 10,
-                    top: (MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height) *
-                        0.45,
-                    height: 30,
-                    width: 30,
-                    child: Container(
-                      //padding: EdgeInsets.all(0),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(50),
-                          color: white),
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (expandMode) {
-                              expandMode = false;
-                              widthOfSideBar = 110;
-                            } else {
-                              expandMode = true;
-                              widthOfSideBar = 220;
-                            }
-                          });
-                        },
-                        iconSize: 20,
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                            (expandMode)
-                                ? Icons.arrow_back_ios_rounded
-                                : Icons.arrow_forward_ios_rounded,
-                            color: darkBlueTextColor,
-                            size: 20),
-                        style: ButtonStyle(
-                          backgroundColor:
-                          const MaterialStatePropertyAll<Color>(white),
-                          side: MaterialStateProperty.all(
-                            const BorderSide(width: 1, color: Colors.black),
                           ),
                         ),
-                        hoverColor: Colors.transparent,
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
 
             Expanded(
               child: Container(
                 child: Center(
                   child:
-                  (_index == 1000) ? widget.visibleWidget : screens[_index],
+                      (_index == 1000) ? widget.visibleWidget : screens[_index],
                 ),
               ),
             ),

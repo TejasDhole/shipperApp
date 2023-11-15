@@ -6,16 +6,19 @@ import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/loadDetailsCommentWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/BiddingDateTime.dart';
+import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadDetailsHeader.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingDateWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/loadingTimeWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/moveLoadConfirmationScreenButtonWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/productTypeWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/truckTypeWebWidget.dart';
 import 'package:shipper_app/Widgets/loadDetailsWebWidgets/tyresWebWidget.dart';
+import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
+import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
 import '../../Widgets/loadDetailsWebWidgets/loadPublishMethodWebWidget.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
@@ -67,28 +70,62 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
           child: Container(
             child: Column(
               children: [
-                Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(space_4, space_4, space_2, space_0),
-                  child: AddPostLoadHeader(
-                    reset: true,
-                    resetFunction: () {
-                      setState(() {
-                        controller.text = "";
-                        controllerOthers.text = "";
-                        providerData.resetTruckFilters();
-                        providerData.updatePrice(0);
-                        providerData.PerTonTrue(false, false);
-                        providerData.updateBorderColor(darkBlueColor);
-                        providerData.updateTotalTyresValue(0);
-                        providerData.resetOnNewType();
-                        providerData.clearProductType();
-                        providerData.updateResetActive(false);
-                      });
+                LoadDetailsHeader(
+                    reset: () {
+                      controller.text = "";
+                      controllerOthers.text = "";
+
+                      providerData.updatePrice(0);
+                      providerData.PerTonTrue(false, false);
+                      providerData.resetOnNewType();
+                      providerData.updateResetActive(false);
+                      providerData.updateBorderColor(darkBlueColor);
+
+                      //reset bidding end date and time
+                      providerData.updateBiddingEndDateTime(null, null);
+                      //reset comment
+                      providerData.updateComment("");
+                      //reset publish method
+                      providerData.updatePublishMethod('');
+                      //reset schedule loading date and time
+                      providerData.updateScheduleLoadingDate('');
+                      providerData.scheduleLoadingTime = '';
+                      //reset tyre
+                      providerData.updateTotalTyresValue(0);
+                      //reset product type
+                      providerData.updateProductType("Choose Product Type");
+                      //reset trucks
+                      List<String> empList = [];
+                      providerData.updateResetActive(true);
+                      providerData.updateTruckTypeValue("");
+                      providerData.resetOnNewType();
+                      providerData.updatePassingWeightMultipleValue(empList);
+                      providerData.updateLoadTransporterList(empList);
                     },
-                  ),
-                ),
-                (Responsive.isMobile(context) || Responsive.isTablet(context))
+                    title: 'Load Details',
+                    subTitle: 'Select Load details',
+                    previousScreen: (kIsWeb)
+                        ? HomeScreenWeb(
+                            visibleWidget: PostLoadNav(
+                                setChild: postLoadMultipleLocationWidget(
+                                    context,
+                                    HomeScreenWeb(
+                                      selectedIndex: 0,
+                                      index: 0,
+                                    )),
+                                index: 0),
+                            index: 1000,
+                            selectedIndex: screens.indexOf(postLoadScreen),
+                          )
+                        : PostLoadNav(
+                            setChild: postLoadMultipleLocationWidget(
+                                context,
+                                HomeScreenWeb(
+                                  selectedIndex: 0,
+                                  index: 0,
+                                )),
+                            index: 0)),
+                (Responsive.isMobile(context))
                     ? SingleChildScrollView(
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(

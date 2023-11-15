@@ -51,6 +51,9 @@ class _ProductTypeSelectionState extends State<ProductTypeSelection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LoadDetailsHeader(
+              reset: () {
+                providerData.updateProductType("Choose Product Type");
+              },
               title: 'Select Product Type',
               subTitle: 'We need some details from you.',
               previousScreen: (kIsWeb)
