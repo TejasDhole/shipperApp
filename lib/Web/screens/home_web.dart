@@ -118,6 +118,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         icon: Icon(Icons.person_outline_outlined), label: "Account"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.supervised_user_circle_outlined), label: "Add User"),
+    const BottomNavigationBarItem(
+        icon: Icon(Icons.location_on), label: "Facility"),
   ];
 
   @override

@@ -133,9 +133,11 @@ class _FacilitiesState extends State<Facilities> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    facilityController.updateCountry('India');
-                    facilityController.updateCreate(true);
-                    addLocationDrawerToggleController.toggleDrawer(true);
+                    setState(() {
+                      facilityController.updateCountry('India');
+                      facilityController.updateCreate(true);
+                      addLocationDrawerToggleController.toggleDrawer(true);
+                    });
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -215,7 +217,6 @@ class _FacilitiesState extends State<Facilities> {
                 ),
               );
             } else if (snapshot.connectionState == ConnectionState.done) {
-              //print(snapshot.data);
               if (snapshot.hasError) {
                 // An error occurred while fetching data
                 return Text('Error: ${snapshot.error}');
@@ -250,13 +251,14 @@ class _FacilitiesState extends State<Facilities> {
                       itemCount: geoFencesData.length,
                       itemBuilder: (context, index) {
                         final geofence = geoFencesData[index];
-                        final name = geofence['name'];
-                        final address = geofence['attributes']['address'];
-                        final city = geofence['attributes']['city'];
-                        final state = geofence['attributes']['state'];
+                        final name = geofence['name'] ?? ' ';
+                        final address =
+                            geofence['attributes']['address'] ?? ' ';
+                        final city = geofence['attributes']['city'] ?? ' ';
+                        final state = geofence['attributes']['state'] ?? ' ';
                         final String pincode =
-                            geofence['attributes']['pinCode'];
-                        final latlog = geofence['area'];
+                            geofence['attributes']['pinCode'] ?? '';
+                        final latlog = geofence['area'] ?? ' ';
                         final String id = geofence['id'].toString();
 
                         return facilityData(
