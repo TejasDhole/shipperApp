@@ -234,42 +234,44 @@ class _FacilitiesState extends State<Facilities> {
                       child: Text('No result found'),
                     );
                   }
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 5,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: geoFencesData.length,
-                      itemBuilder: (context, index) {
-                        final geofence = geoFencesData[index];
-                        final name = geofence['name'] ?? ' ';
-                        final address =
-                            geofence['attributes']['address'] ?? ' ';
-                        final city = geofence['attributes']['city'] ?? ' ';
-                        final state = geofence['attributes']['state'] ?? ' ';
-                        final String pincode =
-                            geofence['attributes']['pinCode'] ?? '';
-                        final latlog = geofence['area'] ?? ' ';
-                        final String id = geofence['id'].toString();
+                  return Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 5,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: false,
+                        itemCount: geoFencesData.length,
+                        itemBuilder: (context, index) {
+                          final geofence = geoFencesData[index];
+                          final name = geofence['name'] ?? ' ';
+                          final address =
+                              geofence['attributes']['address'] ?? ' ';
+                          final city = geofence['attributes']['city'] ?? ' ';
+                          final state = geofence['attributes']['state'] ?? ' ';
+                          final String pincode =
+                              geofence['attributes']['pinCode'] ?? '';
+                          final latlog = geofence['area'] ?? ' ';
+                          final String id = geofence['id'].toString();
 
-                        return facilityData(
-                            name: name,
-                            address: address,
-                            city: city,
-                            state: state,
-                            pincode: pincode,
-                            latlog: latlog,
-                            id: id.toString());
-                      },
+                          return facilityData(
+                              name: name,
+                              address: address,
+                              city: city,
+                              state: state,
+                              pincode: pincode,
+                              latlog: latlog,
+                              id: id.toString());
+                        },
+                      ),
                     ),
                   );
                 });
@@ -301,7 +303,7 @@ class _FacilitiesState extends State<Facilities> {
             flex: 4,
             child: Center(
               child: Text(
-                name ?? 'N/A',
+                name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -316,7 +318,7 @@ class _FacilitiesState extends State<Facilities> {
             flex: 5,
             child: Center(
               child: Text(
-                address ?? 'N/A',
+                address,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -331,7 +333,9 @@ class _FacilitiesState extends State<Facilities> {
             flex: 5,
             child: Center(
               child: Text(
-                '${city ?? 'N/A'}, ${state ?? 'N/A'}',
+                (city == ' ' || state == ' ')
+                    ? '$city  $state'
+                    : '$city , $state',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -353,10 +357,10 @@ class _FacilitiesState extends State<Facilities> {
                 onSelected: (item) => onSelect(
                   context,
                   item,
-                  name ?? '',
-                  address ?? '',
-                  city ?? '',
-                  state ?? '',
+                  name,
+                  address,
+                  city,
+                  state,
                   pincode,
                   latlog,
                   id,
@@ -403,6 +407,7 @@ class _FacilitiesState extends State<Facilities> {
         break;
       case MenuItemFacility.deleteText:
         deleteGeofences(id);
+        setState(() {});
         break;
     }
   }
