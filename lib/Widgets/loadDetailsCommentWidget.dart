@@ -52,7 +52,7 @@ class _LoadDetailsCommentWidgetState extends State<LoadDetailsCommentWidget> {
                 color: borderLightColor,
                 fontFamily: 'Montserrat',
                 fontSize: size_8),
-            label: Text('Comment',
+            label: Text('Comment (optional)',
                 style: TextStyle(
                     color: kLiveasyColor,
                     fontFamily: 'Montserrat',

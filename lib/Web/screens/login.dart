@@ -17,9 +17,11 @@ import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import 'package:shipper_app/models/shipperModel.dart';
 import 'package:shipper_app/widgets/buttons/signUpWithGoogleButton.dart';
+
 //import '../../screens/LoginScreens/CompanyDetailsForm.dart';
 //import '../../screens/navigationScreen.dart';
 import '/Web/screens/home_web.dart';
+
 //import '/Widgets/liveasy_Icon_Widgets.dart';
 import 'company_details.dart';
 import 'package:sizer/sizer.dart';
@@ -40,7 +42,6 @@ class _LoginWebState extends State<LoginWeb> {
   late String email;
   late String password;
   bool passwordVisible = true;
-  bool isChecked = false;
   bool isError = false;
   Iterable<String>? autofillHints = {'@gmail.com', '@outlook.in', '@yahoo.com'};
 
@@ -250,10 +251,8 @@ class _LoginWebState extends State<LoginWeb> {
                                               SharedPreferences prefs =
                                                   await SharedPreferences
                                                       .getInstance();
-                                              if (isChecked) {
-                                                prefs.setString('uid',
-                                                    firebaseUser.user!.uid);
-                                              }
+                                              prefs.setString('uid',
+                                                  firebaseUser.user!.uid);
                                               if (firebaseUser
                                                       .user!.displayName ==
                                                   null) {
@@ -352,7 +351,8 @@ class _LoginWebState extends State<LoginWeb> {
                                           prefs.setString(
                                               'uid', firebaseUser.user!.uid);
                                           prefs.setBool('isGoogleLogin', true);
-                                          prefs.setString('userEmail', firebaseUser.user!.email!);
+                                          prefs.setString('userEmail',
+                                              firebaseUser.user!.email!);
                                           getShipperIdFromCompanyDatabase();
                                           if (!mounted) return;
                                           ShipperModel shipperModel =

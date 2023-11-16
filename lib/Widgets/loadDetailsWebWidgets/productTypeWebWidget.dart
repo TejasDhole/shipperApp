@@ -58,7 +58,7 @@ class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
                   color: borderLightColor,
                   fontFamily: 'Montserrat',
                   fontSize: size_8),
-              label: Text('Product Type',
+              label: Text('Product Type (optional)',
                   style: TextStyle(
                       color: kLiveasyColor,
                       fontFamily: 'Montserrat',
