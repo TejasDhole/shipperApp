@@ -6,7 +6,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/Widgets/invoice_details_dailog.dart';
 import 'package:shipper_app/Widgets/invoice_header.dart';
-import 'package:shipper_app/Widgets/transporter_edit_dialog.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';

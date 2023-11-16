@@ -5,7 +5,6 @@ import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.da
 import 'package:shipper_app/screens/accountScreens/account_details.dart';
 import 'package:shipper_app/screens/employee_list_with_roles_screen.dart';
 import 'package:shipper_app/screens/PostLoadScreens/postloadnavigation.dart';
-import 'package:shipper_app/screens/transporter_screen.dart';
 import '../Web/screens/web_dashboard.dart';
 import '../Widgets/accountVerification/accountPageUtil.dart';
 import '../Widgets/alertDialog/LogOutDialogue.dart';
@@ -30,7 +29,7 @@ final accountPageUtil = AccountPageUtil();
 const logoutDialogue = LogoutDialogue();
 const employeeListScreen = EmployeeListRolesScreen();
 const postLoadScreenTwo = PostLoadScreenTwo();
-const transportScreen = TransporterScreen();
+
 
 //TODO : This is the list of the screens, Navigated to these when user selects anything,we are maintaining home screen as base screen.
 //TODO : All the variables above initialized must be added to this list.
