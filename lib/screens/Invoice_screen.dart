@@ -21,6 +21,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   bool setSelectedTransporterList = true;
   bool visiable = true;
 
+  
   bool enableFinishButton = false;
   @override
   void initState() {
@@ -268,6 +269,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           thickness: 1,
                           width: 0,
                         ),
+                        
                         Expanded(
                           flex: 4,
                           child: Center(
