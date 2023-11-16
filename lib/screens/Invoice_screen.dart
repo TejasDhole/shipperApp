@@ -1,20 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/Widgets/invoice_details_dailog.dart';
 import 'package:shipper_app/Widgets/invoice_header.dart';
 import 'package:shipper_app/constants/colors.dart';
-import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';
-import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/BackgroundAndLocation.dart';
 import 'package:shipper_app/functions/fatch_invoice_data.dart';
-import 'package:shipper_app/functions/shipperApis/TransporterListFromShipperApi.dart';
-import 'package:http/http.dart' as http;
-import 'package:sizer/sizer.dart';
+
 
 class InvoiceScreen extends StatefulWidget {
   const InvoiceScreen({Key? key}) : super(key: key);
@@ -37,7 +29,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   }
 
   Future<void> _fetchInvoiceData() async {
-    String shipperId = shipperIdController.shipperId.value;
+    String shipperId = shipperIdController.ownerShipperId.value;
 
     try {
       List<dynamic> data = await ApiService.getInvoiceData(shipperId);
