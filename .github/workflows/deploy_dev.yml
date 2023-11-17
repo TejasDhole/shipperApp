@@ -48,6 +48,7 @@ jobs:
           echo "oneSignalAppId=${{ vars.ONE_SIGNAL_APP_ID }}" >> .env
           echo "fastTag=${{ vars.FAST_TAG }}" >> .env
           echo "vahanUrl=${{ vars.VAHAN_URL }}" >> .env
+          echo "invoiceApiUrl=${{ vars.INVOICE_API_URL }}" >> .env
 
       - name: Merge to branch
         run: |
