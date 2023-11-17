@@ -405,7 +405,7 @@ class _FacilitiesState extends State<Facilities> {
         break;
       case MenuItemFacility.deleteText:
         deleteGeofences(id).then((bool state) {
-          print("object");
+
           setState(() {});
         });
 

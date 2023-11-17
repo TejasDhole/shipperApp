@@ -367,6 +367,14 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                       children: [
                         TextButton(
                             onPressed: () {
+                              facilityController.updatePartyName('');
+                              facilityController.updateCountry('');
+                              facilityController.updateState('');
+                              facilityController.updateCity('');
+                              facilityController.updateAddress('');
+                              facilityController.updatePinCode('');
+                              facilityController.updateFacilityLatLng(
+                                  '', '');
                               Navigator.pop(widget.context);
                             },
                             child: Container(
@@ -437,7 +445,6 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                       el.markNeedsBuild();
                                       el.visitChildren(rebuild);
                                     }
-
                                     (widget.context as Element)
                                         .visitChildren(rebuild);
                                   } else {
