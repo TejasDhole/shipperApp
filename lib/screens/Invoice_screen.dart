@@ -38,7 +38,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   }
 
   Future<void> _fetchInvoiceData() async {
-    String shipperId = shipperIdController.shipperId.value;
+    String shipperId = shipperIdController.ownerShipperId.value;
 
     try {
       List<dynamic> data = await ApiService.getInvoiceData(shipperId);
