@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 
-deleteGeofences(String id) async {
+Future<bool> deleteGeofences(String id) async {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   String traccarApi = dotenv.get('traccarApi');
   String traccarUser = shipperIdController.ownerEmailId.value;

@@ -133,11 +133,9 @@ class _FacilitiesState extends State<Facilities> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      facilityController.updateCountry('India');
-                      facilityController.updateCreate(true);
-                      addLocationDrawerToggleController.toggleDrawer(true);
-                    });
+                    facilityController.updateCountry('India');
+                    facilityController.updateCreate(true);
+                    addLocationDrawerToggleController.toggleDrawer(true);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -406,8 +404,11 @@ class _FacilitiesState extends State<Facilities> {
         addLocationDrawerToggleController.toggleDrawer(true);
         break;
       case MenuItemFacility.deleteText:
-        deleteGeofences(id);
-        setState(() {});
+        deleteGeofences(id).then((bool state) {
+          print("object");
+          setState(() {});
+        });
+
         break;
     }
   }

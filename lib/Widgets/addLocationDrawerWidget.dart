@@ -433,16 +433,13 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     facilityController.updatePinCode('');
                                     facilityController.updateFacilityLatLng(
                                         '', '');
-                                    if (facilityController.create.value ==
-                                        false) {
-                                      void rebuild(Element el) {
-                                        el.markNeedsBuild();
-                                        el.visitChildren(rebuild);
-                                      }
-
-                                      (widget.context as Element)
-                                          .visitChildren(rebuild);
+                                    void rebuild(Element el) {
+                                      el.markNeedsBuild();
+                                      el.visitChildren(rebuild);
                                     }
+
+                                    (widget.context as Element)
+                                        .visitChildren(rebuild);
                                   } else {
                                     showSnackBar(
                                         'Something went Wrong, Try again Later!!!',
