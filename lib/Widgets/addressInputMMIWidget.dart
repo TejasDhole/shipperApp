@@ -135,8 +135,8 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                 direction: PopoverDirection.bottom,
                 bodyBuilder: (context) {
                   return Container(
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
                       color: offWhite,
                     ),
                     child: Column(
@@ -146,9 +146,9 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: white),
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: TextButton(
-                            child: Text(
+                            child: const Text(
                               '+ Add Facility',
                               style: TextStyle(
                                   fontSize: 15,
@@ -157,13 +157,14 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                   fontWeight: FontWeight.w600),
                             ),
                             onPressed: () {
+                              facilityController.updateCreate(true);
                               Navigator.of(context).pop();
                               addLocationDrawerToggleController
                                   .toggleDrawer(true);
                             },
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Container(
@@ -177,12 +178,12 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                               facilityController
                                   .updateFacilityPopUpSearchText(value);
                             },
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 13,
                                 fontFamily: "Montserrat",
                                 color: kLiveasyColor,
                                 fontWeight: FontWeight.w400),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(
                                   bottom: 0, left: 5, right: 5, top: 15),
@@ -197,7 +198,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         FutureBuilder(
@@ -209,11 +210,11 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                         .facilityPopUpSearchText.value
                                         .toLowerCase(),
                                     snapshot.data);
-                                if (filteredGeoFence.length == 0) {
+                                if (filteredGeoFence.isEmpty) {
                                   return Container(
                                     width: 250,
-                                    padding: EdgeInsets.all(15),
-                                    child: Center(
+                                    padding: const EdgeInsets.all(15),
+                                    child: const Center(
                                       child: Text('No GeoFence Found!!!',
                                           style: TextStyle(
                                             fontSize: 13,
@@ -225,7 +226,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                   );
                                 } else {
                                   return Expanded(
-                                    child: Container(
+                                    child: SizedBox(
                                         width: 250,
                                         child: ListView.builder(
                                           shrinkWrap: true,
@@ -253,16 +254,18 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                 Navigator.pop(context);
                                               },
                                               child: Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 10),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
                                                     color: white),
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10,
-                                                    horizontal: 10),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 10),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -271,12 +274,12 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    Icon(
+                                                    const Icon(
                                                       Icons.home_outlined,
                                                       color: black,
                                                       size: 30,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 10,
                                                     ),
                                                     Column(
@@ -289,7 +292,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                         Text(
                                                           singleGeoFence['name']
                                                               .toString(),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 15,
                                                               fontFamily:
                                                                   "Montserrat",
@@ -301,7 +304,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                           overflow:
                                                               TextOverflow.fade,
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 5,
                                                         ),
                                                         Text(
@@ -310,7 +313,8 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                                   ['city']
                                                               .toString()
                                                               .trim(),
-                                                          style: TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             fontSize: 13,
                                                             fontFamily:
                                                                 "Montserrat",
@@ -336,20 +340,20 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                             } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Expanded(
-                                child: Container(
+                                child: SizedBox(
                                     width: 250,
                                     child: ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
                                         return Container(
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               vertical: 10),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: white),
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               vertical: 10, horizontal: 10),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -358,12 +362,12 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Icon(
+                                              const Icon(
                                                 Icons.home_outlined,
                                                 color: black,
                                                 size: 30,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                               Column(
@@ -381,7 +385,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                                       color: lightGrey,
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Shimmer.fromColors(
@@ -405,8 +409,8 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                               );
                             } else {
                               return Container(
-                                padding: EdgeInsets.all(15),
-                                child: Center(
+                                padding: const EdgeInsets.all(15),
+                                child: const Center(
                                   child: Text('Something went wrong!!!',
                                       style: TextStyle(
                                         fontSize: 13,
@@ -434,7 +438,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
               onTap: widget.onTap,
               child: widget.hintText == "Loading point 2" ||
                       widget.hintText == "Unloading point 2"
-                  ? Icon(Icons.delete_outline)
+                  ? const Icon(Icons.delete_outline)
                   : CancelIconWidget()),
         ),
       ),

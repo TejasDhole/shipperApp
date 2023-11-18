@@ -20,13 +20,18 @@ createFacility() async {
     ];
   }
 
-  //then create geo fence in user traccar account
-  return createGeoFence(latLng[0], latLng[1]);
+  //then create  or update  geo fence in user traccar account
+  if (facilityController.create.value == true) {
+    return createGeoFence(latLng[0], latLng[1]);
+  } else {
+    return updateGeoFence(latLng[0], latLng[1]);
+  }
 }
 
 getLatLong() async {
   FacilityController facilityController = Get.put(FacilityController());
   String placeId = facilityController.placeId.value;
+
   String kGoogleApiKey = dotenv.get('mapKey');
   String proxyServer = dotenv.get('placeAutoCompleteProxy');
 
@@ -83,7 +88,45 @@ createGeoFence(lat, long) async {
   };
   String body = json.encode(data);
 
-  var response = await http.post(Uri.parse("$traccarApi/geofences/"),
+  var response = await http.post(Uri.parse("$traccarApi/geofences"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      },
+      body: body);
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+updateGeoFence(lat, long) async {
+  ShipperIdController shipperIdController = Get.put(ShipperIdController());
+  FacilityController facilityController = Get.put(FacilityController());
+  String id = facilityController.id.value;
+  String traccarApi = dotenv.get('traccarApi');
+  String traccarUser = shipperIdController.ownerEmailId.value;
+  String traccarPass = dotenv.get('traccarPass');
+  String basicAuth =
+      'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));
+
+  Map data = {
+    "attributes": {
+      "pinCode": facilityController.pinCode.value.toString(),
+      "address": facilityController.address.value.toString(),
+      "city": facilityController.city.value.toString(),
+      "state":
+          "${facilityController.state.value.toString()}, ${facilityController.country.value.toString()}",
+    },
+    "name": facilityController.partyName.value.toString(),
+    "area": "CIRCLE ($lat $long, 2500)",
+    "id": int.parse(id),
+  };
+  String body = json.encode(data);
+
+  var response = await http.put(Uri.parse("$traccarApi/geofences/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'authorization': basicAuth,
