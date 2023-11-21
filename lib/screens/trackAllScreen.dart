@@ -295,29 +295,32 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         } else {
           debugPrint("no unloading point");
         }
-
         //Calculating the Current Location Address
-        currLocation = await checkFastTag().fetchAddressForWeb(
-            currentLocation!.latitude, currentLocation.longitude);
+        if (currLocation != null) {
+          currLocation = await checkFastTag().fetchAddressForWeb(
+              currentLocation!.latitude, currentLocation.longitude);
 
-        List<String> parts = currLocation.split(',');
-        if (parts.length >= 2) {
-          shortAddress = parts[1].trim();
-        } else {
-          shortAddress = parts[0].trim();
+          List<String> parts = currLocation.split(',');
+          if (parts.length >= 2) {
+            shortAddress = parts[1].trim();
+          } else {
+            shortAddress = parts[0].trim();
+          }
         }
 
         //Calculating the Estimated Time
-        duration = await EstimatedTime().getEstimatedTime(
-                currentLocation, unloadingPointCoordinates!) ??
-            "Not possible";
+        if (currentLocation != null) {
+          duration = await EstimatedTime().getEstimatedTime(
+                  currentLocation, unloadingPointCoordinates!) ??
+              "Not possible";
 
-        estimatedTime = DurationToDateTime().getDuration(duration!, to);
+          estimatedTime = DurationToDateTime().getDuration(duration!, to);
 
-        bookingDetails[booking] = {
-          'shortAddress': shortAddress!,
-          'estimatedTime': estimatedTime!
-        };
+          bookingDetails[booking] = {
+            'shortAddress': shortAddress ?? "Not Found",
+            'estimatedTime': estimatedTime!
+          };
+        }
 
         setState(
           () {
@@ -524,7 +527,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
             child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               if (isDetailsVisible)
                 Expanded(
-                    flex: 2,
+                    flex: 25,
                     child: Padding(
                       padding:
                           EdgeInsets.only(left: screenWidth * 0.02, top: 17),
@@ -575,7 +578,8 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                                                           ?.driverPhoneNum),
                                                 ],
                                               )),
-                                          SizedBox(height: screenHeight * 0.05),
+                                          SizedBox(
+                                              height: screenHeight * 0.022),
                                           routeRow(
                                               'assets/icons/endingPoint.png',
                                               'Loading Point'),
@@ -604,7 +608,8 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                                                   color: Colors.black,
                                                   fontSize:
                                                       screenHeight * 0.02)),
-                                          SizedBox(height: screenHeight * 0.05),
+                                          SizedBox(
+                                              height: screenHeight * 0.022),
                                           Text('Current Location',
                                               style: GoogleFonts.montserrat(
                                                   fontWeight: FontWeight.w500,
@@ -634,10 +639,12 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                                                                   0.02)),
                                                 )
                                               ]),
-                                          SizedBox(height: screenHeight * 0.04),
+                                          SizedBox(
+                                              height: screenHeight * 0.022),
                                           routeRow('assets/icons/time.png',
                                               'Estimated Time'),
-                                          SizedBox(height: screenHeight * 0.02),
+                                          SizedBox(
+                                              height: screenHeight * 0.022),
                                           Text(estimatedTime!,
                                               style: GoogleFonts.montserrat(
                                                   fontWeight: FontWeight.w600,
@@ -649,7 +656,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                                       'Select a shipment to see details'),
                     )),
               Expanded(
-                  flex: isDetailsVisible ? 8 : 10,
+                  flex: isDetailsVisible ? 75 : 10,
                   child: Padding(
                     padding:
                         EdgeInsets.only(left: screenWidth * 0.02, top: 17.0),

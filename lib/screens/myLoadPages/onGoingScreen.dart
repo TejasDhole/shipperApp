@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/trackAllScreen.dart';
 import '../../Widgets/LoadsTableHeader.dart';
@@ -125,7 +127,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
     } else {
       searchedLoadList = modelList;
     }
-    if(mounted){
+    if (mounted) {
       setState(() {});
     }
   }
@@ -155,7 +157,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
             Row(
               children: [
                 Expanded(
-                    flex: (Responsive.isMobile(context))?8:50,
+                    flex: (Responsive.isMobile(context)) ? 8 : 50,
                     child: TextField(
                       controller: searchTextController,
                       onChanged: (value) {
@@ -193,46 +195,47 @@ class _OngoingScreenState extends State<OngoingScreen> {
                               borderSide:
                                   BorderSide(color: truckGreen, width: 1.5))),
                     )),
-                    
                 Expanded(
-                  flex: (Responsive.isMobile(context))?2:33,
+                  flex: (Responsive.isMobile(context)) ? 2 : 33,
                   child: Container(),
                 ),
                 Visibility(
                   visible: Responsive.isDesktop(context) ? true : false,
                   child: Expanded(
-                        flex: 17,
-                        child: InkWell(
-                          onTap :() {
-                            Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                      const TrackAllScreen()),
-                                );
-                          },
-                          child: Container(
-                            height : 55,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              border: Border.all(color: darkBlueTextColor),
-                              color : white
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Image.asset('assets/icons/Track.png'),
-                                Text('Track All Loads', style : GoogleFonts.montserrat(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color : darkBlueTextColor
-                          
-                                )),
-                              ],
-                            ),
-                          ),
+                    flex: 17,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreenWeb(
+                                    visibleWidget: TrackAllScreen(),
+                                    index: 1000,
+                                    selectedIndex:
+                                        screens.indexOf(postLoadScreen),
+                                  )),
+                        );
+                      },
+                      child: Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            border: Border.all(color: darkBlueTextColor),
+                            color: white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset('assets/icons/Track.png'),
+                            Text('Track All Loads',
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: darkBlueTextColor)),
+                          ],
                         ),
                       ),
+                    ),
+                  ),
                 ),
               ],
             ),
