@@ -175,6 +175,11 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               LoadDetailsHeader(
+                  reset: () {
+                    setState(() {
+                      controller.clear();
+                    });
+                  },
                   title: 'Location Details',
                   subTitle: 'Tell us your location details',
                   previousScreen: null),

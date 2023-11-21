@@ -20,6 +20,7 @@ class ProductTypeWebWidget extends StatefulWidget {
 
 class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
   TextEditingController txtController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
@@ -27,6 +28,8 @@ class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
         providerData.productType != '' &&
         providerData.productType != 'Choose Product Type') {
       txtController.text = providerData.productType;
+    } else {
+      txtController.clear();
     }
     return Expanded(
       child: Container(
@@ -55,7 +58,7 @@ class ProductTypeWebWidgetState extends State<ProductTypeWebWidget> {
                   color: borderLightColor,
                   fontFamily: 'Montserrat',
                   fontSize: size_8),
-              label: Text('Product Type',
+              label: Text('Product Type (optional)',
                   style: TextStyle(
                       color: kLiveasyColor,
                       fontFamily: 'Montserrat',

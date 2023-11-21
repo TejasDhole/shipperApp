@@ -191,7 +191,7 @@ class LoadingDateWebWidgetState extends State<LoadingDateWebWidget> {
                   color: borderLightColor,
                   fontFamily: 'Montserrat',
                   fontSize: size_8),
-              label: Text('Schedule Loading Date',
+              label: Text('Schedule Loading Date (optional)',
                   style: TextStyle(
                       color: kLiveasyColor,
                       fontFamily: 'Montserrat',

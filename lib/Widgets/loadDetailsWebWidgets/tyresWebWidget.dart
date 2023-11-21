@@ -63,7 +63,7 @@ class _TyresWebWidgetState extends State<TyresWebWidget> {
                   color: borderLightColor,
                   fontFamily: 'Montserrat',
                   fontSize: size_8),
-              label: Text('Tyres',
+              label: Text('Tyres (optional)',
                   style: TextStyle(
                       color: kLiveasyColor,
                       fontFamily: 'Montserrat',

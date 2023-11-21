@@ -82,7 +82,7 @@ class _TruckTypeWebWidgetState extends State<TruckTypeWebWidget> {
                 color: borderLightColor,
                 fontFamily: 'Montserrat',
                 fontSize: size_8),
-            label: Text('Truck Type',
+            label: Text('Truck Type (optional)',
                 style: TextStyle(
                     color: kLiveasyColor,
                     fontFamily: 'Montserrat',

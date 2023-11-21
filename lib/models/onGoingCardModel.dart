@@ -1,4 +1,5 @@
 class OngoingCardModel {
+  String? loadId;
   String? bookingId;
   String? loadingPointCity;
   String? unloadingPointCity;
@@ -42,5 +43,6 @@ class OngoingCardModel {
       this.truckNo,
       this.truckType,
       this.unloadingPointCity,
+      this.loadId,
       this.deviceId});
 }

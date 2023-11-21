@@ -129,7 +129,7 @@ class _LoadPublishMethodWebWidgetState
                   borderRadius: BorderRadius.zero,
                   borderSide: BorderSide(color: borderLightColor, width: 1.5)),
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              label: Text('Publishing Method',
+              label: Text('Publishing Method (optional)',
                   style: TextStyle(
                       color: kLiveasyColor,
                       fontFamily: 'Montserrat',
