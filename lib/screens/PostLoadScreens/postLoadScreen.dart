@@ -9,7 +9,6 @@ import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/navigationScreen.dart';
-import 'package:shipper_app/screens/trackAllScreen.dart';
 import '/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/controller/postLoadVariablesController.dart';
@@ -79,14 +78,6 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                                 ? size_10
                                 : size_15),
                       ),
-                      ElevatedButton(onPressed :(){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                              const TrackAllScreen()),
-                        );
-                      }, child: const Text('Track All')),
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
