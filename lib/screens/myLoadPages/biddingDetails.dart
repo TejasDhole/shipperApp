@@ -81,6 +81,7 @@ class BiddingDetails extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(space_1 + 3)),
                         child: Card(
+                            surfaceTintColor: transparent,
                             color: white,
                             child: Container(
                               margin: EdgeInsets.symmetric(vertical: space_2),

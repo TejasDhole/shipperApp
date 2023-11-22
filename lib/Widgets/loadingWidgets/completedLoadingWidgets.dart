@@ -27,6 +27,7 @@ class _CompletedLoadingWidgetsState extends State<CompletedLoadingWidgets> {
 
   Card completedLoadingCard() {
     return Card(
+      surfaceTintColor: transparent,
       child: Padding(
         padding: EdgeInsets.all(space_2),
         child: Column(

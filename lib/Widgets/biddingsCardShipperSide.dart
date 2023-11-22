@@ -214,6 +214,7 @@ class BiddingsCardShipperSide extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(bottom: space_2),
               child: Card(
+                surfaceTintColor: transparent,
                 elevation: 3,
                 child: Container(
                   color:

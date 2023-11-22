@@ -167,6 +167,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Card(
+        surfaceTintColor: transparent,
         elevation: 0,
         margin: EdgeInsets.all(0),
         child: Container(
