@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:shipper_app/constants/colors.dart';
 import '/widgets/showStopOnMap.dart';
 
 class stopSpecificCard extends StatefulWidget {
@@ -44,6 +45,7 @@ class _stopSpecificCardState extends State<stopSpecificCard> {
     return stopStatus == show
         ? Container(
             child: Card(
+              surfaceTintColor: transparent,
             elevation: 5,
             child: Column(
               children: [

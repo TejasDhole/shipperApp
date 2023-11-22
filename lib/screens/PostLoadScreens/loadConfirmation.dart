@@ -59,6 +59,7 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                           ? MediaQuery.of(context).size.width * 0.5
                           : MediaQuery.of(context).size.width * 0.9,
                       child: Card(
+                        surfaceTintColor: transparent,
                         elevation: 5,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(space_3, 0, space_3, 0),
@@ -242,6 +243,7 @@ class _LoadConfirmationState extends State<LoadConfirmation> {
                                 height: space_4,
                               ),
                               Card(
+                                surfaceTintColor: transparent,
                                 elevation: 5,
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(

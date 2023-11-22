@@ -22,6 +22,7 @@ class LoadDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      surfaceTintColor: transparent,
       elevation: 0,
       // without card widget 'Material Widget required' will be thrown while running the application for android
       margin: EdgeInsets.all(0),
