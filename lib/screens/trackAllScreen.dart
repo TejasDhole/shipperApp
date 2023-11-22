@@ -296,7 +296,6 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           debugPrint("no unloading point");
         }
         //Calculating the Current Location Address
-        if (currLocation != null) {
           currLocation = await checkFastTag().fetchAddressForWeb(
               currentLocation!.latitude, currentLocation.longitude);
 
@@ -306,22 +305,19 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           } else {
             shortAddress = parts[0].trim();
           }
-        }
 
         //Calculating the Estimated Time
-        if (currentLocation != null) {
-          duration = await EstimatedTime().getEstimatedTime(
-                  currentLocation, unloadingPointCoordinates!) ??
-              "Not possible";
+        duration = await EstimatedTime().getEstimatedTime(
+                currentLocation, unloadingPointCoordinates!) ??
+            "Not possible";
 
-          estimatedTime = DurationToDateTime().getDuration(duration!, to);
+        estimatedTime = DurationToDateTime().getDuration(duration!, to);
 
-          bookingDetails[booking] = {
-            'shortAddress': shortAddress ?? "Not Found",
-            'estimatedTime': estimatedTime!
-          };
-        }
-
+        bookingDetails[booking] = {
+          'shortAddress': shortAddress!,
+          'estimatedTime': estimatedTime!
+        };
+      
         setState(
           () {
             routes.add(eachBookingCompleteCoordinates);
