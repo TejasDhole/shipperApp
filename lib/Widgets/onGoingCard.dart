@@ -352,6 +352,7 @@ class _OngoingCardState extends State<OngoingCard> {
             child: Container(
               margin: EdgeInsets.only(bottom: space_3),
               child: Card(
+                surfaceTintColor: transparent,
                 elevation: 5,
                 child: Column(
                   children: [

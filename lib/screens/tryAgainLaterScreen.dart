@@ -41,6 +41,7 @@ class _TryAgainLaterScreenState extends State<TryAgainLaterScreen> {
       //backgroundColor: Colors.transparent,
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Card(
+          surfaceTintColor: transparent,
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Column(

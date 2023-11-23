@@ -89,6 +89,7 @@ class OngoingCardOrders extends StatelessWidget {
             ));
           },
           child: Card(
+            surfaceTintColor: transparent,
             child: Column(
               children: [
                 Container(

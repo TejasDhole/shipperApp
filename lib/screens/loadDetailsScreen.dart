@@ -133,6 +133,7 @@ class _LoadDetailsScreenState extends State<LoadDetailsScreen> {
                                     borderRadius:
                                         BorderRadius.circular(radius_2 - 2)),
                                 child: Card(
+                                  surfaceTintColor: transparent,
                                   color: white,
                                   child: Row(
                                     mainAxisAlignment:
@@ -154,6 +155,7 @@ class _LoadDetailsScreenState extends State<LoadDetailsScreen> {
                           ],
                         ),
                         Card(
+                          surfaceTintColor: transparent,
                           elevation: 5,
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(
