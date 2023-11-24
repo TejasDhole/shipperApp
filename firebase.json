@@ -1,16 +1,10 @@
 {
   "hosting": {
     "public": "build/web",
-    "target": "shipperwebapp",
+    "target": "shipperProd",
     "ignore": [
       "firebase.json",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+      "/node_modules/"
     ]
   }
 }
