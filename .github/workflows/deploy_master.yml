@@ -67,7 +67,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          # firebase service account will change because for main and dev we can't use same dashboard link
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SHIPPERWEBAPP_MAIN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SHIPPERPROD }}'
           channelId: live
-          projectId: shipperwebapp
+          projectId: shipperprod
