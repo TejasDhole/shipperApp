@@ -330,7 +330,7 @@ class MapUtil {
           'authorization': basicAuth,
           'Accept': 'application/json'
         },
-      );
+      ).timeout(Duration(seconds: 5));
       // print(response.statusCode);
       var logger = Logger();
       // logger.i("response.statusCode ${response.statusCode}");
