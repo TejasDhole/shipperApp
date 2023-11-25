@@ -251,31 +251,31 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TruckTypeWebWidget(),
-                              SizedBox(height: 40),
+                              SizedBox(height: 35),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   ProductTypeWebWidget(),
                                   SizedBox(
-                                    width: 40,
+                                    width: 35,
                                   ),
                                   TyresWebWidget()
                                 ],
                               ),
-                              SizedBox(height: 40),
+                              SizedBox(height: 35),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   LoadingDateWebWidget(),
                                   SizedBox(
-                                    width: 40,
+                                    width: 35,
                                   ),
                                   LoadingTimeWebWidget()
                                 ],
                               ),
-                              SizedBox(height: 40),
+                              SizedBox(height: 35),
                               LoadPublishMethodWebWidget(
                                   refreshParent: refresh),
                               Visibility(
@@ -289,15 +289,15 @@ class _PostLoadScreenTwoState extends State<PostLoadScreenTwo> {
                                     : false,
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 40),
+                                    SizedBox(height: 35),
                                     BiddingDateTime(
                                         refreshParent: refresh, width: 0.402),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 40),
+                              SizedBox(height: 35),
                               LoadDetailsCommentWidget(),
-                              SizedBox(height: 40),
+                              SizedBox(height: 10),
                               moveLoadConfirmationScreenButtonWidget(),
                               SizedBox(height: 40),
                             ],
