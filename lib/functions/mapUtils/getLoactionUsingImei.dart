@@ -376,11 +376,6 @@ class MapUtil {
     String? from,
     String? to,
   }) async {
-    print("FROM : $from");
-    print("TO : $to");
-    print("$deviceId");
-    print(
-        "$traccarApi/reports/stops?deviceId=$deviceId&from=${from}Z&to=${to}Z");
 
     try {
       http.Response response = await http.get(
@@ -390,11 +385,9 @@ class MapUtil {
             'authorization': basicAuth,
             'Accept': 'application/json'
           });
-      print(response.statusCode);
 
-      print(response.body);
       var jsonData = await jsonDecode(response.body);
-      print(response.body);
+  
       var LatLongList = [];
       if (response.statusCode == 200) {
         for (var json in jsonData) {
@@ -416,7 +409,6 @@ class MapUtil {
 
           LatLongList.add(gpsDataModel);
         }
-        print("TDS ${LatLongList.length}");
         return LatLongList;
       } else {
         return null;
@@ -443,11 +435,8 @@ class MapUtil {
             'authorization': basicAuth,
             'Accept': 'application/json'
           });
-      print(response.statusCode);
 
-      print(response.body);
       var jsonData = await jsonDecode(response.body);
-      print(response.body);
       var LatLongList = [];
       if (response.statusCode == 200) {
         for (var json in jsonData) {
@@ -465,7 +454,7 @@ class MapUtil {
               json["averageSpeed"] != null ? json["averageSpeed"] : 0;
           gpsDataModel.distance =
               json["distance"] != null ? json["distance"] : 0;
-
+         
           gpsDataModel.startTime =
               json["startTime"] != null ? json["startTime"] : 'NA';
           gpsDataModel.endTime =
@@ -477,7 +466,6 @@ class MapUtil {
 
           LatLongList.add(gpsDataModel);
         }
-        print("TDT $LatLongList");
         return LatLongList;
       } else {
         return null;

@@ -21,8 +21,8 @@ class checkFastTag {
       body: jsonEncode(params),
     );
 
-    debugPrint(response.statusCode.toString());
     final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
     final String errCode =
         jsonResponse['response'][0]['response']['vehicle']['errCode'];
     //Here we are not directly checking the status code because of the response of the API
