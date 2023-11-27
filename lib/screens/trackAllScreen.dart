@@ -237,7 +237,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         if (stoppages != null) {
           for (int i = 0; i < stoppages!.length; i++) {
             var stoppage = stoppages![i];
-            getStoppage(stoppage, i);
+            addStoppageMarker(stoppage, i + 1);
           }
         }
 
@@ -317,12 +317,12 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                   currentLocation, unloadingPointCoordinates) ??
               "Not possible";
 
-          estimatedTime = DurationToDateTime().getDuration(duration!, to);       
+          estimatedTime = DurationToDateTime().getDuration(duration!, to);
         }
 
         bookingDetails[booking] = {
-            'shortAddress': shortAddress!,
-            'estimatedTime': estimatedTime!
+          'shortAddress': shortAddress!,
+          'estimatedTime': estimatedTime!
         };
 
         setState(
@@ -354,6 +354,28 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
       debugPrint('Error fetching data: $e');
     }
   }
+
+
+Future<void> addStoppageMarker(var stoppage, int index) async {
+  LatLng stoplatlong = LatLng(stoppage.latitude, stoppage.longitude);
+  String stopAddress = await getStoppageAddress(stoppage);
+  String stoppageTime = getStoppageTime(stoppage);
+  String duration = getStoppageDuration(stoppage);
+  BitmapDescriptor icon = await createNumberedMarkerIcon(index);
+
+  setState(() {
+    _markers.add(Marker(
+      markerId: MarkerId("Stop Mark $index"),
+      position: stoplatlong,
+      icon: icon,
+      onTap: () {
+        _showCustomInfoWindow(
+            MarkerId("Stop Mark $index"), stoplatlong, duration, stoppageTime, stopAddress);
+      },
+    ));
+  });
+}
+
 
   getStoppage(var gpsStoppage, int i) async {
     var stopAddress;
