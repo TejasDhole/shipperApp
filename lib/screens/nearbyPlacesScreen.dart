@@ -699,6 +699,7 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen>
                                   print("DISTANCE ABCD " +
                                       here.distance.toString());
                                   return Card(
+                                      surfaceTintColor: transparent,
                                       child: InkWell(
                                     onTap: () {
                                       this._googleMapController.animateCamera(

@@ -184,6 +184,7 @@ class _truckanalysisCardState extends State<truckanalysisCard>
         margin: EdgeInsets.all(5.0),
         child: (truckStatus == true)
             ? Card(
+                surfaceTintColor: transparent,
                 elevation: 5,
                 child: Column(
                   children: [
@@ -382,6 +383,7 @@ class _truckanalysisCardState extends State<truckanalysisCard>
                 ),
               )
             : Card(
+                surfaceTintColor: transparent,
                 elevation: 5,
                 child: Column(
                   children: [

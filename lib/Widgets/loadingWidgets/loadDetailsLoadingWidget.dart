@@ -43,6 +43,7 @@ class LoadDetailsLoadingWidget extends StatelessWidget {
 
   Card onGoingLoadingCard() {
     return Card(
+      surfaceTintColor: transparent,
       child: Padding(
         padding: EdgeInsets.all(space_2),
         child: Column(

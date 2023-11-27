@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shipper_app/constants/colors.dart';
 
 import '/constants/fontSize.dart';
 import '/constants/spaces.dart';
@@ -40,6 +41,7 @@ class LoadCard extends StatelessWidget {
       color: const Color(0xffF7F8FA),
       margin: EdgeInsets.only(bottom: space_2),
       child: Card(
+        surfaceTintColor: transparent,
         elevation: size_4,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

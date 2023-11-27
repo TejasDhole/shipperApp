@@ -113,6 +113,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Card(
+              surfaceTintColor: transparent,
               color: white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(radius_5),

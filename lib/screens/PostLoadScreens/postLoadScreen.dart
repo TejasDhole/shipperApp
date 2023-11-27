@@ -30,14 +30,15 @@ class PostLoadScreen extends StatefulWidget {
 
 class _PostLoadScreenState extends State<PostLoadScreen> {
   //Page Controller
-  PageController pageController = PageController(initialPage: 0);
+  late PageController pageController;
   PostLoadVariablesController postLoadVariables =
       Get.put(PostLoadVariablesController());
-  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     ProviderData providerData = Provider.of<ProviderData>(context);
+    pageController =
+        PageController(initialPage: providerData.upperNavigatorIndex);
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButton: (kIsWeb &&

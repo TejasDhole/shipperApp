@@ -28,6 +28,7 @@ class _OnGoingLoadingWidgetsState extends State<OnGoingLoadingWidgets> {
 //TODO: change the design of this card
   Card onGoingLoadingCard() {
     return Card(
+      surfaceTintColor: transparent,
       child: Padding(
         padding: EdgeInsets.all(space_2),
         child: Column(
