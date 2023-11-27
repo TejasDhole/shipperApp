@@ -293,8 +293,6 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                 _onMarkerTapped();
               }));
           j++;
-        } else {
-          debugPrint("no unloading point");
         }
         //Calculating the Current Location Address
         if (currentLocation == null) {
