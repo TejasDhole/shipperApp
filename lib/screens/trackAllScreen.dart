@@ -298,10 +298,10 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         }
         //Calculating the Current Location Address
         if (currentLocation == null) {
-          position = await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
+          position =
+              await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
           var first = position![0];
           currentLocation = LatLng(first.latitude, first.longitude);
-            
         }
         currLocation = await checkFastTag().fetchAddressForWeb(
             currentLocation.latitude, currentLocation.longitude);
@@ -314,15 +314,17 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         }
 
         //Calculating the Estimated Time
-        duration = await EstimatedTime().getEstimatedTime(
-                currentLocation, unloadingPointCoordinates!) ??
-            "Not possible";
+        if (unloadingPointCoordinates != null) {
+          duration = await EstimatedTime().getEstimatedTime(
+                  currentLocation, unloadingPointCoordinates) ??
+              "Not possible";
 
-        estimatedTime = DurationToDateTime().getDuration(duration!, to);
+          estimatedTime = DurationToDateTime().getDuration(duration!, to);       
+        }
 
         bookingDetails[booking] = {
-          'shortAddress': shortAddress!,
-          'estimatedTime': estimatedTime!
+            'shortAddress': shortAddress!,
+            'estimatedTime': estimatedTime!
         };
 
         setState(

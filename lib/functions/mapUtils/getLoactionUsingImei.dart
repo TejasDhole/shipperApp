@@ -233,7 +233,6 @@ class MapUtil {
           gpsDataModel.motion = json["attributes"]["motion"] != null
               ? json["attributes"]["motion"]
               : false;
-          print("Motion : ${gpsDataModel.motion}");
           gpsDataModel.ignition = json["attributes"]["ignition"] != null
               ? json["attributes"]["ignition"]
               : false;
