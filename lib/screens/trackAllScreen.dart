@@ -45,6 +45,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
   List<List<LatLng>> routes = [];
   List<dynamic>? locations;
   List<dynamic>? stoppages;
+  List<dynamic>? position;
   late Uint8List markerIcon;
   List<dynamic>? trips;
   //var trips;
@@ -292,32 +293,38 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                 _onMarkerTapped();
               }));
           j++;
-        } else {
-          debugPrint("no unloading point");
         }
         //Calculating the Current Location Address
-          currLocation = await checkFastTag().fetchAddressForWeb(
-              currentLocation!.latitude, currentLocation.longitude);
+        if (currentLocation == null) {
+          position =
+              await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
+          var first = position![0];
+          currentLocation = LatLng(first.latitude, first.longitude);
+        }
+        currLocation = await checkFastTag().fetchAddressForWeb(
+            currentLocation.latitude, currentLocation.longitude);
 
-          List<String> parts = currLocation.split(',');
-          if (parts.length >= 2) {
-            shortAddress = parts[1].trim();
-          } else {
-            shortAddress = parts[0].trim();
-          }
+        List<String> parts = currLocation.split(',');
+        if (parts.length >= 2) {
+          shortAddress = parts[1].trim();
+        } else {
+          shortAddress = parts[0].trim();
+        }
 
         //Calculating the Estimated Time
-        duration = await EstimatedTime().getEstimatedTime(
-                currentLocation, unloadingPointCoordinates!) ??
-            "Not possible";
+        if (unloadingPointCoordinates != null) {
+          duration = await EstimatedTime().getEstimatedTime(
+                  currentLocation, unloadingPointCoordinates) ??
+              "Not possible";
 
-        estimatedTime = DurationToDateTime().getDuration(duration!, to);
+          estimatedTime = DurationToDateTime().getDuration(duration!, to);       
+        }
 
         bookingDetails[booking] = {
-          'shortAddress': shortAddress!,
-          'estimatedTime': estimatedTime!
+            'shortAddress': shortAddress!,
+            'estimatedTime': estimatedTime!
         };
-      
+
         setState(
           () {
             routes.add(eachBookingCompleteCoordinates);

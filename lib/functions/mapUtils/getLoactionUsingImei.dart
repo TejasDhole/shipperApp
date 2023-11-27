@@ -209,10 +209,7 @@ class MapUtil {
             'authorization': basicAuth,
             'Accept': 'application/json'
           });
-      print(response.statusCode);
-      print("BODY IS${response.body}");
       var jsonData = await jsonDecode(response.body);
-      print(response.body);
       var LatLongList = [];
       if (response.statusCode == 200) {
         for (var json in jsonData) {
@@ -230,15 +227,12 @@ class MapUtil {
               json["latitude"] != null ? json["latitude"] : 0;
           gpsDataModel.longitude =
               json["longitude"] != null ? json["longitude"] : 0;
-          print(
-              "LAT : ${gpsDataModel.latitude}, LONG : ${gpsDataModel.longitude} ");
           gpsDataModel.distance = json["attributes"]["totalDistance"] != null
               ? json["attributes"]["totalDistance"]
               : 0;
           gpsDataModel.motion = json["attributes"]["motion"] != null
               ? json["attributes"]["motion"]
               : false;
-          print("Motion : ${gpsDataModel.motion}");
           gpsDataModel.ignition = json["attributes"]["ignition"] != null
               ? json["attributes"]["ignition"]
               : false;
@@ -330,7 +324,7 @@ class MapUtil {
           'authorization': basicAuth,
           'Accept': 'application/json'
         },
-      );
+      ).timeout(Duration(seconds: 5));
       // print(response.statusCode);
       var logger = Logger();
       // logger.i("response.statusCode ${response.statusCode}");
