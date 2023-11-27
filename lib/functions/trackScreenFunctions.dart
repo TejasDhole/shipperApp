@@ -269,7 +269,6 @@ getStoppageTime(var gpsStoppageHistory) {
       .replaceAll(":", "")
       .replaceAll(" ", "")
       .replaceAll(".", "");
-  print("timestamp is $timestamp2");
   var month2 = int.parse(timestamp2.substring(4, 6));
   var day2 = timestamp2.substring(6, 8);
   var hour2 = int.parse(timestamp2.substring(8, 10));
@@ -283,7 +282,6 @@ getStoppageTime(var gpsStoppageHistory) {
 
   stoppageTime = "$truckStart - $truckEnd";
   // }
-  print("Stop time $stoppageTime");
   return stoppageTime;
 }
 

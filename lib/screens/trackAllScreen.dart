@@ -45,6 +45,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
   List<List<LatLng>> routes = [];
   List<dynamic>? locations;
   List<dynamic>? stoppages;
+  List<dynamic>? position;
   late Uint8List markerIcon;
   List<dynamic>? trips;
   //var trips;
@@ -297,11 +298,13 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         }
         //Calculating the Current Location Address
         if (currentLocation == null) {
-          currentLocation =
-              await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
+          position = await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
+          var first = position![0];
+          currentLocation = LatLng(first.latitude, first.longitude);
+            
         }
         currLocation = await checkFastTag().fetchAddressForWeb(
-            currentLocation!.latitude, currentLocation.longitude);
+            currentLocation.latitude, currentLocation.longitude);
 
         List<String> parts = currLocation.split(',');
         if (parts.length >= 2) {
