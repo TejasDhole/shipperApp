@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "shipperwebapp"
+    "default": "shipperprod"
   },
   "targets": {
-    "shipperwebapp": {
+    "shipperprod": {
       "hosting": {
-        "shipperwebapp": [
-          "shipperwebapp"
+        "shipperProd": [
+          "liveasyshipper"
         ]
       }
     }
