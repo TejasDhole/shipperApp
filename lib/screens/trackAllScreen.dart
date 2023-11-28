@@ -171,16 +171,19 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           k++;
         }
         //Get the Stoppages data from Traccar Stooppages API
+        print("api starting ");
         stoppages = await MapUtil().getTraccarStoppages(
             deviceId: booking.deviceId, from: from, to: to);
-
+        print("Stoappges not empty ");
         //Get the Fastag Data
         locations = await checkFastTag()
             .getVehicleLocation(booking.truckId![0].toString());
+             print("location not empty ");
 
         //Get the Truck history data from the Traccar History API
         trips = await MapUtil().getTraccarHistory(
             deviceId: booking.deviceId, from: formattedDate, to: to);
+            print("trips not empty");
 
         if (trips != null && trips!.isNotEmpty) {
           int a = 0;
@@ -298,11 +301,13 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         if (currentLocation == null) {
           position =
               await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
+              print("currLocation not empty");
           var first = position![0];
           currentLocation = LatLng(first.latitude, first.longitude);
         }
         currLocation = await checkFastTag().fetchAddressForWeb(
             currentLocation.latitude, currentLocation.longitude);
+            
 
         List<String> parts = currLocation.split(',');
         if (parts.length >= 2) {
