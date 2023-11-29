@@ -74,6 +74,12 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
     'assets/images/TollImage.png',
   ];
 
+  final List<String> stoppagePaths = [
+    'assets/icons/stoppage.png',
+    'assets/icons/stoppage.png',
+    'assets/icons/stoppage.png',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -171,16 +177,19 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           k++;
         }
         //Get the Stoppages data from Traccar Stooppages API
+        print("api starting ");
         stoppages = await MapUtil().getTraccarStoppages(
             deviceId: booking.deviceId, from: from, to: to);
-
+        print("Stoappges not empty ");
         //Get the Fastag Data
         locations = await checkFastTag()
             .getVehicleLocation(booking.truckId![0].toString());
+        print("location not empty ");
 
         //Get the Truck history data from the Traccar History API
         trips = await MapUtil().getTraccarHistory(
             deviceId: booking.deviceId, from: formattedDate, to: to);
+        print("trips not empty");
 
         if (trips != null && trips!.isNotEmpty) {
           int a = 0;
@@ -234,16 +243,21 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         }
 
         //Stoppages marker is added here
+        print("going into stoppages");
         if (stoppages != null) {
           for (int i = 0; i < stoppages!.length; i++) {
+            print("stoppages start");
             var stoppage = stoppages![i];
             addStoppageMarker(stoppage, i + 1);
+            print("stoppages added");
           }
         }
 
         //Fastag marker is added here
+        print("going into locations");
         if (locations != null) {
           for (int i = 0; i < locations!.length; i++) {
+            print("fastag start");
             final location = locations![i];
             String combinedDateTime = location['readerReadTime'];
             DateTime dateTime = DateTime.parse(combinedDateTime);
@@ -272,6 +286,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                         location['tollPlazaName']);
                   }));
               eachBookingCompleteCoordinates.add(LatLng(latitude, longitude));
+              print("fastag ended");
             }
           }
         }
@@ -279,7 +294,9 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         //Unloading Point marker is added
         LatLng? unloadingPointCoordinates =
             await getCoordinatesForWeb(booking.unloadingPointCity!);
+        print("going into unloading");
         if (unloadingPointCoordinates != null) {
+          print("entered unloading");
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
               await getBytesFromAssets('assets/icons/Startingpoint.png', 35);
@@ -295,35 +312,74 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           j++;
         }
         //Calculating the Current Location Address
+        print("going into currlocation");
         if (currentLocation == null) {
+          print("entered currLocation");
           position =
               await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
-          var first = position![0];
-          currentLocation = LatLng(first.latitude, first.longitude);
-        }
-        currLocation = await checkFastTag().fetchAddressForWeb(
-            currentLocation.latitude, currentLocation.longitude);
+          print("currLocation not empty");
+          print("position is $position");
+          if (position != null) {
+            var first = position![0];
+            print(first);
+            currentLocation = LatLng(first.latitude, first.longitude);
+            try {
+              final Uint8List marker =
+                  await getBytesFromAssets('assets/icons/truckPin.png', 105);
+              _markers.add(Marker(
+                markerId: const MarkerId('Current Location: 1000'),
+                position: currentLocation,
+                icon: BitmapDescriptor.fromBytes(marker),
+              ));
+            } catch (e) {
+              debugPrint("Error adding marker with position: $e");
+            }
+            print("prinitng currLocation : $currentLocation");
+            print("going out of currLocation");
+            print("currLocation address taken");
+            currLocation = await checkFastTag().fetchAddressForWeb(
+                currentLocation.latitude, currentLocation.longitude);
+            print("got the currLocation address");
 
-        List<String> parts = currLocation.split(',');
-        if (parts.length >= 2) {
-          shortAddress = parts[1].trim();
+            List<String> parts = currLocation.split(',');
+            if (parts.length >= 2) {
+              shortAddress = parts[1].trim();
+            } else {
+              shortAddress = parts[0].trim();
+            }
+          } else {
+            shortAddress = "Not Found";
+          }
         } else {
-          shortAddress = parts[0].trim();
+          currLocation = await checkFastTag().fetchAddressForWeb(
+              currentLocation.latitude, currentLocation.longitude);
+          print("got the currLocation address else one ");
+
+          List<String> parts = currLocation.split(',');
+          if (parts.length >= 2) {
+            shortAddress = parts[1].trim();
+          } else {
+            shortAddress = parts[0].trim();
+          }
         }
 
         //Calculating the Estimated Time
-        if (unloadingPointCoordinates != null) {
+        if (unloadingPointCoordinates != null && currentLocation != null) {
+          print("calculating the estimatedTime");
           duration = await EstimatedTime().getEstimatedTime(
                   currentLocation, unloadingPointCoordinates) ??
               "Not possible";
 
           estimatedTime = DurationToDateTime().getDuration(duration!, to);
+          print("time converted");
         }
 
+        print("time and address add start");
         bookingDetails[booking] = {
           'shortAddress': shortAddress!,
-          'estimatedTime': estimatedTime!
+          'estimatedTime': estimatedTime ?? "Not Found"
         };
+        print("time and address add end");
 
         setState(
           () {
@@ -355,27 +411,25 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
     }
   }
 
+  Future<void> addStoppageMarker(var stoppage, int index) async {
+    LatLng stoplatlong = LatLng(stoppage.latitude, stoppage.longitude);
+    String stopAddress = await getStoppageAddress(stoppage);
+    String stoppageTime = getStoppageTime(stoppage);
+    String duration = getStoppageDuration(stoppage);
+    final Uint8List icon = await getBytesFromAssets(stoppagePaths[index % 3], 25);
 
-Future<void> addStoppageMarker(var stoppage, int index) async {
-  LatLng stoplatlong = LatLng(stoppage.latitude, stoppage.longitude);
-  String stopAddress = await getStoppageAddress(stoppage);
-  String stoppageTime = getStoppageTime(stoppage);
-  String duration = getStoppageDuration(stoppage);
-  BitmapDescriptor icon = await createNumberedMarkerIcon(index);
-
-  setState(() {
-    _markers.add(Marker(
-      markerId: MarkerId("Stop Mark $index"),
-      position: stoplatlong,
-      icon: icon,
-      onTap: () {
-        _showCustomInfoWindow(
-            MarkerId("Stop Mark $index"), stoplatlong, duration, stoppageTime, stopAddress);
-      },
-    ));
-  });
-}
-
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId("Stop Mark $index"),
+        position: stoplatlong,
+        icon: BitmapDescriptor.fromBytes(icon),
+        onTap: () {
+          _showCustomInfoWindow(MarkerId("Stop Mark $index"), stoplatlong,
+              duration, stoppageTime, stopAddress);
+        },
+      ));
+    });
+  }
 
   getStoppage(var gpsStoppage, int i) async {
     var stopAddress;
@@ -384,12 +438,18 @@ Future<void> addStoppageMarker(var stoppage, int index) async {
     var duration;
 
     LatLng? latlong;
+    print("lat lng");
     latlong = LatLng(gpsStoppage.latitude, gpsStoppage.longitude);
     stoplatlong = latlong;
+    print('address');
     stopAddress = await getStoppageAddress(gpsStoppage);
+    print("time");
     stoppageTime = getStoppageTime(gpsStoppage);
+    print("duration");
     duration = getStoppageDuration(gpsStoppage);
-    markerIcon = await getBytesFromCanvas(i + 1, 100, 100);
+    print("icon");
+    markerIcon = await getBytesFromAssets(stoppagePaths[i % 3], 25);
+    print("icon completed");
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId("Stop Mark $i"),

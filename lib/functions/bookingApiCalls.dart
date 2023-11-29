@@ -24,7 +24,7 @@ class BookingApiCalls {
     //print('getDataByPostLoadIdOnGoing in');
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
-          '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
+          '$bookingApiUrl?postLoadId=${shipperIdController.ownerShipperId.value}&completed=false&cancel=false&pageNo=$i'));
 
       var jsonData = json.decode(response.body);
 
