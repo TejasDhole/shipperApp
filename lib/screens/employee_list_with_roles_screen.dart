@@ -54,10 +54,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     bool isMobile = Responsive.isMobile(context);
     return Scaffold(
-      // floatingActionButton:
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
-        child: SingleChildScrollView(
           child: loading
               ? const OnGoingLoadingWidgets()
               : users.isEmpty
@@ -124,24 +121,25 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                               ],
                             ),
                             Visibility(child: AccountTableHeader(context), visible: Responsive.isMobile(context) ? false : true,),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              padding: EdgeInsets.only(bottom: space_15),
-                              itemCount: users.length,
-                              itemBuilder: (context, index) => (index ==
-                                      users.length) //removed -1 here
-                                  ? Visibility(
-                                      visible: bottomProgressLoad,
-                                      child:
-                                          const bottomProgressBarIndicatorWidget())
-                                  : EmployeeCard(
-                                      companyUsersModel: users[index],
-                                    ),
+                            Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: space_15),
+                                itemCount: users.length,
+                                itemBuilder: (context, index) => (index ==
+                                        users.length) //removed -1 here
+                                    ? Visibility(
+                                        visible: bottomProgressLoad,
+                                        child:
+                                            const bottomProgressBarIndicatorWidget())
+                                    : EmployeeCard(
+                                        companyUsersModel: users[index],
+                                      ),
+                              ),
                             ),
                           ]),
                     ),
-        ),
       ),
     );
   }

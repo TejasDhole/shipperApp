@@ -693,6 +693,7 @@ class _NearbyPlacesScreenOngoingState extends State<NearbyPlacesScreenOngoing>
                             Results here = _placesNearbyData.results![index];
                             print("DISTANCE ABCD " + here.distance.toString());
                             return Card(
+                              surfaceTintColor: transparent,
                               child: InkWell(
                                 onTap: () {
                                   this._googleMapController.animateCamera(

@@ -119,6 +119,7 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
                         },
                         child: (kIsWeb && Responsive.isDesktop(context))
                             ? Card(
+                                surfaceTintColor: transparent,
                                 margin: EdgeInsets.only(bottom: 5),
                                 shadowColor: Colors.grey,
                                 shape: RoundedRectangleBorder(

@@ -46,6 +46,7 @@ class OnGoingLoadDetails extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(radius_2 - 2)),
                       child: Card(
+                        surfaceTintColor: transparent,
                         color: white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,6 +68,7 @@ class OnGoingLoadDetails extends StatelessWidget {
               ),
             ),
             Card(
+              surfaceTintColor: transparent,
               elevation: 5,
               child: Container(
                 margin: EdgeInsets.all(space_3),

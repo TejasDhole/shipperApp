@@ -25,6 +25,7 @@ class _CardTemplateState extends State<CardTemplate> {
         width: MediaQuery.of(context).size.width * 0.88,
         height: MediaQuery.of(context).size.height * 0.55,
         child: Card(
+          surfaceTintColor: transparent,
           shadowColor: shadowGrey,
           elevation: space_2,
           shape: RoundedRectangleBorder(

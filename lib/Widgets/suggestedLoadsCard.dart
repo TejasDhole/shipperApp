@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shipper_app/constants/colors.dart';
 import '/constants/elevation.dart';
 import '/constants/spaces.dart';
 import '/controller/shipperIdController.dart';
@@ -33,6 +34,7 @@ class SuggestedLoadsCard extends StatelessWidget {
             }
           },
           child: Card(
+            surfaceTintColor: transparent,
             elevation: elevation_2,
             child: Column(
               children: [

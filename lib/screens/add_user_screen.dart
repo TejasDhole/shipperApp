@@ -143,6 +143,7 @@ class _AddUserState extends State<AddUser> {
                               children: [
                                 Text('Send Invite',
                                     style: GoogleFonts.montserrat(
+                                        color: white,
                                         fontWeight: FontWeight.w600,
                                         fontSize: size_8)),
                                 const Image(

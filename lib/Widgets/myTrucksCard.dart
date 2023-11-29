@@ -91,6 +91,7 @@ class _MyTruckCardState extends State<MyTruckCard> {
           );
         },
         child: Card(
+          surfaceTintColor: transparent,
           elevation: 5,
           child: Container(
             child: Column(

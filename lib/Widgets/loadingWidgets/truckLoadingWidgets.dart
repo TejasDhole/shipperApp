@@ -28,6 +28,7 @@ class TruckLoadingWidgets extends StatelessWidget {
 
   Card widget() {
     return Card(
+      surfaceTintColor: transparent,
       child: Padding(
         padding: EdgeInsets.all(space_2),
         child: Column(

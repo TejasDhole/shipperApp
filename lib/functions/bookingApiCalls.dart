@@ -21,7 +21,7 @@ class BookingApiCalls {
   //GET ------------------------------------------------------------------------
   Future<List<BookingModel>> getDataByPostLoadIdOnGoing() async {
     modelList = [];
-    print('getDataByPostLoadIdOnGoing in');
+    //print('getDataByPostLoadIdOnGoing in');
     for (int i = 0;; i++) {
       http.Response response = await http.get(Uri.parse(
           '$bookingApiUrl?postLoadId=${shipperIdController.shipperId.value}&completed=false&cancel=false&pageNo=$i'));
@@ -31,30 +31,26 @@ class BookingApiCalls {
       if (jsonData.isEmpty) {
         break;
       }
-      print('on going response : $jsonData');
 
       for (var json in jsonData) {
         BookingModel bookingModel = BookingModel(truckId: []);
         bookingModel.bookingDate =
             json['bookingDate'] != null ? json['bookingDate'] : "NA";
-        print(bookingModel.bookingDate);
         bookingModel.loadId = json['loadId'];
-        print(bookingModel.loadId);
         bookingModel.transporterId = json['transporterId'];
-        print(bookingModel.transporterId);
         bookingModel.truckId = json['truckId'];
-        print(bookingModel.truckId);
         bookingModel.cancel = json['cancel'];
-        print(bookingModel.cancel);
         bookingModel.completed = json['completed'];
-        print(bookingModel.completed);
+        bookingModel.driverName = json['driverName'];
+        bookingModel.driverPhoneNum = json['driverPhoneNum'];
         bookingModel.completedDate =
             json['completedDate'] != null ? json['completedDate'] : "NA";
-        print(bookingModel.completedDate);
+        bookingModel.deviceId = int.tryParse(json['deviceId']);
+        bookingModel.loadingPointCity = json['loadingPointCity'];
+        bookingModel.unloadingPointCity = json['unloadingPointCity'];
         modelList.add(bookingModel);
       }
     }
-    print('getDataByPostLoadIdOnGoing out');
     return modelList;
   }
 

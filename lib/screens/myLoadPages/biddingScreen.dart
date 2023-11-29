@@ -223,6 +223,7 @@ class _BiddingScreensState extends State<BiddingScreens> {
                       : (Responsive.isTablet(context) ||
                               Responsive.isDesktop(context))
                           ? Card(
+                              surfaceTintColor: transparent,
                               elevation: 10,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.zero),

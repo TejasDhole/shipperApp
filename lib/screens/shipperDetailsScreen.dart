@@ -109,6 +109,7 @@ class _ShipperDetailsState extends State<ShipperDetails> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(radius_2 - 2)),
                       child: Card(
+                        surfaceTintColor: transparent,
                         color: white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,6 +132,7 @@ class _ShipperDetailsState extends State<ShipperDetails> {
                 height: space_5,
               ),
               Card(
+                surfaceTintColor: transparent,
                 elevation: 5,
                 child: Padding(
                   padding:
