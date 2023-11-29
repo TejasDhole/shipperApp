@@ -23,9 +23,12 @@ import 'package:logger/logger.dart';
 // ignore: must_be_immutable
 class TrackButton extends StatefulWidget {
   final OngoingCardModel loadAllDataModel;
-
+  String? name;
+  String? assetImage;
   TrackButton({
     required this.loadAllDataModel,
+    this.name,
+    this.assetImage,
   });
 
   @override
@@ -43,58 +46,60 @@ class _TrackButtonState extends State<TrackButton> {
   @override
   Widget build(BuildContext context) {
     return (Responsive.isDesktop(context))
-        ? Expanded(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: TextButton(
-                style: ButtonStyle(
-                  padding: const MaterialStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.only(left: 5, right: 10)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  )),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(darkBlueColor),
-                ),
-                onPressed: () async {
-                  ongoingTruckGpsData =
-                      OngoingTruckGpsData(widget.loadAllDataModel);
-                  ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
-                    Get.to(
-                      TrackScreen(
-                        deviceId: gpsData[1][0].deviceId,
-                        gpsData: gpsData[1][0],
-                        truckNo: widget.loadAllDataModel.truckNo,
-                        totalDistance: gpsData[3],
-                        online: true,
-                        active: true,
-                      ),
-                    );
-                  });
-                },
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: space_1),
-                      child: true
-                          ? Container()
-                          : Image(
-                              height: 16,
-                              width: 11,
-                              image: AssetImage('assets/icons/lockIcon.png')),
+        ? SizedBox(
+            child: TextButton(
+              style: ButtonStyle(
+                padding: const MaterialStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.only(left: 5, right: 10)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                )),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(darkBlueColor),
+              ),
+              onPressed: () async {
+                ongoingTruckGpsData =
+                    OngoingTruckGpsData(widget.loadAllDataModel);
+                ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
+                  Get.to(
+                    TrackScreen(
+                      deviceId: gpsData[1][0].deviceId,
+                      gpsData: gpsData[1][0],
+                      truckNo: widget.loadAllDataModel.truckNo,
+                      totalDistance: gpsData[3],
+                      online: true,
+                      active: true,
                     ),
-                    Text(
-                      'Track'.tr,
-                      style: TextStyle(
-                        letterSpacing: 0.7,
-                        fontWeight: normalWeight,
-                        color: white,
-                        fontSize: size_7,
-                      ),
+                  );
+                });
+              },
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: space_1),
+                    child: true
+                        ? Container()
+                        : Image(
+                            height: 16,
+                            width: 11,
+                            image: AssetImage('assets/icons/lockIcon.png')),
+                  ),
+                  (widget.assetImage == null)
+                      ? Container()
+                      : Image(
+                          image: AssetImage(widget.assetImage!),
+                        ),
+                  Text(
+                    widget.name!,
+                    style: TextStyle(
+                      letterSpacing: 0.7,
+                      fontWeight: normalWeight,
+                      color: white,
+                      fontSize: size_7,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           )

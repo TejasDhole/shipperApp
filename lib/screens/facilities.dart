@@ -89,9 +89,6 @@ class _FacilitiesState extends State<Facilities> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 40,
-        ),
         Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
@@ -133,6 +130,12 @@ class _FacilitiesState extends State<Facilities> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    facilityController.updatePartyName('');
+                    facilityController.updateState('');
+                    facilityController.updateCity('');
+                    facilityController.updateAddress('');
+                    facilityController.updatePinCode('');
+                    facilityController.updateFacilityLatLng('', '');
                     facilityController.updateCountry('India');
                     facilityController.updateCreate(true);
                     addLocationDrawerToggleController.toggleDrawer(true);
@@ -405,7 +408,6 @@ class _FacilitiesState extends State<Facilities> {
         break;
       case MenuItemFacility.deleteText:
         deleteGeofences(id).then((bool state) {
-
           setState(() {});
         });
 

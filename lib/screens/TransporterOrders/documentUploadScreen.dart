@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:shipper_app/Widgets/buttons/editDriverDetail.dart';
+import 'package:shipper_app/Widgets/buttons/sendConsentButton.dart';
+import 'package:shipper_app/Widgets/buttons/trackButton.dart';
+import 'package:shipper_app/functions/loadOnGoingData.dart';
+import 'package:shipper_app/functions/operatorInfo.dart';
+import 'package:shipper_app/functions/truckApis/consentStatusApi.dart';
+import 'package:shipper_app/models/onGoingCardModel.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/FastTagScreen.dart';
 import 'package:shipper_app/screens/vehicleDetailsScreen.dart';
@@ -40,6 +46,7 @@ class documentUploadScreen extends StatefulWidget {
   String? productType;
   String? truckType;
   String? unitValue;
+  final OngoingCardModel? loadAllDataModel;
 
   documentUploadScreen({
     Key? key,
@@ -60,6 +67,7 @@ class documentUploadScreen extends StatefulWidget {
     this.productType,
     this.truckType,
     this.unitValue,
+    this.loadAllDataModel,
   }) : super(key: key);
 
   @override
@@ -69,14 +77,46 @@ class documentUploadScreen extends StatefulWidget {
 class _documentUploadScreenState extends State<documentUploadScreen>
     with TickerProviderStateMixin {
   bool progressBar = false;
-  late TabController _tabController;
 
+  String status = 'Pending'; // Default status
+  String? selectedOperator;
+  List<String> operatorOptions = [
+    'Airtel',
+    'Vodafone',
+    'Jio',
+  ];
+  final StatusAPI statusAPI = StatusAPI();
+
+  Map? loadData;
   @override
   void initState() {
     super.initState();
-    // pod1 = false;
-
+    fetchDataFromLoadApi();
+    fetchConsent();
+    loadOperatorInfo(widget.driverPhoneNum, updateSelectedOperator);
     Permission.camera.request();
+  }
+
+  fetchDataFromLoadApi() async {
+    Map ongoingloadData =
+        await loadApiCalls.getDataByLoadId(widget.loadAllDataModel!.loadId!);
+    setState(() {
+      loadData = ongoingloadData;
+    });
+  }
+
+  void updateSelectedOperator(String newOperator) {
+    setState(() {
+      selectedOperator = newOperator;
+    });
+  }
+
+  Future<void> fetchConsent() async {
+    final responseStatus = await statusAPI.getStatus(widget.driverPhoneNum!);
+
+    setState(() {
+      status = responseStatus;
+    });
   }
 
   @override
@@ -86,7 +126,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
     bool isMobile = Responsive.isMobile(context);
     Get.put(ShipperIdController());
     var providerData = Provider.of<ProviderData>(context);
-    _tabController = TabController(length: 4, vsync: this);
 
     late Map
         datanew; // this map will contain the data to be posted using the post document api.
@@ -95,6 +134,8 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       "documents": [{}],
     };
     late Map dataput;
+
+    //This function is used to fetch the operator info select it by default from the dropdown
 
     // function to call the post or put api functions according to the need to upload the documents.
     uploadDocumentApiCall() async {
@@ -1119,8 +1160,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                   children: [
                                                     Text(
                                                       "Loads Details",
-                                                      // widget.truckNo.toString(),
-                                                      // "TN 09 JP 1234",
                                                       style: TextStyle(
                                                           fontSize: size_10 - 1,
                                                           fontWeight:
@@ -1145,174 +1184,462 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       ),
                                     ),
                                   ),
-                                                                
+
                                   const SizedBox(
                                     height: 50,
                                   ),
                                   //from to widget
                                   Padding(
-                                      padding: EdgeInsets.all(isMobile ? 20.0 : 30.0),
-                                      child: Material(
-                                        elevation: 5,
-                                        child: SizedBox(
-                                            height: isMobile ? screenHeight/7 : screenHeight/ 5,
-                                            width : screenWidth * 0.9,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal:   screenHeight / 100  ),
-                                              child: Container(
-                                                color: Colors.white,
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(vertical : 20.0, horizontal : isMobile ? screenHeight * 0.001 :  screenWidth * 0.01),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            Text(
-                                                              "${widget.loadingPoint}",
-                                                              style:
-                                                                  TextStyle(
-                                                                color: okButtonColor,
-                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              // rectangle429199w (1:2)
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              height: 7,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                  begin:
-                                                                      Alignment(
-                                                                          -1, -1),
-                                                                  end: Alignment(
-                                                                      1, -1),
-                                                                  colors: <Color>[
-                                                                    Color(
-                                                                        0xff09b778),
-                                                                    Color(
-                                                                        0xffec4a4a)
-                                                                  ],
-                                                                  stops: <double>[
-                                                                    0,
-                                                                    1
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "${widget.unloadingPoint}",
-                                                              style:
-                                                                  TextStyle(
-                                                                color: diffDeleteButtonColor,
-                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
-                                                              ),
-                                                            ),
-                                                          ]),
-                                                      const Divider(
-                                                        thickness: 2,
-                                                      ),
-                                                      Padding(
-                                                        padding: EdgeInsets.only(left: isMobile ? screenHeight * 0.001 : screenWidth * 0.03, top : isMobile ? screenHeight * 0.013 : screenHeight * 0.03),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                          children: [
-                                                            InkWell(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              VehicleDetailsScreen(
-                                                                                truckNumber: widget.truckNo,
-                                                                              )),
-                                                                );
-                                                              },
-                                                              child: Container(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          screenWidth *
-                                                                              0.004),
-                                                                  height: isMobile ? screenHeight * 0.03 : screenHeight * 0.04,
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  width:
-                                                                      isMobile ? screenHeight * 0.065 :  screenWidth * 0.07,
-                                                                  decoration:
-                                                                      const BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.all(
-                                                                            Radius.circular(2)),
-                                                                    color:
-                                                                        trackButtonColor,
-                                                                  ),
-                                                                  child: Text(
-                                                                      'Track',
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize: isMobile ? screenWidth * 0.035 : screenHeight * 0.02,
-                                                                          color : white,
-                                                                          fontWeight: FontWeight.w500
-                                                                        )
-                                                                      )
-                                                              ),
-                                                            ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                Navigator
-                                                                    .push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          MapScreen(
-                                                                            loadingPoint: widget.loadingPoint,
-                                                                            unloadingPoint: widget.unloadingPoint,
-                                                                            truckNumber: widget.truckNo,
-                                                                            loadingPointCity: widget.loadingPointCity,
-                                                                            unloadingPointCity: widget.unloadingPointCity,
-                                                                          )
-                                                                          ),
-                                                                );
-                                                              },
-                                                              child:
-                                                                  Container(
-                                                                      padding: EdgeInsets.symmetric(
-                                                                          horizontal: screenWidth *
-                                                                              0.005),
-                                                                      height: isMobile ? screenHeight * 0.03 : screenHeight * 0.04,
-                                                                      width: isMobile ? screenHeight * 0.07 :  screenWidth * 0.09,
-                                                                      decoration:
-                                                                          const BoxDecoration(
-                                                                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                                                                        color: trackButtonColor,
+                                    padding:
+                                        EdgeInsets.all(isMobile ? 20.0 : 30.0),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: SizedBox(
+                                          height: isMobile
+                                              ? screenHeight / 7
+                                              : screenHeight / 3.5,
+                                          width: screenWidth * 0.9,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical:
+                                                        screenHeight / 90),
+                                                child: Container(
+                                                  color:
+                                                      const Color(0xfff4f4f4),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 20.0,
+                                                            horizontal: isMobile
+                                                                ? screenHeight *
+                                                                    0.001
+                                                                : screenWidth *
+                                                                    0.01),
+                                                    child: (loadData != null)
+                                                        ? Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          20,
+                                                                          0,
+                                                                          20,
+                                                                          0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const Image(
+                                                                        image: AssetImage(
+                                                                            'assets/icons/greenFilledCircleIcon.png'),
+                                                                        height:
+                                                                            10,
+                                                                        width:
+                                                                            10,
                                                                       ),
-                                                                      child: Image.asset(
-                                                                          'assets/icons/fastag.png')),
-                                                            ),  
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
+                                                                      Padding(
+                                                                        padding: EdgeInsets.fromLTRB(
+                                                                            screenWidth *
+                                                                                0.02,
+                                                                            0,
+                                                                            screenWidth *
+                                                                                0.02,
+                                                                            0),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Text(
+                                                                              "${widget.loadingPoint}",
+                                                                              style: TextStyle(
+                                                                                fontWeight: mediumBoldWeight,
+                                                                                color: liveasyBlackColor,
+                                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
+                                                                              ),
+                                                                            ),
+                                                                            Text(' ${loadData?['loadingPoint']},${loadData?['loadingPointCity']} , ${loadData?['loadingPointState']}',
+                                                                                style: TextStyle(fontSize: Responsive.isMobile(context) ? 10 : 16, color: darkBlueColor))
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                const Image(
+                                                                  image: AssetImage(
+                                                                      'assets/icons/arrow2.png'),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsets.fromLTRB(
+                                                                      screenWidth *
+                                                                          0.02,
+                                                                      0,
+                                                                      screenWidth *
+                                                                          0.02,
+                                                                      0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const Image(
+                                                                        image: AssetImage(
+                                                                            'assets/icons/unloadingPoint.png'),
+                                                                        height:
+                                                                            10,
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsets.fromLTRB(
+                                                                            screenWidth *
+                                                                                0.02,
+                                                                            0,
+                                                                            screenWidth *
+                                                                                0.02,
+                                                                            0),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Text(
+                                                                              "${widget.unloadingPoint}",
+                                                                              style: TextStyle(
+                                                                                fontWeight: mediumBoldWeight,
+                                                                                color: liveasyBlackColor,
+                                                                                fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
+                                                                              ),
+                                                                            ),
+                                                                            Text(' ${loadData?['unloadingPoint']},${loadData?['unloadingPointCity']} , ${loadData?['unloadingPointState']}',
+                                                                                style: TextStyle(fontSize: Responsive.isMobile(context) ? 10 : 16, color: darkBlueColor))
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ])
+                                                        : Container(),
                                                   ),
                                                 ),
                                               ),
-                                            )),
-                                      ),
+                                              const Divider(
+                                                thickness: 2,
+                                              ),
+                                              Responsive.isMobile(context)
+                                                  ? Container()
+                                                  : Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical:
+                                                                  screenHeight /
+                                                                      90),
+                                                      child: Container(
+                                                          color: const Color(
+                                                              0xfff1f4ff),
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                                vertical: 20.0,
+                                                                horizontal: isMobile
+                                                                    ? screenHeight *
+                                                                        0.001
+                                                                    : screenWidth *
+                                                                        0.01),
+                                                            child: Row(
+                                                              children: [
+                                                                const SizedBox(
+                                                                  width: 50,
+                                                                ),
+                                                                const Image(
+                                                                  image: AssetImage(
+                                                                      'assets/icons/box.png'),
+                                                                ),
+                                                                Text(
+                                                                  "DOC",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          veryDarkGrey,
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          mediumBoldWeight),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 100,
+                                                                ),
+                                                                const Image(
+                                                                  image: AssetImage(
+                                                                      'assets/icons/truckDoc.png'),
+                                                                ),
+                                                                Text(
+                                                                  "${loadData?['weight']} tons| ${loadData?['truckType']} | ${loadData?['noOfTyres']} Tyres  ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          veryDarkGrey,
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          mediumBoldWeight),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )))
+                                            ],
+                                          )),
                                     ),
+                                  ),
+
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Responsive.isMobile(context)
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(30),
+                                          child: Material(
+                                            elevation: 5,
+                                            child: SizedBox(
+                                              height: screenHeight / 8,
+                                              width: screenWidth * 0.9,
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: Text(
+                                                        " Track Vehicle ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                darkBlueColor,
+                                                            fontSize: size_9,
+                                                            fontWeight:
+                                                                mediumBoldWeight),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: TrackButton(
+                                                          assetImage:
+                                                              'assets/icons/location2.png',
+                                                          name: "Gps",
+                                                          loadAllDataModel: widget
+                                                              .loadAllDataModel!),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        MapScreen(
+                                                                          loadingPoint:
+                                                                              widget.loadingPoint,
+                                                                          unloadingPoint:
+                                                                              widget.unloadingPoint,
+                                                                          truckNumber:
+                                                                              widget.truckNo,
+                                                                          loadingPointCity:
+                                                                              widget.loadingPointCity,
+                                                                          unloadingPointCity:
+                                                                              widget.unloadingPointCity,
+                                                                        )),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        screenWidth *
+                                                                            0.005),
+                                                            height: isMobile
+                                                                ? screenHeight *
+                                                                    0.03
+                                                                : screenHeight *
+                                                                    0.04,
+                                                            width: isMobile
+                                                                ? screenHeight *
+                                                                    0.07
+                                                                : screenWidth *
+                                                                    0.09,
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(Radius
+                                                                          .circular(
+                                                                              2)),
+                                                              color:
+                                                                  trackButtonColor,
+                                                            ),
+                                                            child: Image.asset(
+                                                                'assets/icons/fastag.png')),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.all(30),
+                                          child: Material(
+                                            elevation: 5,
+                                            child: SizedBox(
+                                              height: screenHeight / 8,
+                                              width: screenWidth * 0.9,
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: Text(
+                                                        " Track Vehicle ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                darkBlueColor,
+                                                            fontSize: size_13,
+                                                            fontWeight:
+                                                                mediumBoldWeight),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: TrackButton(
+                                                          assetImage:
+                                                              'assets/icons/location2.png',
+                                                          name: "Gps",
+                                                          loadAllDataModel: widget
+                                                              .loadAllDataModel!),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: TrackButton(
+                                                          assetImage:
+                                                              'assets/icons/microSim.png',
+                                                          name: "Sim",
+                                                          loadAllDataModel: widget
+                                                              .loadAllDataModel!),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          screenWidth * 0.02),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        MapScreen(
+                                                                          loadingPoint:
+                                                                              widget.loadingPoint,
+                                                                          unloadingPoint:
+                                                                              widget.unloadingPoint,
+                                                                          truckNumber:
+                                                                              widget.truckNo,
+                                                                          loadingPointCity:
+                                                                              widget.loadingPointCity,
+                                                                          unloadingPointCity:
+                                                                              widget.unloadingPointCity,
+                                                                        )),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        screenWidth *
+                                                                            0.005),
+                                                            height: isMobile
+                                                                ? screenHeight *
+                                                                    0.03
+                                                                : screenHeight *
+                                                                    0.04,
+                                                            width: isMobile
+                                                                ? screenHeight *
+                                                                    0.07
+                                                                : screenWidth *
+                                                                    0.09,
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(Radius
+                                                                          .circular(
+                                                                              2)),
+                                                              color:
+                                                                  trackButtonColor,
+                                                            ),
+                                                            child: Image.asset(
+                                                                'assets/icons/fastag.png')),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                   const SizedBox(
                                     height: 25,
                                   ),
-                                  //BOXXX
+                                  Padding(
+                                    padding: const EdgeInsets.all(30),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: Container(
+                                        height: screenHeight * 0.1,
+                                        color: white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              50, 0, 100, 0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Driver Details",
+                                                  style: TextStyle(
+                                                      color: darkBlueTextColor,
+                                                      fontWeight:
+                                                          mediumBoldWeight,
+                                                      fontSize:
+                                                          Responsive.isMobile(
+                                                                  context)
+                                                              ? 16
+                                                              : 26)),
+                                              const SizedBox(width: 20),
+                                              EditDriverDetail(
+                                                bookingId:
+                                                    widget.bookingId.toString(),
+                                                driverName: widget.driverName,
+                                                driverPhoneNum:
+                                                    widget.driverPhoneNum,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                   Padding(
                                     padding: const EdgeInsets.all(30),
                                     child: Material(
@@ -1322,7 +1649,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height /
-                                              3,
+                                              3.7,
                                           child: Column(
                                             children: [
                                               Container(
@@ -1340,12 +1667,67 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                 child: Row(
                                                   children: [
                                                     Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
+                                                      width: screenWidth * 0.15,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Booking Date",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.15,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.bookingDate}")),
+                                                    ),
+                                                    Container(
+                                                      width: screenWidth * 0.15,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Driver Number.",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.15,
+                                                      child: Center(
+                                                          child: Text(
+                                                              "${widget.driverPhoneNum}")),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: screenWidth * 0.15,
                                                       decoration:
                                                           const BoxDecoration(
                                                         border: Border(),
@@ -1361,24 +1743,13 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                       )),
                                                     ),
                                                     SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       child: Center(
                                                           child: Text(
                                                               "${widget.truckNo}")),
                                                     ),
                                                     Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       decoration:
                                                           const BoxDecoration(
                                                         color: Color.fromRGBO(
@@ -1393,13 +1764,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                       )),
                                                     ),
                                                     SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       child: const Center(
                                                           child: Text(
                                                         "Hm98765432110112",
@@ -1423,12 +1788,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                 child: Row(
                                                   children: [
                                                     Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       decoration:
                                                           const BoxDecoration(
                                                         border: Border(),
@@ -1444,24 +1804,13 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                       )),
                                                     ),
                                                     SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       child: Center(
                                                           child: Text(
                                                               "${widget.driverName}")),
                                                     ),
                                                     Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       decoration:
                                                           const BoxDecoration(
                                                         color: Color.fromRGBO(
@@ -1469,267 +1818,148 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                       ),
                                                       child: const Center(
                                                           child: Text(
-                                                        "Product Type",
+                                                        "Frieght",
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.white),
                                                       )),
                                                     ),
                                                     SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: Center(
-                                                          child: Text(
-                                                        "${widget.productType}",
-                                                      )),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                height: (MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        3) /
-                                                    5,
-                                                decoration: const BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Colors.black,
-                                                          width: 1)),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        border: Border(),
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "Driver\nMobile No.",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: Center(
-                                                          child: Text(
-                                                              "${widget.driverPhoneNum}")),
-                                                    ),
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "Truck Type",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: Center(
-                                                          child: Text(
-                                                        "${widget.truckType}",
-                                                      )),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                height: (MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        3) /
-                                                    5,
-                                                decoration: const BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Colors.black,
-                                                          width: 1)),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        border: Border(),
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "Booking\nDate",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: Center(
-                                                          child: Text(
-                                                              "${widget.bookingDate}")),
-                                                    ),
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "weight",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: Center(
-                                                          child: Text(
-                                                        "${widget.unitValue}",
-                                                      )),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                height: (MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        3) /
-                                                    5,
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        border: Border(),
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "Transpoter",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
-                                                      child: const Center(
-                                                          child: Text(
-                                                              "LivEasy Logistics")),
-                                                    ),
-                                                    Container(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) /
-                                                          6,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color: Color.fromRGBO(
-                                                            9, 183, 120, 1),
-                                                      ),
-                                                      child: const Center(
-                                                          child: Text(
-                                                        "Fright",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      )),
-                                                    ),
-                                                    SizedBox(
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              60) *
-                                                          2 /
-                                                          6,
+                                                      width: screenWidth * 0.15,
                                                       child: const Center(
                                                           child: Text(
                                                         "17,000",
                                                       )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: (MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3) /
+                                                    5,
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1)),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: screenWidth * 0.15,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(),
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Sim-Tracking Consent status ",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.15,
+                                                      child: ElevatedButton(
+                                                          onPressed: () {},
+                                                          style: ButtonStyle(
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .white),
+                                                            side: MaterialStateProperty
+                                                                .all(BorderSide(
+                                                                    color: getStatusColor(
+                                                                        status),
+                                                                    width:
+                                                                        2.0)),
+                                                          ),
+                                                          child: Text(
+                                                            ' $status',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  getStatusColor(
+                                                                      status),
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      width: screenWidth * 0.15,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            9, 183, 120, 1),
+                                                      ),
+                                                      child: const Center(
+                                                          child: Text(
+                                                        "Vehicle Details",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.15,
+                                                      child: ElevatedButton(
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          VehicleDetailsScreen(
+                                                                            truckNumber:
+                                                                                widget.truckNo,
+                                                                          )),
+                                                            );
+                                                          },
+                                                          style: ButtonStyle(
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .white),
+                                                            side: MaterialStateProperty.all(
+                                                                const BorderSide(
+                                                                    color:
+                                                                        kLiveasyColor,
+                                                                    width:
+                                                                        2.0)),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    100,
+                                                                    10,
+                                                                    10,
+                                                                    10),
+                                                            child: Container(
+                                                              height: isMobile
+                                                                  ? screenHeight *
+                                                                      0.03
+                                                                  : screenHeight *
+                                                                      0.03,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              width: isMobile
+                                                                  ? screenHeight *
+                                                                      0.065
+                                                                  : 100,
+                                                              child: const Text(
+                                                                "View ",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        kLiveasyColor),
+                                                              ),
+                                                            ),
+                                                          )),
                                                     ),
                                                   ],
                                                 ),
@@ -1744,186 +1974,362 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                   ),
                                   const SizedBox(height: 20),
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        space_4, space_4, space_4, 0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Upload Documents",
-                                        style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                21, 41, 104, 1),
-                                            fontWeight: boldWeight,
-                                            fontSize: size_10),
+                                    padding: const EdgeInsets.all(30),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: Container(
+                                        height: screenHeight * 0.125,
+                                        color: white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Sim-Tracking Consent :",
+                                                style: TextStyle(
+                                                  color: darkBlueColor,
+                                                  fontSize: Responsive.isMobile(
+                                                          context)
+                                                      ? 12
+                                                      : 26,
+                                                  fontWeight: mediumBoldWeight,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width:
+                                                    Responsive.isMobile(context)
+                                                        ? 10
+                                                        : 30,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          space_1),
+                                                  border: Border.all(
+                                                      color: Colors.black),
+                                                ),
+                                                child: DropdownButton<String>(
+                                                  value: selectedOperator,
+                                                  icon: const Icon(Icons
+                                                      .keyboard_arrow_down_sharp),
+                                                  style: const TextStyle(
+                                                      color: black),
+                                                  underline: Container(
+                                                    height: 2,
+                                                    color: white,
+                                                  ),
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                    setState(() {
+                                                      selectedOperator =
+                                                          newValue;
+                                                    });
+                                                  },
+                                                  items: operatorOptions
+                                                      .map((String operator) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: operator,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.all(
+                                                            space_2),
+                                                        child: SizedBox(
+                                                          width: 100,
+                                                          height: 28,
+                                                          child: Row(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            space_2),
+                                                                child: Text(
+                                                                  operator,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      fontSize:
+                                                                          size_7),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width:
+                                                    Responsive.isMobile(context)
+                                                        ? 10
+                                                        : 30,
+                                              ),
+                                              SendConsentButton(
+                                                selectedOperator:
+                                                    selectedOperator,
+                                                title: 'Send',
+                                                mobileno: widget.driverPhoneNum,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(30),
+                                    child: Material(
+                                      elevation: 5,
+                                      child: Container(
+                                        height: 70,
+                                        color: white,
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(space_4,
+                                              space_4, space_4, space_4),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Uploaded Documents",
+                                              style: TextStyle(
+                                                  color: const Color.fromRGBO(
+                                                      21, 41, 104, 1),
+                                                  fontWeight: boldWeight,
+                                                  fontSize: size_10),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
 
                                   Responsive.isMobile(context)
-                                      ? Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_4, space_2, space_4, 0),
-                                              child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Loading Documents".tr,
-                                                    style: TextStyle(
-                                                        color: grey,
-                                                        fontSize: size_9,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline),
-                                                  )),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_4, space_1, space_4, 0),
-                                              child: Text(
-                                                "Upload Loadoing document photos for advanced payment"
-                                                    .tr,
-                                                style: const TextStyle(
-                                                    color: grey),
-                                              ),
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    space_4,
-                                                    space_4,
-                                                    space_4,
-                                                    0),
-                                                child: docInputLr(
-                                                    providerData: providerData,
-                                                    bookingId:
-                                                        widget.bookingId)),
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    space_4,
-                                                    space_4,
-                                                    space_4,
-                                                    0),
-                                                child: docInputEWBill(
-                                                    providerData: providerData,
-                                                    bookingId:
-                                                        widget.bookingId)),
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    space_4,
-                                                    space_4,
-                                                    space_4,
-                                                    0),
-                                                child: docInputWgtReceipt(
-                                                  providerData: providerData,
-                                                  bookingId: widget.bookingId,
-                                                )),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_4, space_4, space_4, 0),
-                                              child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Uploading Documents".tr,
-                                                    style: TextStyle(
-                                                        color: grey,
-                                                        fontSize: size_9,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline),
-                                                  )),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_4, space_1, space_4, 0),
-                                              child: Text(
-                                                "Upload unloadoing document photos for final payment"
-                                                    .tr,
-                                                style: const TextStyle(
-                                                    color: grey),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  space_4,
-                                                  space_4,
-                                                  space_4,
-                                                  space_4),
-                                              child: docInputPod(
-                                                providerData: providerData,
-                                                bookingId: widget.bookingId,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      space_4,
-                                                      space_4,
-                                                      space_4,
-                                                      space_4),
-                                                  child: docInputLr(
-                                                      providerData:
-                                                          providerData,
-                                                      bookingId:
-                                                          widget.bookingId),
-                                                ),
-                                                Padding(
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(30),
+                                          child: Material(
+                                            elevation: 5,
+                                            child: Container(
+                                              color: white,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            space_4,
+                                                            space_2,
+                                                            space_4,
+                                                            0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Loading Documents"
+                                                              .tr,
+                                                          style: TextStyle(
+                                                              color: grey,
+                                                              fontSize: size_9,
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .underline),
+                                                        )),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            space_4,
+                                                            space_1,
+                                                            space_4,
+                                                            0),
+                                                    child: Text(
+                                                      "Upload Loadoing document photos for advanced payment"
+                                                          .tr,
+                                                      style: const TextStyle(
+                                                          color: grey),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              space_4,
+                                                              space_4,
+                                                              space_4,
+                                                              0),
+                                                      child: docInputLr(
+                                                          providerData:
+                                                              providerData,
+                                                          bookingId: widget
+                                                              .bookingId)),
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              space_4,
+                                                              space_4,
+                                                              space_4,
+                                                              0),
+                                                      child: docInputEWBill(
+                                                          providerData:
+                                                              providerData,
+                                                          bookingId: widget
+                                                              .bookingId)),
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              space_4,
+                                                              space_4,
+                                                              space_4,
+                                                              0),
+                                                      child: docInputWgtReceipt(
+                                                        providerData:
+                                                            providerData,
+                                                        bookingId:
+                                                            widget.bookingId,
+                                                      )),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            space_4,
+                                                            space_4,
+                                                            space_4,
+                                                            0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Uploading Documents"
+                                                              .tr,
+                                                          style: TextStyle(
+                                                              color: grey,
+                                                              fontSize: size_9,
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .underline),
+                                                        )),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            space_4,
+                                                            space_1,
+                                                            space_4,
+                                                            0),
+                                                    child: Text(
+                                                      "Upload unloadoing document photos for final payment"
+                                                          .tr,
+                                                      style: const TextStyle(
+                                                          color: grey),
+                                                    ),
+                                                  ),
+                                                  Padding(
                                                     padding:
                                                         EdgeInsets.fromLTRB(
                                                             space_4,
                                                             space_4,
                                                             space_4,
                                                             space_4),
-                                                    child: docInputEWBill(
-                                                        providerData:
-                                                            providerData,
-                                                        bookingId:
-                                                            widget.bookingId)),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 70,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      space_4,
-                                                      space_4,
-                                                      space_4,
-                                                      space_4),
-                                                  child: docInputWgtReceipt(
-                                                    providerData: providerData,
-                                                    bookingId: widget.bookingId,
+                                                    child: docInputPod(
+                                                      providerData:
+                                                          providerData,
+                                                      bookingId:
+                                                          widget.bookingId,
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      space_4,
-                                                      space_4,
-                                                      space_4,
-                                                      space_4),
-                                                  child: docInputPod(
-                                                    providerData: providerData,
-                                                    bookingId: widget.bookingId,
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                            const SizedBox(
-                                              height: 20,
-                                            )
-                                          ],
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.all(30),
+                                          child: Material(
+                                            elevation: 5,
+                                            child: Container(
+                                              color: white,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(30),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4),
+                                                          child: docInputLr(
+                                                              providerData:
+                                                                  providerData,
+                                                              bookingId: widget
+                                                                  .bookingId),
+                                                        ),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    space_4,
+                                                                    space_4,
+                                                                    space_4,
+                                                                    space_4),
+                                                            child: docInputEWBill(
+                                                                providerData:
+                                                                    providerData,
+                                                                bookingId: widget
+                                                                    .bookingId)),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 70,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4),
+                                                          child:
+                                                              docInputWgtReceipt(
+                                                            providerData:
+                                                                providerData,
+                                                            bookingId: widget
+                                                                .bookingId,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4,
+                                                                  space_4),
+                                                          child: docInputPod(
+                                                            providerData:
+                                                                providerData,
+                                                            bookingId: widget
+                                                                .bookingId,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
 
                                   const SizedBox(height: 50),
@@ -1933,5 +2339,18 @@ class _documentUploadScreenState extends State<documentUploadScreen>
         ),
       ),
     );
+  }
+}
+
+Color getStatusColor(String status) {
+  switch (status) {
+    case 'APPROVED':
+      return liveasyGreen;
+    case 'PENDING':
+      return orangeColor;
+    case 'REJECTED':
+      return red;
+    default:
+      return black;
   }
 }

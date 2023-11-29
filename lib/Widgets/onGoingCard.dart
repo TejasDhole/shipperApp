@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/buttons/trackButton.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/functions/ongoingTruckGpsData.dart';
 import 'package:shipper_app/responsive.dart';
 import '/constants/colors.dart';
@@ -87,29 +89,37 @@ class _OngoingCardState extends State<OngoingCard> {
                 ongoingTruckGpsData =
                     OngoingTruckGpsData(widget.loadAllDataModel);
                 ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
-                  Get.to(documentUploadScreen(
-                    bookingId: widget.loadAllDataModel.bookingId.toString(),
-                    truckNo: widget.loadAllDataModel.truckNo,
-                    loadingPoint: widget.loadAllDataModel.loadingPointCity,
-                    unloadingPoint: widget.loadAllDataModel.unloadingPointCity,
-                    transporterName: widget.loadAllDataModel.shipperName,
-                    transporterPhoneNum:
-                        widget.loadAllDataModel.shipperPhoneNum,
-                    driverPhoneNum: widget.loadAllDataModel.driverPhoneNum,
-                    driverName: widget.loadAllDataModel.driverName,
-                    bookingDate: widget.loadAllDataModel.bookingDate,
-                    // trackApproved: true,
-                    gpsDataList: gpsData[1][0],
-                    // widget.gpsDataList,
-                    totalDistance: gpsData[3],
-                    //  widget.totalDistance,
-                    // device: gpsData.deviceId,
-                    // gpsData!.deviceId
-                    // widget.device,
-                    truckType: widget.loadAllDataModel.truckType,
-                    productType: widget.loadAllDataModel.productType,
-                    unitValue: widget.loadAllDataModel.unitValue,
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreenWeb(
+                        visibleWidget: documentUploadScreen(
+                          bookingId:
+                              widget.loadAllDataModel.bookingId.toString(),
+                          truckNo: widget.loadAllDataModel.truckNo,
+                          loadingPoint:
+                              widget.loadAllDataModel.loadingPointCity,
+                          unloadingPoint:
+                              widget.loadAllDataModel.unloadingPointCity,
+                          transporterName: widget.loadAllDataModel.shipperName,
+                          transporterPhoneNum:
+                              widget.loadAllDataModel.shipperPhoneNum,
+                          driverPhoneNum:
+                              widget.loadAllDataModel.driverPhoneNum,
+                          driverName: widget.loadAllDataModel.driverName,
+                          bookingDate: widget.loadAllDataModel.bookingDate,
+                          gpsDataList: gpsData[1][0],
+                          totalDistance: gpsData[3],
+                          truckType: widget.loadAllDataModel.truckType,
+                          productType: widget.loadAllDataModel.productType,
+                          unitValue: widget.loadAllDataModel.unitValue,
+                          loadAllDataModel: widget.loadAllDataModel,
+                        ),
+                        index: 1000,
+                        selectedIndex: screens.indexOf(postLoadScreen),
+                      ),
+                    ),
+                  );
                 });
               },
               child: Row(
@@ -237,6 +247,8 @@ class _OngoingCardState extends State<OngoingCard> {
                           child: Column(
                             children: [
                               TrackButton(
+                                assetImage: null,
+                                name: 'Track',
                                 loadAllDataModel: widget.loadAllDataModel,
                               ),
                               const SizedBox(
@@ -266,38 +278,87 @@ class _OngoingCardState extends State<OngoingCard> {
                               ongoingTruckGpsData
                                   .getTruckGpsDetails()
                                   .then((gpsData) {
-                                Get.to(documentUploadScreen(
-                                  bookingId: widget.loadAllDataModel.bookingId
-                                      .toString(),
-                                  truckNo: widget.loadAllDataModel.truckNo,
-                                  loadingPoint:
-                                      widget.loadAllDataModel.loadingPointCity,
-                                  unloadingPoint: widget
-                                      .loadAllDataModel.unloadingPointCity,
-                                  transporterName:
-                                      widget.loadAllDataModel.shipperName,
-                                  transporterPhoneNum:
-                                      widget.loadAllDataModel.shipperPhoneNum,
-                                  driverPhoneNum:
-                                      widget.loadAllDataModel.driverPhoneNum,
-                                  driverName:
-                                      widget.loadAllDataModel.driverName,
-                                  bookingDate:
-                                      widget.loadAllDataModel.bookingDate,
-                                  // trackApproved: true,
-                                  gpsDataList: gpsData[1][0],
-                                  // widget.gpsDataList,
-                                  totalDistance: gpsData[3],
-                                  //  widget.totalDistance,
-                                  // device: gpsData.deviceId,
-                                  // gpsData!.deviceId
-                                  // widget.device,
-                                  truckType: widget.loadAllDataModel.truckType,
-                                  productType:
-                                      widget.loadAllDataModel.productType,
-                                  unitValue: widget.loadAllDataModel.unitValue,
-                                ));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreenWeb(
+                                      visibleWidget: documentUploadScreen(
+                                        bookingId: widget
+                                            .loadAllDataModel.bookingId
+                                            .toString(),
+                                        truckNo:
+                                            widget.loadAllDataModel.truckNo,
+                                        loadingPoint: widget
+                                            .loadAllDataModel.loadingPointCity,
+                                        unloadingPoint: widget.loadAllDataModel
+                                            .unloadingPointCity,
+                                        transporterName:
+                                            widget.loadAllDataModel.shipperName,
+                                        transporterPhoneNum: widget
+                                            .loadAllDataModel.shipperPhoneNum,
+                                        driverPhoneNum: widget
+                                            .loadAllDataModel.driverPhoneNum,
+                                        driverName:
+                                            widget.loadAllDataModel.driverName,
+                                        bookingDate:
+                                            widget.loadAllDataModel.bookingDate,
+                                        gpsDataList: gpsData[1][0],
+                                        totalDistance: gpsData[3],
+                                        truckType:
+                                            widget.loadAllDataModel.truckType,
+                                        productType:
+                                            widget.loadAllDataModel.productType,
+                                        unitValue:
+                                            widget.loadAllDataModel.unitValue,
+                                        loadAllDataModel:
+                                            widget.loadAllDataModel,
+                                      ),
+                                      index: 1000,
+                                      selectedIndex:
+                                          screens.indexOf(postLoadScreen),
+                                    ),
+                                  ),
+                                );
                               });
+
+                              // ongoingTruckGpsData =
+                              //     OngoingTruckGpsData(widget.loadAllDataModel);
+                              // ongoingTruckGpsData
+                              //     .getTruckGpsDetails()
+                              //     .then((gpsData) {
+                              //   Get.to(documentUploadScreen(
+                              //     bookingId: widget.loadAllDataModel.bookingId
+                              //         .toString(),
+                              //     truckNo: widget.loadAllDataModel.truckNo,
+                              //     loadingPoint:
+                              //         widget.loadAllDataModel.loadingPointCity,
+                              //     unloadingPoint: widget
+                              //         .loadAllDataModel.unloadingPointCity,
+                              //     transporterName:
+                              //         widget.loadAllDataModel.shipperName,
+                              //     transporterPhoneNum:
+                              //         widget.loadAllDataModel.shipperPhoneNum,
+                              //     driverPhoneNum:
+                              //         widget.loadAllDataModel.driverPhoneNum,
+                              //     driverName:
+                              //         widget.loadAllDataModel.driverName,
+                              //     bookingDate:
+                              //         widget.loadAllDataModel.bookingDate,
+                              //     // trackApproved: true,
+                              //     gpsDataList: gpsData[1][0],
+                              //     // widget.gpsDataList,
+                              //     totalDistance: gpsData[3],
+                              //     //  widget.totalDistance,
+                              //     // device: gpsData.deviceId,
+                              //     // gpsData!.deviceId
+                              //     // widget.device,
+                              //     truckType: widget.loadAllDataModel.truckType,
+                              //     productType:
+                              //         widget.loadAllDataModel.productType,
+                              //     unitValue: widget.loadAllDataModel.unitValue,
+                              //     loadAllDataModel: widget.loadAllDataModel,
+                              //   ));
+                              // });
                             },
                             icon: const Icon(
                               Icons.arrow_forward_ios_sharp,
@@ -326,6 +387,7 @@ class _OngoingCardState extends State<OngoingCard> {
                   OngoingTruckGpsData(widget.loadAllDataModel);
               ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
                 Get.to(documentUploadScreen(
+                  loadAllDataModel: widget.loadAllDataModel,
                   bookingId: widget.loadAllDataModel.bookingId.toString(),
                   truckNo: widget.loadAllDataModel.truckNo,
                   loadingPoint: widget.loadAllDataModel.loadingPointCity,
@@ -449,6 +511,8 @@ class _OngoingCardState extends State<OngoingCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           TrackButton(
+                              assetImage: null,
+                              name: 'Track',
                               loadAllDataModel: widget.loadAllDataModel),
                           CallButton(
                             directCall: false,
