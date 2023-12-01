@@ -50,23 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDd0O5dKTa31uoOWxWMvTy2CafP_C7VfN0',
-    appId: '1:692017725889:web:cc19a50e3d57b46959ef40',
-    messagingSenderId: '692017725889',
-    projectId: 'shipperwebapp',
-    authDomain: 'shipperwebapp.firebaseapp.com',
-    databaseURL:
-        'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'shipperwebapp.appspot.com',
-  );
+      apiKey: "AIzaSyBCsvWBlCbKF4x-wrEPtpnHao6E7PbABTQ",
+      authDomain: "shipperprod.firebaseapp.com",
+      databaseURL: "https://shipperprod-default-rtdb.firebaseio.com",
+      projectId: "shipperprod",
+      storageBucket: "shipperprod.appspot.com",
+      messagingSenderId: "747833665493",
+      appId: "1:747833665493:web:676cf9a80e410a3fe37f5c",
+      measurementId: "G-BFRY06DBFK");
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDwGra6d7Gm2fIIp_KUjKKmbVXADbA9iNo',
-    appId: '1:692017725889:android:97de2700f739792859ef40',
-    messagingSenderId: '692017725889',
-    projectId: 'shipperwebapp',
-    databaseURL:
-        'https://shipperwebapp-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'shipperwebapp.appspot.com',
+    apiKey: 'AIzaSyBCsvWBlCbKF4x-wrEPtpnHao6E7PbABTQ',
+    appId: '1:747833665493:android:1e94d85143356ef3e37f5c',
+    messagingSenderId: '747833665493',
+    projectId: 'shipperprod',
+    databaseURL: 'https://shipperprod-default-rtdb.firebaseio.com',
+    storageBucket: 'shipperprod.appspot.com',
   );
 }
