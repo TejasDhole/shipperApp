@@ -24,7 +24,7 @@ getRoleOfEmployee(String uid) async {
       .get();
   // This is the path for owner's shipper ID
   if (snapshot.exists) {
-    shipperIdController.updateOwnerStatus(snapshot.value == 'owner');
+    //shipperIdController.updateOwnerStatus(snapshot.value == 'owner');
     //print(snapshot.value);
 
     // After getting the owner status we are updating the role status through out the app

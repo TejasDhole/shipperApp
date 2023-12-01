@@ -366,6 +366,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 borderRadius: BorderRadius.circular(radius_1),
               ),
               child: SignUpWithGoogleButton(
+                txt: "Sign in Google",
                 onPressed: () async {
                   try {
                     UserCredential firebaseUser = await signInWithGoogle();

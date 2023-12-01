@@ -11,8 +11,10 @@ import 'package:shipper_app/functions/shipperApis/runShipperApiPost.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import 'package:shipper_app/models/shipperModel.dart';
 import 'package:shipper_app/screens/LoginScreens/PasswordScreen.dart';
+import 'package:shipper_app/screens/LoginScreens/RegisterScreen.dart';
 import 'package:shipper_app/screens/LoginScreens/loginScreenUsingPhone.dart';
 import 'package:shipper_app/screens/navigationScreen.dart';
+import 'package:sizer/sizer.dart';
 import '../../functions/firebaseAuthentication/signInWithGoogle.dart';
 import '/constants/spaces.dart';
 import '/constants/colors.dart';
@@ -337,6 +339,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                         borderRadius: BorderRadius.circular(radius_1),
                       ),
                       child: SignUpWithGoogleButton(
+                        txt: "Sign in Google",
                         onPressed: () async {
                           try {
                             UserCredential firebaseUser =
