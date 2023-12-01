@@ -377,6 +377,43 @@ class _documentUploadScreenState extends State<documentUploadScreen>
       await uploadDocumentApiCall();
     }
 
+    String wrapWords(String input, int maxChars) {
+      List<String> words = input.split(' ');
+      List<String> lines = [];
+      String currentLine = '';
+
+      for (String word in words) {
+        if ((currentLine.length + word.length) <= maxChars) {
+          currentLine += '$word ';
+        } else {
+          lines.add(currentLine.trim());
+          currentLine = '$word ';
+        }
+      }
+
+      lines.add(currentLine.trim());
+      return lines.join('\n');
+    }
+
+    String formatLoadingPoint(String loadingPoint) {
+      if (loadingPoint.length > 150) {
+        return loadingPoint.substring(0, 150) + '...';
+      } else if (loadingPoint.length > 10) {
+        return loadingPoint.replaceAllMapped(
+            RegExp(r"(.{1,40})(?:\s|$)"), (match) => "${match.group(1)}\n");
+      } else {
+        return loadingPoint;
+      }
+    }
+
+    String formatText(String text) {
+      if (text.length > 30) {
+        return text.substring(0, 30) + '...';
+      } else {
+        return text;
+      }
+    }
+
     uploadedCheckWeightReceipt() async {
       docLinks = [];
       docLinks = await getDocumentApiCall(widget.bookingId.toString(), "W");
@@ -1197,7 +1234,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       child: SizedBox(
                                           height: isMobile
                                               ? screenHeight / 7
-                                              : screenHeight / 3.5,
+                                              : screenHeight / 3.1,
                                           width: screenWidth * 0.9,
                                           child: Column(
                                             children: [
@@ -1221,7 +1258,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                         ? Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .spaceBetween,
+                                                                    .spaceEvenly,
                                                             children: [
                                                                 Padding(
                                                                   padding:
@@ -1255,15 +1292,26 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                               CrossAxisAlignment.start,
                                                                           children: [
                                                                             Text(
-                                                                              "${widget.loadingPoint}",
+                                                                              "   ${widget.loadingPoint}",
                                                                               style: TextStyle(
                                                                                 fontWeight: mediumBoldWeight,
                                                                                 color: liveasyBlackColor,
                                                                                 fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
                                                                               ),
                                                                             ),
-                                                                            Text(' ${loadData?['loadingPoint']},${loadData?['loadingPointCity']} , ${loadData?['loadingPointState']}',
-                                                                                style: TextStyle(fontSize: Responsive.isMobile(context) ? 10 : 16, color: darkBlueColor))
+                                                                            Text(
+                                                                              wrapWords(
+                                                                                ' ${formatText(loadData?['loadingPoint'])}, ${loadData?['loadingPointCity']} , ${loadData?['loadingPointState']}',
+                                                                                50,
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: Responsive.isMobile(context) ? 10 : 16,
+                                                                                color: darkBlueColor,
+                                                                              ),
+                                                                              maxLines: 5,
+                                                                              softWrap: true,
+                                                                              overflow: TextOverflow.visible,
+                                                                            )
                                                                           ],
                                                                         ),
                                                                       ),
@@ -1313,8 +1361,19 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                                 fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
                                                                               ),
                                                                             ),
-                                                                            Text(' ${loadData?['unloadingPoint']},${loadData?['unloadingPointCity']} , ${loadData?['unloadingPointState']}',
-                                                                                style: TextStyle(fontSize: Responsive.isMobile(context) ? 10 : 16, color: darkBlueColor))
+                                                                            Text(
+                                                                              wrapWords(
+                                                                                ' ${formatText(loadData?['unloadingPoint'])}, ${loadData?['unloadingPointCity']} , ${loadData?['unloadingPointState']}',
+                                                                                50,
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: Responsive.isMobile(context) ? 10 : 16,
+                                                                                color: darkBlueColor,
+                                                                              ),
+                                                                              maxLines: 5,
+                                                                              softWrap: true,
+                                                                              overflow: TextOverflow.visible,
+                                                                            )
                                                                           ],
                                                                         ),
                                                                       ),

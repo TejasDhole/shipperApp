@@ -415,19 +415,48 @@ class _FacilitiesState extends State<Facilities> {
     }
   }
 
+  // PopupMenuItem<PopUpMenuForFacility> showEachItem(PopUpMenuForFacility item) =>
+  //     PopupMenuItem<PopUpMenuForFacility>(
+  //       value: item,
+  //       child: Column(
+  //         children: [
+  //           Text(
+  //             item.text,
+  //             style: TextStyle(
+  //               fontWeight: mediumBoldWeight,
+  //               color: item.color,
+  //             ),
+  //           ),
+  //           const Divider(height: 1, color: Colors.grey),
+  //         ],
+  //       ),
+  //     );
   PopupMenuItem<PopUpMenuForFacility> showEachItem(PopUpMenuForFacility item) =>
       PopupMenuItem<PopUpMenuForFacility>(
         value: item,
-        child: Row(
-          children: [
-            Text(
-              item.text,
-              style: TextStyle(
-                fontWeight: normalWeight,
-                color: item.color,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: const Offset(0, 3),
               ),
-            )
-          ],
+            ],
+          ),
+          child: Column(
+            children: [
+              Text(
+                item.text,
+                style: TextStyle(
+                  fontWeight: mediumBoldWeight,
+                  color: item.color,
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }
