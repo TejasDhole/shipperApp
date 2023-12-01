@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shipper_app/Widgets/alertDialog/update_employee_alert_dialog.dart';
 import 'package:shipper_app/Widgets/customRoleCell.dart';
 import 'package:shipper_app/Widgets/remove_employee_alert_dialog.dart';
+import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/add_user_functions.dart';
 import 'package:shipper_app/functions/fetchUserData.dart';
 import 'package:shipper_app/functions/get_role_of_employee.dart';
@@ -43,7 +45,7 @@ class EmployeeCard extends StatelessWidget {
           // Assuming snapshot.data contains the data in the format [Name, Email, Role]
           String name = snapshot.data[0]!;
           String email = snapshot.data[1]!;
-          String role = companyUsersModel.role;
+          String role = snapshot.data[2];
 
           // Create a map to hold the data of the current employee
           Map<String, dynamic> employeeData = {
@@ -291,13 +293,10 @@ class EmployeeCard extends StatelessWidget {
 }
 
 Future<bool> _fetchUserRole() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //fetching the email, the user has entered while signing in with Google
-  String storedEmail = prefs.getString('userEmail') ?? "";
-  debugPrint(storedEmail + 'No email found');
-  //fetching the role of the user wh0 is currently logged in
-  bool userRole = await AddUserFunctions().getCurrentUserRole(storedEmail);
-  return userRole;
+  ShipperIdController shipperIdController =
+  Get.put(ShipperIdController());
+
+  return (shipperIdController.role.value == 'ADMIN') ? true: false;
 }
   
 }

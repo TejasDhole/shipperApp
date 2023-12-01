@@ -66,7 +66,7 @@ class LoadConfirmationScreenButton extends StatelessWidget {
         if (providerData.editLoad == false) {
           loadId = await postLoadAPi(
               postLoadVariables.bookingDate.value,
-              shipperIdController.ownerShipperId.value,
+              shipperIdController.companyId.value,
               providerData.loadingPointPostLoad,
               providerData.loadingPointCityPostLoad,
               providerData.loadingPointStatePostLoad,
@@ -154,7 +154,7 @@ class LoadConfirmationScreenButton extends StatelessWidget {
           loadId = await putLoadAPI(
               providerData.transporterLoadId,
               postLoadVariables.bookingDate.value,
-              shipperIdController.ownerShipperId.value,
+              shipperIdController.companyId.value,
               "${providerData.loadingPointCityPostLoad}, ${providerData.loadingPointStatePostLoad}",
               providerData.loadingPointCityPostLoad,
               providerData.loadingPointStatePostLoad,
