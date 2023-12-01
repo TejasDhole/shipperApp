@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const Color orangeColor = Color(0xffed4a4a);
 const Color kLiveasyColor = Color(0xFF000066);
 const Color statusBarColor = Color.fromARGB(255, 8, 25, 70);
 const Color darkBlueColor = Color(0xFF152968);
