@@ -23,6 +23,8 @@ Future<String?> runShipperApiPost({
   String? gst,
   String? address,
   String? userLocation,
+  String? companyId,
+  String? role,
 }) async {
   try {
     ShipperIdController shipperIdController =
@@ -37,8 +39,10 @@ Future<String?> runShipperApiPost({
             "phoneNo": phoneNo,
             "shipperName": shipperName,
             "companyName": companyName,
+            "companyId": companyId,
+            "roles": role,
             "GST": gst,
-            "companyStatus": "notVerified",
+            "companyStatus": "verified",
             "shipperLocation": address,
           };
 
@@ -50,9 +54,9 @@ Future<String?> runShipperApiPost({
         },
         body: body);
 
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       var decodedResponse = json.decode(response.body);
+      print(decodedResponse);
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
@@ -104,15 +108,16 @@ Future<String?> runShipperApiPost({
         sidstorage
             .write("companyName", companyName)
             .then((value) => print("Written companyName"));
+        shipperIdController
+            .updateCompanyId(decodedResponse["companyId"].toString());
+
+        shipperIdController.updateRole(decodedResponse["roles"].toString());
+
         if (decodedResponse["token"] != null) {
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
-        CreateCompanyDatabase().createCompanyDatabase(
-            shipperIdController.companyName.value.toString(),
-            shipperIdController.shipperId.value.toString());
-        getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
-        await getShipperIdFromCompanyDatabase();
+
         if (FirebaseAuth.instance.currentUser != null) {
           createUserTraccar(phoneNo);
         }
@@ -121,7 +126,6 @@ Future<String?> runShipperApiPost({
         return null;
       }
     } else {
-      print(response.body);
       return null;
     }
   } catch (e) {

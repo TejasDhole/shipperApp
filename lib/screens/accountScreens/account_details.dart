@@ -36,7 +36,7 @@ class AccountScreenState extends State<AccountScreen> {
     nameController =
         TextEditingController(text: shipperIdController.name.value);
     roleController = TextEditingController(
-        text: shipperIdController.isOwner.value ? 'Owner' : 'Employee');
+        text: shipperIdController.role.value);
     emailController = TextEditingController(
         text: FirebaseAuth.instance.currentUser!.email.toString());
 

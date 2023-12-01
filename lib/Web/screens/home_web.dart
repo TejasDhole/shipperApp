@@ -48,8 +48,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   @override
   void initState() {
     super.initState();
-    runShipperApiPost(
-        emailId: FirebaseAuth.instance.currentUser!.email.toString());
+    isolatedShipperGetData();
+
     if (widget.index != null) {
       setState(() {
         _index = widget.index!;
@@ -109,8 +109,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
     liveasySelectedTabGradientColor =
         const LinearGradient(colors: [white, white]);
-
-    isolatedShipperGetData();
   }
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
@@ -279,6 +277,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                       children: [
                         Row(children: [
                           Card(
+                            surfaceTintColor: transparent,
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.zero)),
                             elevation: 5,
