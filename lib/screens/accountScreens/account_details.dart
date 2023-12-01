@@ -134,11 +134,7 @@ class AccountScreenState extends State<AccountScreen> {
                   padding: EdgeInsets.zero,
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [white],
-                    ),
+                    color:  white
                   ),
                 ),
                 Positioned(
