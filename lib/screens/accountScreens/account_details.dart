@@ -36,7 +36,7 @@ class AccountScreenState extends State<AccountScreen> {
     nameController =
         TextEditingController(text: shipperIdController.name.value);
     roleController = TextEditingController(
-        text: shipperIdController.isOwner.value ? 'Owner' : 'Employee');
+        text: shipperIdController.role.value);
     emailController = TextEditingController(
         text: FirebaseAuth.instance.currentUser!.email.toString());
 
@@ -134,11 +134,7 @@ class AccountScreenState extends State<AccountScreen> {
                   padding: EdgeInsets.zero,
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [white],
-                    ),
+                    color:  white
                   ),
                 ),
                 Positioned(
@@ -344,30 +340,30 @@ class AccountScreenState extends State<AccountScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (nameController.text.isNotEmpty &&
-                          companyNameController.text.isNotEmpty) {
-                        try {
-                          await updateUserDetails(
-                            uniqueID: shipperuniqueIdController.text,
-                            name: nameController.text,
-                            companyName: companyNameController.text,
-                          );
-
-                          shipperIdController.updateName(nameController.text);
-                          shipperIdController
-                              .updateCompanyName(companyNameController.text);
-                          sidstorage.write("name", nameController.text);
-                          sidstorage.write(
-                              "companyName", companyNameController.text);
-                          setState(() {
-                            isEditing = false;
-                          });
-                        } catch (e) {
-                          print('Error updating user details: $e');
-                        }
-                      } else {
-                        showMySnackBar(context, "update Compamy and Name");
-                      }
+                      // if (nameController.text.isNotEmpty &&
+                      //     companyNameController.text.isNotEmpty) {
+                      //   try {
+                      //     await updateUserDetails(
+                      //       uniqueID: shipperuniqueIdController.text,
+                      //       name: nameController.text,
+                      //       companyName: companyNameController.text,
+                      //     );
+                      //
+                      //     shipperIdController.updateName(nameController.text);
+                      //     shipperIdController
+                      //         .updateCompanyName(companyNameController.text);
+                      //     sidstorage.write("name", nameController.text);
+                      //     sidstorage.write(
+                      //         "companyName", companyNameController.text);
+                      //     setState(() {
+                      //       isEditing = false;
+                      //     });
+                      //   } catch (e) {
+                      //     debugPrint('Error updating user details: $e');
+                      //   }
+                      // } else {
+                      //   showMySnackBar(context, "Update Company and Name");
+                      // }
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 38),

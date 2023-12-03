@@ -221,6 +221,7 @@ class _docInputEWBillState extends State<docInputEWBill> {
                     ),
                   )
                 : Card(
+                    surfaceTintColor: transparent,
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
