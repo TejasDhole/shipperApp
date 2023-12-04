@@ -11,7 +11,7 @@ signIn(String email, String password, BuildContext context) async {
   late UserCredential credential;
   try {
     credential =
-        await auth.signInWithEmailAndPassword(email: email, password: password);
+        await auth.signInWithEmailAndPassword(email: email.trim(), password: password);
     return credential;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
@@ -36,14 +36,19 @@ signUp(String email, String password, BuildContext context) async {
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       alertDialog('Weak password', 'Entered password is too weak', context);
+      return null;
     } else if (e.code == 'email-already-in-use') {
       showSnackBar('An account exits with the given email address.',
           deleteButtonColor, const Icon(Icons.warning), context);
+      return null;
     } else if (e.code == 'invalid-email') {
+      debugPrint(e.toString());
       showSnackBar('Email Address is not valid.', deleteButtonColor,
           const Icon(Icons.warning), context);
+      return null;
     } else {
       alertDialog('Error', '$e', context);
+      return null;
     }
   }
 }

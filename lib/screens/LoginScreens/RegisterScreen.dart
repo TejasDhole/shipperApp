@@ -89,6 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.only(
                                 left: 10.w, top: 1.h, right: 7.w),
                             child: TextFormField(
+                              controller: email,
                               autofocus: true,
                               autofillHints: autofillHints,
                               decoration: InputDecoration(
@@ -111,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   isError = true;
                                   return "Enter your email id";
                                 }
-                                if (!value.toString().contains('@') &&
+                                if (!value.toString().contains('@') ||
                                     !value.toString().isEmail) {
                                   isError = true;
                                   return "Invalid Email Id";
@@ -143,6 +144,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.only(
                                 left: 10.w, top: 1.h, right: 7.w),
                             child: TextFormField(
+                              controller: password,
                               obscureText: passwordVisible,
                               textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(
@@ -192,15 +194,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 try {
-                                  await signUp(
+                                  var value = await signUp(
                                       email.text, password.text, context);
 
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CompanyDetails(
-                                                email: email.text,
-                                              )));
+                                  if(value != null){
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CompanyDetails(
+                                              email: email.text,
+                                            )));
+                                  }
                                 } catch (e) {
                                   debugPrint('in sign in button catch--->$e');
                                 }
