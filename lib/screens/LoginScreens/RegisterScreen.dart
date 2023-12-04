@@ -111,8 +111,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   isError = true;
                                   return "Enter your email id";
                                 }
-                                if (value.toString().contains('@') &&
-                                    value.toString().isEmail) {
+                                if (!value.toString().contains('@') &&
+                                    !value.toString().isEmail) {
                                   isError = true;
                                   return "Invalid Email Id";
                                 }
