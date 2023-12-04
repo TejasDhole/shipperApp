@@ -569,7 +569,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 _formKey.currentState!.save();
                                 allowToSubmit = false;
                                 try {
-                                    await createCompany(companyNameController.text,
+                                    var status = await createCompany(companyNameController.text,
                                     companyEmailController.text,
                                     companyPhoneController.text,
                                     companyAddressController.text,
@@ -580,22 +580,28 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                     companyCinController.text,
                                     firebaseAuth.currentUser!.email!);
 
-                                    showSnackBar('Resgistration Successful', truckGreen, Icon(Icons.check), context);
+                                    if(status){
+                                      showSnackBar('Resgistration Successful', truckGreen, Icon(Icons.check), context);
 
-                                    SharedPreferences prefs =
-                                    await SharedPreferences
-                                        .getInstance();
+                                      SharedPreferences prefs =
+                                      await SharedPreferences
+                                          .getInstance();
 
-                                    prefs.setString(
-                                        'uid', FirebaseAuth.instance.currentUser!.uid!);
-                                    prefs.setBool('isGoogleLogin', true);
-                                    prefs.setString('userEmail',
-                                        FirebaseAuth.instance.currentUser!.email!);
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                            const HomeScreenWeb()));
+                                      prefs.setString(
+                                          'uid', FirebaseAuth.instance.currentUser!.uid!);
+                                      prefs.setBool('isGoogleLogin', true);
+                                      prefs.setString('userEmail',
+                                          FirebaseAuth.instance.currentUser!.email!);
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const HomeScreenWeb()));
+                                    }
+                                    else{
+                                      showSnackBar('Something went wrong', deleteButtonColor, Icon(Icons.check), context);
+                                    }
+
                                 } catch (e) {
                                   showSnackBar(e.toString(), deleteButtonColor, Icon(Icons.report_gmailerrorred_rounded), context);
                                   debugPrint('Error : $e');
