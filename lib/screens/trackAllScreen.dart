@@ -794,7 +794,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
                       //Map or Satellite View
                       Visibility(
-                        visible: isLoading && !timeout ? false : true,
+                        visible: !isLoading && !timeout ? true : false,
                         child: Padding(
                           padding: EdgeInsets.only(
                               left: screenHeight * 0.1,
@@ -851,7 +851,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: isLoading && !timeout ? false : true,
+                        visible: !isLoading && !timeout ? true : false,
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Column(
