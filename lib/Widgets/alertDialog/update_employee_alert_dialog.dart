@@ -1,8 +1,11 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
@@ -33,9 +36,13 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
-      contentPadding:  EdgeInsets.only(
-          left: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09,
-          right: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.09,
+      contentPadding: EdgeInsets.only(
+          left: Responsive.isMobile(context)
+              ? screenWidth * 0.18
+              : screenWidth * 0.09,
+          right: Responsive.isMobile(context)
+              ? screenWidth * 0.18
+              : screenWidth * 0.09,
           top: screenHeight * 0.1,
           bottom: screenHeight * 0.05), // Adjust the padding as needed
       content: SingleChildScrollView(
@@ -50,7 +57,9 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
       ),
       actions: [
         Container(
-          width: Responsive.isMobile(context) ? screenWidth * 0.2 : screenWidth * 0.06,
+          width: Responsive.isMobile(context)
+              ? screenWidth * 0.2
+              : screenWidth * 0.06,
           padding: EdgeInsets.only(bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -68,7 +77,10 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
         ),
         Padding(
           padding: EdgeInsets.only(
-              right: Responsive.isMobile(context) ? screenWidth * 0.18 : screenWidth * 0.1, bottom: screenHeight * 0.09),
+              right: Responsive.isMobile(context)
+                  ? screenWidth * 0.18
+                  : screenWidth * 0.1,
+              bottom: screenHeight * 0.09),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -96,35 +108,41 @@ class _UpdateEmployeeRoleState extends State<UpdateEmployeeRole> {
     );
   }
 
-  void _updateUserRole() {
+  void _updateUserRole() async {
     if (widget.selectedRole != null && widget.selectedRole.isNotEmpty) {
-      FirebaseDatabase database = FirebaseDatabase.instance;
-      DatabaseReference ref = database.ref();
-      final updateEmployee = ref.child(
-          "companies/${shipperIdController.companyName.value.capitalizeFirst}/members");
-      updateEmployee
-          .update({
-            widget.employeeUid: widget.selectedRole,
-          })
-          .then((value) => {
-                // kIsWeb ?
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => kIsWeb
-                          ? HomeScreenWeb(
-                              index: screens.indexOf(employeeListScreen),
-                              selectedIndex: screens
-                                  .indexOf(accountVerificationStatusScreen),
-                            )
-                          : const EmployeeListRolesScreen(),
-                    )),
-                //: Get.off(() => const EmployeeListRolesScreen())
-              })
-          .catchError((error) {
-            debugPrint("Error Occured");
-            // Handle error if needed
-          });
+      try {
+        final String shipperApiUrl = dotenv.get('shipperApiUrl');
+
+        Map data = {
+          "roles": widget.selectedRole,
+        };
+
+        String body = json.encode(data);
+        final response =
+            await http.put(Uri.parse('$shipperApiUrl/${widget.employeeUid}'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: body);
+
+        if (response.statusCode == 200) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => kIsWeb
+                    ? HomeScreenWeb(
+                        index: screens.indexOf(employeeListScreen),
+                        selectedIndex:
+                            screens.indexOf(accountVerificationStatusScreen),
+                      )
+                    : const EmployeeListRolesScreen(),
+              ));
+        } else {
+          debugPrint('Something wrong');
+        }
+      } catch (error) {
+        debugPrint(error.toString());
+      }
     }
   }
 }

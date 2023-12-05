@@ -38,7 +38,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   }
 
   Future<void> _fetchInvoiceData() async {
-    String shipperId = shipperIdController.ownerShipperId.value;
+    String shipperId = shipperIdController.companyId.value;
 
     try {
       List<dynamic> data = await ApiService.getInvoiceData(shipperId);
@@ -113,6 +113,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     height: 50,
                     child: Card(
                       elevation: 10,
+                      surfaceTintColor: transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

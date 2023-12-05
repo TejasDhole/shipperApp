@@ -452,6 +452,7 @@ class MyLoadsCard extends StatelessWidget {
       return Container(
         margin: EdgeInsets.only(bottom: space_2),
         child: Card(
+          surfaceTintColor: transparent,
           color: loadDetailsScreenModel.status == "EXPIRED"
               ? cancelledBiddingBackground
               : Colors.white,

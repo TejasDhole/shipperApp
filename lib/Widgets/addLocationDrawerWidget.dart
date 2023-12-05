@@ -373,8 +373,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                               facilityController.updateCity('');
                               facilityController.updateAddress('');
                               facilityController.updatePinCode('');
-                              facilityController.updateFacilityLatLng(
-                                  '', '');
+                              facilityController.updateFacilityLatLng('', '');
                               Navigator.pop(widget.context);
                             },
                             child: Container(
@@ -441,12 +440,15 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     facilityController.updatePinCode('');
                                     facilityController.updateFacilityLatLng(
                                         '', '');
+
                                     void rebuild(Element el) {
                                       el.markNeedsBuild();
                                       el.visitChildren(rebuild);
                                     }
+
                                     (widget.context as Element)
                                         .visitChildren(rebuild);
+                                    Navigator.pop(widget.context);
                                   } else {
                                     showSnackBar(
                                         'Something went Wrong, Try again Later!!!',
