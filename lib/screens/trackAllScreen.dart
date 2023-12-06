@@ -252,14 +252,14 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
         //Stoppages marker is added here
         print("going into stoppages");
-        // if (stoppages != null) {
-        //   for (int i = 0; i < stoppages!.length; i++) {
-        //     print("stoppages start");
-        //     var stoppage = stoppages![i];
-        //     addStoppageMarker(stoppage, i + 1);
-        //     print("stoppages added");
-        //   }
-        // }
+        if (stoppages != null) {
+          for (int i = 0; i < stoppages!.length; i++) {
+            print("stoppages start");
+            var stoppage = stoppages![i];
+            addStoppageMarker(stoppage, i + 1);
+            print("stoppages added");
+          }
+        }
 
         //Fastag marker is added here
         print("going into locations");
@@ -307,7 +307,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           print("entered unloading");
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
-              await getBytesFromAssets('assets/icons/Startingpoint.png', 35);
+              await getBytesFromAssets('assets/icons/StartingPoint.png', 35);
 
           _markers.add(Marker(
               markerId: MarkerId('Unloading ${j + 1}'),
