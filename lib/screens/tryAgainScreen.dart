@@ -40,7 +40,7 @@ class TryAgain extends StatelessWidget {
               margin : EdgeInsets.only(top : isMobile ? screenHeight * 0.15 : 0),
               color: Colors.amberAccent,
               child: Image.asset('assets/images/tryAgain.png',
-                  height: isMobile ? screenHeight * 0.4 : screenHeight * 0.8),
+                  height: isMobile ? screenHeight * 0.4 : screenHeight * 0.72),
             ),
           ),
           Center(

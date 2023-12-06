@@ -136,13 +136,19 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
     try {
       List<BookingModel> bookingData =
-          await bookingApi.getDataByPostLoadIdOnGoing();
+          await bookingApi.getDataByPostLoadIdOnGoing().timeout(Duration(seconds: 5), onTimeout: () {
+            return [];
+          },);
 
       setState(() {
         isLoading = true;
       });
 
       //access all the bookings
+      if(bookingData.length == 0){
+        isLoading = false;
+          timeout = true;
+      }else{
       for (BookingModel booking in bookingData) {
         String dateString =
             booking.bookingDate!; // Assuming booking.bookingDate is a String
@@ -244,14 +250,14 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
         //Stoppages marker is added here
         print("going into stoppages");
-        if (stoppages != null) {
-          for (int i = 0; i < stoppages!.length; i++) {
-            print("stoppages start");
-            var stoppage = stoppages![i];
-            addStoppageMarker(stoppage, i + 1);
-            print("stoppages added");
-          }
-        }
+        // if (stoppages != null) {
+        //   for (int i = 0; i < stoppages!.length; i++) {
+        //     print("stoppages start");
+        //     var stoppage = stoppages![i];
+        //     addStoppageMarker(stoppage, i + 1);
+        //     print("stoppages added");
+        //   }
+        // }
 
         //Fastag marker is added here
         print("going into locations");
@@ -381,6 +387,10 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         };
         print("time and address add end");
 
+        if(routes.isEmpty && _markers.isEmpty){
+          isLoading = false;
+          timeout = true;
+        }else{
         setState(
           () {
             routes.add(eachBookingCompleteCoordinates);
@@ -393,19 +403,23 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                 width: 3,
               ));
             }
+            isLoading = false;
           },
         );
+        
+        }
+      }
       }
 
-      setState(() {
-        isLoading = false;
-        if (!isLoading &&
-            locations!.isEmpty &&
-            stoppages!.isEmpty &&
-            trips!.isEmpty) {
-          timeout = true;
-        }
-      });
+      // setState(() {
+      //   isLoading = false;
+      //   if (!isLoading &&
+      //       locations!.isEmpty &&
+      //       stoppages!.isEmpty &&
+      //       trips!.isEmpty) {
+      //     timeout = true;
+      //   }
+      // });
     } catch (e) {
       debugPrint('Error fetching data: $e');
     }
@@ -794,7 +808,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
                       //Map or Satellite View
                       Visibility(
-                        visible: isLoading && !timeout ? false : true,
+                        visible: !isLoading && !timeout ? true : false,
                         child: Padding(
                           padding: EdgeInsets.only(
                               left: screenHeight * 0.1,
@@ -851,7 +865,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: isLoading && !timeout ? false : true,
+                        visible: !isLoading && !timeout ? true : false,
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Column(
