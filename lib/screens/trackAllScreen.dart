@@ -167,6 +167,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
 
         //Add the marker for the loadingPoint
         if (loadingPointCoordinates != null) {
+          print("entered into loading");
           eachBookingCompleteCoordinates.add(loadingPointCoordinates);
           final Uint8List loadingPointMarker =
               await getBytesFromAssets('assets/icons/EndingPoint.png', 35);
@@ -182,6 +183,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
           ));
           k++;
         }
+        print("exit loading");
         //Get the Stoppages data from Traccar Stooppages API
         print("api starting ");
         stoppages = await MapUtil().getTraccarStoppages(
@@ -317,6 +319,7 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
               }));
           j++;
         }
+        print("exit unloading");
         //Calculating the Current Location Address
         print("going into currlocation");
         if (currentLocation == null) {
