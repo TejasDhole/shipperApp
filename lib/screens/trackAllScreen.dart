@@ -191,7 +191,9 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         print("Stoappges not empty ");
         //Get the Fastag Data
         locations = await checkFastTag()
-            .getVehicleLocation(booking.truckId![0].toString());
+            .getVehicleLocation(booking.truckId![0].toString()).timeout(Duration(seconds: 10), onTimeout: () {
+            return [];
+          },);
         print("location not empty ");
 
         //Get the Truck history data from the Traccar History API
@@ -375,11 +377,13 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         //Calculating the Estimated Time
         if (unloadingPointCoordinates != null && currentLocation != null) {
           print("calculating the estimatedTime");
+          print("both : $unloadingPointCoordinates also $currentLocation");
           duration = await EstimatedTime().getEstimatedTime(
-                  currentLocation, unloadingPointCoordinates) ??
+                  unloadingPointCoordinates, currentLocation ) ??
               "Not possible";
-
+              print("duration : $duration");
           estimatedTime = DurationToDateTime().getDuration(duration!, to);
+          print('estimated: $estimatedTime');
           print("time converted");
         }
 
@@ -433,13 +437,14 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
     String stopAddress = await getStoppageAddress(stoppage);
     String stoppageTime = getStoppageTime(stoppage);
     String duration = getStoppageDuration(stoppage);
-    final Uint8List icon = await getBytesFromAssets(stoppagePaths[index % 3], 25);
+    // final Uint8List icon = await getBytesFromAssets(stoppagePaths[index % 3], 25);
+    BitmapDescriptor icon = await createNumberedMarkerIcon(index);
 
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId("Stop Mark $index"),
         position: stoplatlong,
-        icon: BitmapDescriptor.fromBytes(icon),
+        icon: icon,
         onTap: () {
           _showCustomInfoWindow(MarkerId("Stop Mark $index"), stoplatlong,
               duration, stoppageTime, stopAddress);
