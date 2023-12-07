@@ -6,32 +6,60 @@ import 'package:http/http.dart' as http;
 
 class EstimatedTime {
   getEstimatedTime(LatLng origin, LatLng destination) async {
-    final String url = dotenv.get('googleApi');
+    //final String url = dotenv.get('googleApi');
     final String apiKey = dotenv.get('mapKey');
-    final proxy = dotenv.get('placeAutoCompleteProxy');
+    // final proxy = dotenv.get('placeAutoCompleteProxy');
     final String formattedOrigin = '${origin.latitude},${origin.longitude}';
+    print("origin: $formattedOrigin");
     final String formattedDestination =
         '${destination.latitude},${destination.longitude}';
+    print("destination : $formattedDestination");
     try {
       http.Response response = await http.get(
         Uri.parse(
-            '$proxy$url?origin=$formattedOrigin&destination=$formattedDestination&key=$apiKey'),
+            'https://maps.googleapis.com/maps/api/directions/json?origin=$formattedOrigin&destination=$formattedDestination&key=$apiKey'),
       );
+      print('Response status code: ${response.statusCode}');
+      print('response : $response.body');
 
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+//       final Map<String, dynamic> jsonResponse = json.decode(response.body);
+//       print("json : $jsonResponse");
+//       final List<dynamic> route = jsonResponse['routes'];
+// print(route);
+//       if (!route.isEmpty) {
+//         final String duration =
+//             jsonResponse['routes'][0]['legs'][0]['duration']['text'];
+//         print(duration);
+//         return duration;
+//       } else {
+//         return null;
+//       }
+//     } catch (e) {
+//       print('Error in fetching Estimated Time : $e');
+//       return null;
+//     }
 
-      final List<dynamic> route = jsonResponse['routes'];
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+        print('Decoded JSON: $jsonResponse');
 
-      if (!route.isEmpty) {
-        final String duration =
-            jsonResponse['routes'][0]['legs'][0]['duration']['text'];
+        final List<dynamic> routes = jsonResponse['routes'];
 
-        return duration;
+        if (routes.isNotEmpty) {
+          final String duration =
+              jsonResponse['routes'][0]['legs'][0]['duration']['text'];
+          print('Duration: $duration');
+          return duration;
+        } else {
+          return null;
+        }
       } else {
+        print('Request failed with status: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error in fetching Estimated Time : $e');
+      print('Error in fetching Estimated Time: $e');
+      return null;
     }
   }
 }
