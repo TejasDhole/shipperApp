@@ -40,7 +40,7 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
     pageController =
         PageController(initialPage: providerData.upperNavigatorIndex);
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: headerLightBlueColor,
       floatingActionButton: (kIsWeb &&
               (Responsive.isDesktop(context) || Responsive.isTablet(context)))
           ? null
@@ -124,11 +124,6 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                   height: MediaQuery.of(context).size.height * 0.75,
                   child: PageView(
                     controller: pageController,
-                    onPageChanged: (value) {
-                      setState(() {
-                        providerData.updateUpperNavigatorIndex(value);
-                      });
-                    },
                     children: [
                       MyLoadsScreen(),
                       OngoingScreen(),
