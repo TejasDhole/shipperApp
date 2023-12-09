@@ -29,10 +29,11 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
 
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
-  // final String bookingApiUrl = FlutterConfig.get('bookingApiUrl');
+  TextEditingController searchTextController = TextEditingController();
   final String bookingApiUrl = dotenv.get('bookingApiUrl');
 
   List<DeliveredCardModel> modelList = [];
+  List<DeliveredCardModel> searchedLoadList = [];
 
   ScrollController scrollController = ScrollController();
 
@@ -45,6 +46,9 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
     var bookingDataListWithPagei = await getDeliveredDataWithPageNo(i);
     for (var bookingData in bookingDataListWithPagei) {
       modelList.add(bookingData);
+      if (modelList.isNotEmpty) {
+        getSearchLoadList();
+      }
     }
     if (this.mounted) {
       setState(() {
@@ -69,6 +73,55 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
     });
   }
 
+  getSearchLoadList() {
+    String? searchedText = searchTextController.text;
+    if (searchedText != null &&
+        searchedText.isNotEmpty &&
+        modelList.isNotEmpty) {
+      if (searchedText.endsWith('')) {
+        searchedText = removeTrailingSpaces(searchedText);
+      }
+      searchedText = searchedText.toLowerCase();
+      searchedLoadList = [];
+      for (int i = 0; i < modelList.length; i++) {
+        String loadingCity = modelList[i].loadingPointCity ?? 'na';
+        String unloadingCity = modelList[i].unloadingPointCity ?? 'na';
+        String truckNo = modelList[i].truckNo ?? 'na';
+        String driverName = modelList[i].driverName ?? 'na';
+        String companyName = modelList[i].companyName ?? 'na';
+        String productType = modelList[i].productType ?? 'na';
+        String truckType = modelList[i].truckType ?? 'na';
+        String deviceId = modelList[i].deviceId.toString();
+
+        if (loadingCity.toLowerCase().contains(searchedText) ||
+            unloadingCity.toLowerCase().contains(searchedText) ||
+            truckNo.toLowerCase().contains(searchedText) ||
+            driverName.toLowerCase().contains(searchedText) ||
+            companyName.toLowerCase().contains(searchedText) ||
+            deviceId.toLowerCase().contains(searchedText) ||
+            productType.toLowerCase().contains(searchedText) ||
+            truckType.toLowerCase().contains(searchedText)) {
+          searchedLoadList.add(modelList[i]);
+        }
+      }
+    } else {
+      searchedLoadList = modelList;
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  String removeTrailingSpaces(String input) {
+    int endIndex = input.length - 1;
+
+    while (endIndex >= 0 && input[endIndex] == ' ') {
+      endIndex--;
+    }
+
+    return input.substring(0, endIndex + 1);
+  }
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -83,12 +136,69 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
           space_8,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                  flex: (Responsive.isMobile(context)) ? 8 : 5,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: white,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: lightGrey,
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      controller: searchTextController,
+                      onChanged: (value) {
+                        if (value.length > 2) {
+                          getSearchLoadList();
+                        } else {
+                          searchedLoadList = modelList;
+                          setState(() {});
+                        }
+                      },
+                      style: TextStyle(
+                          color: black,
+                          fontFamily: 'Montserrat',
+                          fontSize: size_8),
+                      cursorColor: kLiveasyColor,
+                      cursorWidth: 1,
+                      mouseCursor: SystemMouseCursors.click,
+                      decoration:  InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.only(
+                            bottom: 0, left: 5, right: 5, top: 15),
+                        prefixIcon:
+                        const Icon(Icons.search, color: grey, size: 25),
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                            fontSize: size_8,
+                            fontFamily: "Montserrat",
+                            color: grey,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  )),
+              Expanded(
+                flex: (Responsive.isMobile(context)) ? 2 : 4,
+                child: Container(),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
           ),
           loading
               ? Expanded(child: const OnGoingLoadingWidgets())
-              : modelList.length == 0
+              : searchedLoadList.isEmpty
                   ? Container(
                       margin: EdgeInsets.only(top: 153),
                       child: Column(
@@ -132,9 +242,6 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
                                         loadingStatus: 'On-Going',
                                         screenWidth:
                                             MediaQuery.of(context).size.width),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
                                     Expanded(
                                       flex: 4,
                                       child: ListView.separated(
@@ -146,22 +253,23 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
                                         padding:
                                             EdgeInsets.only(bottom: space_15),
                                         controller: scrollController,
-                                        itemCount: modelList.length,
+                                        itemCount: searchedLoadList.length,
                                         itemBuilder: (context, index) => (index ==
-                                                modelList
-                                                    .length) //removed -1 here
+                                            searchedLoadList
+                                                    .length)
                                             ? Visibility(
                                                 visible: DeliveredProgress,
                                                 child:
                                                     bottomProgressBarIndicatorWidget())
                                             : Row(children: [
                                                 DeliveredCard(
-                                                  model: modelList[index],
+                                                  model: searchedLoadList[index],
                                                 ),
                                               ]),
                                         separatorBuilder: (context, index) =>
-                                            Divider(
+                                            const Divider(
                                           thickness: 1,
+                                          height: 0,
                                           color: Colors.grey,
                                         ),
                                       ),
@@ -173,15 +281,15 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
                                 physics: BouncingScrollPhysics(),
                                 padding: EdgeInsets.only(bottom: space_15),
                                 controller: scrollController,
-                                itemCount: modelList.length,
+                                itemCount: searchedLoadList.length,
                                 itemBuilder: (context, index) => (index ==
-                                        modelList.length - 1)
+                                    searchedLoadList.length)
                                     ? Visibility(
                                         visible: DeliveredProgress,
                                         child:
                                             bottomProgressBarIndicatorWidget())
                                     : DeliveredCard(
-                                        model: modelList[index],
+                                        model: searchedLoadList[index],
                                       )),
                       ),
                     ),
