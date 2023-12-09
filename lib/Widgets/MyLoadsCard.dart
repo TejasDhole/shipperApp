@@ -53,9 +53,9 @@ class MyLoadsCard extends StatelessWidget {
       small = false;
     }
     if (small) {
-      textFontSize = 12;
+      textFontSize = 10;
     } else {
-      textFontSize = 16;
+      textFontSize = 14;
     }
 
     if (truckFilterVariables.truckTypeValueList
@@ -73,379 +73,382 @@ class MyLoadsCard extends StatelessWidget {
 
     if (kIsWeb && Responsive.isDesktop(context)) {
       return Expanded(
-        child: Row(
-          children: [
-            SizedBox(
-              width: 5,
-            ),
-            Expanded(
-                flex: 3,
-                child: Center(
-                    child: Column(
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Expanded(
+                  flex: 3,
+                  child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                          Text(
+                            '${loadDetailsScreenModel.scheduleLoadDate}' ?? 'Null',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
+                          (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                              ? SizedBox(
+                                  height: 5,
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                ),
+                          (loadDetailsScreenModel.scheduleLoadTime != 'NA')
+                              ? Text(
+                                  '${loadDetailsScreenModel.scheduleLoadTime}' ??
+                                      'Null',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: textFontSize,
+                                      fontFamily: 'Montserrat'),
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                )
+                        ]),
+                      ))),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Text(
-                        '${loadDetailsScreenModel.scheduleLoadDate}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: kLiveasyColor,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      ),
-                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
-                          ? SizedBox(
-                              height: 5,
-                            )
-                          : SizedBox(
-                              height: 0,
-                            ),
-                      (loadDetailsScreenModel.scheduleLoadTime != 'NA')
-                          ? Text(
-                              '${loadDetailsScreenModel.scheduleLoadTime}' ??
-                                  'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: truckGreen,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          : SizedBox(
-                              height: 0,
-                            )
-                    ]))),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-                flex: 5,
-                child: Container(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image(
-                              image: AssetImage((loadDetailsScreenModel
-                                          .loadingPointCity2 !=
-                                      'NA')
-                                  ? 'assets/icons/green_white_outline_circle.png'
-                                  : 'assets/icons/greenFilledCircleIcon.png'),
-                              height: 11,
-                              width: 11,
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                              alignment: Alignment.center,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              loadDetailsScreenModel.loadingPointCity ?? 'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          ],
-                        ),
-                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
-                            ? Container(
-                                padding: EdgeInsets.only(left: 4.5),
-                                height: 15,
-                                child: DottedLine(
-                                  alignment: WrapAlignment.center,
-                                  direction: Axis.vertical,
-                                  dashColor: kLiveasyColor,
-                                  dashGapColor: Colors.white,
-                                  lineThickness: 1.5,
-                                  dashLength: 3.5,
-                                  dashGapLength: 2.25,
-                                  lineLength: 15,
-                                  dashGapRadius: 0,
-                                ))
-                            : SizedBox(
-                                height: 0,
-                              ),
-                        (loadDetailsScreenModel.loadingPointCity2 != 'NA')
-                            ? Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image(
-                                    image: AssetImage(
-                                        'assets/icons/greenFilledCircleIcon.png'),
-                                    height: 10,
-                                    width: 10,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
-                                    alignment: Alignment.center,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    loadDetailsScreenModel.loadingPointCity2 ??
-                                        'Null',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: kLiveasyColor,
-                                        fontSize: textFontSize,
-                                        fontFamily: 'Montserrat'),
-                                  )
-                                ],
-                              )
-                            : SizedBox(
-                                height: 0,
-                              )
-                      ],
-                    ),
-                  ),
-                )),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-                flex: 5,
-                child: Container(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image(
-                              image: AssetImage((loadDetailsScreenModel
-                                          .unloadingPointCity2 !=
-                                      'NA')
-                                  ? 'assets/icons/red_white_outline_circle.png'
-                                  : 'assets/icons/red_circle.png'),
-                              height: 11,
-                              width: 11,
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                              alignment: Alignment.center,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              loadDetailsScreenModel.unloadingPointCity ??
-                                  'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          ],
-                        ),
-                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
-                            ? Container(
-                                padding: EdgeInsets.only(left: 5),
-                                height: 15,
-                                child: DottedLine(
-                                  alignment: WrapAlignment.center,
-                                  direction: Axis.vertical,
-                                  dashColor: kLiveasyColor,
-                                  dashGapColor: Colors.white,
-                                  lineThickness: 1.5,
-                                  dashLength: 3.5,
-                                  dashGapLength: 2.25,
-                                  lineLength: 15,
-                                  dashGapRadius: 0,
-                                ))
-                            : SizedBox(
-                                height: 0,
-                              ),
-                        (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
-                            ? Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image(
-                                    image: AssetImage(
-                                        'assets/icons/red_circle.png'),
-                                    height: 10,
-                                    width: 10,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
-                                    alignment: Alignment.center,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    loadDetailsScreenModel
-                                            .unloadingPointCity2 ??
-                                        'Null',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: kLiveasyColor,
-                                        fontSize: textFontSize,
-                                        fontFamily: 'Montserrat'),
-                                  )
-                                ],
-                              )
-                            : SizedBox(
-                                height: 0,
-                              )
-                      ],
-                    ),
-                  ),
-                )),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-                flex: 4,
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Text(
-                        '${loadDetailsScreenModel.truckType}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: kLiveasyColor,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '${loadDetailsScreenModel.noOfTyres} tyres' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: truckGreen,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      )
-                    ]))),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-                flex: 4,
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Text(
-                        '${loadDetailsScreenModel.productType}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: kLiveasyColor,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '${loadDetailsScreenModel.weight} tons' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: truckGreen,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      )
-                    ]))),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-              flex: 3,
-              child: Center(
-                  child: (loadDetailsScreenModel.status == 'EXPIRED')
-                      ? null
-                      : (loadDetailsScreenModel.publishMethod != 'Bid')
-                          ? Text(
-                              '${loadDetailsScreenModel.publishMethod}' ??
-                                  'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                  ViewBidsButton(
-                                    loadId: loadDetailsScreenModel.loadId,
-                                    loadingPointCity:
-                                        loadDetailsScreenModel.loadingPointCity,
-                                    unloadingPointCity: loadDetailsScreenModel
-                                        .unloadingPointCity,
-                                    screenSmall: small,
-                                  ),
-                                ])),
-            ),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-                flex: 3,
-                child: Center(
-                    child: Flex(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
-                        direction: Axis.vertical,
                         children: [
-                      Flexible(
-                          child: Text(
-                        (loadDetailsScreenModel.status == 'EXPIRED')
-                            ? 'Load\nExpired'
-                            : 'Load\nPending',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: (loadDetailsScreenModel.status == 'EXPIRED')
-                                ? declineButtonRed
-                                : truckGreen,
-                            fontSize: textFontSize,
-                            fontFamily: 'Montserrat'),
-                      ))
-                    ]))),
-            VerticalDivider(
-              color: Colors.grey,
-            ),
-            Expanded(
-              flex: 4,
-              child: Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  (loadDetailsScreenModel.status == 'EXPIRED')
-                      ? Repostbutton(small, context)
-                      : SizedBox(),
-                  PopupMenuButton<popupMenuforloads>(
-                      padding: EdgeInsets.all(0),
-                      offset: Offset(0, kToolbarHeight),
-                      //padding: (small)?EdgeInsets.only(left: 0, right: 0): EdgeInsets.all(5),
-                      // offset: Offset(0, space_2),
-                      // shape: RoundedRectangleBorder(
-                      //     borderRadius:
-                      //     BorderRadius.all((small)?Radius.circular(radius_0):Radius.circular(radius_2))),
-                      iconSize: (small) ? 20 : 30,
-                      onSelected: (item) => onSelected(context, item),
-                      itemBuilder: (context) => [
-                            ...MenuItems.listItem
-                                .map(showEachItemFromList)
-                                .toList(),
-                          ]),
-                ],
-              )),
-            ),
-          ],
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image(
+                                image: AssetImage((loadDetailsScreenModel
+                                            .loadingPointCity2 !=
+                                        'NA')
+                                    ? 'assets/icons/green_white_outline_circle.png'
+                                    : 'assets/icons/greenFilledCircleIcon.png'),
+                                height: 11,
+                                width: 11,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                                alignment: Alignment.center,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                loadDetailsScreenModel.loadingPointCity ?? 'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              )
+                            ],
+                          ),
+                          (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                              ? Container(
+                                  padding: EdgeInsets.only(left: 4.5),
+                                  height: 15,
+                                  child: DottedLine(
+                                    alignment: WrapAlignment.center,
+                                    direction: Axis.vertical,
+                                    dashColor: kLiveasyColor,
+                                    dashGapColor: Colors.white,
+                                    lineThickness: 1.5,
+                                    dashLength: 3.5,
+                                    dashGapLength: 2.25,
+                                    lineLength: 15,
+                                    dashGapRadius: 0,
+                                  ))
+                              : SizedBox(
+                                  height: 0,
+                                ),
+                          (loadDetailsScreenModel.loadingPointCity2 != 'NA')
+                              ? Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                          'assets/icons/greenFilledCircleIcon.png'),
+                                      height: 10,
+                                      width: 10,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                      alignment: Alignment.center,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      loadDetailsScreenModel.loadingPointCity2 ??
+                                          'Null',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: textFontSize,
+                                          fontFamily: 'Montserrat'),
+                                    )
+                                  ],
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                )
+                        ],
+                      ),
+                    ),
+                  )),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image(
+                                image: AssetImage((loadDetailsScreenModel
+                                            .unloadingPointCity2 !=
+                                        'NA')
+                                    ? 'assets/icons/red_white_outline_circle.png'
+                                    : 'assets/icons/red_circle.png'),
+                                height: 11,
+                                width: 11,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                                alignment: Alignment.center,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                loadDetailsScreenModel.unloadingPointCity ??
+                                    'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              )
+                            ],
+                          ),
+                          (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                              ? Container(
+                                  padding: EdgeInsets.only(left: 5),
+                                  height: 15,
+                                  child: DottedLine(
+                                    alignment: WrapAlignment.center,
+                                    direction: Axis.vertical,
+                                    dashColor: kLiveasyColor,
+                                    dashGapColor: Colors.white,
+                                    lineThickness: 1.5,
+                                    dashLength: 3.5,
+                                    dashGapLength: 2.25,
+                                    lineLength: 15,
+                                    dashGapRadius: 0,
+                                  ))
+                              : SizedBox(
+                                  height: 0,
+                                ),
+                          (loadDetailsScreenModel.unloadingPointCity2 != 'NA')
+                              ? Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image(
+                                      image: AssetImage(
+                                          'assets/icons/red_circle.png'),
+                                      height: 10,
+                                      width: 10,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                      alignment: Alignment.center,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      loadDetailsScreenModel
+                                              .unloadingPointCity2 ??
+                                          'Null',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: textFontSize,
+                                          fontFamily: 'Montserrat'),
+                                    )
+                                  ],
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                )
+                        ],
+                      ),
+                    ),
+                  )),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                  flex: 4,
+                  child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 8),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Text(
+                            '${loadDetailsScreenModel.truckType}' ?? 'Null',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '${loadDetailsScreenModel.noOfTyres} tyres' ?? 'Null',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: truckGreen,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          )
+                        ]),
+                      ))),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                  flex: 4,
+                  child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Text(
+                            '${loadDetailsScreenModel.productType}' ?? 'Null',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '${loadDetailsScreenModel.weight} tons' ?? 'Null',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: truckGreen,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          )
+                        ]),
+                      ))),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                flex: 3,
+                child: Center(
+                    child: (loadDetailsScreenModel.status == 'EXPIRED')
+                        ? null
+                        : (loadDetailsScreenModel.publishMethod != 'Bid')
+                            ? Text(
+                                '${loadDetailsScreenModel.publishMethod}' ??
+                                    'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                    ViewBidsButton(
+                                      loadId: loadDetailsScreenModel.loadId,
+                                      loadingPointCity:
+                                          loadDetailsScreenModel.loadingPointCity,
+                                      unloadingPointCity: loadDetailsScreenModel
+                                          .unloadingPointCity,
+                                      screenSmall: small,
+                                    ),
+                                  ])),
+              ),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                  flex: 3,
+                  child: Center(
+                      child: Flex(
+                          mainAxisSize: MainAxisSize.min,
+                          direction: Axis.vertical,
+                          children: [
+                        Flexible(
+                            child: Text(
+                          (loadDetailsScreenModel.status == 'EXPIRED')
+                              ? 'Load\nExpired'
+                              : 'Load\nPending',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: (loadDetailsScreenModel.status == 'EXPIRED')
+                                  ? declineButtonRed
+                                  : truckGreen,
+                              fontSize: textFontSize,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat'),
+                        ))
+                      ]))),
+              VerticalDivider(color: Colors.grey, thickness: 1),
+              Expanded(
+                flex: 4,
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    (loadDetailsScreenModel.status == 'EXPIRED')
+                        ? Repostbutton(small, context, loadDetailsScreenModel)
+                        : SizedBox(),
+                    PopupMenuButton<popupMenuforloads>(
+                        padding: EdgeInsets.all(0),
+                        offset: Offset(0, kToolbarHeight),
+                        iconSize: (small) ? 20 : 30,
+                        onSelected: (item) => onSelected(context, item),
+                        itemBuilder: (context) => [
+                              ...MenuItems.listItem
+                                  .map(showEachItemFromList)
+                                  .toList(),
+                            ]),
+                  ],
+                )),
+              ),
+            ],
+          ),
         ),
       );
     } else {
