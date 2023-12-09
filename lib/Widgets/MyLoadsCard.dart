@@ -432,7 +432,7 @@ class MyLoadsCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     (loadDetailsScreenModel.status == 'EXPIRED')
-                        ? Repostbutton(small, context, loadDetailsScreenModel)
+                        ? Repostbutton(small, context)
                         : SizedBox(),
                     PopupMenuButton<popupMenuforloads>(
                         padding: EdgeInsets.all(0),
