@@ -57,9 +57,9 @@ class _OngoingCardState extends State<OngoingCard> {
       small = false;
     }
     if (small) {
-      textFontSize = 12;
+      textFontSize = 10;
     } else {
-      textFontSize = 16;
+      textFontSize = 14;
     }
 
     widget.loadAllDataModel.truckType;
@@ -122,262 +122,239 @@ class _OngoingCardState extends State<OngoingCard> {
                   );
                 });
               },
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Text(
-                              widget.loadAllDataModel.bookingDate ?? 'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            ))),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                        child: Text(
-                      widget.loadAllDataModel.loadingPointCity ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                        child: Text(
-                      widget.loadAllDataModel.unloadingPointCity ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Text(
-                      '${widget.loadAllDataModel.truckNo}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Center(
-                        child: Text(
-                      '${widget.loadAllDataModel.driverName}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Text(
-                      '${widget.loadAllDataModel.truckType}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Flex(
-                            mainAxisSize: MainAxisSize.min,
-                            direction: Axis.vertical,
-                            children: [
-                          Flexible(
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                            '${widget.loadAllDataModel.companyName}' ?? 'Null',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: kLiveasyColor,
-                                fontSize: textFontSize,
-                                fontFamily: 'Montserrat'),
-                          ))
-                        ])),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IntrinsicHeight(
-                          child: Column(
-                            children: [
-                              TrackButton(
-                                assetImage: null,
-                                name: 'Track',
-                                loadAllDataModel: widget.loadAllDataModel,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CallButton(
-                                directCall: false,
-                                transporterPhoneNum:
-                                    widget.loadAllDataModel.shipperPhoneNum,
-                                driverPhoneNum:
-                                    widget.loadAllDataModel.driverPhoneNum,
-                                driverName: widget.loadAllDataModel.driverName,
-                                transporterName:
-                                    widget.loadAllDataModel.companyName,
-                              ),
-                              Container()
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: IconButton(
-                            onPressed: () {
-                              ongoingTruckGpsData =
-                                  OngoingTruckGpsData(widget.loadAllDataModel);
-                              ongoingTruckGpsData
-                                  .getTruckGpsDetails()
-                                  .then((gpsData) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreenWeb(
-                                      visibleWidget: documentUploadScreen(
-                                        bookingId: widget
-                                            .loadAllDataModel.bookingId
-                                            .toString(),
-                                        truckNo:
-                                            widget.loadAllDataModel.truckNo,
-                                        loadingPoint: widget
-                                            .loadAllDataModel.loadingPointCity,
-                                        unloadingPoint: widget.loadAllDataModel
-                                            .unloadingPointCity,
-                                        transporterName:
-                                            widget.loadAllDataModel.shipperName,
-                                        transporterPhoneNum: widget
-                                            .loadAllDataModel.shipperPhoneNum,
-                                        driverPhoneNum: widget
-                                            .loadAllDataModel.driverPhoneNum,
-                                        driverName:
-                                            widget.loadAllDataModel.driverName,
-                                        bookingDate:
-                                            widget.loadAllDataModel.bookingDate,
-                                        gpsDataList: gpsData[1][0],
-                                        totalDistance: gpsData[3],
-                                        truckType:
-                                            widget.loadAllDataModel.truckType,
-                                        productType:
-                                            widget.loadAllDataModel.productType,
-                                        unitValue:
-                                            widget.loadAllDataModel.unitValue,
-                                        loadAllDataModel:
-                                            widget.loadAllDataModel,
-                                      ),
-                                      index: 1000,
-                                      selectedIndex:
-                                          screens.indexOf(postLoadScreen),
-                                    ),
-                                  ),
-                                );
-                              });
-
-                              // ongoingTruckGpsData =
-                              //     OngoingTruckGpsData(widget.loadAllDataModel);
-                              // ongoingTruckGpsData
-                              //     .getTruckGpsDetails()
-                              //     .then((gpsData) {
-                              //   Get.to(documentUploadScreen(
-                              //     bookingId: widget.loadAllDataModel.bookingId
-                              //         .toString(),
-                              //     truckNo: widget.loadAllDataModel.truckNo,
-                              //     loadingPoint:
-                              //         widget.loadAllDataModel.loadingPointCity,
-                              //     unloadingPoint: widget
-                              //         .loadAllDataModel.unloadingPointCity,
-                              //     transporterName:
-                              //         widget.loadAllDataModel.shipperName,
-                              //     transporterPhoneNum:
-                              //         widget.loadAllDataModel.shipperPhoneNum,
-                              //     driverPhoneNum:
-                              //         widget.loadAllDataModel.driverPhoneNum,
-                              //     driverName:
-                              //         widget.loadAllDataModel.driverName,
-                              //     bookingDate:
-                              //         widget.loadAllDataModel.bookingDate,
-                              //     // trackApproved: true,
-                              //     gpsDataList: gpsData[1][0],
-                              //     // widget.gpsDataList,
-                              //     totalDistance: gpsData[3],
-                              //     //  widget.totalDistance,
-                              //     // device: gpsData.deviceId,
-                              //     // gpsData!.deviceId
-                              //     // widget.device,
-                              //     truckType: widget.loadAllDataModel.truckType,
-                              //     productType:
-                              //         widget.loadAllDataModel.productType,
-                              //     unitValue: widget.loadAllDataModel.unitValue,
-                              //     loadAllDataModel: widget.loadAllDataModel,
-                              //   ));
-                              // });
-                            },
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_sharp,
-                              color: kLiveasyColor,
-                              size: 15,
-                              weight: 700,
-                            ),
-                            padding: EdgeInsets.zero,
-                            iconSize: 15,
-                            style: const ButtonStyle(
-                              padding: MaterialStatePropertyAll<EdgeInsets>(
-                                  EdgeInsets.zero),
-                            ),
-                          ),
-                        ),
-                      ],
+                                widget.loadAllDataModel.bookingDate ?? 'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              ))),
                     ),
-                  ),
-                ],
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        widget.loadAllDataModel.loadingPointCity ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: black,
+                            fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        widget.loadAllDataModel.unloadingPointCity ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: black,
+                            fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${widget.loadAllDataModel.truckNo}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: kLiveasyColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 4,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${widget.loadAllDataModel.driverName}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${widget.loadAllDataModel.truckType}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: kLiveasyColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Flex(
+                                mainAxisSize: MainAxisSize.min,
+                                direction: Axis.vertical,
+                                children: [
+                              Flexible(
+                                  child: Text(
+                                '${widget.loadAllDataModel.companyName}' ?? 'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              ))
+                            ]),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 4,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IntrinsicHeight(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Column(
+                                children: [
+                                  TrackButton(
+                                    assetImage: null,
+                                    name: 'Track',
+                                    loadAllDataModel: widget.loadAllDataModel,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  CallButton(
+                                    directCall: false,
+                                    transporterPhoneNum:
+                                        widget.loadAllDataModel.shipperPhoneNum,
+                                    driverPhoneNum:
+                                        widget.loadAllDataModel.driverPhoneNum,
+                                    driverName: widget.loadAllDataModel.driverName,
+                                    transporterName:
+                                        widget.loadAllDataModel.companyName,
+                                  ),
+                                  Container()
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: IconButton(
+                              onPressed: () {
+                                ongoingTruckGpsData =
+                                    OngoingTruckGpsData(widget.loadAllDataModel);
+                                ongoingTruckGpsData
+                                    .getTruckGpsDetails()
+                                    .then((gpsData) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreenWeb(
+                                        visibleWidget: documentUploadScreen(
+                                          bookingId: widget
+                                              .loadAllDataModel.bookingId
+                                              .toString(),
+                                          truckNo:
+                                              widget.loadAllDataModel.truckNo,
+                                          loadingPoint: widget
+                                              .loadAllDataModel.loadingPointCity,
+                                          unloadingPoint: widget.loadAllDataModel
+                                              .unloadingPointCity,
+                                          transporterName:
+                                              widget.loadAllDataModel.shipperName,
+                                          transporterPhoneNum: widget
+                                              .loadAllDataModel.shipperPhoneNum,
+                                          driverPhoneNum: widget
+                                              .loadAllDataModel.driverPhoneNum,
+                                          driverName:
+                                              widget.loadAllDataModel.driverName,
+                                          bookingDate:
+                                              widget.loadAllDataModel.bookingDate,
+                                          gpsDataList: gpsData[1][0],
+                                          totalDistance: gpsData[3],
+                                          truckType:
+                                              widget.loadAllDataModel.truckType,
+                                          productType:
+                                              widget.loadAllDataModel.productType,
+                                          unitValue:
+                                              widget.loadAllDataModel.unitValue,
+                                          loadAllDataModel:
+                                              widget.loadAllDataModel,
+                                        ),
+                                        index: 1000,
+                                        selectedIndex:
+                                            screens.indexOf(postLoadScreen),
+                                      ),
+                                    ),
+                                  );
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: kLiveasyColor,
+                                size: 15,
+                                weight: 700,
+                              ),
+                              padding: EdgeInsets.zero,
+                              iconSize: 15,
+                              style: const ButtonStyle(
+                                padding: MaterialStatePropertyAll<EdgeInsets>(
+                                    EdgeInsets.zero),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           )
