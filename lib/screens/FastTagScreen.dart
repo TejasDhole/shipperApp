@@ -20,8 +20,6 @@ import 'package:shipper_app/responsive.dart';
 class MapScreen extends StatefulWidget {
   String? loadingPoint;
   String? unloadingPoint;
-  // String? loadingPointCity;
-  // String? unloadingPointCity;
   String? truckNumber;
 
   MapScreen(
@@ -29,8 +27,6 @@ class MapScreen extends StatefulWidget {
       this.loadingPoint,
       this.unloadingPoint,
       this.truckNumber,
-      // this.loadingPointCity,
-      // this.unloadingPointCity
       })
       : super(key: key);
 

@@ -103,8 +103,6 @@ class _EwayBillsState extends State<EwayBills> {
                           ),
                         ],
                       ),
-                      // padding: EdgeInsets.only(
-                      //     bottom: screenHeight * 0.06, ),
                       child: TextField(
                         decoration: InputDecoration(
                             fillColor: Colors.white,
