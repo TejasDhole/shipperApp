@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Widgets/LoadsTableHeader.dart';
+import 'package:shipper_app/Widgets/filterWidgets/ClearALLWidget.dart';
+import 'package:shipper_app/Widgets/filterWidgets/MyLoadsFilterWidgets.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';
+import 'package:shipper_app/controller/myLoadFilterController.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/models/loadDetailsScreenModel.dart';
 import 'package:shipper_app/responsive.dart';
@@ -28,8 +32,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
   List<LoadDetailsScreenModel> myLoadList = [];
   List<LoadDetailsScreenModel> searchedLoadList = [];
   TextEditingController searchTextController = TextEditingController();
-
-  // final String loadApiUrl = FlutterConfig.get("loadApiUrl");
+  MyLoadsFilterController myLoadsFilterController = Get.put(MyLoadsFilterController());
   final String loadApiUrl = dotenv.get('loadApiUrl');
 
   ScrollController scrollController = ScrollController();
@@ -45,12 +48,12 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
   void initState() {
     super.initState();
     loading = true;
-    getDataByPostLoadId(i);
+    getDataByPostLoadId(i,null,null);
     scrollController.addListener(() {
       if (scrollController.position.pixels >
           scrollController.position.maxScrollExtent * 0.7) {
         i = i + 1;
-        getDataByPostLoadId(i);
+        getDataByPostLoadId(i, null, null);
       }
     });
   }
@@ -58,6 +61,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
   @override
   void dispose() {
     scrollController.dispose();
+    myLoadsFilterController.resetController();
     super.dispose();
   }
 
@@ -70,61 +74,163 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
                 Expanded(
                     flex: (Responsive.isMobile(context)) ? 8 : 5,
-                    child: TextField(
-                      controller: searchTextController,
-                      onChanged: (value) {
-                        if (value.length > 2) {
-                          getSearchLoadList();
-                        } else {
-                          searchedLoadList = myLoadList;
-                          setState(() {});
-                        }
-                      },
-                      style: TextStyle(
-                          color: black,
-                          fontFamily: 'Montserrat',
-                          fontSize: size_8),
-                      textAlign: TextAlign.center,
-                      cursorColor: kLiveasyColor,
-                      cursorWidth: 1,
-                      mouseCursor: SystemMouseCursors.click,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                  color: borderLightColor, width: 1.5)),
-                          hintText: 'Search',
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: white,
+                          boxShadow: const [
+                             BoxShadow(
+                              color: lightGrey,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                      child: TextField(
+                        controller: searchTextController,
+                        onChanged: (value) {
+                          if (value.length > 2) {
+                            getSearchLoadList();
+                          } else {
+                            searchedLoadList = myLoadList;
+                            setState(() {});
+                          }
+                        },
+                        style: TextStyle(
+                            color: black,
+                            fontFamily: 'Montserrat',
+                            fontSize: size_8),
+                        cursorColor: kLiveasyColor,
+                        cursorWidth: 1,
+                        mouseCursor: SystemMouseCursors.click,
+                        decoration:  InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                              bottom: 0, left: 5, right: 5, top: 15),
+                          prefixIcon:
+                          const Icon(Icons.search, color: grey, size: 25),
+                          hintText: "Search",
                           hintStyle: TextStyle(
-                              color: borderLightColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: size_8),
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: borderLightColor,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide:
-                                  BorderSide(color: truckGreen, width: 1.5))),
+                              fontSize: size_8,
+                              fontFamily: "Montserrat",
+                              color: grey,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     )),
                 Expanded(
                   flex: (Responsive.isMobile(context)) ? 2 : 4,
-                  child: Container(),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: SizedBox(),
+                      ),
+                      Obx(() => InkWell(
+                        onTap: () {
+                          myLoadsFilterController.updateToggleFilter(!myLoadsFilterController.toggleFilter.value);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: myLoadsFilterController.filterState.value? kLiveasyColor:  white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: lightGrey,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 5)
+                              ),
+                            ],
+                          ),
+                          child:  Row(
+                            children: [
+                              Text('Filter', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: myLoadsFilterController.filterState.value? white:  kLiveasyColor, fontFamily: "Montserrat"),),
+                              const SizedBox(width: 10,),
+                              Icon(Icons.filter_list_outlined, color: myLoadsFilterController.filterState.value? white:  kLiveasyColor,)
+                            ],
+                          ),
+                        ),
+                      ))
+                    ],
+                  ),
                 )
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Obx(() => Visibility(
+                visible: myLoadsFilterController.toggleFilter.value,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  child: Stack(
+                      children: [DottedBorder(
+                          borderType: BorderType.RRect,
+                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                          strokeWidth: 3,
+                          color: lightGrey,
+                          dashPattern: const [10,10],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(left: 10, right: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    border: Border.all(color: kLiveasyColor,width: 2),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: const Text(
+                                  'Inbound', style: TextStyle(color: kLiveasyColor, fontSize: 15, fontFamily: 'Montserrat'), textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(left: 10, right: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    border: Border.all(color: kLiveasyColor,width: 2),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: const Text(
+                                  'Outbound', style: TextStyle(color: kLiveasyColor, fontSize: 15, fontFamily: 'Montserrat'), textAlign: TextAlign.center,
+                                ),
+                              ),
+                              const MyLoadsFilterWidget(),
+                              Container(
+                                margin: const EdgeInsets.only(left: 10, right: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    border: Border.all(color: kLiveasyColor,width: 2),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: const Text(
+                                  'Status', style: TextStyle(color: kLiveasyColor, fontSize: 15, fontFamily: 'Montserrat'), textAlign: TextAlign.center,
+                                ),
+                              ),
+                              const Expanded(flex : 2,child: SizedBox()),
+                              ClearALLWidget(),
+                              const Expanded(flex : 1,child: SizedBox())
+                            ],
+                          )
+                      ),
+                        Positioned(right: 10, top: 10,child: InkWell(
+                          onTap: () {
+                            myLoadsFilterController.updateToggleFilter(false);
+                          },
+                            child: const Icon(Icons.close_outlined, color: black,)))]
+                  ),
+                )),),
+            const SizedBox(height: 20,),
             loading
-                ? Expanded(child: const OnGoingLoadingWidgets())
+                ? const Expanded(child: OnGoingLoadingWidgets())
                 : searchedLoadList.isEmpty
                     ? Container(
                         margin: const EdgeInsets.only(top: 153),
@@ -145,104 +251,122 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                         ),
                       )
                     : Expanded(
-                        child: RefreshIndicator(
-                            color: lightNavyBlue,
-                            onRefresh: () {
-                              setState(() {
-                                myLoadList.clear();
-                                loading = true;
+                        child: Obx(() {
+                            if(myLoadsFilterController.refreshBuilder.value){
+                              WidgetsBinding.instance.addPostFrameCallback((_){
+                                setState(() {
+                                  myLoadList.clear();
+                                  loading = true;
+                                  i=0;
+                                  myLoadsFilterController.updateRefreshBuilder(false);
+                                  getDataByPostLoadId(i, myLoadsFilterController.startDate.value, myLoadsFilterController.endDate.value);
+                                });
                               });
-                              return getDataByPostLoadId(0);
-                            },
-                            child: (kIsWeb && Responsive.isDesktop(context))
-                                ? Card(
-                                    surfaceTintColor: transparent,
-                                    margin: EdgeInsets.only(bottom: 5),
-                                    shadowColor: Colors.grey,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.zero),
-                                    elevation: 10,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        LoadsTableHeader(
-                                            loadingStatus: 'MyLoads',
-                                            screenWidth: MediaQuery.of(context)
-                                                .size
-                                                .width),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Expanded(
-                                          flex: 4,
-                                          child: ListView.separated(
-                                            shrinkWrap: true,
-                                            primary: false,
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            // physics: const AlwaysScrollableScrollPhysics (),
-                                            scrollDirection: Axis.vertical,
-                                            padding: EdgeInsets.only(
-                                                bottom: space_15),
-                                            controller: scrollController,
-                                            itemCount: searchedLoadList.length,
-                                            itemBuilder: (context, index) => (index ==
-                                                    searchedLoadList
-                                                        .length) //removed -1 here
-                                                ? Visibility(
-                                                    visible: bottomProgressLoad,
-                                                    child:
-                                                        const bottomProgressBarIndicatorWidget())
-                                                : Row(children: [
-                                                    MyLoadsCard(
-                                                      loadDetailsScreenModel:
-                                                          searchedLoadList[
-                                                              index],
-                                                    ),
-                                                  ]),
-                                            separatorBuilder:
-                                                (context, index) => Divider(
-                                              thickness: 1,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const BouncingScrollPhysics(),
-                                    padding: EdgeInsets.only(bottom: space_15),
-                                    controller: scrollController,
-                                    itemCount: searchedLoadList.length,
-                                    itemBuilder: (context, index) => (index ==
+                            }
+                          return RefreshIndicator(
+                              color: lightNavyBlue,
+                              onRefresh: () {
+                                setState(() {
+                                  myLoadList.clear();
+                                  loading = true;
+                                  i=0;
+                                });
+                                return getDataByPostLoadId(i, myLoadsFilterController.startDate.value, myLoadsFilterController.endDate.value);
+                              },
+                              child: (kIsWeb && Responsive.isDesktop(context))
+                                  ? Card(
+                                surfaceTintColor: transparent,
+                                margin: EdgeInsets.only(bottom: 5),
+                                shadowColor: Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero),
+                                elevation: 10,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    LoadsTableHeader(
+                                        loadingStatus: 'MyLoads',
+                                        screenWidth: MediaQuery.of(context)
+                                            .size
+                                            .width),
+                                    Expanded(
+                                      flex: 4,
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        primary: false,
+                                        physics:
+                                        const BouncingScrollPhysics(),
+                                        // physics: const AlwaysScrollableScrollPhysics (),
+                                        scrollDirection: Axis.vertical,
+                                        padding: EdgeInsets.only(
+                                            bottom: space_15),
+                                        controller: scrollController,
+                                        itemCount: searchedLoadList.length,
+                                        itemBuilder: (context, index) => (index ==
                                             searchedLoadList
                                                 .length) //removed -1 here
-                                        ? Visibility(
+                                            ? Visibility(
                                             visible: bottomProgressLoad,
                                             child:
-                                                const bottomProgressBarIndicatorWidget())
-                                        : MyLoadsCard(
+                                            const bottomProgressBarIndicatorWidget())
+                                            : Row(children: [
+                                          MyLoadsCard(
                                             loadDetailsScreenModel:
-                                                searchedLoadList[index],
+                                            searchedLoadList[
+                                            index],
                                           ),
-                                  )),
+                                        ]),
+                                        separatorBuilder:
+                                            (context, index) => Divider(
+                                          thickness: 1,
+                                          height: 0,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                                  : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: space_15),
+                                controller: scrollController,
+                                itemCount: searchedLoadList.length,
+                                itemBuilder: (context, index) => (index ==
+                                    searchedLoadList
+                                        .length) //removed -1 here
+                                    ? Visibility(
+                                    visible: bottomProgressLoad,
+                                    child:
+                                    const bottomProgressBarIndicatorWidget())
+                                    : MyLoadsCard(
+                                  loadDetailsScreenModel:
+                                  searchedLoadList[index],
+                                ),
+                              ));
+                        }),
                       )
           ],
         ));
   }
 
-  getDataByPostLoadId(int i) async {
+  getDataByPostLoadId(int i, String? startDate, String? endDate) async {
     if (mounted) {
       setState(() {
         bottomProgressLoad = true;
       });
     }
+    String url = '$loadApiUrl?postLoadId=${shipperIdController.companyId.value}&pageNo=$i';
+
+    if(startDate != null && endDate!= null && startDate.isNotEmpty && endDate.isNotEmpty){
+      url += '&startTimestam=$startDate&endTimestam=$endDate';
+    }
+
     http.Response response = await http.get(Uri.parse(
-        '$loadApiUrl?postLoadId=${shipperIdController.companyId.value}&pageNo=$i'));
+        url));
     var jsonData = json.decode(response.body);
     for (var json in jsonData) {
       LoadDetailsScreenModel loadDetailsScreenModel = LoadDetailsScreenModel();

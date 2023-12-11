@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shipper_app/constants/colors.dart';
 
 Container LoadsTableHeader(
     {required String loadingStatus, required double screenWidth}) {
   bool small = true;
-  double leftRightPadding, textFontSize, containerWidth;
+  double textFontSize;
   if (screenWidth < 1400 && screenWidth > 1099) {
     small = true;
   } else {
@@ -13,23 +14,23 @@ Container LoadsTableHeader(
   }
 
   if (small) {
-    leftRightPadding = 0;
     textFontSize = 10;
-    containerWidth = 56;
   } else {
-    leftRightPadding = 20;
     textFontSize = 14;
-    containerWidth = 100;
   }
 
   return Container(
     height: 80,
     decoration: BoxDecoration(
-        border: Border(
-            bottom: BorderSide(color: Colors.grey, width: 1),
-            top: BorderSide(color: Colors.grey, width: 1),
-            left: BorderSide(color: Colors.grey, width: 1),
-            right: BorderSide(color: Colors.grey, width: 1))),
+      color: lightBlueTable,
+      boxShadow: const [
+        BoxShadow(
+          color: lightGrey,
+          blurRadius: 5,
+          offset: Offset(0, 5)
+        ),
+      ],
+            ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +46,8 @@ Container LoadsTableHeader(
                           : "Booking\nOn",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.grey,
+                          color: black,
+                          fontWeight: FontWeight.w700,
                           fontSize: textFontSize,
                           fontFamily: 'Montserrat'),
                     )))),
@@ -70,7 +72,8 @@ Container LoadsTableHeader(
                     "Loading\nPoint",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: black,
+                        fontWeight: FontWeight.w700,
                         fontSize: textFontSize,
                         fontFamily: 'Montserrat'),
                   ))
@@ -99,7 +102,8 @@ Container LoadsTableHeader(
                     "Unloading\nPoint",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: black,
+                        fontWeight: FontWeight.w700,
                         fontSize: textFontSize,
                         fontFamily: 'Montserrat'),
                   ))
@@ -117,7 +121,8 @@ Container LoadsTableHeader(
                   : "Truck\nNumber",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.grey,
+                  color: black,
+                  fontWeight: FontWeight.w700,
                   fontSize: textFontSize,
                   fontFamily: 'Montserrat'),
             ))),
@@ -134,7 +139,8 @@ Container LoadsTableHeader(
                   : "Driver's\nName",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.grey,
+                  color: black,
+                  fontWeight: FontWeight.w700,
                   fontSize: textFontSize,
                   fontFamily: 'Montserrat'),
             ))),
@@ -149,7 +155,8 @@ Container LoadsTableHeader(
               (loadingStatus == 'MyLoads') ? "Publishing\nMethod" : "Freight",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.grey,
+                  color: black,
+                  fontWeight: FontWeight.w700,
                   fontSize: textFontSize,
                   fontFamily: 'Montserrat'),
             ))),
@@ -163,7 +170,8 @@ Container LoadsTableHeader(
                 child: Text(
               (loadingStatus == 'MyLoads') ? "Status" : 'Transporter',
               style: TextStyle(
-                  color: Colors.grey,
+                  color: black,
+                  fontWeight: FontWeight.w700,
                   fontSize: textFontSize,
                   fontFamily: 'Montserrat'),
             ))),
