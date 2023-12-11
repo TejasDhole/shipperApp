@@ -61,6 +61,7 @@ const Color skyBlue = Color.fromARGB(255, 5, 122, 247);
 //TODO: Remove duplic ate color entries , choose a general name for solidLineColor ,priceBackground , unactivereset and replace it in theor usecase too
 // keep deactiveButton color though othervise code will break
 
+Color lightBlueTable = const Color.fromRGBO(237, 241, 255, 1);
 Color textBlur = const Color(0xFF929292);
 Color liveasyOrange = const Color(0xFFFF7600);
 Color solidLineColor = const Color(0xFFC4C9D9);
