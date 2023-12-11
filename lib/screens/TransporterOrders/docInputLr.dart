@@ -217,6 +217,7 @@ class _docInputLrState extends State<docInputLr> {
                     ),
                   )
                 : Card(
+                    surfaceTintColor: transparent,
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),

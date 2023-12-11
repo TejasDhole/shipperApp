@@ -23,6 +23,7 @@ Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
       await shipperApiCalls.getDataByShipperId(bookingModel.transporterId);
 
   OngoingCardModel loadALLDataModel = OngoingCardModel();
+  loadALLDataModel.loadId = bookingModel.loadId;
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
   loadALLDataModel.bookingId = bookingModel.bookingId;
   loadALLDataModel.completedDate = bookingModel.completedDate;

@@ -23,25 +23,16 @@ class _moveLoadConfirmationScreenButtonWidgetState
     extends State<moveLoadConfirmationScreenButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    bool enable = false;
+    bool enable = true;
     ProviderData providerData = Provider.of<ProviderData>(context);
 
-    if (providerData.truckTypeValue != '' &&
-        providerData.passingWeightMultipleValue != [] &&
-        providerData.productType != "Choose Product Type" &&
-        providerData.totalTyresValue != 0 &&
-        providerData.scheduleLoadingDate != '' &&
-        providerData.publishMethod != '') {
-      if ((providerData.publishMethod == 'Bid' ||
-              providerData.publishMethod == 'Select') &&
-          providerData.loadTransporterList != []) {
-        enable = true;
-      } else if (providerData.publishMethod == 'Contract') {
-        enable = true;
+    if(providerData.productType == "Choose Product Type"){
+      providerData.productType = '';
+    }
+    if (providerData.publishMethod == 'Contract') {
         providerData.biddingEndTime = null;
         providerData.biddingEndDate = null;
         providerData.loadTransporterList = [];
-      }
     }
     return TextButton(
       style: ButtonStyle(

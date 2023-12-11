@@ -1,31 +1,39 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shipper_app/controller/shipperIdController.dart';
+
 // import 'package:flutter_config/flutter_config.dart';
 import '/functions/shipperApis/runShipperApiPost.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<String?> createUserTraccar(String? mobileNum) async {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
-  final String shipperApiUrl = dotenv.get('shipperApiUrl');
   final String traccarUser = dotenv.get('traccarUser');
   final String traccarPass = dotenv.get('traccarPass');
   final String traccarApi = dotenv.get('traccarApi');
-  String ownerEmailId = '';
+  String companyEmailId = '';
 
-  //fetch email of owner
-  http.Response response = await http.get(Uri.parse(
-      '$shipperApiUrl/${shipperIdController.ownerShipperId.toString()}'));
-  var jsonData = json.decode(response.body);
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    ownerEmailId = jsonData["emailId"].toString();
-    shipperIdController.updateOwnerEmailId(ownerEmailId);
-  }
+  //fetching company emailId from firebase firestore
+  final DocumentReference documentRef = FirebaseFirestore.instance
+      .collection('/Companies')
+      .doc(shipperIdController.companyId.value);
 
+  await documentRef.get().then((doc) {
+    if (doc.exists) {
+      Map data = doc.data() as Map;
+      companyEmailId =
+          data!["company_details"]["contact_info"]["company_email"].toString();
+      shipperIdController.updateOwnerEmailId(companyEmailId);
+    } else {
+      debugPrint('No such document!');
+    }
+  });
 
   //create User Account in traccar
-  //email will be owner email
+  //email will be company email
   //name will be company name
 
   String basicAuth =
@@ -34,7 +42,7 @@ Future<String?> createUserTraccar(String? mobileNum) async {
   Map data = {
     "name": shipperIdController.companyName.toString(),
     "password": traccarPass,
-    "email": ownerEmailId,
+    "email": companyEmailId,
     "attributes": {"timezone": "Asia/Kolkata"}
   };
   String body = json.encode(data);
@@ -52,7 +60,7 @@ Future<String?> createUserTraccar(String? mobileNum) async {
         .write("traccarUserId", id)
         .then((value) => print("traccarUserId \" $id \" saved in cache"));
     return id;
-  } else if (response.statusCode == 400) {
+  } else if (responseUser.statusCode == 400) {
     return null;
   }
   return null;

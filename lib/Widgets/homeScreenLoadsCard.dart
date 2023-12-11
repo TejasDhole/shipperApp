@@ -54,6 +54,7 @@ class HomeScreenLoadsCard extends StatelessWidget {
                 }
             },
         child: Card(
+          surfaceTintColor: transparent,
           elevation: elevation_2,
           child: Padding(
             padding: EdgeInsets.all(space_2),

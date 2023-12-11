@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shipper_app/constants/colors.dart';
 import '/constants/spaces.dart';
 import '/widgets/buttons/acceptButton.dart';
 import '/widgets/buttons/declineButton.dart';
@@ -31,6 +32,7 @@ class BiddingDecisionCard extends StatelessWidget {
 
     return Container(
       child: Card(
+        surfaceTintColor: transparent,
         elevation: 3,
         child: Container(
           margin: EdgeInsets.all(space_3),

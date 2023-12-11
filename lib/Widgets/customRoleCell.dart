@@ -39,7 +39,7 @@ class _CustomRoleState extends State<CustomRole> {
   }
 
   List<DropdownMenuItem<String>> _dropDownItem() {
-    List<String> roles = ['employee', 'owner'];
+    List<String> roles = ['ADMIN', 'EDITOR', 'VIEWER'];
     return roles
         .map((value) => DropdownMenuItem(
             value: value,

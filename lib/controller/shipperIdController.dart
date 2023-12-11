@@ -2,15 +2,15 @@ import 'package:get/get.dart';
 
 class ShipperIdController extends GetxController {
   RxString shipperId = "".obs;
-  RxString ownerShipperId = "".obs;
+  RxString companyId = "".obs;
   RxString ownerEmailId = "".obs;
 
   updateOwnerEmailId(String ownerEmail) {
     ownerEmailId.value = ownerEmail;
   }
 
-  void updateOwnerShipperId(String newValue) {
-    ownerShipperId.value = newValue;
+  void updateCompanyId(String newValue) {
+    companyId.value = newValue;
   }
 
   void updateShipperId(String newValue) {
@@ -23,10 +23,10 @@ class ShipperIdController extends GetxController {
     companyApproved.value = newValue;
   }
 
-  RxBool isOwner = false.obs;
+  RxString role = 'VIEWER'.obs;
 
-  void updateOwnerStatus(bool newValue) {
-    isOwner.value = newValue;
+  void updateRole(String newValue) {
+    role.value = newValue;
   }
 
   RxString name = "".obs;

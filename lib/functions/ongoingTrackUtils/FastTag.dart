@@ -7,7 +7,7 @@ import 'package:xml/xml.dart';
 
 class checkFastTag {
   //Fetch the fastag location of any truck
-  Future<List<dynamic>> getVehicleLocation(String vehicle) async {
+  getVehicleLocation(String vehicle) async {
     final String url = dotenv.get("fastTag");
 
     final Map<String, dynamic> params = {"vehiclenumber": vehicle};
@@ -21,11 +21,13 @@ class checkFastTag {
       body: jsonEncode(params),
     );
 
-    debugPrint(response.statusCode.toString());
     final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+     try{
     final String errCode =
         jsonResponse['response'][0]['response']['vehicle']['errCode'];
     //Here we are not directly checking the status code because of the response of the API
+   
     if (errCode == "000") {
       final List<dynamic> txnList = jsonResponse['response'][0]['response']
           ['vehicle']['vehltxnList']['txn'];
@@ -43,6 +45,10 @@ class checkFastTag {
       }
       return reversedList.cast<Map<String, dynamic>>();
     } else {
+      return [];
+    }
+    }catch(e){
+      print("error message: $e ");
       return [];
     }
   }

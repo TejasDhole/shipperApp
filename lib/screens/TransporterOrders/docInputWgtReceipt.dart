@@ -217,6 +217,7 @@ class _docInputWgtReceiptState extends State<docInputWgtReceipt> {
                     ),
                   )
                 : Card(
+                    surfaceTintColor: transparent,
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),

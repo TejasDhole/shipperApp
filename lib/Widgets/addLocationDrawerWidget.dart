@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -17,8 +16,8 @@ import '/constants/spaces.dart';
 
 class AddLocationDrawerWidget extends StatefulWidget {
   final context;
-
-  AddLocationDrawerWidget({required this.context});
+  final Function refreshParent;
+  AddLocationDrawerWidget({required this.context, required this.refreshParent});
 
   @override
   State<AddLocationDrawerWidget> createState() =>
@@ -47,13 +46,15 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Add New Facility',
+                      (facilityController.create.value == false)
+                          ? 'Edit Facility'
+                          : 'Add New Facility',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: size_10,
@@ -64,7 +65,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                         onPressed: () {
                           addLocationDrawerToggleController.toggleDrawer(false);
                         },
-                        icon: FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.xmark,
                           color: black,
                           size: 25,
@@ -72,13 +73,13 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 color: grey,
                 thickness: 0.5,
                 height: 0,
               ),
               Container(
-                padding: EdgeInsets.only(top: 50, left: 20, right: 40),
+                padding: const EdgeInsets.only(top: 50, left: 20, right: 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,13 +104,13 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
                         FacilityAddressTextFieldWidget(),
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         TextButton(
@@ -124,7 +125,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                               );
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 15),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -134,7 +135,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                 children: [
                                   Image.asset('assets/images/spoon.png',
                                       height: 20, width: 8, fit: BoxFit.fill),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
@@ -149,7 +150,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                             ))
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -167,7 +168,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   color: black,
                                   fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             FacilityPinCodeTextFieldWidget()
@@ -184,7 +185,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   color: black,
                                   fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Obx(() {
@@ -216,12 +217,12 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(5)),
                                           borderSide: BorderSide(
                                               color: borderLightColor,
                                               width: 0.5)),
-                                      focusedBorder: OutlineInputBorder(
+                                      focusedBorder: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5)),
                                           borderSide: BorderSide(
@@ -242,7 +243,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   color: black,
                                   fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             FacilityStateNameTextField()
@@ -259,7 +260,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   color: black,
                                   fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
@@ -283,17 +284,17 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   mouseCursor: SystemMouseCursors.click,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(5)),
                                         borderSide: BorderSide(
                                             color: borderLightColor,
                                             width: 0.5)),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(5)),
                                         borderSide: BorderSide(
                                             color: black, width: 0.5)),
-                                    suffixIcon: Icon(
+                                    suffixIcon: const Icon(
                                       Icons.arrow_drop_down,
                                       color: black,
                                     ),
@@ -305,7 +306,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Text(
@@ -316,7 +317,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                           color: black,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -342,8 +343,8 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5)),
                                     borderSide: BorderSide(
                                         color: borderLightColor, width: 0.5)),
                                 hintText: 'Enter Party Name',
@@ -351,14 +352,14 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     color: borderLightColor,
                                     fontFamily: 'Montserrat',
                                     fontSize: size_8),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5)),
                                     borderSide:
                                         BorderSide(color: black, width: 0.5))),
                           );
                         })),
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     Row(
@@ -366,10 +367,17 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                       children: [
                         TextButton(
                             onPressed: () {
+                              facilityController.updatePartyName('');
+                              facilityController.updateCountry('');
+                              facilityController.updateState('');
+                              facilityController.updateCity('');
+                              facilityController.updateAddress('');
+                              facilityController.updatePinCode('');
+                              facilityController.updateFacilityLatLng('', '');
                               Navigator.pop(widget.context);
                             },
                             child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 12),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
@@ -382,7 +390,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                       fontSize: size_9,
                                       color: kLiveasyColor),
                                 ))),
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         TextButton(
@@ -416,7 +424,10 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   bool status = await createFacility();
                                   if (status) {
                                     showSnackBar(
-                                        'Facility Created Successfully!!!',
+                                        (facilityController.create.value ==
+                                                false)
+                                            ? 'Facility Edited Successfully!! '
+                                            : 'Facility Created Successfully!!!',
                                         truckGreen,
                                         Icon(Icons
                                             .check_circle_outline_outlined),
@@ -429,6 +440,15 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     facilityController.updatePinCode('');
                                     facilityController.updateFacilityLatLng(
                                         '', '');
+
+                                    void rebuild(Element el) {
+                                      el.markNeedsBuild();
+                                      el.visitChildren(rebuild);
+                                    }
+
+                                    (widget.context as Element)
+                                        .visitChildren(rebuild);
+                                    Navigator.pop(widget.context);
                                   } else {
                                     showSnackBar(
                                         'Something went Wrong, Try again Later!!!',
@@ -440,13 +460,14 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                   showSnackBar(
                                       error.toString(),
                                       deleteButtonColor,
-                                      Icon(Icons.report_gmailerrorred_sharp),
+                                      const Icon(
+                                          Icons.report_gmailerrorred_sharp),
                                       context);
                                 }
                               }
                             },
                             child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 12),
                                 decoration: BoxDecoration(
                                     color: kLiveasyColor,
@@ -454,7 +475,9 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     border: Border.all(
                                         width: 0.5, color: kLiveasyColor)),
                                 child: Text(
-                                  'Create Facility',
+                                  (facilityController.create.value == true)
+                                      ? 'Create Facility'
+                                      : 'Save Changes',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: size_9,

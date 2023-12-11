@@ -28,24 +28,11 @@ late Timer timer;
 isolatedShipperGetData() {
   exe = true;
   timer = Timer.periodic(
-      Duration(seconds: 2), (Timer t) => exe ? apirun2() : timer.cancel());
-}
-
-Future<dynamic> apirun2() async {
-  var response = await runShipperApiPostIsolated(
-      emailId: FirebaseAuth.instance.currentUser!.email.toString(),
-      phoneNo: FirebaseAuth.instance.currentUser!.phoneNumber
-          .toString()
-          .replaceFirst("+91", ""));
-  count = count + 1;
-  print(count);
-  if (response != null ||
-      count == 5 ||
-      FirebaseAuth.instance.currentUser == null) {
-    exe = false;
-  }
-
-  return response;
+      Duration(seconds: 2),
+      (Timer t) => exe
+          ? runShipperApiPostIsolated(
+              emailId: FirebaseAuth.instance.currentUser!.email!)
+          : timer.cancel());
 }
 
 GetStorage sidstorage = GetStorage('ShipperIDStorage');
@@ -56,25 +43,16 @@ Future<String?> runShipperApiPostIsolated(
     ShipperIdController shipperIdController =
         Get.put(ShipperIdController(), permanent: true);
 
-    final String shipperApiUrl =
-        // FlutterConfig.get("shipperApiUrl").toString();
-        dotenv.get('shipperApiUrl');
+    final String shipperApiUrl = dotenv.get('shipperApiUrl');
 
-    Map data = userLocation != null
-        ? {"emailId": emailId, "shipperLocation": userLocation}
-        : {"emailId": emailId, "phoneNo": phoneNo};
-    String body = json.encode(data);
-    final response = await http.post(Uri.parse(shipperApiUrl),
+    final response = await http.get(
+        Uri.parse('$shipperApiUrl/?emailId=$emailId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          // HttpHeaders.authorizationHeader: firebaseToken!
-        },
-        body: body);
-
+        });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      var decodedResponse = json.decode(response.body);
-      // print("isolated data--->${response.body}");
+      var decodedResponse = json.decode(response.body)[0];
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
@@ -88,14 +66,15 @@ Future<String?> runShipperApiPostIsolated(
         String companyName = decodedResponse["companyName"] ?? " ";
         String companyStatus = decodedResponse["companyStatus"] ?? " ";
         String mobileNum = decodedResponse["phoneNo"] ?? " ";
-        shipperIdController.updateCompanyApproved(companyApproved);
-        sidstorage
-            .write("companyApproved", companyApproved)
-            .then((value) => print("Written companyApproved"));
         shipperIdController.updateShipperId(shipperId);
         sidstorage
             .write("shipperId", shipperId)
             .then((value) => print("Written shipperId"));
+        shipperIdController.updateCompanyApproved(companyApproved);
+        sidstorage
+            .write("companyApproved", companyApproved)
+            .then((value) => print("Written companyApproved"));
+
         shipperIdController.updateCompanyStatus(companyStatus);
         sidstorage
             .write("companyStatus", companyStatus)
@@ -124,16 +103,20 @@ Future<String?> runShipperApiPostIsolated(
         sidstorage
             .write("companyName", companyName)
             .then((value) => print("Written companyName"));
+        shipperIdController
+            .updateCompanyId(decodedResponse["companyId"].toString());
+
+        shipperIdController.updateRole(decodedResponse["roles"].toString());
+
         if (decodedResponse["token"] != null) {
           shipperIdController
               .updateJmtToken(decodedResponse["token"].toString());
         }
-        getRoleOfEmployee(FirebaseAuth.instance.currentUser!.uid.toString());
-        await getShipperIdFromCompanyDatabase();
 
         if (FirebaseAuth.instance.currentUser != null) {
           createUserTraccar(phoneNo);
         }
+        exe = false;
         return shipperId;
       } else {
         return null;

@@ -16,6 +16,9 @@ class LogoutDialogue extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return AlertDialog(
+      surfaceTintColor: transparent,
+        backgroundColor: white,
+        shadowColor: gradientGreyColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),

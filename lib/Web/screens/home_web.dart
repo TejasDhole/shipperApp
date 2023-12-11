@@ -34,6 +34,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       invoiceSelectedTabGradientColor,
       accountSelectedTabGradientColor,
       liveasySelectedTabGradientColor,
+      facilitySelectedTabGradientColor,
       signoutSelectedTabGradientColor;
 
   late bool expandMode;
@@ -47,8 +48,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   @override
   void initState() {
     super.initState();
-    runShipperApiPost(
-        emailId: FirebaseAuth.instance.currentUser!.email.toString());
+    isolatedShipperGetData();
+
     if (widget.index != null) {
       setState(() {
         _index = widget.index!;
@@ -92,6 +93,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 4) {
+      facilitySelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      facilitySelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 5) {
       signoutSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
@@ -101,8 +109,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
     liveasySelectedTabGradientColor =
         const LinearGradient(colors: [white, white]);
-
-    isolatedShipperGetData();
   }
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
@@ -118,7 +124,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         icon: Icon(Icons.person_outline_outlined), label: "Account"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.supervised_user_circle_outlined), label: "Add User"),
+    const BottomNavigationBarItem(
+        icon: Icon(Icons.location_on), label: "Facility"),
   ];
+
+  refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +168,15 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               )
             : null,
         key: scaffoldKey,
-        endDrawer: AddLocationDrawerWidget(context: context),
+        endDrawer: AddLocationDrawerWidget(
+          context: context,
+          refreshParent: refresh,
+        ),
+        onEndDrawerChanged: (isOpened) {
+          if (isOpened == false) {
+            addLocationDrawerToggleController.toggleDrawer(false);
+          }
+        },
         appBar: AppBar(
           leading: null,
           backgroundColor: kLiveasyColor,
@@ -164,10 +184,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
             children: [
               TextButton(
                 onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreenWeb()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreenWeb()));
                 },
                 child: SizedBox(
                   child: Row(
@@ -257,6 +277,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                       children: [
                         Row(children: [
                           Card(
+                            surfaceTintColor: transparent,
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.zero)),
                             elevation: 5,
@@ -273,28 +294,36 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: AssetImage(
                                           'assets/images/shipper_web_dashboard.png')),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   SideExpandedItem(
                                       title: "My Loads",
                                       icon: AssetImage(
                                           'assets/images/shipper_web_my_loads.png')),
                                   SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   SideExpandedItem(
                                       title: "Invoice",
                                       icon: AssetImage(
                                           'assets/images/shipper_web_invoice.png')),
                                   SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   SideExpandedItem(
                                       title: "Team",
                                       icon: AssetImage(
                                           'assets/images/shipper_web_account.png')),
                                   SizedBox(
-                                    height: 100,
+                                    height: 10,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "Facility",
+                                      icon: AssetImage(
+                                          'assets/icons/facility.png')),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
                                   ),
                                   SideExpandedItem(
                                       title: "Signout",
@@ -416,6 +445,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 4) {
+      facilitySelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      facilitySelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 5) {
       signoutSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
@@ -438,6 +474,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               _selectedIndex = 0;
@@ -450,6 +488,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
@@ -464,6 +504,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   colors: [sideNavItemSelectedColor, transparent]);
               accountSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               _selectedIndex = 2;
@@ -477,10 +519,27 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor = const LinearGradient(
                   colors: [sideNavItemSelectedColor, transparent]);
+              facilitySelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               _selectedIndex = 3;
               _index = 3;
+            } else if (title == "Facility") {
+              dashboardSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              invoiceSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              accountSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
+              signoutSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              _selectedIndex = 4;
+              _index = 4;
             } else if (title == "Signout") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
@@ -490,11 +549,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor = const LinearGradient(
                   colors: [sideNavItemSelectedColor, transparent]);
 
-              _selectedIndex = 4;
-              _index = 4;
+              _selectedIndex = 5;
+              _index = 5;
             }
           });
         },
@@ -512,7 +573,9 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                 ? invoiceSelectedTabGradientColor
                                 : (title == "Team")
                                     ? accountSelectedTabGradientColor
-                                    : signoutSelectedTabGradientColor),
+                                    : (title == "Facility")
+                                        ? facilitySelectedTabGradientColor
+                                        : signoutSelectedTabGradientColor),
             child: Row(
               children: [
                 Image(image: icon, filterQuality: FilterQuality.high),

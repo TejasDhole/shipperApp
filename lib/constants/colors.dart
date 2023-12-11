@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const Color orangeColor = Color(0xffed4a4a);
 const Color kLiveasyColor = Color(0xFF000066);
 const Color statusBarColor = Color.fromARGB(255, 8, 25, 70);
 const Color darkBlueColor = Color(0xFF152968);
@@ -35,6 +36,7 @@ const Color backgroundGrey = Color(0xffECEEF1);
 const Color black_87 = Colors.black87;
 const Color loadingWidgetColor = Colors.lightBlueAccent;
 const Color inactiveBidding = Color(0xffC4C9D9);
+const Color containerBackground = Color.fromARGB(255, 246, 248, 255);
 const Color cancelledBiddingBackground = Color(0xffD0D4E1);
 const Color greyShade = Color.fromARGB(255, 197, 195, 195);
 const Color hintTextColor = Color.fromARGB(255, 217, 217, 217);
@@ -48,6 +50,7 @@ const diffDeleteButtonColor = Color.fromARGB(255, 237, 74, 74);
 const Color darkBlueTextColor = Color.fromARGB(255, 21, 41, 104);
 const Color formBackground = Color.fromARGB(255, 245, 246, 250);
 const Color teamBar = Color.fromARGB(255, 245, 247, 251);
+const Color dividerColor = Color.fromARGB(255, 232, 232, 232);
 const Color searchBar = Color.fromARGB(255, 143, 143, 143);
 const Color timelinesColor = Color.fromARGB(255, 47, 46, 65);
 const Color infoWindowColor = Color.fromARGB(255, 0, 0, 0);
