@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/Widgets/postLoadLocationWidgets/PostLoadMultipleLocationWidget.dart';
+import 'package:shipper_app/screens/Eway_Bills_Screen.dart';
 import 'package:shipper_app/screens/Invoice_screen.dart';
 import 'package:shipper_app/screens/PostLoadScreens/PostLoadScreenLoadDetails.dart';
 import 'package:shipper_app/screens/accountScreens/account_details.dart';
@@ -18,6 +19,7 @@ import '../screens/add_user_screen.dart';
 const webDashBoard = WebDashBoard();
 const invoiceScreen = InvoiceScreen();
 const contactUs = Center(child: Text('contact us'));
+const ewayBillScreen = EwayBills();
 const postLoadScreen = PostLoadScreen();
 var postLoadNav = PostLoadNav(
   setChild: Container(),
@@ -38,6 +40,7 @@ const postLoadScreenTwo = PostLoadScreenTwo();
 List<Widget> screens = [
   webDashBoard,
   postLoadScreen,
+  ewayBillScreen,
   invoiceScreen,
   employeeListScreen,
   facilities,

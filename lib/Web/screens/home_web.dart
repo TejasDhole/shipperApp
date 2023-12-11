@@ -31,6 +31,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   int _index = 0;
   late LinearGradient dashboardSelectedTabGradientColor,
       myLoadsSelectedTabGradientColor,
+      ewayBillsSelectedTabGradientColor,
       invoiceSelectedTabGradientColor,
       accountSelectedTabGradientColor,
       liveasySelectedTabGradientColor,
@@ -77,29 +78,36 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       myLoadsSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
-
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor =
+      ewayBillsSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
-      invoiceSelectedTabGradientColor =
+      ewayBillsSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
+
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor =
+      invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
-      accountSelectedTabGradientColor =
+      invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 4) {
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 5) {
       facilitySelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       facilitySelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
-    if (_selectedIndex == 5) {
+    if (_selectedIndex == 6) {
       signoutSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
@@ -119,7 +127,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         icon: Icon(Icons.space_dashboard), label: "Dashboard"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.inventory_2_rounded), label: "My Loads"),
-    //const BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: "Invoice"),
+    const BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: "Eway Bills"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.person_outline_outlined), label: "Account"),
     const BottomNavigationBarItem(
@@ -304,6 +312,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                     height: 10,
                                   ),
                                   SideExpandedItem(
+                                      title: "Eway Bills",
+                                      icon: AssetImage(
+                                          'assets/images/shipper_web_ewayBill.png')),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  SideExpandedItem(
                                       title: "Invoice",
                                       icon: AssetImage(
                                           'assets/images/shipper_web_invoice.png')),
@@ -431,27 +446,34 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     }
 
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor =
+      ewayBillsSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
-      invoiceSelectedTabGradientColor =
+      ewayBillsSelectedTabGradientColor  =
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor =
+      invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
-      accountSelectedTabGradientColor =
+      invoiceSelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
     if (_selectedIndex == 4) {
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+    } else {
+      accountSelectedTabGradientColor =
+          const LinearGradient(colors: [white, white]);
+    }
+    if (_selectedIndex == 5) {
       facilitySelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
       facilitySelectedTabGradientColor =
           const LinearGradient(colors: [white, white]);
     }
-    if (_selectedIndex == 5) {
+    if (_selectedIndex == 6) {
       signoutSelectedTabGradientColor =
           const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
     } else {
@@ -470,6 +492,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   colors: [sideNavItemSelectedColor, transparent]);
               myLoadsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
+                  ewayBillsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
@@ -485,6 +509,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor = const LinearGradient(
                   colors: [sideNavItemSelectedColor, transparent]);
+              ewayBillsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);    
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               accountSelectedTabGradientColor =
@@ -495,10 +521,30 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               _selectedIndex = 1;
               _index = 1;
-            } else if (title == "Invoice") {
+            } else if (title == "Eway Bills") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              ewayBillsSelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
+              invoiceSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              accountSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              facilitySelectedTabGradientColor = const LinearGradient(
+                  colors: [sideNavItemSelectedColor, transparent]);
+              signoutSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              _selectedIndex = 2;
+              _index = 2;
+            }
+            else if (title == "Invoice") {
+              dashboardSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              ewayBillsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor = const LinearGradient(
                   colors: [sideNavItemSelectedColor, transparent]);
@@ -508,12 +554,14 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              _selectedIndex = 2;
-              _index = 2;
+              _selectedIndex = 3;
+              _index = 3;
             } else if (title == "Team") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              ewayBillsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
@@ -523,12 +571,14 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   const LinearGradient(colors: [white, white]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              _selectedIndex = 3;
-              _index = 3;
+              _selectedIndex = 4;
+              _index = 4;
             } else if (title == "Facility") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              ewayBillsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
@@ -538,12 +588,14 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   colors: [sideNavItemSelectedColor, transparent]);
               signoutSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
-              _selectedIndex = 4;
-              _index = 4;
+              _selectedIndex = 5;
+              _index = 5;
             } else if (title == "Signout") {
               dashboardSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               myLoadsSelectedTabGradientColor =
+                  const LinearGradient(colors: [white, white]);
+              ewayBillsSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
               invoiceSelectedTabGradientColor =
                   const LinearGradient(colors: [white, white]);
@@ -554,8 +606,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               signoutSelectedTabGradientColor = const LinearGradient(
                   colors: [sideNavItemSelectedColor, transparent]);
 
-              _selectedIndex = 5;
-              _index = 5;
+              _selectedIndex = 6;
+              _index = 6;
             }
           });
         },
@@ -569,6 +621,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                         ? dashboardSelectedTabGradientColor
                         : (title == "My Loads")
                             ? myLoadsSelectedTabGradientColor
+                            :(title == "Eway Bills")
+                            ? ewayBillsSelectedTabGradientColor
                             : (title == "Invoice")
                                 ? invoiceSelectedTabGradientColor
                                 : (title == "Team")

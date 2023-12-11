@@ -39,6 +39,7 @@ const Color inactiveBidding = Color(0xffC4C9D9);
 const Color containerBackground = Color.fromARGB(255, 246, 248, 255);
 const Color cancelledBiddingBackground = Color(0xffD0D4E1);
 const Color greyShade = Color.fromARGB(255, 197, 195, 195);
+const Color grey2 = Color.fromARGB(255, 121, 121, 121);
 const Color hintTextColor = Color.fromARGB(255, 217, 217, 217);
 const Color darkGreyish = Color.fromARGB(255, 160, 160, 160);
 const Color textGreyColor = Color.fromARGB(255, 211, 202, 202);
@@ -100,6 +101,7 @@ const Color transparent = Colors.transparent;
 
 const Color fadeGrey = Color(0xFFF1F1F1);
 const Color lightGrey = Color(0xffDADADA);
+const Color shimmerGrey = Color.fromARGB(255, 231, 227, 227);
 
 //box shadow
 const Color darkShadow = Color(0x26000000);
