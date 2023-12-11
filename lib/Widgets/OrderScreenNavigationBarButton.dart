@@ -26,7 +26,6 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
       child: InkWell(
         hoverColor: transparent,
         onTap: () {
-          providerData.updateUpperNavigatorIndex(value);
           if (pageController.page == value) {
             if (pageController.page == 0) {
               pageController
@@ -47,6 +46,7 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
             }
           } else {
             pageController.jumpToPage(value);
+            providerData.updateUpperNavigatorIndex(value);
           }
         },
         child: Column(

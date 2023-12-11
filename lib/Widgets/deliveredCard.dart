@@ -71,8 +71,8 @@ class DeliveredCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double textFontSize = (MediaQuery.of(context).size.width > 1099 &&
             MediaQuery.of(context).size.width < 1400)
-        ? 12
-        : 16;
+        ? 10
+        : 14;
     if (model.companyName == null) {
       model.companyName = "NA";
     }
@@ -87,179 +87,195 @@ class DeliveredCard extends StatelessWidget {
               onTap: () {
                 moveToDocumentUploadScreen();
               },
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Text(
-                              model.bookingDate ?? 'Null',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: textFontSize,
-                                  fontFamily: 'Montserrat'),
-                            ))),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                        child: Text(
-                      model.loadingPointCity ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                        child: Text(
-                      model.unloadingPointCity ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Text(
-                      '${model.truckNo}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Center(
-                        child: Text(
-                      '${model.driverName}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Text(
-                      '${model.truckType}' ?? 'Null',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: kLiveasyColor,
-                          fontSize: textFontSize,
-                          fontFamily: 'Montserrat'),
-                    )),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Flex(
-                            mainAxisSize: MainAxisSize.min,
-                            direction: Axis.vertical,
-                            children: [
-                          Flexible(
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                            '${model.companyName}' ?? 'Null',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: kLiveasyColor,
-                                fontSize: textFontSize,
-                                fontFamily: 'Montserrat'),
-                          ))
-                        ])),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IntrinsicHeight(
-                            child: TextButton(
-                          style: ButtonStyle(
-                            padding: MaterialStatePropertyAll<EdgeInsets>(
-                                EdgeInsets.only(left: 8, right: 8)),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    side: BorderSide(color: darkBlueColor))),
-                            alignment: Alignment.center,
-                            backgroundColor: MaterialStateProperty.all(
-                                Colors.white.withOpacity(0)),
-                          ),
-                          child: Text(
-                            'History',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: mediumBoldWeight,
-                                color: kLiveasyColor,
-                                fontSize: size_7,
-                                fontFamily: 'Montserrat'),
-                          ),
-                          onPressed: () {
-                            moveToDocumentUploadScreen();
-                          },
-                        )),
-                        SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: IconButton(
-                            onPressed: () {
-                              moveToDocumentUploadScreen();
-                            },
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_sharp,
-                              color: kLiveasyColor,
-                              size: 15,
-                              weight: 700,
-                            ),
-                            padding: EdgeInsets.zero,
-                            iconSize: 15,
-                            style: const ButtonStyle(
-                              padding: MaterialStatePropertyAll<EdgeInsets>(
-                                  EdgeInsets.zero),
-                            ),
-                          ),
-                        ),
-                      ],
+                                model.bookingDate ?? 'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              ))),
                     ),
-                  ),
-                ],
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        model.loadingPointCity ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        model.unloadingPointCity ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${model.truckNo}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 4,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${model.driverName}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                        '${model.truckType}' ?? 'Null',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: textFontSize,
+                              fontFamily: 'Montserrat'),
+                      ),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Flex(
+                                mainAxisSize: MainAxisSize.min,
+                                direction: Axis.vertical,
+                                children: [
+                              Flexible(
+                                  child: Text(
+                                '${model.companyName}' ?? 'Null',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: textFontSize,
+                                    fontFamily: 'Montserrat'),
+                              ))
+                            ]),
+                          )),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 1),
+                    Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IntrinsicHeight(
+                                child: TextButton(
+                              style: ButtonStyle(
+                                padding: MaterialStatePropertyAll<EdgeInsets>(
+                                    EdgeInsets.only(left: 8, right: 8)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                        side: BorderSide(color: darkBlueColor))),
+                                alignment: Alignment.center,
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.white.withOpacity(0)),
+                              ),
+                              child: Text(
+                                'History',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: mediumBoldWeight,
+                                    color: kLiveasyColor,
+                                    fontSize: size_7,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                              onPressed: () {
+                                moveToDocumentUploadScreen();
+                              },
+                            )),
+                            SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: IconButton(
+                                onPressed: () {
+                                  moveToDocumentUploadScreen();
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  color: kLiveasyColor,
+                                  size: 15,
+                                  weight: 700,
+                                ),
+                                padding: EdgeInsets.zero,
+                                iconSize: 15,
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll<EdgeInsets>(
+                                      EdgeInsets.zero),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           )

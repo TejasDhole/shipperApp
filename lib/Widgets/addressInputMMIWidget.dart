@@ -132,7 +132,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                 transition: PopoverTransition.other,
                 barrierColor: transparent,
                 radius: 0,
-                direction: PopoverDirection.bottom,
+                direction: (widget.hintText.contains("Unloading"))?PopoverDirection.top:PopoverDirection.bottom,
                 bodyBuilder: (context) {
                   return Container(
                     padding: const EdgeInsets.all(15),

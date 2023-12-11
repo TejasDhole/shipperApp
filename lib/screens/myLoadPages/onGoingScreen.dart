@@ -151,96 +151,106 @@ class _OngoingScreenState extends State<OngoingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
                 Expanded(
-                    flex: (Responsive.isMobile(context)) ? 8 : 50,
-                    child: TextField(
-                      controller: searchTextController,
-                      onChanged: (value) {
-                        if (value.length > 2) {
-                          getSearchLoadList();
-                        } else {
-                          searchedLoadList = modelList;
-                          setState(() {});
-                        }
-                      },
-                      style: TextStyle(
-                          color: black,
-                          fontFamily: 'Montserrat',
-                          fontSize: size_8),
-                      textAlign: TextAlign.center,
-                      cursorColor: kLiveasyColor,
-                      cursorWidth: 1,
-                      mouseCursor: SystemMouseCursors.click,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                  color: borderLightColor, width: 1.5)),
-                          hintText: 'Search',
-                          hintStyle: TextStyle(
-                              color: borderLightColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: size_8),
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: borderLightColor,
+                    flex: (Responsive.isMobile(context)) ? 8 : 5,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: lightGrey,
+                            blurRadius: 5,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide:
-                                  BorderSide(color: truckGreen, width: 1.5))),
+                        ],
+                      ),
+                      child: TextField(
+                        controller: searchTextController,
+                        onChanged: (value) {
+                          if (value.length > 2) {
+                            getSearchLoadList();
+                          } else {
+                            searchedLoadList = modelList;
+                            setState(() {});
+                          }
+                        },
+                        style: TextStyle(
+                            color: black,
+                            fontFamily: 'Montserrat',
+                            fontSize: size_8),
+                        cursorColor: kLiveasyColor,
+                        cursorWidth: 1,
+                        mouseCursor: SystemMouseCursors.click,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                              bottom: 0, left: 5, right: 5, top: 15),
+                          prefixIcon:
+                          const Icon(Icons.search, color: grey, size: 25),
+                          hintText: "Search",
+                          hintStyle: TextStyle(
+                              fontSize: size_8,
+                              fontFamily: "Montserrat",
+                              color: grey,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     )),
-                Expanded(
-                  flex: (Responsive.isMobile(context)) ? 2 : 33,
-                  child: Container(),
-                ),
                 Visibility(
                   visible: Responsive.isDesktop(context) ? true : false,
                   child: Expanded(
-                    flex: 17,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreenWeb(
-                                    visibleWidget: TrackAllScreen(),
-                                    index: 1000,
-                                    selectedIndex:
-                                        screens.indexOf(postLoadScreen),
-                                  )),
-                        );
-                      },
-                      child: Container(
-                        height: 55,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            border: Border.all(color: darkBlueTextColor),
-                            color: white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset('assets/icons/Track.png'),
-                            Text('Track All Loads',
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: darkBlueTextColor)),
-                          ],
+                    flex: (Responsive.isMobile(context)) ? 2 :4,
+                    child: Row(
+                      children: [
+                        Expanded(child: SizedBox(),),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreenWeb(
+                                        visibleWidget: TrackAllScreen(),
+                                        index: 1000,
+                                        selectedIndex:
+                                            screens.indexOf(postLoadScreen),
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            height: 55,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                border: Border.all(color: darkBlueTextColor),
+                                color: white),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset('assets/icons/Track.png'),
+                                const SizedBox(width: 20,),
+                                Text('Track All Loads',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        color: darkBlueTextColor)),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 20,
             ),
             loading
                 ? Expanded(child: const OnGoingLoadingWidgets())
@@ -290,9 +300,6 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                           screenWidth: MediaQuery.of(context)
                                               .size
                                               .width),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
                                       Expanded(
                                         flex: 4,
                                         child: ListView.separated(
@@ -320,8 +327,9 @@ class _OngoingScreenState extends State<OngoingScreen> {
                                                   ),
                                                 ]),
                                           separatorBuilder: (context, index) =>
-                                              Divider(
+                                              const Divider(
                                             thickness: 1,
+                                            height: 0,
                                             color: Colors.grey,
                                           ),
                                         ),
