@@ -1508,10 +1508,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                               widget.unloadingPoint,
                                                                           truckNumber:
                                                                               widget.truckNo,
-                                                                          loadingPointCity:
-                                                                              widget.loadingPointCity,
-                                                                          unloadingPointCity:
-                                                                              widget.unloadingPointCity,
                                                                         )),
                                                           );
                                                         },
@@ -1614,10 +1610,6 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                               widget.unloadingPoint,
                                                                           truckNumber:
                                                                               widget.truckNo,
-                                                                          loadingPointCity:
-                                                                              widget.loadingPointCity,
-                                                                          unloadingPointCity:
-                                                                              widget.unloadingPointCity,
                                                                         )),
                                                           );
                                                         },

@@ -13,22 +13,20 @@ import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/Widgets/custom_Info_Window.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/bookingApiCalls.dart';
-import 'package:shipper_app/functions/durationToDateTime.dart';
-import 'package:shipper_app/functions/googleDirectionsApi.dart';
-import 'package:shipper_app/functions/mapUtils/getLoactionUsingImei.dart';
 import 'package:shipper_app/functions/ongoingTrackUtils/FastTag.dart';
 import 'package:shipper_app/functions/trackScreenFunctions.dart';
 import 'package:shipper_app/models/BookingModel.dart';
 import 'package:shipper_app/screens/tryAgainScreen.dart';
 
-class TrackAllScreen extends StatefulWidget {
-  const TrackAllScreen({super.key});
+class TrackAllFastagScreen extends StatefulWidget {
+  final List<Map<String, dynamic>> EwayData;
+  const TrackAllFastagScreen({super.key, required this.EwayData});
 
   @override
-  State<TrackAllScreen> createState() => _TrackAllScreenState();
+  State<TrackAllFastagScreen> createState() => _TrackAllFastagScreenState();
 }
 
-class _TrackAllScreenState extends State<TrackAllScreen> {
+class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
   GlobalKey _mapKey = GlobalKey();
   OverlayEntry? _overlayEntry;
   final double customInfoWindowWidth = 200; // Adjust as needed
@@ -72,12 +70,6 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
     'assets/images/TollImage.png',
     'assets/images/TollImage.png',
     'assets/images/TollImage.png',
-  ];
-
-  final List<String> stoppagePaths = [
-    'assets/icons/stoppage.png',
-    'assets/icons/stoppage.png',
-    'assets/icons/stoppage.png',
   ];
 
   @override
@@ -126,48 +118,30 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
   }
 
   Future<void> fetchBookingData() async {
-    String? currLocation;
     String geoCode;
-    LatLng? currentLocation;
-    String? duration;
     from = yesterday.toIso8601String();
     to = now.toIso8601String();
     int k = 0, j = 0;
 
     try {
-      List<BookingModel> bookingData =
-          await bookingApi.getDataByPostLoadIdOnGoing().timeout(Duration(seconds: 5), onTimeout: () {
-            return [];
-          },);
-
       setState(() {
         isLoading = true;
       });
 
       //access all the bookings
-      if(bookingData.length == 0){
-        isLoading = false;
-          timeout = true;
-      }else{
-      for (BookingModel booking in bookingData) {
-        String dateString =
-            booking.bookingDate!; // Assuming booking.bookingDate is a String
-        List<String> dateParts = dateString.split('-');
-        int day = int.parse(dateParts[0]);
-        int month = int.parse(dateParts[1]);
-        int year = int.parse(dateParts[2]);
 
-        DateTime date = DateTime(year, month, day);
-        DateTime utcDate = DateTime.utc(date.year, date.month, date.day);
-        String formattedDate = utcDate.toIso8601String().split('Z')[0];
+      for (var i = 0; i < widget.EwayData.length; i++) {
+        final Map<String, dynamic> currentEwayBill = widget.EwayData[i];
+        final String fromPlace = currentEwayBill['fromPlace'];
+        final String toPlace = currentEwayBill['toPlace'];
+        final String vehicleNo =
+            currentEwayBill['vehicleListDetails'][0]['vehicleNo'];
 
         List<LatLng> eachBookingCompleteCoordinates = [];
-        LatLng? loadingPointCoordinates =
-            await getCoordinatesForWeb(booking.loadingPointCity!);
+        LatLng? loadingPointCoordinates = await getCoordinatesForWeb(fromPlace);
 
         //Add the marker for the loadingPoint
         if (loadingPointCoordinates != null) {
-          print("entered into loading");
           eachBookingCompleteCoordinates.add(loadingPointCoordinates);
           final Uint8List loadingPointMarker =
               await getBytesFromAssets('assets/icons/EndingPoint.png', 35);
@@ -176,88 +150,17 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
             markerId: MarkerId('loading${k + 1}'),
             position: loadingPointCoordinates,
             icon: BitmapDescriptor.fromBytes(loadingPointMarker),
-            onTap: () {
-              setSelectedBooking(booking);
-              _onMarkerTapped();
-            },
           ));
           k++;
         }
 
-        //Get the Stoppages data from Traccar Stooppages API
-        stoppages = await MapUtil().getTraccarStoppages(
-            deviceId: booking.deviceId, from: from, to: to);
-     
         //Get the Fastag Data
-        locations = await checkFastTag()
-            .getVehicleLocation(booking.truckId![0].toString()).timeout(Duration(seconds: 10), onTimeout: () {
+        locations = await checkFastTag().getVehicleLocation(vehicleNo).timeout(
+          Duration(seconds: 10),
+          onTimeout: () {
             return [];
-          },);
-
-        //Get the Truck history data from the Traccar History API
-        trips = await MapUtil().getTraccarHistory(
-            deviceId: booking.deviceId, from: formattedDate, to: to);
-       
-
-        if (trips != null && trips!.isNotEmpty) {
-          int a = 0;
-          int b = 3;
-          int c;
-
-          while (a < trips!.length) {
-            c = a + 3;
-
-            if (c >= trips!.length) {
-              c = trips!.length - 1;
-            }
-
-            LatLng point1 = LatLng(trips![a].latitude, trips![a].longitude);
-            LatLng point2 = LatLng(trips![c].latitude, trips![c].longitude);
-
-            // Add points to eachBookingCompleteCoordinates
-            eachBookingCompleteCoordinates.add(point1);
-            if (a != c) {
-              // Check to avoid adding the same point twice when 'c' is adjusted
-              eachBookingCompleteCoordinates.add(point2);
-            }
-
-            // Update 'a' to the old 'b' and 'b' to 'c' for the next iteration
-            a = b;
-            b = c;
-
-            // Break if 'a' is the last index, to avoid duplicate addition of last point
-            if (a == trips!.length - 1) {
-              break;
-            }
-          }
-
-          // Get the last location
-          var lastTrip = trips!.last;
-          currentLocation = LatLng(lastTrip.latitude, lastTrip.longitude);
-
-          // Add a marker at the last location
-          try {
-            final Uint8List marker =
-                await getBytesFromAssets('assets/icons/truckPin.png', 105);
-            _markers.add(Marker(
-              markerId: MarkerId(
-                  'Final Current Location: ${currentLocation.toString()}'),
-              position: currentLocation,
-              icon: BitmapDescriptor.fromBytes(marker),
-            ));
-          } catch (e) {
-            debugPrint("Error adding marker: $e");
-          }
-        }
-
-        //Stoppages marker is added here
-      
-        if (stoppages != null) {
-          for (int i = 0; i < stoppages!.length; i++) {
-            var stoppage = stoppages![i];
-            addStoppageMarker(stoppage, i + 1);
-          }
-        }
+          },
+        );
 
         //Fastag marker is added here
         if (locations != null) {
@@ -295,101 +198,40 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         }
 
         //Unloading Point marker is added
-        LatLng? unloadingPointCoordinates =
-            await getCoordinatesForWeb(booking.unloadingPointCity!);
+        LatLng? unloadingPointCoordinates = await getCoordinatesForWeb(toPlace);
         if (unloadingPointCoordinates != null) {
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
               await getBytesFromAssets('assets/icons/StartingPoint.png', 35);
 
           _markers.add(Marker(
-              markerId: MarkerId('Unloading ${j + 1}'),
-              position: unloadingPointCoordinates,
-              icon: BitmapDescriptor.fromBytes(unloadingPointMarker),
-              onTap: () {
-                setSelectedBooking(booking);
-                _onMarkerTapped();
-              }));
+            markerId: MarkerId('Unloading ${j + 1}'),
+            position: unloadingPointCoordinates,
+            icon: BitmapDescriptor.fromBytes(unloadingPointMarker),
+          ));
           j++;
         }
-        //Calculating the Current Location Address
-        if (currentLocation == null) {
-          position =
-              await MapUtil().getTraccarPosition(deviceId: booking.deviceId);
-          if (position != null) {
-            var first = position![0];
-            currentLocation = LatLng(first.latitude, first.longitude);
-            try {
-              final Uint8List marker =
-                  await getBytesFromAssets('assets/icons/truckPin.png', 105);
-              _markers.add(Marker(
-                markerId: const MarkerId('Current Location: 1000'),
-                position: currentLocation,
-                icon: BitmapDescriptor.fromBytes(marker),
-              ));
-            } catch (e) {
-              debugPrint("Error adding marker with position: $e");
-            }
-            currLocation = await checkFastTag().fetchAddressForWeb(
-                currentLocation.latitude, currentLocation.longitude);
-
-            List<String> parts = currLocation.split(',');
-            if (parts.length >= 2) {
-              shortAddress = parts[1].trim();
-            } else {
-              shortAddress = parts[0].trim();
-            }
-          } else {
-            shortAddress = "Not Found";
-          }
-        } else {
-          currLocation = await checkFastTag().fetchAddressForWeb(
-              currentLocation.latitude, currentLocation.longitude);
-
-          List<String> parts = currLocation.split(',');
-          if (parts.length >= 2) {
-            shortAddress = parts[1].trim();
-          } else {
-            shortAddress = parts[0].trim();
-          }
-        }
-
-        //Calculating the Estimated Time
-        if (unloadingPointCoordinates != null && currentLocation != null) {
-          duration = await EstimatedTime().getEstimatedTime(
-                  unloadingPointCoordinates, currentLocation ) ??
-              "Not possible";
-              print("duration : $duration");
-          estimatedTime = DurationToDateTime().getDuration(duration!, to);
-        }
-
-        bookingDetails[booking] = {
-          'shortAddress': shortAddress!,
-          'estimatedTime': estimatedTime ?? "Not Found"
-        };
-
-        if(routes.isEmpty && _markers.isEmpty){
+        
+        if (routes.isEmpty && _markers.isEmpty) {
           isLoading = false;
           timeout = true;
-        }else{
-        setState(
-          () {
-            routes.add(eachBookingCompleteCoordinates);
-            for (List<LatLng> routeCoordinates in routes) {
-              int index = routes.indexOf(routeCoordinates);
-              _polyline.add(Polyline(
-                polylineId: PolylineId('Route ${index + 1}'),
-                points: routeCoordinates,
-                color: Colors.blue,
-                width: 3,
-              ));
-            }
-            isLoading = false;
-          },
-        );
-        
+        } else {
+          setState(
+            () {
+              routes.add(eachBookingCompleteCoordinates);
+              for (List<LatLng> routeCoordinates in routes) {
+                int index = routes.indexOf(routeCoordinates);
+                _polyline.add(Polyline(
+                  polylineId: PolylineId('Route ${index + 1}'),
+                  points: routeCoordinates,
+                  color: Colors.blue,
+                  width: 3,
+                ));
+              }
+              isLoading = false;
+            },
+          );
         }
-      }
       }
     } catch (e) {
       debugPrint('Error fetching data: $e');
@@ -401,7 +243,6 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
     String stopAddress = await getStoppageAddress(stoppage);
     String stoppageTime = getStoppageTime(stoppage);
     String duration = getStoppageDuration(stoppage);
-    // final Uint8List icon = await getBytesFromAssets(stoppagePaths[index % 3], 25);
     BitmapDescriptor icon = await createNumberedMarkerIcon(index);
 
     setState(() {
@@ -412,43 +253,6 @@ class _TrackAllScreenState extends State<TrackAllScreen> {
         onTap: () {
           _showCustomInfoWindow(MarkerId("Stop Mark $index"), stoplatlong,
               duration, stoppageTime, stopAddress);
-        },
-      ));
-    });
-  }
-
-  getStoppage(var gpsStoppage, int i) async {
-    var stopAddress;
-    var stoppageTime;
-    var stoplatlong;
-    var duration;
-
-    LatLng? latlong;
-    print("lat lng");
-    latlong = LatLng(gpsStoppage.latitude, gpsStoppage.longitude);
-    stoplatlong = latlong;
-    print('address');
-    stopAddress = await getStoppageAddress(gpsStoppage);
-    print("time");
-    stoppageTime = getStoppageTime(gpsStoppage);
-    print("duration");
-    duration = getStoppageDuration(gpsStoppage);
-    print("icon");
-    markerIcon = await getBytesFromAssets(stoppagePaths[i % 3], 25);
-    print("icon completed");
-    setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId("Stop Mark $i"),
-        position: stoplatlong,
-        icon: kIsWeb
-            ? BitmapDescriptor.fromBytes(markerIcon, size: const Size(40, 40))
-            : BitmapDescriptor.fromBytes(markerIcon),
-        onTap: () async {
-          stopAddress = await getStoppageAddress(gpsStoppage);
-          stoppageTime = getStoppageTime(gpsStoppage);
-          duration = getStoppageDuration(gpsStoppage);
-          _showCustomInfoWindow(MarkerId("Stop Mark $i"), stoplatlong, duration,
-              stoppageTime, stopAddress);
         },
       ));
     });
