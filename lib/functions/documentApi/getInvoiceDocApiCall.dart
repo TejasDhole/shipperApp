@@ -18,7 +18,6 @@ getInvoiceDocApiCall(String invoiceId, String docType) async {
         invoiceDocLinks.add(jsondata["documentLink"]);
       }
     }
-    // print(invoiceDocLinks);
     return invoiceDocLinks;
   } catch (e) {
     return e.toString();

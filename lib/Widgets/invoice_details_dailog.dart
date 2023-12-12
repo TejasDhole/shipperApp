@@ -62,7 +62,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   : "",
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return Text('Could not load image');
+                return Text('no image');
               },
             ),
             const SizedBox(height: 32),

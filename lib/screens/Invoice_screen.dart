@@ -44,11 +44,11 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
 
   Future<void> _fetchInvoiceData() async {
     ShipperIdController shipperIdController = Get.put(ShipperIdController());
-    String shipperId = shipperIdController.companyId.value;
+    String companyId = shipperIdController.companyId.value;
     from = DateFormat('yyyy-MM-dd HH:mm:ss').format(yesterday);
     to = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     try {
-      List<dynamic> data = await ApiService.getInvoiceData(shipperId, from, to);
+      List<dynamic> data = await ApiService.getInvoiceData(companyId, from, to);
       setState(() {
         inoviceList = data;
       });
