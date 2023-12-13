@@ -144,15 +144,17 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         if (loadingPointCoordinates != null) {
            print("3");
           eachBookingCompleteCoordinates.add(loadingPointCoordinates);
+          print("add");
           final Uint8List loadingPointMarker =
               await getBytesFromAssets('assets/icons/EndingPoint.png', 35);
-
+              print("marker done");
           _markers.add(Marker(
             markerId: MarkerId('loading${k + 1}'),
             position: loadingPointCoordinates,
             icon: BitmapDescriptor.fromBytes(loadingPointMarker),
           ));
           k++;
+          print("loop done");
         }
 
         //Get the Fastag Data
@@ -173,7 +175,7 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
             DateTime dateTime = DateTime.parse(combinedDateTime);
             String formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
             String formattedTime = DateFormat('hh:mm a').format(dateTime);
-
+            print("detailed address");
             geoCode = location['tollPlazaGeocode'];
             final List<String> geoCodeParts = geoCode.split(',');
 
@@ -211,7 +213,7 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
               await getBytesFromAssets('assets/icons/StartingPoint.png', 35);
-
+              print("unloading");
           _markers.add(Marker(
             markerId: MarkerId('Unloading ${j + 1}'),
             position: unloadingPointCoordinates,
