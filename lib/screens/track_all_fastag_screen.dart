@@ -327,6 +327,7 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
   }
 
   Future<Uint8List> getBytesFromAssets(String path, int width) async {
+    try{
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
         targetHeight: width);
@@ -334,6 +335,10 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
     return (await info.image.toByteData(format: ui.ImageByteFormat.png))!
         .buffer
         .asUint8List();
+    }catch(e){
+      print("Error in image : $e");
+      throw(e);
+    }
   }
 
 //To set the visibility of the side panel
