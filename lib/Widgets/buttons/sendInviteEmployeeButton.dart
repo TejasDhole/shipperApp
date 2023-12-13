@@ -16,41 +16,41 @@ class _SendInviteButtonState extends State<SendInviteButton> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      width: isMobile ? screenWidth * 0.46 : screenWidth * 0.15,
-      height: 65,
-      child: Padding(
-        padding: isMobile
-            ? const EdgeInsets.only(left: 14.0, top: 6.0, bottom: 10.0)
-            : const EdgeInsets.only(right: 8.0, top: 8.0, bottom: 16.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            backgroundColor: const Color(0xFF000066),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('Send Invite',
-                  style: GoogleFonts.montserrat(
-                      color: white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: size_8)),
-              const Image(image: AssetImage('assets/icons/telegramicon.png')),
-            ],
-          ),
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const AddUser();
-                });
-          },
+      width: isMobile ? screenWidth * 0.46 : screenWidth * 0.12,
+      height: 45,
+      margin: isMobile
+          ? const EdgeInsets.only(left: 14.0, top: 6.0, bottom: 10.0)
+          : EdgeInsets.only(right: 35.0, top: 6.0, bottom: screenHeight * 0.06),
+      decoration: BoxDecoration(
+        border: Border.all(color: darkBlueTextColor),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
         ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Send Invite',
+                style: GoogleFonts.montserrat(
+                    color: const Color(0xFF000066),
+                    fontWeight: FontWeight.w600,
+                    fontSize: size_8)),
+            const Image(image: AssetImage('assets/icons/telegramicon.png')),
+          ],
+        ),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AddUser();
+              });
+        },
       ),
     );
   }

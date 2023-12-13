@@ -25,7 +25,7 @@ import '../models/popup_model_for_employee_card.dart';
 //TODO: This card is used to display the employee name/uid and role in the company and also we can edit the role as well as delete the employee from company database
 class EmployeeCard extends StatelessWidget {
   CompanyUsers companyUsersModel;
-  
+
   EmployeeCard({Key? key, required this.companyUsersModel}) : super(key: key);
 
   List<Map<String, dynamic>> employeeDataList = [];
@@ -53,177 +53,194 @@ class EmployeeCard extends StatelessWidget {
             'Email': email,
             'Role': role,
           };
-          return Responsive.isMobile(context)   
-              ? Container(width: 70, height : 170, margin: const EdgeInsets.only(top: 1, bottom : 40, left: 13, right: 13),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3.0), 
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), 
-                    spreadRadius: 2, 
-                    blurRadius: 5,
-                    offset: const Offset(0, 3), 
+          return Responsive.isMobile(context)
+              ? Container(
+                  width: 70,
+                  height: 170,
+                  margin: const EdgeInsets.only(
+                      top: 1, bottom: 40, left: 13, right: 13),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(3.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                    color: Colors.white,
                   ),
-                ],
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [ 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0,right: 16.0, top: 14.0,bottom: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '$name',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: kLiveasyColor,
-                            fontSize: 15,
-                            fontFamily: 'Montserrat'),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, top: 14.0, bottom: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '$name',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: kLiveasyColor,
+                                    fontSize: 15,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                              GestureDetector(
+                                  onTap: () async {
+                                    bool Role = await _fetchUserRole();
+                                    if (Role) {
+                                      removeUser(context, '$email');
+                                    } else {
+                                      showNotAllowedPopup(context);
+                                    }
+                                  },
+                                  child: const Image(
+                                      image: AssetImage(
+                                          'assets/icons/deleteIcon.png')))
+                            ],
+                          ),
                         ),
-                        GestureDetector(
-                          onTap: () async {
-                            bool Role = await _fetchUserRole(); 
-                            if(Role){
-                              removeUser(context, '$email');
-                            }else{
-                              showNotAllowedPopup(context);
-                            }
-                          },
-                          child: const Image(image: AssetImage('assets/icons/deleteIcon.png')))
-                      ],
-                    ),
-                  ), 
-                  Padding(
-                    padding: const EdgeInsets.only(left:16.0,right: 16.0,top:2.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Email',
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: sideBarTextColor
-                          )
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, top: 2.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Email',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: sideBarTextColor)),
+                              Text(
+                                '$email',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: kLiveasyColor,
+                                    fontSize: 15,
+                                    fontFamily: 'Montserrat'),
+                              )
+                            ],
+                          ),
                         ),
-                        Text(
-                          '$email',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: kLiveasyColor,
-                            fontSize: 15,
-                            fontFamily: 'Montserrat'),
-                        )
-                      ],
-                    ),
-                  ), 
-                  Padding(
-                    padding: const EdgeInsets.only(left:16.0,right: 16.0,top:4.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Role",
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            color: sideBarTextColor
-                          )
-                        ),
-                        Container(
-                            padding: const EdgeInsets.only(top: 12),
-                            child: CustomRole(
-                                selectedRole: '$role',
-                                roleChanged: (newRole) async{
-                                    bool Role = await _fetchUserRole(); 
-                                      if(Role){
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, top: 4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Role",
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w500,
+                                      color: sideBarTextColor)),
+                              Container(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: CustomRole(
+                                    selectedRole: '$role',
+                                    roleChanged: (newRole) async {
+                                      bool Role = await _fetchUserRole();
+                                      if (Role) {
                                         updateUser(context, newRole);
-                                      }else{
+                                      } else {
                                         showNotAllowedPopup(context);
                                       }
-                                }),
+                                    }),
+                              ),
+                            ],
                           ),
-                      ],
-                    ),
-                  )
-                  ]),
-              ):
-            
-              Row(
-              children: [
-                Expanded(
-                    flex: 4,
-                    child: Center(
-                        child: Container(
+                        )
+                      ]),
+                )
+              : Container(
+                  height: 80,
+                  margin: EdgeInsets.only(left: 15, right : 35),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                    border:
+                        const Border(bottom: BorderSide(color: greyShade, width: 1)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 4,
+                          child: Center(
+                              child: Container(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, top: 12),
+                                  child: Text(
+                                    '$name',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kLiveasyColor,
+                                        fontSize: 15,
+                                        fontFamily: 'Montserrat'),
+                                  )))),
+                      const VerticalDivider(color: greyShade, thickness: 1),
+                      Expanded(
+                          flex: 5,
+                          child: Center(
+                              child: Container(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, top: 12),
+                                  child: Text(
+                                    '$email',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        color: kLiveasyColor,
+                                        fontSize: 15,
+                                        fontFamily: 'Montserrat'),
+                                  )))),
+                      const VerticalDivider(color: greyShade, thickness: 1),
+                      Expanded(
+                          flex: 4,
+                          child: Center(
+                              child: Container(
+                            padding: const EdgeInsets.only(top: 12, bottom: 12),
+                            child: CustomRole(
+                                selectedRole: '$role',
+                                roleChanged: (newRole) async {
+                                  bool Role = await _fetchUserRole();
+                                  if (Role) {
+                                    updateUser(context, newRole);
+                                  } else {
+                                    showNotAllowedPopup(context);
+                                  }
+                                }),
+                          ))),
+                      const VerticalDivider(color: greyShade, thickness: 1),
+                      Expanded(
+                          flex: 2,
+                          child: Center(
+                              child: Container(
                             padding: const EdgeInsets.only(left: 8, top: 12),
-                            child: Text(
-                              '$name',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: kLiveasyColor,
-                                  fontSize: 15,
-                                  fontFamily: 'Montserrat'),
-                            )))),
-                const VerticalDivider(
-                  color: Colors.grey,
-                ),
-                Expanded(
-                    flex: 5,
-                    child: Center(
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 8, top: 12),
-                            child: Text(
-                              '$email',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: kLiveasyColor,
-                                  fontSize: 15,
-                                  fontFamily: 'Montserrat'),
-                            )))),
-                const VerticalDivider(
-                  color: Colors.grey,
-                ),
-                Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Container(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: CustomRole(
-                          selectedRole: '$role',
-                          roleChanged: (newRole) async{
-                              bool Role = await _fetchUserRole(); 
-                                if(Role){
-                                  updateUser(context, newRole);
-                                }else{
+                            child: GestureDetector(
+                              onTap: () async {
+                                bool Role = await _fetchUserRole();
+                                if (Role) {
+                                  removeUser(context, '$email');
+                                } else {
                                   showNotAllowedPopup(context);
                                 }
-                          }),
-                    ))),
-                const VerticalDivider(
-                  color: Colors.grey,
-                ),
-                Expanded(
-                    flex: 3,
-                    child: Center(
-                        child: Container(
-                      padding: const EdgeInsets.only(left: 8, top: 12),
-                      child: GestureDetector(
-                        onTap: () async {
-                          bool Role = await _fetchUserRole(); 
-                          if(Role){
-                            removeUser(context, '$email');
-                          }else{
-                            showNotAllowedPopup(context);
-                          }
-                        },
-                        child: const Image(
-                            image: AssetImage('assets/icons/deleteIcon.png')),
-                      ),
-                    ))),
-              ],
-            );
+                              },
+                              child: const Image(
+                                  image: AssetImage(
+                                      'assets/icons/deleteIcon.png')),
+                            ),
+                          ))),
+                    ],
+                  ),
+                );
         } else {
           return Container();
         }
@@ -263,7 +280,7 @@ class EmployeeCard extends StatelessWidget {
         });
   }
 
-  removeUser(BuildContext context, String name) { 
+  removeUser(BuildContext context, String name) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -273,30 +290,29 @@ class EmployeeCard extends StatelessWidget {
   }
 
   void showNotAllowedPopup(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Permission Denied'),
-        content: const Text('This action is only allowed for administrators.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-            },
-            child: Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Permission Denied'),
+          content:
+              const Text('This action is only allowed for administrators.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-Future<bool> _fetchUserRole() async {
-  ShipperIdController shipperIdController =
-  Get.put(ShipperIdController());
+  Future<bool> _fetchUserRole() async {
+    ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
-  return (shipperIdController.role.value == 'ADMIN') ? true: false;
-}
-  
+    return (shipperIdController.role.value == 'ADMIN') ? true : false;
+  }
 }
