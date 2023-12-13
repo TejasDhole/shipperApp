@@ -90,14 +90,12 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              decoration: BoxDecoration(
-                                  color: isMobile ? lineDividerColor : teamBar),
                               height: isMobile
                                   ? screenHeight * 0.07
                                   : screenHeight * 0.13,
                               width: screenWidth,
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
+                                padding: const EdgeInsets.only(left: 15.0),
                                 child: Align(
                                   alignment: Responsive.isMobile(context)
                                       ? Alignment.center
