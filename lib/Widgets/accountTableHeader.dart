@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
 
 Container AccountTableHeader(context) {
   bool small = true;
@@ -25,68 +27,67 @@ Container AccountTableHeader(context) {
   }
 
   return Container(
-    height: 50,
+    margin : EdgeInsets.only(left: 15,right : 35),
+    height: 60,
     decoration: const BoxDecoration(
-        border: Border(
-            bottom: BorderSide(color: greyShade, width: 1),
-            top: BorderSide(color: greyShade, width: 1),
-            left: BorderSide(color: greyShade, width: 1),
-            right: BorderSide(color: greyShade, width: 1))),
+      color: Color(0xfff2f5ff),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
             flex: 4,
             child: Center(
-                child: Container(
-                    child: Text(
+                child: Text(
               'Users',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: sideBarTextColor,
-                  fontSize: size_8,
-                  fontFamily: 'Montserrat'),
-            )))),
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: size_8,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
             flex: 5,
             child: Center(
-                child: Container(
-                    child: Text(
+                child: Text(
               'Email',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: sideBarTextColor,
-                  fontSize: size_8,
-                  fontFamily: 'Montserrat'),
-            )))),
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: size_8,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 3,
+            flex: 4,
             child: Center(
-                child: Container(
-                    child: Text(
+                child: Text(
               'Role',
               textAlign: TextAlign.center,
               selectionColor: sideBarTextColor,
-              style: TextStyle(
-                  color: sideBarTextColor,
-                  fontSize: size_8,
-                  fontFamily: 'Montserrat'),
-            )))),
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: size_8,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 3,
+            flex: 2,
             child: Center(
-                child: Container(
-                    child: Text(
+                child: Text(
               'Delete',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: size_8,
-                  color: sideBarTextColor,
-                  fontFamily: 'Montserrat'),
-            )))),
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: size_8,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
       ],
     ),
   );

@@ -128,9 +128,8 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         isLoading = true;
       });
 
-      //access all the bookings
-
       for (var i = 0; i < widget.EwayData.length; i++) {
+        print("1");
         final Map<String, dynamic> currentEwayBill = widget.EwayData[i];
         final String fromPlace = currentEwayBill['fromPlace'];
         final String toPlace = currentEwayBill['toPlace'];
@@ -141,7 +140,9 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         LatLng? loadingPointCoordinates = await getCoordinatesForWeb(fromPlace);
 
         //Add the marker for the loadingPoint
+         print("2");
         if (loadingPointCoordinates != null) {
+           print("3");
           eachBookingCompleteCoordinates.add(loadingPointCoordinates);
           final Uint8List loadingPointMarker =
               await getBytesFromAssets('assets/icons/EndingPoint.png', 35);
@@ -155,15 +156,17 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         }
 
         //Get the Fastag Data
+         print("4");
         locations = await checkFastTag().getVehicleLocation(vehicleNo).timeout(
           Duration(seconds: 10),
           onTimeout: () {
             return [];
           },
         );
-
+        print("5");
         //Fastag marker is added here
         if (locations != null) {
+           print("6");
           for (int i = 0; i < locations!.length; i++) {
             final location = locations![i];
             String combinedDateTime = location['readerReadTime'];
@@ -180,6 +183,7 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
 
               final Uint8List marker = await getBytesFromAssets(paths[i], 25);
 
+              print("7");
               _markers.add(Marker(
                   markerId: MarkerId(i.toString()),
                   position: LatLng(latitude, longitude),
@@ -194,12 +198,16 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
                   }));
               eachBookingCompleteCoordinates.add(LatLng(latitude, longitude));
             }
+            print("8");
           }
         }
 
         //Unloading Point marker is added
+         print("9");
         LatLng? unloadingPointCoordinates = await getCoordinatesForWeb(toPlace);
+        print("10");
         if (unloadingPointCoordinates != null) {
+           print("11");
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
               await getBytesFromAssets('assets/icons/StartingPoint.png', 35);
@@ -212,12 +220,15 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
           j++;
         }
         
+         print("12");
         if (routes.isEmpty && _markers.isEmpty) {
+           print("13 if");
           isLoading = false;
           timeout = true;
         } else {
           setState(
             () {
+               print("13 else");
               routes.add(eachBookingCompleteCoordinates);
               for (List<LatLng> routeCoordinates in routes) {
                 int index = routes.indexOf(routeCoordinates);
@@ -232,7 +243,9 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
             },
           );
         }
+        print("14");
       }
+      print("15");
     } catch (e) {
       debugPrint('Error fetching data: $e');
     }

@@ -73,8 +73,9 @@ class _EwayBillsState extends State<EwayBills> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                top: screenHeight * 0.05, right: screenWidth * 0.72),
+                top: screenHeight * 0.05, ),
             child: Text('E-way Bill',
+            textAlign: TextAlign.left,
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.02,
