@@ -1,24 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/functions/documentApi/getDocApiCallVerify.dart';
+import 'package:shipper_app/functions/documentApi/getInvoiceDocApiCall.dart';
 
-class InvoiceDetails extends StatelessWidget {
-  String? bookid;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController contactNumberController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController panNumberController = TextEditingController();
-  final TextEditingController gstNumberController = TextEditingController();
-  final TextEditingController vendorNumberController = TextEditingController();
+class InvoiceDetails extends StatefulWidget {
+  String? invoiceId;
+  InvoiceDetails({this.invoiceId});
 
-  InvoiceDetails({super.key});
+  @override
+  State<InvoiceDetails> createState() => _InvoiceDetailsState();
+}
+
+class _InvoiceDetailsState extends State<InvoiceDetails> {
+  var docLinks = [];
+
+  uploadedCheck() async {
+    try {
+      docLinks = await getInvoiceDocApiCall(widget.invoiceId.toString(), "I");
+      print(docLinks);
+    } catch (e) {
+      print("Error fetching docLinks: $e");
+    }
+
+    setState(() {
+      docLinks = docLinks;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    uploadedCheck();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
-        height: MediaQuery.of(context).size.height * 0.5, // Adju
+        height: MediaQuery.of(context).size.height * 0.6,
         child: Column(
           children: [
             const Row(
@@ -36,7 +56,16 @@ class InvoiceDetails extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Divider(),
-            const SizedBox(height: 182),
+            Image.network(
+              docLinks != null && docLinks.isNotEmpty && docLinks[0] != null
+                  ? docLinks[0].toString()
+                  : "",
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return Text('no image');
+              },
+            ),
+            const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.only(left: 60, right: 60),
               child: Row(
@@ -60,7 +89,7 @@ class InvoiceDetails extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      getDocApiCallVerify(bookid.toString(), "L");
+                      //getDocApiCallVerify(bookid.toString(),
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(

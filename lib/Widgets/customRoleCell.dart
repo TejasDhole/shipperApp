@@ -23,6 +23,7 @@ class _CustomRoleState extends State<CustomRole> {
       width: Responsive.isMobile(context) ? 120 :  250,
       decoration: BoxDecoration(
         border: Border.all(color: greyShade),
+        borderRadius: const BorderRadius.all(Radius.circular(7))
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(

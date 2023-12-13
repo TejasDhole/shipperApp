@@ -1,14 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/Widgets/addLocationDrawerWidget.dart';
+import 'package:shipper_app/constants/shipper_nav_icons.dart';
 import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/functions/shipperApis/isolatedShipperGetData.dart';
 import '../../constants/screens.dart';
-import '../../functions/shipperApis/runShipperApiPost.dart';
 import '/constants/colors.dart';
 import 'package:sizer/sizer.dart';
 import '../logo.dart';
@@ -29,8 +28,9 @@ class HomeScreenWeb extends StatefulWidget {
 class _HomeScreenWebState extends State<HomeScreenWeb> {
   int _selectedIndex = 0;
   int _index = 0;
-  late LinearGradient dashboardSelectedTabGradientColor,
+  late Color dashboardSelectedTabGradientColor,
       myLoadsSelectedTabGradientColor,
+      ewayBillsSelectedTabGradientColor,
       invoiceSelectedTabGradientColor,
       accountSelectedTabGradientColor,
       liveasySelectedTabGradientColor,
@@ -63,52 +63,56 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       widthOfSideBar = 110;
     }
     if (_selectedIndex == 0) {
-      dashboardSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      dashboardSelectedTabGradientColor = kLiveasyColor;
     } else {
-      dashboardSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      dashboardSelectedTabGradientColor = white;
     }
 
     if (_selectedIndex == 1) {
       myLoadsSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+          kLiveasyColor;
     } else {
       myLoadsSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+          white;
     }
-
     if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      ewayBillsSelectedTabGradientColor =
+          kLiveasyColor;
     } else {
-      invoiceSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      ewayBillsSelectedTabGradientColor =
+          white;
     }
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      invoiceSelectedTabGradientColor =
+         kLiveasyColor;
     } else {
-      accountSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      invoiceSelectedTabGradientColor =
+          white;
     }
     if (_selectedIndex == 4) {
-      facilitySelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      accountSelectedTabGradientColor =
+         kLiveasyColor;
     } else {
-      facilitySelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      accountSelectedTabGradientColor =
+          white;
     }
     if (_selectedIndex == 5) {
+      facilitySelectedTabGradientColor =
+          kLiveasyColor;
+    } else {
+      facilitySelectedTabGradientColor =
+         white;
+    }
+    if (_selectedIndex == 6) {
       signoutSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+          kLiveasyColor;
     } else {
       signoutSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+          white;
     }
 
     liveasySelectedTabGradientColor =
-        const LinearGradient(colors: [white, white]);
+        white;
   }
 
   //TODO: This is the list for Navigation Rail List Destinations,This contains icons and it's labels
@@ -116,10 +120,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   //TODO : This is the list for Bottom Navigation Bar
   List<BottomNavigationBarItem> bottom_destinations = [
     const BottomNavigationBarItem(
-        icon: Icon(Icons.space_dashboard), label: "Dashboard"),
+        icon: Icon(Icons.space_dashboard), label: "Control Tower"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.inventory_2_rounded), label: "My Loads"),
-    //const BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: "Invoice"),
+    const BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: "Eway Bills"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.person_outline_outlined), label: "Account"),
     const BottomNavigationBarItem(
@@ -284,51 +288,66 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             shadowColor: Colors.grey,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 100),
+                                  left: 15, right: 15, top: 100),
                               height: MediaQuery.of(context).size.height,
                               width: widthOfSideBar,
+                              color: white,
                               child: Column(
                                 children: [
                                   SideExpandedItem(
-                                      title: "Dashboard",
-                                      icon: AssetImage(
-                                          'assets/images/shipper_web_dashboard.png')),
+                                      title: "Control Tower",
+                                      iconSize: 18,
+                                      icon: ShipperNav.control_tower,
+                                      position: 0),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 8,
                                   ),
                                   SideExpandedItem(
                                       title: "My Loads",
-                                      icon: AssetImage(
-                                          'assets/images/shipper_web_my_loads.png')),
-                                  SizedBox(
-                                    height: 10,
+                                      iconSize: 18,
+                                      icon: ShipperNav.loads,
+                                      position: 1),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  SideExpandedItem(
+                                      title: "Eway Bills",
+                                      iconSize: 18,
+                                      icon: ShipperNav.eway_bill,
+                                      position: 2),
+                                  const SizedBox(
+                                    height: 8,
                                   ),
                                   SideExpandedItem(
                                       title: "Invoice",
-                                      icon: AssetImage(
-                                          'assets/images/shipper_web_invoice.png')),
-                                  SizedBox(
-                                    height: 10,
+                                      iconSize: 18,
+                                      icon: ShipperNav.invoice,
+                                      position: 3),
+                                  const SizedBox(
+                                    height: 8,
                                   ),
                                   SideExpandedItem(
                                       title: "Team",
-                                      icon: AssetImage(
-                                          'assets/images/shipper_web_account.png')),
-                                  SizedBox(
-                                    height: 10,
+                                      iconSize: 18,
+                                      icon : ShipperNav.team,
+                                      position: 4),
+                                  const SizedBox(
+                                    height: 8,
                                   ),
                                   SideExpandedItem(
                                       title: "Facility",
-                                      icon: AssetImage(
-                                          'assets/icons/facility.png')),
+                                      iconSize: 18,
+                                      icon: ShipperNav.facility,
+                                      position: 5),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.05,
+                                        0.04,
                                   ),
                                   SideExpandedItem(
                                       title: "Signout",
-                                      icon: AssetImage(
-                                          'assets/icons/signout.png')),
+                                      iconSize: 23,
+                                      icon: Icons.logout_outlined,
+                                      position: 6),
                                   Expanded(
                                       child: Align(
                                           alignment: Alignment.bottomLeft,
@@ -337,14 +356,14 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                                   EdgeInsets.only(bottom: 30),
                                               child: SideExpandedItem(
                                                   title: "Liveasy",
-                                                  icon: AssetImage(
-                                                      'assets/images/shipper_liveasy_logo.png'))))),
+                                                  iconSize: 23,
+                                                  icon: ShipperNav.liveasy_logo, position: 999)))),
                                 ],
                               ),
-                              color: white,
                             ),
                           ),
-                          SizedBox(
+                          Container(
+                            color: headerLightBlueColor,
                             width: 15,
                           )
                         ]),
@@ -413,162 +432,190 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     });
   }
 
-  InkWell SideExpandedItem({required String title, required AssetImage icon}) {
+  InkWell SideExpandedItem({required String title, required IconData icon, required int position, required double iconSize}) {
     if (_selectedIndex == 0) {
       dashboardSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+          kLiveasyColor;
     } else {
       dashboardSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+          white;
     }
 
     if (_selectedIndex == 1) {
       myLoadsSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+         kLiveasyColor;
     } else {
       myLoadsSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+          white;
     }
 
-    if (_selectedIndex == 2) {
-      invoiceSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+     if (_selectedIndex == 2) {
+      ewayBillsSelectedTabGradientColor =
+         kLiveasyColor;
     } else {
-      invoiceSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      ewayBillsSelectedTabGradientColor  =
+          white;
     }
+
     if (_selectedIndex == 3) {
-      accountSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      invoiceSelectedTabGradientColor =
+          kLiveasyColor;
     } else {
-      accountSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      invoiceSelectedTabGradientColor =
+          white;
     }
     if (_selectedIndex == 4) {
-      facilitySelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+      accountSelectedTabGradientColor =
+          kLiveasyColor;
     } else {
-      facilitySelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+      accountSelectedTabGradientColor =
+          white;
     }
     if (_selectedIndex == 5) {
+      facilitySelectedTabGradientColor =
+          kLiveasyColor;
+    } else {
+      facilitySelectedTabGradientColor =
+          white;
+    }
+    if (_selectedIndex == 6) {
       signoutSelectedTabGradientColor =
-          const LinearGradient(colors: [sideNavItemSelectedColor, transparent]);
+         kLiveasyColor;
     } else {
       signoutSelectedTabGradientColor =
-          const LinearGradient(colors: [white, white]);
+          white;
     }
 
     liveasySelectedTabGradientColor =
-        const LinearGradient(colors: [white, white]);
+        white;
 
     return InkWell(
         onTap: () {
           setState(() {
-            if (title == "Dashboard") {
-              dashboardSelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
+            if (title == "Control Tower") {
+              dashboardSelectedTabGradientColor = kLiveasyColor;
               myLoadsSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
+              ewayBillsSelectedTabGradientColor =
+                 white;
               invoiceSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                 white;
               accountSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               facilitySelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               signoutSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               _selectedIndex = 0;
               _index = 0;
             } else if (title == "My Loads") {
               dashboardSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              myLoadsSelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
+                 white;
+              myLoadsSelectedTabGradientColor = kLiveasyColor;
+              ewayBillsSelectedTabGradientColor = white;
               invoiceSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               accountSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               facilitySelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                 white;
               signoutSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               _selectedIndex = 1;
               _index = 1;
-            } else if (title == "Invoice") {
+            } else if (title == "Eway Bills") {
               dashboardSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              myLoadsSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              invoiceSelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
+                 white;
+              myLoadsSelectedTabGradientColor = white;
+              ewayBillsSelectedTabGradientColor = kLiveasyColor;
+              invoiceSelectedTabGradientColor =
+                  white;
               accountSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               facilitySelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                 white;
               signoutSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               _selectedIndex = 2;
               _index = 2;
-            } else if (title == "Team") {
+            } 
+            else if (title == "Invoice") {
               dashboardSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               myLoadsSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              invoiceSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              accountSelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
+                  white;
+              ewayBillsSelectedTabGradientColor = white;
+              invoiceSelectedTabGradientColor = kLiveasyColor;
+              accountSelectedTabGradientColor =
+                  white;
               facilitySelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               signoutSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               _selectedIndex = 3;
               _index = 3;
-            } else if (title == "Facility") {
+            } else if (title == "Team") {
               dashboardSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               myLoadsSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
+              ewayBillsSelectedTabGradientColor = white;    
               invoiceSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              accountSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              facilitySelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
+                  white;
+              accountSelectedTabGradientColor = kLiveasyColor;
+              facilitySelectedTabGradientColor =
+                  white;
               signoutSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               _selectedIndex = 4;
               _index = 4;
-            } else if (title == "Signout") {
+            } else if (title == "Facility") {
               dashboardSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               myLoadsSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
+              ewayBillsSelectedTabGradientColor = white;
               invoiceSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
+                  white;
               accountSelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              facilitySelectedTabGradientColor =
-                  const LinearGradient(colors: [white, white]);
-              signoutSelectedTabGradientColor = const LinearGradient(
-                  colors: [sideNavItemSelectedColor, transparent]);
-
+                  white;
+              facilitySelectedTabGradientColor = kLiveasyColor;
+              signoutSelectedTabGradientColor =
+                  white;
               _selectedIndex = 5;
               _index = 5;
+            } else if (title == "Signout") {
+              dashboardSelectedTabGradientColor =
+                  white;
+              myLoadsSelectedTabGradientColor =
+                  white;
+              ewayBillsSelectedTabGradientColor = white;
+              invoiceSelectedTabGradientColor =
+                  white;
+              accountSelectedTabGradientColor =
+                  white;
+              facilitySelectedTabGradientColor =
+                  white;
+              signoutSelectedTabGradientColor = kLiveasyColor;
+
+              _selectedIndex = 6;
+              _index = 6;
             }
           });
         },
         child: Container(
             height: 60,
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.only(left: 15, top:15, bottom: 15),
             decoration: BoxDecoration(
-                gradient: (title == "Liveasy")
+              borderRadius: BorderRadius.circular(10),
+                color: (title == "Liveasy")
                     ? liveasySelectedTabGradientColor
-                    : (title == "Dashboard")
+                    : (title == "Control Tower")
                         ? dashboardSelectedTabGradientColor
                         : (title == "My Loads")
                             ? myLoadsSelectedTabGradientColor
+                            :(title == "Eway Bills")
+                            ? ewayBillsSelectedTabGradientColor
                             : (title == "Invoice")
                                 ? invoiceSelectedTabGradientColor
                                 : (title == "Team")
@@ -578,8 +625,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                         : signoutSelectedTabGradientColor),
             child: Row(
               children: [
-                Image(image: icon, filterQuality: FilterQuality.high),
-                const SizedBox(
+                Icon(icon, size: iconSize, color : position == _selectedIndex ? white : darkBlueColor),
+                 const SizedBox(
                   width: 10,
                 ),
                 Visibility(
@@ -587,18 +634,18 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     child: (title == "Liveasy")
                         ? Text(
                             title,
-                            style: const TextStyle(
-                                fontSize: 25,
+                            style: TextStyle(
+                                fontSize: 23,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: "Montserrat Bold",
-                                color: darkBlueTextColor),
+                                color: position == _selectedIndex ? white : darkBlueColor),
                           )
                         : Text(
                             title,
-                            style: const TextStyle(
-                                fontSize: 20,
+                            style: TextStyle(
+                                fontSize: 18,
                                 fontFamily: "Montserrat",
-                                color: darkBlueTextColor),
+                                color: (position ==_selectedIndex) ? white : darkBlueColor),
                           ))
               ],
             )));

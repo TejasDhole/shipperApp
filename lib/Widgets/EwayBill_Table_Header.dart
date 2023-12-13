@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 
-Container AccountTableHeader(context) {
+// ignore: non_constant_identifier_names
+Container EwayBillsTableHeader(context) {
   bool small = true;
   double leftRightPadding, textFontSize, containerWidth;
   var screenWidth = MediaQuery.of(context).size.width;
@@ -25,22 +24,20 @@ Container AccountTableHeader(context) {
     textFontSize = 16;
     containerWidth = 100;
   }
-
   return Container(
-    margin : EdgeInsets.only(left: 15,right : 35),
-    height: 60,
+    height: 70,
     decoration: const BoxDecoration(
       color: Color(0xfff2f5ff),
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        ),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
+    ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-            flex: 4,
+            flex: 20,
             child: Center(
                 child: Text(
-              'Users',
+              'E-way Bill Date',
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
                 color: Colors.black,
@@ -50,23 +47,22 @@ Container AccountTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 5,
+            flex: 25,
             child: Center(
                 child: Text(
-              'Email',
+              'Route',
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
-                color: Colors.black,
-                fontSize: size_8,
-                fontWeight: mediumBoldWeight,
-              ),
+                  color: Colors.black,
+                  fontSize: size_8,
+                  fontWeight: mediumBoldWeight),
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 4,
+            flex: 50,
             child: Center(
                 child: Text(
-              'Role',
+              'Transporter Name',
               textAlign: TextAlign.center,
               selectionColor: sideBarTextColor,
               style: GoogleFonts.montserrat(
@@ -77,14 +73,27 @@ Container AccountTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 2,
+            flex: 20,
             child: Center(
                 child: Text(
-              'Delete',
+              'Vehicle No',
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
-                color: Colors.black,
                 fontSize: size_8,
+                color: Colors.black,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
+            const VerticalDivider(color: greyShade, thickness: 1),
+        Expanded(
+            flex: 20,
+            child: Center(
+                child: Text(
+              'Track',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                fontSize: size_8,
+                color: Colors.black,
                 fontWeight: mediumBoldWeight,
               ),
             ))),
