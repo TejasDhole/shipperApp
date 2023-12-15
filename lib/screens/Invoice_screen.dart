@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:shipper_app/Widgets/invoice_details_dailog.dart';
 import 'package:shipper_app/Widgets/invoice_header.dart';
 import 'package:shipper_app/constants/colors.dart';
@@ -11,7 +12,7 @@ import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/BackgroundAndLocation.dart';
-import 'package:shipper_app/functions/fatch_invoice_data.dart';
+import 'package:shipper_app/functions/fetch_invoice_data.dart';
 import 'package:shipper_app/functions/shipperApis/TransporterListFromShipperApi.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
@@ -28,8 +29,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   var selectedTransporterList = [];
   bool setSelectedTransporterList = true;
   bool visiable = true;
+  DateTime yesterday =
+      DateTime.now().subtract(const Duration(days: 30, hours: 5, minutes: 30));
+  String from = "";
+  String to = "";
+  DateTime now = DateTime.now().subtract(const Duration(hours: 5, minutes: 30));
 
-  
   bool enableFinishButton = false;
   @override
   void initState() {
@@ -38,10 +43,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   }
 
   Future<void> _fetchInvoiceData() async {
-    String shipperId = shipperIdController.companyId.value;
-
+    ShipperIdController shipperIdController = Get.put(ShipperIdController());
+    String companyId = shipperIdController.companyId.value;
+    from = DateFormat('yyyy-MM-dd HH:mm:ss').format(yesterday);
+    to = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     try {
-      List<dynamic> data = await ApiService.getInvoiceData(shipperId);
+      List<dynamic> data = await ApiService.getInvoiceData(companyId, from, to);
       setState(() {
         inoviceList = data;
       });
@@ -278,7 +285,6 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           thickness: 1,
                           width: 0,
                         ),
-                        
                         Expanded(
                           flex: 4,
                           child: Center(
@@ -406,7 +412,9 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return InvoiceDetails();
+                                      return InvoiceDetails(
+                                        invoiceId: invoice['invoiceId'] ?? 'NA',
+                                      );
                                     },
                                   );
                                 },

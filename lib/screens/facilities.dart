@@ -263,14 +263,20 @@ class _FacilitiesState extends State<Facilities> {
                           final latlog = geofence['area'] ?? ' ';
                           final String id = geofence['id'].toString();
 
-                          return facilityData(
-                              name: name,
-                              address: address,
-                              city: city,
-                              state: state,
-                              pincode: pincode,
-                              latlog: latlog,
-                              id: id.toString());
+                          return Column(
+                            children: [
+                              facilityData(
+                                  name: name,
+                                  address: address,
+                                  city: city,
+                                  state: state,
+                                  pincode: pincode,
+                                  latlog: latlog,
+                                  id: id.toString()),
+                              const Divider(
+                                  color: Color(0xffd2d2d2), height: 1),
+                            ],
+                          );
                         },
                       ),
                     ),
@@ -415,22 +421,6 @@ class _FacilitiesState extends State<Facilities> {
     }
   }
 
-  // PopupMenuItem<PopUpMenuForFacility> showEachItem(PopUpMenuForFacility item) =>
-  //     PopupMenuItem<PopUpMenuForFacility>(
-  //       value: item,
-  //       child: Column(
-  //         children: [
-  //           Text(
-  //             item.text,
-  //             style: TextStyle(
-  //               fontWeight: mediumBoldWeight,
-  //               color: item.color,
-  //             ),
-  //           ),
-  //           const Divider(height: 1, color: Colors.grey),
-  //         ],
-  //       ),
-  //     );
   PopupMenuItem<PopUpMenuForFacility> showEachItem(PopUpMenuForFacility item) =>
       PopupMenuItem<PopUpMenuForFacility>(
         value: item,
