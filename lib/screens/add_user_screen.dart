@@ -141,9 +141,9 @@ class _AddUserState extends State<AddUser> {
                                       icon: Padding(
                                           padding: EdgeInsets.only(
                                               right: screenWidth * 0.015),
-                                          child: const Icon(
+                                          child: Icon(
                                               Icons.arrow_drop_down,
-                                              size: 30)),
+                                              size: screenWidth * 0.02)),
                                       items: dateRanges.map((String role) {
                                         return DropdownMenuItem<String>(
                                           value: role,
@@ -154,7 +154,7 @@ class _AddUserState extends State<AddUser> {
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.montserrat(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
+                                                    fontSize: screenWidth * 0.013,
                                                     color: Colors.black)),
                                           ),
                                         );
@@ -199,9 +199,9 @@ class _AddUserState extends State<AddUser> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Responsive.isMobile(context)
                                   ? screenWidth * 0.20
-                                  : 265.0,
+                                  : screenWidth * 0.18,
                               vertical:
-                                  Responsive.isMobile(context) ? 3.0 : 10.0),
+                                  Responsive.isMobile(context) ? 3.0 : screenHeight * 0.01),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -227,7 +227,7 @@ class _AddUserState extends State<AddUser> {
                                     style: GoogleFonts.montserrat(
                                         color: white,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: size_8)),
+                                        fontSize: screenWidth * 0.0125)),
                                 const Image(
                                     image: AssetImage(
                                         'assets/icons/telegramicon.png')),

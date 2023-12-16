@@ -100,7 +100,7 @@ class _EwayBillsState extends State<EwayBills> {
                     color: darkBlueTextColor)),
           ),
           Padding(
-            padding: EdgeInsets.only(left: screenWidth * 0.21),
+            padding: EdgeInsets.only(left: screenWidth * 0.19),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Text('Date',
@@ -153,9 +153,9 @@ class _EwayBillsState extends State<EwayBills> {
                         },
                       )),
                 ),
-                const Expanded(flex: 20, child: SizedBox()),
+                const Expanded(flex: 19, child: SizedBox()),
                 Expanded(
-                    flex: 15,
+                    flex: 16,
                     child: Container(
                       height: 55,
                       margin: EdgeInsets.only(
@@ -180,8 +180,8 @@ class _EwayBillsState extends State<EwayBills> {
                             icon: Padding(
                                 padding:
                                     EdgeInsets.only(right: screenWidth * 0.015),
-                                child: const Icon(Icons.arrow_drop_down,
-                                    size: 30)),
+                                child: Icon(Icons.arrow_drop_down,
+                                    size: screenWidth * 0.02)),
                             items: dateRanges.keys.map((String key) {
                               return DropdownMenuItem<String>(
                                 value: key,
@@ -192,7 +192,7 @@ class _EwayBillsState extends State<EwayBills> {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 18,
+                                          fontSize: screenWidth * 0.013,
                                           color: Colors.black)),
                                 ),
                               );
