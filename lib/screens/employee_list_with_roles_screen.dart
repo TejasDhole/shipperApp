@@ -181,6 +181,7 @@ class _EmployeeListRolesScreenState extends State<EmployeeListRolesScreen> {
     await documentRef.get().then((doc) {
       if (doc.exists) {
         Map data = doc.data() as Map;
+        shipperIdController.updateCompanyName(data["company_details"]["company_name"]);
         List members = data!["members"];
         members.forEach((value) {
           users.add(CompanyUsers(
