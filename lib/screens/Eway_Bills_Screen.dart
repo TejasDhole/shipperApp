@@ -236,7 +236,7 @@ class _EwayBillsState extends State<EwayBills> {
                           Image.asset('assets/icons/Track.png'),
                           Text('Track All Loads',
                               style: GoogleFonts.montserrat(
-                                  fontSize: 18,
+                                  fontSize: screenWidth * 0.0125,
                                   fontWeight: FontWeight.w600,
                                   color: darkBlueTextColor)),
                         ],
@@ -327,7 +327,8 @@ class _EwayBillsState extends State<EwayBills> {
                                     vehicleNo: vehicleNumber,
                                     from: fromPlace,
                                     to: toPlace,
-                                    date: ewayBillDate),
+                                    date: ewayBillDate,
+                                    screenWidth: screenWidth),
                               );
                             },
                           ));
@@ -346,6 +347,7 @@ class _EwayBillsState extends State<EwayBills> {
     required final String from,
     required final String to,
     required final String date,
+    required final screenWidth
   }) {
     return Container(
         height: 70,
@@ -361,7 +363,7 @@ class _EwayBillsState extends State<EwayBills> {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
                   color: Colors.black,
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   fontWeight: normalWeight,
                 ),
               ),
@@ -384,7 +386,7 @@ class _EwayBillsState extends State<EwayBills> {
                           selectionColor: sideBarTextColor,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: size_8,
+                            fontSize: screenWidth * 0.0125,
                             fontWeight: normalWeight,
                           ),
                         ),
@@ -394,7 +396,7 @@ class _EwayBillsState extends State<EwayBills> {
                           selectionColor: sideBarTextColor,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: size_8,
+                            fontSize: screenWidth * 0.0125,
                             fontWeight: normalWeight,
                           ),
                         )
@@ -411,7 +413,7 @@ class _EwayBillsState extends State<EwayBills> {
                 selectionColor: sideBarTextColor,
                 style: GoogleFonts.montserrat(
                   color: Colors.black,
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   fontWeight: normalWeight,
                 ),
               ))),
@@ -423,7 +425,7 @@ class _EwayBillsState extends State<EwayBills> {
                 vehicleNo,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   color: Colors.black,
                   fontWeight: normalWeight,
                 ),
@@ -458,7 +460,7 @@ class _EwayBillsState extends State<EwayBills> {
                         "Track",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.montserrat(
-                          fontSize: size_8,
+                          fontSize: screenWidth * 0.0125,
                           color: Colors.white,
                           fontWeight: mediumBoldWeight,
                         ),
