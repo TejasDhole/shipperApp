@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shipper_app/controller/myLoadFilterController.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
 import 'package:shipper_app/functions/traccarCalls/createUserTraccar.dart';
 import '../get_role_of_employee.dart';
@@ -40,6 +41,7 @@ GetStorage sidstorage = GetStorage('ShipperIDStorage');
 Future<String?> runShipperApiPostIsolated(
     {required String emailId, String? userLocation, String? phoneNo}) async {
   try {
+    MyLoadsFilterController myLoadsFilterController = Get.put(MyLoadsFilterController());
     ShipperIdController shipperIdController =
         Get.put(ShipperIdController(), permanent: true);
 
@@ -56,6 +58,10 @@ Future<String?> runShipperApiPostIsolated(
       if (decodedResponse["shipperId"] != null) {
         String shipperId = decodedResponse["shipperId"];
 
+        shipperIdController
+            .updateCompanyId(decodedResponse["companyId"].toString());
+
+        shipperIdController.updateRole(decodedResponse["roles"].toString());
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
@@ -103,10 +109,7 @@ Future<String?> runShipperApiPostIsolated(
         sidstorage
             .write("companyName", companyName)
             .then((value) => print("Written companyName"));
-        shipperIdController
-            .updateCompanyId(decodedResponse["companyId"].toString());
-
-        shipperIdController.updateRole(decodedResponse["roles"].toString());
+        myLoadsFilterController.updateRefreshBuilder(true);
 
         if (decodedResponse["token"] != null) {
           shipperIdController
