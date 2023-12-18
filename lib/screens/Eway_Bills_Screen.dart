@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,17 +26,32 @@ class EwayBills extends StatefulWidget {
 
 class _EwayBillsState extends State<EwayBills> {
   String search = '';
+  String selectedRange = '7 days';
   List<Map<String, dynamic>> EwayBills = [];
   DateTime now = DateTime.now();
-  DateTime yesterday = DateTime.now().subtract(const Duration(days: 7));
+  late DateTime yesterday;
   late String from;
   late String gstNo;
   late String to;
 
+  Map<String, int> dateRanges = {
+    "3 days": 3,
+    "7 days": 7,
+    "15 days": 15,
+    "30 days": 30
+  };
+
   @override
   void initState() {
     super.initState();
+    setDateRange('7 days');
     getEwayBillsData();
+  }
+
+  void setDateRange(String range) {
+    int days = dateRanges[range] ?? 7;
+    yesterday = now.subtract(Duration(days: days));
+    from = DateFormat('yyyy-MM-dd').format(yesterday);
   }
 
   Future<List<Map<String, dynamic>>> getEwayBillsData() async {
@@ -73,17 +90,30 @@ class _EwayBillsState extends State<EwayBills> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                top: screenHeight * 0.05, ),
+              top: screenHeight * 0.05,
+            ),
             child: Text('E-way Bill',
-            textAlign: TextAlign.left,
+                textAlign: TextAlign.left,
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.02,
                     color: darkBlueTextColor)),
           ),
           Padding(
+            padding: EdgeInsets.only(left: screenWidth * 0.19),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text('Date',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600,
+                      fontSize: screenWidth * 0.016,
+                      color: Colors.black)),
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.only(
-                top: screenHeight * 0.045, bottom: screenHeight * 0.06),
+                top: screenHeight * 0.022, bottom: screenHeight * 0.035),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -94,13 +124,13 @@ class _EwayBillsState extends State<EwayBills> {
                       height: screenHeight * 0.07,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 0,
                             blurRadius: 12,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -123,7 +153,59 @@ class _EwayBillsState extends State<EwayBills> {
                         },
                       )),
                 ),
-                const Expanded(flex: 25, child: SizedBox()),
+                const Expanded(flex: 19, child: SizedBox()),
+                Expanded(
+                    flex: 16,
+                    child: Container(
+                      height: 55,
+                      margin: EdgeInsets.only(
+                        right: screenWidth * 0.02,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 5,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          color: white),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                            value: selectedRange,
+                            dropdownColor: Colors.white,
+                            alignment: Alignment.center,
+                            icon: Padding(
+                                padding:
+                                    EdgeInsets.only(right: screenWidth * 0.015),
+                                child: Icon(Icons.arrow_drop_down,
+                                    size: screenWidth * 0.02)),
+                            items: dateRanges.keys.map((String key) {
+                              return DropdownMenuItem<String>(
+                                value: key,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth * 0.015),
+                                  child: Text(key,
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: screenWidth * 0.013,
+                                          color: Colors.black)),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedRange = newValue!;
+                                setDateRange(newValue);
+                                getEwayBillsData();
+                              });
+                            }),
+                      ),
+                    )),
                 Expanded(
                   flex: 25,
                   child: InkWell(
@@ -143,9 +225,7 @@ class _EwayBillsState extends State<EwayBills> {
                     child: Container(
                       height: 55,
                       margin: EdgeInsets.only(
-                        right: screenWidth * 0.06,
-                        // bottom: screenHeight * 0.06,
-                      ),
+                          right: screenWidth * 0.02, left: screenWidth * 0.02),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
                           border: Border.all(color: darkBlueTextColor),
@@ -156,7 +236,7 @@ class _EwayBillsState extends State<EwayBills> {
                           Image.asset('assets/icons/Track.png'),
                           Text('Track All Loads',
                               style: GoogleFonts.montserrat(
-                                  fontSize: 18,
+                                  fontSize: screenWidth * 0.0125,
                                   fontWeight: FontWeight.w600,
                                   color: darkBlueTextColor)),
                         ],
@@ -226,8 +306,7 @@ class _EwayBillsState extends State<EwayBills> {
                               final String toPlace = ewayBill['toPlace'];
                               final String vehicleNumber =
                                   ewayBill['vehicleListDetails'][0]
-                                      ['vehicleNo'];
-
+                                      ['vehicleNo'];                   
                               return InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -248,13 +327,14 @@ class _EwayBillsState extends State<EwayBills> {
                                     vehicleNo: vehicleNumber,
                                     from: fromPlace,
                                     to: toPlace,
-                                    date: ewayBillDate),
+                                    date: ewayBillDate,
+                                    screenWidth: screenWidth),
                               );
                             },
                           ));
                     }
                   } else {
-                    return Text("Something went wrong");
+                    return const Text("Something went wrong");
                   }
                 }),
           )
@@ -267,6 +347,7 @@ class _EwayBillsState extends State<EwayBills> {
     required final String from,
     required final String to,
     required final String date,
+    required final screenWidth
   }) {
     return Container(
         height: 70,
@@ -282,7 +363,7 @@ class _EwayBillsState extends State<EwayBills> {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
                   color: Colors.black,
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   fontWeight: normalWeight,
                 ),
               ),
@@ -305,7 +386,7 @@ class _EwayBillsState extends State<EwayBills> {
                           selectionColor: sideBarTextColor,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: size_8,
+                            fontSize: screenWidth * 0.0125,
                             fontWeight: normalWeight,
                           ),
                         ),
@@ -315,7 +396,7 @@ class _EwayBillsState extends State<EwayBills> {
                           selectionColor: sideBarTextColor,
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: size_8,
+                            fontSize: screenWidth * 0.0125,
                             fontWeight: normalWeight,
                           ),
                         )
@@ -332,7 +413,7 @@ class _EwayBillsState extends State<EwayBills> {
                 selectionColor: sideBarTextColor,
                 style: GoogleFonts.montserrat(
                   color: Colors.black,
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   fontWeight: normalWeight,
                 ),
               ))),
@@ -344,7 +425,7 @@ class _EwayBillsState extends State<EwayBills> {
                 vehicleNo,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
-                  fontSize: size_8,
+                  fontSize: screenWidth * 0.0125,
                   color: Colors.black,
                   fontWeight: normalWeight,
                 ),
@@ -366,18 +447,20 @@ class _EwayBillsState extends State<EwayBills> {
                                     ),
                                     index: 1000,
                                     selectedIndex:
-                                        screens.indexOf(postLoadScreen),
+                                        screens.indexOf(ewayBillScreen),
                                   )),
                         );
                       },
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(okButtonColor)),
+                          fixedSize: MaterialStateProperty.all<Size>(
+                              const Size.fromWidth(110)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              darkBlueTextColor)),
                       child: Text(
-                        "Track Load",
+                        "Track",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.montserrat(
-                          fontSize: size_8,
+                          fontSize: screenWidth * 0.0125,
                           color: Colors.white,
                           fontWeight: mediumBoldWeight,
                         ),

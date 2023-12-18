@@ -57,13 +57,16 @@ class AddUserFunctions {
   }
 
 //This functionn is used to send the email to the invited user
-  sendEmailToEmployee(String mail, String name) async {
+  sendEmailToEmployee(String mail, String companyName, String companyId,
+      String role, BuildContext context) async {
     final String sendInviteMail = dotenv.get("sendInviteEmailUrl");
     final Map<String, dynamic> params = {
       "receiverMailId": mail,
-      "senderName": name
+      "senderName": companyName,
+      "companyId": companyId,
+      "roles": role
     };
-
+    try{
     http.Response response = await http.post(Uri.parse(sendInviteMail),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -72,6 +75,37 @@ class AddUserFunctions {
 
     if (response.statusCode == 200) {
       debugPrint("Email Successfully Sent");
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return completedDialog(
+            upperDialogText: 'Congratulations'.tr,
+            lowerDialogText:
+                'You have successfully sent the mail to the employee',
+          );
+        },
+      );
+      Timer(
+        const Duration(seconds: 3),
+        () => {
+          kIsWeb
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreenWeb(
+                      index: screens.indexOf(employeeListScreen),
+                      selectedIndex: screens.indexOf(employeeListScreen),
+                    ),
+                  ),
+                )
+              : Get.offAll(() => NavigationScreen()),
+          navigationIndexController.updateIndex(2),
+        },
+      );
+    }
+    }catch(e){
+      print("Error while updating employee: $e");
     }
   }
 

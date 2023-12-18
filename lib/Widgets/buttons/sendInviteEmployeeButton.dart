@@ -20,11 +20,11 @@ class _SendInviteButtonState extends State<SendInviteButton> {
     bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      width: isMobile ? screenWidth * 0.46 : screenWidth * 0.12,
+      width: isMobile ? screenWidth * 0.46 : screenWidth * 0.15,
       height: 45,
       margin: isMobile
           ? const EdgeInsets.only(left: 14.0, top: 6.0, bottom: 10.0)
-          : EdgeInsets.only(right: 35.0, top: 6.0, bottom: screenHeight * 0.06),
+          : EdgeInsets.only(right: screenWidth * 0.03, top: screenHeight * 0.01, bottom: screenHeight * 0.06),
       decoration: BoxDecoration(
         border: Border.all(color: darkBlueTextColor),
         borderRadius: BorderRadius.circular(5),
@@ -40,7 +40,7 @@ class _SendInviteButtonState extends State<SendInviteButton> {
                 style: GoogleFonts.montserrat(
                     color: const Color(0xFF000066),
                     fontWeight: FontWeight.w600,
-                    fontSize: size_8)),
+                    fontSize: screenWidth * 0.0125)),
             const Image(image: AssetImage('assets/icons/telegramicon.png')),
           ],
         ),
