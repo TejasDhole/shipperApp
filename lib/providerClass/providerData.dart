@@ -183,6 +183,9 @@ class ProviderData extends ChangeNotifier {
   int upperNavigatorIndex = 0;
   int upperNavigatorIndex2 = 0;
 
+  List loadingGeoFenceIds = List<int?>.filled(2, null);
+  List unloadingGeoFenceIds = List<int?>.filled(2, null);
+
   dynamic dropDownValue;
 
   // int rate = 0;
@@ -206,6 +209,16 @@ class ProviderData extends ChangeNotifier {
   updateBidEndpoints(loadingPoint, unLoadingPoint) {
     bidLoadingPoint = loadingPoint;
     bidUnloadingPoint = unLoadingPoint;
+    notifyListeners();
+  }
+
+  updateLoadingGeoFenceId(List geoFences){
+    loadingGeoFenceIds = geoFences;
+    notifyListeners();
+  }
+
+  updateUnloadingGeoFenceId(List geoFences){
+    unloadingGeoFenceIds = geoFences;
     notifyListeners();
   }
 
@@ -410,7 +423,6 @@ class ProviderData extends ChangeNotifier {
     loadingPointPostLoad = place;
     loadingPointCityPostLoad = city;
     loadingPointStatePostLoad = state;
-
     notifyListeners();
   }
 
