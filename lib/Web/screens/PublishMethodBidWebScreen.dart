@@ -324,51 +324,54 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
                           );
                   })),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              height: space_8,
-              width: space_33,
-              child: TextButton(
-                style: ButtonStyle(
-                  mouseCursor: MaterialStatePropertyAll((enableFinishButton)
-                      ? SystemMouseCursors.click
-                      : SystemMouseCursors.basic),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: (Responsive.isMobile(context))
-                        ? BorderRadius.circular(50)
-                        : BorderRadius.all(Radius.zero),
-                  )),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      (enableFinishButton) ? truckGreen : disableButtonColor),
-                ),
-                onPressed: () {
-                  if (enableFinishButton) {
-                    providerData
-                        .updateLoadTransporterList(selectedTransporterList);
-                    providerData.updatePublishMethod(widget.publishMethod);
-                    ((kIsWeb)
-                        ? Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreenWeb(
-                                      index: screens.indexOf(postLoadScreenTwo),
-                                      selectedIndex:
-                                          screens.indexOf(postLoadScreen),
-                                    )))
-                        : Get.to(() => PostLoadScreenTwo()));
-                  }
-                },
-                child: Text(
-                  'Finish', // AppLocalizations.of(context)!.postLoad,
-                  style: TextStyle(
-                      fontWeight: mediumBoldWeight,
-                      color: white,
-                      fontSize: size_8,
-                      fontFamily: 'Montserrat'),
+            Obx(() => Visibility(
+              visible: !addLocationDrawerToggleController.addTransporter.value,
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                height: space_8,
+                width: space_33,
+                child: TextButton(
+                  style: ButtonStyle(
+                    mouseCursor: MaterialStatePropertyAll((enableFinishButton)
+                        ? SystemMouseCursors.click
+                        : SystemMouseCursors.basic),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: (Responsive.isMobile(context))
+                              ? BorderRadius.circular(50)
+                              : BorderRadius.all(Radius.zero),
+                        )),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        (enableFinishButton) ? truckGreen : disableButtonColor),
+                  ),
+                  onPressed: () {
+                    if (enableFinishButton) {
+                      providerData
+                          .updateLoadTransporterList(selectedTransporterList);
+                      providerData.updatePublishMethod(widget.publishMethod);
+                      ((kIsWeb)
+                          ? Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreenWeb(
+                                index: screens.indexOf(postLoadScreenTwo),
+                                selectedIndex:
+                                screens.indexOf(postLoadScreen),
+                              )))
+                          : Get.to(() => PostLoadScreenTwo()));
+                    }
+                  },
+                  child: Text(
+                    'Finish', // AppLocalizations.of(context)!.postLoad,
+                    style: TextStyle(
+                        fontWeight: mediumBoldWeight,
+                        color: white,
+                        fontSize: size_8,
+                        fontFamily: 'Montserrat'),
+                  ),
                 ),
               ),
-            )
+            ))
           ],
         ),
       ),

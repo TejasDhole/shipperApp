@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shipper_app/Widgets/Input_text_filed.dart';
 import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/spaces.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/shipperApis/updateUserDetails.dart';
@@ -25,9 +27,17 @@ class AccountScreenState extends State<AccountScreen> {
   late TextEditingController roleController;
   late TextEditingController emailController;
   late TextEditingController phoneNumberController;
-  late TextEditingController companyNameController;
+  TextEditingController companyNameController = TextEditingController();
 
-  bool isEditing = false;
+  //company email is uneditable
+  TextEditingController companyEmailController = TextEditingController();
+  TextEditingController gstNoController = TextEditingController();
+  TextEditingController cinController = TextEditingController();
+
+  bool isUserDetailsEditing = false;
+
+  //only admin should have the right to edit company details
+  bool isCompanyDetailsEditing = false;
 
   @override
   void initState() {
@@ -35,18 +45,50 @@ class AccountScreenState extends State<AccountScreen> {
 
     nameController =
         TextEditingController(text: shipperIdController.name.value);
-    roleController = TextEditingController(
-        text: shipperIdController.role.value);
+    roleController =
+        TextEditingController(text: shipperIdController.role.value);
     emailController = TextEditingController(
         text: FirebaseAuth.instance.currentUser!.email.toString());
 
     phoneNumberController =
         TextEditingController(text: shipperIdController.mobileNum.value);
-    companyNameController =
-        TextEditingController(text: shipperIdController.companyName.value);
     shipperuniqueIdController =
         TextEditingController(text: shipperIdController.shipperId.value);
-    setState(() {});
+
+    getCompanyDetails();
+  }
+
+  getCompanyDetails() async {
+    final DocumentReference documentRef = FirebaseFirestore.instance
+        .collection('/Companies')
+        .doc(shipperIdController.companyId.value);
+
+    await documentRef.get().then((doc) {
+      if (doc.exists) {
+        Map data = doc.data() as Map;
+        companyNameController.text = data["company_details"]["company_name"];
+        gstNoController.text = data["company_details"]["gst_no"];
+        cinController.text = data["company_details"]["cin"];
+        companyEmailController.text =
+            data["company_details"]["contact_info"]["company_email"];
+      } else {
+        debugPrint('No such document!');
+      }
+    });
+  }
+
+  updateCompanyDetails() {
+    final DocumentReference documentRef = FirebaseFirestore.instance
+        .collection('/Companies')
+        .doc(shipperIdController.companyId.value);
+
+    documentRef.update({
+      'company_details.company_name': companyNameController.text,
+      'company_details.gst_no': gstNoController.text,
+      'company_details.cin': cinController.text
+    }).then((_) {
+      shipperIdController.updateCompanyName(companyNameController.text);
+    }).catchError((error) => debugPrint('Failed: $error'));
   }
 
   @override
@@ -83,6 +125,7 @@ class AccountScreenState extends State<AccountScreen> {
               ],
             )
           : null,
+      backgroundColor: headerLightBlueColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,32 +142,35 @@ class AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   )
-                : Row(
-                    children: [
-                      const Text(
-                        'My Account Details',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: darkBlueColor,
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'My Account Details',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: darkBlueColor,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.circle,
-                        color: liveasyGreen,
-                        size: 10,
-                      ),
-                      SizedBox(width: space_1),
-                      Text(
-                        'online',
-                        style: TextStyle(
-                          fontSize: 18,
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.circle,
                           color: liveasyGreen,
+                          size: 10,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: space_1),
+                        Text(
+                          'online',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: liveasyGreen,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
             SizedBox(height: space_2),
             Stack(
@@ -133,9 +179,7 @@ class AccountScreenState extends State<AccountScreen> {
                   height: Responsive.isMobile(context) ? 200 : 150,
                   padding: EdgeInsets.zero,
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  decoration: const BoxDecoration(
-                    color:  white
-                  ),
+                  decoration: const BoxDecoration(color: headerLightBlueColor),
                 ),
                 Positioned(
                   top: Responsive.isMobile(context) ? 120 : 112,
@@ -146,21 +190,30 @@ class AccountScreenState extends State<AccountScreen> {
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            isEditing = !isEditing;
+                            isUserDetailsEditing = !isUserDetailsEditing;
 
-                            if (!isEditing) {
+                            if (!isUserDetailsEditing) {
                               shipperIdController.name.value =
                                   nameController.text;
 
                               shipperIdController.companyName.value =
                                   companyNameController.text;
                             }
+
+                            if (shipperIdController.role.value == "ADMIN") {
+                              //company details should only be editable by admin
+                              isCompanyDetailsEditing =
+                                  !isCompanyDetailsEditing;
+                              getCompanyDetails();
+                            }
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: isEditing ? white : darkBlueColor,
-                          foregroundColor: isEditing ? darkBlueColor : white,
-                          side: isEditing
+                          backgroundColor:
+                              isUserDetailsEditing ? white : darkBlueColor,
+                          foregroundColor:
+                              isUserDetailsEditing ? darkBlueColor : white,
+                          side: isUserDetailsEditing
                               ? const BorderSide(
                                   color: darkBlueColor, width: 2.0)
                               : BorderSide.none,
@@ -171,7 +224,9 @@ class AccountScreenState extends State<AccountScreen> {
                         child: Text(
                           "Edit",
                           style: TextStyle(
-                            color: isEditing ? Colors.black : Colors.white,
+                            color: isUserDetailsEditing
+                                ? Colors.black
+                                : Colors.white,
                           ),
                         ),
                       ),
@@ -245,7 +300,7 @@ class AccountScreenState extends State<AccountScreen> {
                     children: [
                       InputTextField(
                         labelText: 'Name',
-                        isEditing: isEditing,
+                        isEditing: isUserDetailsEditing,
                         controller: nameController,
                       ),
                       const SizedBox(height: 10),
@@ -269,7 +324,7 @@ class AccountScreenState extends State<AccountScreen> {
                       const SizedBox(height: 10),
                       InputTextField(
                         labelText: 'Company Name',
-                        isEditing: isEditing,
+                        isEditing: isUserDetailsEditing,
                         controller: companyNameController,
                       ),
                       SizedBox(height: space_2),
@@ -278,12 +333,24 @@ class AccountScreenState extends State<AccountScreen> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 5),
+                        child: Text(
+                          "User Details",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: size_9,
+                              color: kLiveasyColor,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
                       Row(
                         children: [
                           Flexible(
                             child: InputTextField(
                               controller: nameController,
-                              isEditing: isEditing,
+                              isEditing: isUserDetailsEditing,
                               labelText: 'Name',
                             ),
                           ),
@@ -297,7 +364,7 @@ class AccountScreenState extends State<AccountScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: space_5),
+                      SizedBox(height: space_3),
                       Row(
                         children: [
                           Flexible(
@@ -307,11 +374,7 @@ class AccountScreenState extends State<AccountScreen> {
                               labelText: 'Email',
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: space_5),
-                      Row(
-                        children: [
+                          SizedBox(width: space_5),
                           Flexible(
                             child: InputTextField(
                               controller: phoneNumberController,
@@ -319,12 +382,55 @@ class AccountScreenState extends State<AccountScreen> {
                               labelText: 'Phone Number',
                             ),
                           ),
-                          SizedBox(width: space_5),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 5),
+                        child: Text(
+                          "Company Details",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: size_9,
+                              color: kLiveasyColor,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Row(
+                        children: [
                           Flexible(
                             child: InputTextField(
                               controller: companyNameController,
-                              isEditing: isEditing,
+                              isEditing: isCompanyDetailsEditing,
                               labelText: 'Company Name',
+                            ),
+                          ),
+                          SizedBox(width: space_5),
+                          Flexible(
+                            child: InputTextField(
+                              controller: companyEmailController,
+                              isEditing: false,
+                              labelText: 'Company Email',
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: space_3),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: InputTextField(
+                              controller: gstNoController,
+                              isEditing: isCompanyDetailsEditing,
+                              labelText: 'GST no',
+                            ),
+                          ),
+                          SizedBox(width: space_5),
+                          Flexible(
+                            child: InputTextField(
+                              controller: cinController,
+                              isEditing: isCompanyDetailsEditing,
+                              labelText: 'CIN',
                             ),
                           ),
                         ],
@@ -332,55 +438,68 @@ class AccountScreenState extends State<AccountScreen> {
                     ],
                   ),
             SizedBox(height: Responsive.isMobile(context) ? 10 : 30),
-            if (isEditing)
+            if (isUserDetailsEditing)
               Row(
                 children: [
-                  SizedBox(
-                    width: Responsive.isMobile(context) ? 100 : 750,
+                  Expanded(
+                    flex: 3,
+                    child: Container(),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      // if (nameController.text.isNotEmpty &&
-                      //     companyNameController.text.isNotEmpty) {
-                      //   try {
-                      //     await updateUserDetails(
-                      //       uniqueID: shipperuniqueIdController.text,
-                      //       name: nameController.text,
-                      //       companyName: companyNameController.text,
-                      //     );
-                      //
-                      //     shipperIdController.updateName(nameController.text);
-                      //     shipperIdController
-                      //         .updateCompanyName(companyNameController.text);
-                      //     sidstorage.write("name", nameController.text);
-                      //     sidstorage.write(
-                      //         "companyName", companyNameController.text);
-                      //     setState(() {
-                      //       isEditing = false;
-                      //     });
-                      //   } catch (e) {
-                      //     debugPrint('Error updating user details: $e');
-                      //   }
-                      // } else {
-                      //   showMySnackBar(context, "Update Company and Name");
-                      // }
+                      try {
+                        if (nameController.text.isNotEmpty &&
+                            companyNameController.text.isNotEmpty) {
+                          await updateUserDetails(
+                            uniqueID: shipperuniqueIdController.text,
+                            name: nameController.text,
+                            companyName: companyNameController.text,
+                          );
+
+                          shipperIdController.updateName(nameController.text);
+                          shipperIdController
+                              .updateCompanyName(companyNameController.text);
+                          sidstorage.write("name", nameController.text);
+                          sidstorage.write(
+                              "companyName", companyNameController.text);
+                        } else {
+                          showMySnackBar(context, "Update Company and Name");
+                        }
+
+                        if (shipperIdController.role.value == "ADMIN") {
+                          if (gstNoController.text.isNotEmpty &&
+                              companyNameController.text.isNotEmpty &&
+                              cinController.text.isNotEmpty) {
+                            updateCompanyDetails();
+                          }
+                        }
+                      } catch (e) {
+                        debugPrint('Error updating user details: $e');
+                      }
+                      setState(() {
+                        isUserDetailsEditing = false;
+                        isCompanyDetailsEditing = false;
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 38),
                       backgroundColor: liveasyGreen,
                     ),
                     child: const Text(
-                      'Save',
+                      'Save Changes',
                       style: TextStyle(color: white),
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isEditing = false;
+                        isUserDetailsEditing = false;
+                        isCompanyDetailsEditing = false;
+                        nameController.text = shipperIdController.name.value;
+                        getCompanyDetails();
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -393,8 +512,15 @@ class AccountScreenState extends State<AccountScreen> {
                       style: TextStyle(color: red),
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  )
                 ],
               ),
+            const SizedBox(
+              height: 40,
+            ),
           ],
         ),
       ),
