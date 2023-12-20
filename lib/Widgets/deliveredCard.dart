@@ -110,96 +110,98 @@ class DeliveredCard extends StatelessWidget {
                       flex: 5,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        model.loadingPointCity ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          model.loadingPointCity ?? 'Null',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 5,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        model.unloadingPointCity ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          model.unloadingPointCity ?? 'Null',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${model.truckNo}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${model.truckNo}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 4,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${model.driverName}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${model.driverName}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${model.truckType}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${model.truckType}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Flex(
-                                mainAxisSize: MainAxisSize.min,
-                                direction: Axis.vertical,
-                                children: [
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Flex(
+                            mainAxisSize: MainAxisSize.min,
+                            direction: Axis.vertical,
+                            children: [
                               Flexible(
                                   child: Text(
                                 '${model.companyName}' ?? 'Null',
@@ -211,7 +213,7 @@ class DeliveredCard extends StatelessWidget {
                                     fontFamily: 'Montserrat'),
                               ))
                             ]),
-                          )),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
@@ -231,7 +233,8 @@ class DeliveredCard extends StatelessWidget {
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
-                                        side: BorderSide(color: darkBlueColor))),
+                                        side:
+                                            BorderSide(color: darkBlueColor))),
                                 alignment: Alignment.center,
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.white.withOpacity(0)),

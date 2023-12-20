@@ -150,6 +150,7 @@ class MyLoadsCard extends StatelessWidget {
                               Text(
                                 loadDetailsScreenModel.loadingPointCity ?? 'Null',
                                 textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: black,
                                     fontWeight: FontWeight.w600,
@@ -196,6 +197,7 @@ class MyLoadsCard extends StatelessWidget {
                                       loadDetailsScreenModel.loadingPointCity2 ??
                                           'Null',
                                       textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           color: black,
                                           fontWeight: FontWeight.w600,
@@ -245,6 +247,7 @@ class MyLoadsCard extends StatelessWidget {
                                 loadDetailsScreenModel.unloadingPointCity ??
                                     'Null',
                                 textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: black,
                                     fontWeight: FontWeight.w600,
@@ -292,6 +295,7 @@ class MyLoadsCard extends StatelessWidget {
                                               .unloadingPointCity2 ??
                                           'Null',
                                       textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           color: black,
                                           fontWeight: FontWeight.w600,
