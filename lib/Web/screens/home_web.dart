@@ -132,9 +132,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         icon: Icon(Icons.location_on), label: "Facility"),
   ];
 
-  refresh() {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +171,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
         key: scaffoldKey,
         endDrawer: AddLocationDrawerWidget(
           context: context,
-          refreshParent: refresh,
         ),
         onEndDrawerChanged: (isOpened) {
           if (isOpened == false) {

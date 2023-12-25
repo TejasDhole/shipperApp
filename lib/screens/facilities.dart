@@ -137,6 +137,7 @@ class _FacilitiesState extends State<Facilities> {
                     facilityController.updatePinCode('');
                     facilityController.updateFacilityLatLng('', '');
                     facilityController.updateCountry('India');
+                    facilityController.updateFacilityRadius(2500);
                     facilityController.updateCreate(true);
                     addLocationDrawerToggleController.toggleDrawer(true);
                   },
@@ -406,10 +407,12 @@ class _FacilitiesState extends State<Facilities> {
         facilityController.updateAddress(address);
         facilityController.updatePinCode(pincode);
         facilityController.updateId(id);
-        String scr = latlog.substring(8, latlog.length - 1);
-        scr = scr.split(",")[0];
-        List lot = scr.split(" ");
+        String scr = latlog.substring(8, latlog.length - 1); // latlog --> "CIRCLE (30.7076048 76.7744792, 2500)" ---> latlog.substring(8, latlog.length - 1) --> 30.7076048 76.7744792, 2500 -->src
+        List<String> latLongRadius = scr.split(","); // scr.split(",") --> [30.7076048 76.7744792, 2500] --> latLongRadius
+        List lot = latLongRadius[0].split(" "); // latLongRadius[0].split(" ") --> [30.7076048, 76.7744792] -->lot
         facilityController.updateFacilityLatLng(lot[0], lot[1]);
+        int radius = int.parse(latLongRadius[1].trim()); // latLongRadius[1].trim() --> 2500 --> radius
+        facilityController.updateFacilityRadius(radius);
         addLocationDrawerToggleController.toggleDrawer(true);
         break;
       case MenuItemFacility.deleteText:
