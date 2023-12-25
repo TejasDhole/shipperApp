@@ -289,7 +289,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             shadowColor: Colors.grey,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 100),
+                                  left: 15, right: 15, top: 70),
                               height: MediaQuery.of(context).size.height,
                               width: widthOfSideBar,
                               color: white,
