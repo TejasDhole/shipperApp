@@ -18,8 +18,8 @@ class EwayBill {
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(response.body);
-        List<Map<String, dynamic>> EwayBills =
-            jsonResponse.cast<Map<String, dynamic>>();
+        List<Map<String, dynamic>> EwayBills = jsonResponse.cast<Map<String, dynamic>>();
+ 
         return EwayBills;
       } else {
         return [];

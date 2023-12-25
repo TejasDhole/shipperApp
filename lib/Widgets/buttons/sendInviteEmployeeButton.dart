@@ -31,6 +31,7 @@ class _SendInviteButtonState extends State<SendInviteButton> {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.white,
         ),
         child: Row(
