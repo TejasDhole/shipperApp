@@ -146,15 +146,20 @@ class _OngoingCardState extends State<OngoingCard> {
                       child: Center(
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          widget.loadAllDataModel.loadingPointCity ?? 'Null',
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
+                        child: Tooltip(
+                          message: widget.loadAllDataModel.loadingPointCity ??
+                              'Null',
+                          preferBelow: false,
+                          child: Text(
+                            widget.loadAllDataModel.loadingPointCity ?? 'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
                         ),
                       )),
                     ),
@@ -164,15 +169,21 @@ class _OngoingCardState extends State<OngoingCard> {
                       child: Center(
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          widget.loadAllDataModel.unloadingPointCity ?? 'Null',
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
+                        child: Tooltip(
+                          message: widget.loadAllDataModel.unloadingPointCity ??
+                              'Null',
+                          preferBelow: false,
+                          child: Text(
+                            widget.loadAllDataModel.unloadingPointCity ??
+                                'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
                         ),
                       )),
                     ),

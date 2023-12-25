@@ -111,15 +111,19 @@ class DeliveredCard extends StatelessWidget {
                       child: Center(
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          model.loadingPointCity ?? 'Null',
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
+                        child: Tooltip(
+                          message: model.loadingPointCity ?? 'Null',
+                          preferBelow: false,
+                          child: Text(
+                            model.loadingPointCity ?? 'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
                         ),
                       )),
                     ),
@@ -129,15 +133,19 @@ class DeliveredCard extends StatelessWidget {
                       child: Center(
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          model.unloadingPointCity ?? 'Null',
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
+                        child: Tooltip(
+                          message: model.unloadingPointCity ?? 'Null',
+                          preferBelow: false,
+                          child: Text(
+                            model.unloadingPointCity ?? 'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
                         ),
                       )),
                     ),
