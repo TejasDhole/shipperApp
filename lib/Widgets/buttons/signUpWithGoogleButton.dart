@@ -26,17 +26,18 @@ class SignUpWithGoogleButton extends StatelessWidget {
             (Responsive.isMobile(context) ? 0.83 : 0.33),
         height: screenHeight * 0.060,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius_1),
+          borderRadius: BorderRadius.circular(radius_10),
           border: Border.all(
-            color: black,
+            color: white,
             width: borderWidth_10,
           ),
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              elevation: elevation_0,
-              //backgroundColor: Colors.black.withOpacity(0.01),
-              backgroundColor: Color.fromARGB(255, 26, 26, 26)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius_10),),
+              shadowColor: lightGrey,
+              elevation: elevation_1,
+              backgroundColor: white),
           onPressed: onPressed,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +56,7 @@ class SignUpWithGoogleButton extends StatelessWidget {
                 style: GoogleFonts.montserrat(
                     fontSize: screenHeight * 0.019,
                     fontWeight: FontWeight.w600,
-                    color: white),
+                    color: black),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shipper_app/Web/screens/login_phone_no.dart';
 import 'package:shipper_app/Widgets/buttons/ConfirmButton.dart';
 import 'package:shipper_app/Widgets/showSnackBarTop.dart';
@@ -51,6 +52,7 @@ class _LoginWebState extends State<LoginWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Center(
@@ -59,10 +61,9 @@ class _LoginWebState extends State<LoginWeb> {
             width: MediaQuery.of(context).size.width,
             child: Row(
               children: [
-                const WebLoginLeftPart(),
+                WebLoginLeftPart(login: true,),
                 Expanded(
                   child: Container(
-                    color: formBackground,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +82,7 @@ class _LoginWebState extends State<LoginWeb> {
                                     child: Text(
                                         "Efficiency at your finger tips",
                                         style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w400,
+                                            fontWeight: FontWeight.w500,
                                             color: darkBlueTextColor,
                                             fontSize: 15)),
                                   ),
@@ -95,9 +96,9 @@ class _LoginWebState extends State<LoginWeb> {
                                       child: Text(
                                         'Email Address',
                                         style: GoogleFonts.montserrat(
-                                          fontSize: 20,
-                                          color: darkBlueTextColor,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color: black,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     )
@@ -112,16 +113,21 @@ class _LoginWebState extends State<LoginWeb> {
                                     autofillHints: autofillHints,
                                     decoration: InputDecoration(
                                       filled: true,
-                                      fillColor: white,
+                                      fillColor: offWhite,
                                       hintStyle: TextStyle(
-                                          decoration: TextDecoration.underline,
                                           decorationColor: greyShade,
                                           fontSize: 2.h,
                                           color: hintTextColor),
-                                      hintText: 'joshua07@gmail.com',
+                                      suffixIcon: Icon(FontAwesomeIcons.user, color: greyShade,),
+                                      hintText: 'eg: kartikkun@gmail.com',
                                       contentPadding:
                                           EdgeInsets.only(left: 3.h),
                                       border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(color: black, width: 2),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(5)),
                                       ),
@@ -158,9 +164,9 @@ class _LoginWebState extends State<LoginWeb> {
                                       child: Text(
                                         'Password',
                                         style: GoogleFonts.montserrat(
-                                          fontSize: 20,
-                                          color: darkBlueTextColor,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color: black,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -175,7 +181,7 @@ class _LoginWebState extends State<LoginWeb> {
                                     textAlignVertical: TextAlignVertical.center,
                                     decoration: InputDecoration(
                                       filled: true,
-                                      fillColor: white,
+                                      fillColor: offWhite,
                                       hintStyle: GoogleFonts.roboto(
                                           fontSize: 2.h,
                                           fontWeight: FontWeight.w600,
@@ -187,11 +193,16 @@ class _LoginWebState extends State<LoginWeb> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(5)),
                                       ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(color: black, width: 2),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                      ),
                                       suffixIcon: IconButton(
                                         color: greyShade,
                                         icon: Icon(passwordVisible
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
+                                            ? FontAwesomeIcons.lock
+                                            : FontAwesomeIcons.lockOpen),
                                         onPressed: () {
                                           setState(() {
                                             passwordVisible = !passwordVisible;
@@ -223,9 +234,23 @@ class _LoginWebState extends State<LoginWeb> {
                                   ),
                                 ),
 
+                                //Forget Password
+                                Padding(
+                                  padding:
+                                  EdgeInsets.only(right: 7.w, top: 3.h),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text("Forgot password ?",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: kLiveasyColor)),
+                                  ),
+                                ),
+
                                 //TODO : Sign In button
                                 ConfirmButton(
-                                  text: 'Sign in',
+                                  text: 'Log in',
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
@@ -254,20 +279,6 @@ class _LoginWebState extends State<LoginWeb> {
                                   },
                                 ),
 
-                                //Forget Password
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 7.w, top: 3.h),
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text("Forgot password ?",
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w400,
-                                            color: greyShade)),
-                                  ),
-                                ),
-
                                 SizedBox(
                                   height: space_4,
                                 ),
@@ -279,7 +290,7 @@ class _LoginWebState extends State<LoginWeb> {
                                       Expanded(
                                           child: Container(
                                         height: 1,
-                                        color: darkGreyish,
+                                        color: lightGrey,
                                       )),
                                       SizedBox(
                                         width: space_5,
@@ -288,9 +299,9 @@ class _LoginWebState extends State<LoginWeb> {
                                         "Or",
                                         style: GoogleFonts.roboto(
                                           decoration: TextDecoration.none,
-                                          fontSize: size_10,
+                                          fontSize: size_7,
                                           fontWeight: FontWeight.w600,
-                                          color: textGreyColor,
+                                          color: lightGrey,
                                         ),
                                       ),
                                       SizedBox(
@@ -299,13 +310,13 @@ class _LoginWebState extends State<LoginWeb> {
                                       Expanded(
                                           child: Container(
                                         height: 1,
-                                        color: darkGreyish,
+                                        color: lightGrey,
                                       )),
                                     ],
                                   ),
                                 ),
                                 SignUpWithGoogleButton(
-                                  txt: "Sign in Google",
+                                  txt: "Login with Google",
                                   onPressed: () async {
                                     try {
                                       UserCredential firebaseUser =
@@ -361,16 +372,16 @@ class _LoginWebState extends State<LoginWeb> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text("New to Liveasy Shipper? ",
+                                        Text("Don't have an account? ",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400,
                                                 color: greyShade)),
-                                        Text("Create Your Company",
+                                        Text("Sign Up",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w600,
-                                                color: truckGreen)),
+                                                color: kLiveasyColor)),
                                       ],
                                     ),
                                   ),

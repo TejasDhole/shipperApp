@@ -166,7 +166,7 @@ class _BiddingDateTimeState extends State<BiddingDateTime> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width * widget.width,
           child: TextField(
             controller: _biddingDateTextEditingController,
