@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/Widgets/addLocationDrawerWidget.dart';
+import 'package:shipper_app/Widgets/alertDialog/LogOutDialogue.dart';
 import 'package:shipper_app/constants/shipper_nav_icons.dart';
 import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/responsive.dart';
@@ -597,9 +598,12 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               facilitySelectedTabGradientColor =
                   white;
               signoutSelectedTabGradientColor = kLiveasyColor;
-
-              _selectedIndex = 6;
-              _index = 6;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const LogoutDialogue();
+                },
+              );
             }
           });
         },

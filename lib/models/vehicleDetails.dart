@@ -102,7 +102,11 @@ class VehicleDetails {
   }
 
   String? _getTextOrNA(XmlElement element, String tagName) {
-    final foundElement = element.findElements(tagName).last;
-    return foundElement.innerText.toString();
+    final elements = element.findElements(tagName);
+    if (elements.isNotEmpty) {
+      return elements.last.innerText.toString();
+    } else {
+      return 'N/A'; 
+    }
   }
 }

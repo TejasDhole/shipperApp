@@ -27,9 +27,9 @@ Container EwayBillsTableHeader(context) {
   return Container(
     height: 70,
     decoration: const BoxDecoration(
-      color: Color(0xfff2f5ff),
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
-    ),
+        color: Color(0xfff2f5ff),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10))),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -59,7 +59,7 @@ Container EwayBillsTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 50,
+            flex: 45,
             child: Center(
                 child: Text(
               'Transporter Name',
@@ -73,7 +73,7 @@ Container EwayBillsTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 20,
+            flex: 15,
             child: Center(
                 child: Text(
               'Vehicle No',
@@ -84,9 +84,23 @@ Container EwayBillsTableHeader(context) {
                 fontWeight: mediumBoldWeight,
               ),
             ))),
-            const VerticalDivider(color: greyShade, thickness: 1),
+        const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 20,
+            flex: 15,
+            child: Center(
+                child: Text(
+              'ETA',
+              textAlign: TextAlign.center,
+              selectionColor: sideBarTextColor,
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: size_8,
+                fontWeight: mediumBoldWeight,
+              ),
+            ))),
+        const VerticalDivider(color: greyShade, thickness: 1),
+        Expanded(
+            flex: 15,
             child: Center(
                 child: Text(
               'Track',

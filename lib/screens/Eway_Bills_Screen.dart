@@ -1,17 +1,21 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/EwayBill_Table_Header.dart';
 import 'package:shipper_app/constants/colors.dart';
-import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/functions/eway_bill_api.dart';
+import 'package:shipper_app/functions/googleDirectionsApi.dart';
+import 'package:shipper_app/functions/ongoingTrackUtils/FastTag.dart';
 import 'package:shipper_app/functions/shipperApis/isolatedShipperGetData.dart';
 import 'package:shipper_app/screens/Eway_Bill_Details_Screen.dart';
 import 'package:shipper_app/screens/FastTagScreen.dart';
@@ -26,13 +30,16 @@ class EwayBills extends StatefulWidget {
 
 class _EwayBillsState extends State<EwayBills> {
   String search = '';
-  String selectedRange = '7 days';
+  String selectedRange = '3 days';
   List<Map<String, dynamic>> EwayBills = [];
+  late Future<List<Map<String, dynamic>>> futureEwayBills;
   DateTime now = DateTime.now();
   late DateTime yesterday;
   late String from;
   late String gstNo;
   late String to;
+  Map<String, String> etaCache = {};
+  late Key futureBuilderKey = UniqueKey();
 
   Map<String, int> dateRanges = {
     "3 days": 3,
@@ -44,14 +51,16 @@ class _EwayBillsState extends State<EwayBills> {
   @override
   void initState() {
     super.initState();
-    setDateRange('7 days');
-    getEwayBillsData();
+    setDateRange('3 days');
+    futureEwayBills = getEwayBillsData();
   }
 
   void setDateRange(String range) {
     int days = dateRanges[range] ?? 7;
     yesterday = now.subtract(Duration(days: days));
     from = DateFormat('yyyy-MM-dd').format(yesterday);
+    futureEwayBills = getEwayBillsData(); // Fetch new data
+    futureBuilderKey = UniqueKey();
   }
 
   Future<List<Map<String, dynamic>>> getEwayBillsData() async {
@@ -72,12 +81,118 @@ class _EwayBillsState extends State<EwayBills> {
       from = DateFormat('yyyy-MM-dd').format(yesterday);
       to = DateFormat('yyyy-MM-dd').format(now);
       EwayBills = await EwayBill().getAllEwayBills(gstNo, from, to);
-      //print("$EwayBills");
+
+      List<Future<void>> etaCalculations = [];
+
+      for (var bill in EwayBills) {
+        String vehicleNo = bill['vehicleListDetails'][0]['vehicleNo'];
+        String toAddr1 = bill['toAddr1'];
+        String toAddr2 = bill['toAddr2'];
+        String toPlace = bill['toPlace'];
+        String completeAddress = '$toAddr1,$toAddr2,$toPlace';
+        String cacheKey = '$vehicleNo-$completeAddress';
+        // Add a Future to the list to calculate ETA for each bill
+
+        if (!etaCache.containsKey(cacheKey)) {
+          // Calculate ETA only if not present in the cache
+          String eta = await getETA(vehicleNo, completeAddress);
+          etaCache[cacheKey] = eta;
+        }
+        bill['eta'] = etaCache[cacheKey];
+      }
+
+      await Future.wait(etaCalculations);
+
       return EwayBills;
     } catch (e) {
       print(e);
       return [];
     }
+  }
+
+  Future<String> getETA(String vehicleNo, String recipientAddress) async {
+    to = now.toIso8601String();
+    try {
+      List<dynamic>? locations =
+          await checkFastTag().getVehicleLocation(vehicleNo);
+      if (locations != null && locations.isNotEmpty) {
+        final lastLocation = locations.last;
+        DateTime readerReadTime =
+            DateTime.parse(lastLocation['readerReadTime']);
+        TimeOfDay readerTime =
+            TimeOfDay(hour: readerReadTime.hour, minute: readerReadTime.minute);
+        final geoCode = lastLocation['tollPlazaGeocode'].split(',');
+
+        if (geoCode.length == 2) {
+          final double latitude = double.tryParse(geoCode[0]) ?? 0.0;
+          final double longitude = double.tryParse(geoCode[1]) ?? 0.0;
+          LatLng currentLocation = LatLng(latitude, longitude);
+
+          LatLng? lastAddress = await getCoordinatesForWeb(recipientAddress);
+
+          String? estimatedTime = await EstimatedTime()
+              .getEstimatedTime(currentLocation, lastAddress!);
+
+          if (estimatedTime != null) {
+            // Parse estimated time to total hours
+            RegExp regExp = RegExp(r'(\d+) day[s]? (\d+) hour[s]?');
+            var matches = regExp.firstMatch(estimatedTime);
+            int days = int.parse(matches?.group(1) ?? '0');
+            int hours = int.parse(matches?.group(2) ?? '0');
+            int totalEtaHours = days * 24 + hours;
+
+            // Get current time
+            TimeOfDay nowTime = TimeOfDay.now();
+        
+            // Calculate the difference in hours and minutes from the readerTime to nowTime
+            int hourDifference = nowTime.hour - readerTime.hour;
+            int minuteDifference = nowTime.minute - readerTime.minute;
+
+            // Adjust for any negative values
+            if (minuteDifference < 0) {
+              hourDifference -= 1;
+              minuteDifference += 60;
+            }
+
+            // Subtract the difference from the total ETA hours
+            int updatedEtaHours = totalEtaHours - hourDifference;
+            int updatedEtaMinutes = minuteDifference;
+
+            // Convert back to days and hours
+            int updatedEtaDays = updatedEtaHours ~/ 24;
+            updatedEtaHours %= 24;
+            String formattedEta =
+                '$updatedEtaDays day, $updatedEtaHours hours, $updatedEtaMinutes minutes';
+            return formattedEta;
+          }
+        }
+      }
+    } catch (e) {
+      print("Error fetching FastTag data in getETA function : $e");
+    }
+    return "Not Available";
+  }
+
+  Future<LatLng?> getCoordinatesForWeb(String placename) async {
+    try {
+      final encodedAddress = Uri.encodeComponent(placename);
+      final url =
+          'https://maps.googleapis.com/maps/api/geocode/json?address=$encodedAddress&key=${dotenv.get('mapKey')}';
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['status'] == 'OK' && data['results'].isNotEmpty) {
+          final location = data['results'][0]['geometry']['location'];
+          final lat = location['lat']; // Corrected
+          final lng = location['lng'];
+          return LatLng(lat, lng);
+        }
+      }
+    } catch (e) {
+      debugPrint("Web function isn't working");
+    }
+    return null;
   }
 
   @override
@@ -124,7 +239,8 @@ class _EwayBillsState extends State<EwayBills> {
                       height: screenHeight * 0.07,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
@@ -201,7 +317,7 @@ class _EwayBillsState extends State<EwayBills> {
                               setState(() {
                                 selectedRange = newValue!;
                                 setDateRange(newValue);
-                                getEwayBillsData();
+                                //futureEwayBills = getEwayBillsData();
                               });
                             }),
                       ),
@@ -250,7 +366,8 @@ class _EwayBillsState extends State<EwayBills> {
           EwayBillsTableHeader(context),
           Expanded(
             child: FutureBuilder(
-                future: getEwayBillsData(),
+                key: futureBuilderKey,
+                future: futureEwayBills,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Shimmer.fromColors(
@@ -306,7 +423,9 @@ class _EwayBillsState extends State<EwayBills> {
                               final String toPlace = ewayBill['toPlace'];
                               final String vehicleNumber =
                                   ewayBill['vehicleListDetails'][0]
-                                      ['vehicleNo'];                   
+                                      ['vehicleNo'];
+                              String eta = ewayBill['eta'];
+
                               return InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -328,6 +447,7 @@ class _EwayBillsState extends State<EwayBills> {
                                     from: fromPlace,
                                     to: toPlace,
                                     date: ewayBillDate,
+                                    eta: eta,
                                     screenWidth: screenWidth),
                               );
                             },
@@ -341,14 +461,14 @@ class _EwayBillsState extends State<EwayBills> {
         ]);
   }
 
-  Container ewayBillData({
-    required final String transporterName,
-    required final String vehicleNo,
-    required final String from,
-    required final String to,
-    required final String date,
-    required final screenWidth
-  }) {
+  Container ewayBillData(
+      {required final String transporterName,
+      required final String vehicleNo,
+      required final String from,
+      required final String to,
+      required final String date,
+      required final String eta,
+      required final screenWidth}) {
     return Container(
         height: 70,
         decoration: const BoxDecoration(
@@ -405,7 +525,7 @@ class _EwayBillsState extends State<EwayBills> {
                   ]))),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 50,
+              flex: 45,
               child: Center(
                   child: Text(
                 transporterName,
@@ -419,7 +539,7 @@ class _EwayBillsState extends State<EwayBills> {
               ))),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 20,
+              flex: 15,
               child: Center(
                   child: Text(
                 vehicleNo,
@@ -432,7 +552,20 @@ class _EwayBillsState extends State<EwayBills> {
               ))),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 20,
+              flex: 15,
+              child: Center(
+                  child: Text(
+                eta,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.montserrat(
+                  fontSize: screenWidth * 0.0125,
+                  color: Colors.black,
+                  fontWeight: normalWeight,
+                ),
+              ))),
+          const VerticalDivider(color: greyShade, thickness: 1),
+          Expanded(
+              flex: 15,
               child: Center(
                   child: ElevatedButton(
                       onPressed: () {

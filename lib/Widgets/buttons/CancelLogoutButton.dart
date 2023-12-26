@@ -32,7 +32,7 @@ class CancelLogoutButton extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const HomeScreenWeb()))
-              : Get.back();
+              : Navigator.of(context).pop();
         },
         child: Container(
           decoration: const BoxDecoration(
