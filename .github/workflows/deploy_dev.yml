@@ -54,6 +54,7 @@ jobs:
           echo "numVerifyApiUrl=${{ vars.NUM_VERIFY_API_URL }}" >> .env
           echo "accessKey=${{ vars.ACCESS_KEY }}" >> .env
           echo "ewayBill=${{ vars.EWAY_BILL }}" >> .env
+          echo "sendInviteEmailUrl=${{ vars.SEND_INVITE_EMAIL_URL }}" >> .env
 
       - name: Merge to branch
         run: |

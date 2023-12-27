@@ -84,7 +84,7 @@ createGeoFence(lat, long) async {
           "${facilityController.state.value.toString()}, ${facilityController.country.value.toString()}",
     },
     "name": facilityController.partyName.value.toString(),
-    "area": "CIRCLE ($lat $long, 2500)"
+    "area": "CIRCLE ($lat $long, ${facilityController.facilityRadius.value.toString()})"
   };
   String body = json.encode(data);
 
@@ -121,7 +121,7 @@ updateGeoFence(lat, long) async {
           "${facilityController.state.value.toString()}, ${facilityController.country.value.toString()}",
     },
     "name": facilityController.partyName.value.toString(),
-    "area": "CIRCLE ($lat $long, 2500)",
+    "area": "CIRCLE ($lat $long, ${facilityController.facilityRadius.value.toString()})",
     "id": int.parse(id),
   };
   String body = json.encode(data);

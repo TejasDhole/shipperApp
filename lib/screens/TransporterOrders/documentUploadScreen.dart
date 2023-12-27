@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/buttons/editDriverDetail.dart';
 import 'package:shipper_app/Widgets/buttons/sendConsentButton.dart';
 import 'package:shipper_app/Widgets/buttons/trackButton.dart';
+import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/functions/loadOnGoingData.dart';
 import 'package:shipper_app/functions/operatorInfo.dart';
 import 'package:shipper_app/functions/truckApis/consentStatusApi.dart';
@@ -1263,7 +1265,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsets
-                                                                              .fromLTRB(
+                                                                          .fromLTRB(
                                                                           20,
                                                                           0,
                                                                           20,
@@ -1496,18 +1498,39 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                           screenWidth * 0.02),
                                                       child: InkWell(
                                                         onTap: () {
+                                                          // Navigator.push(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder:
+                                                          //           (context) =>
+                                                          //               MapScreen(
+                                                          //                 loadingPoint:
+                                                          //                     widget.loadingPoint,
+                                                          //                 unloadingPoint:
+                                                          //                     widget.unloadingPoint,
+                                                          //                 truckNumber:
+                                                          //                     widget.truckNo,
+                                                          //               )),
+                                                          // );
                                                           Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        MapScreen(
-                                                                          loadingPoint:
-                                                                              widget.loadingPoint,
-                                                                          unloadingPoint:
-                                                                              widget.unloadingPoint,
-                                                                          truckNumber:
-                                                                              widget.truckNo,
+                                                                        HomeScreenWeb(
+                                                                          visibleWidget:
+                                                                              MapScreen(
+                                                                            loadingPoint:
+                                                                                widget.loadingPoint,
+                                                                            unloadingPoint:
+                                                                                widget.unloadingPoint,
+                                                                            truckNumber:
+                                                                                widget.truckNo,
+                                                                          ),
+                                                                          index:
+                                                                              1000,
+                                                                          selectedIndex:
+                                                                              screens.indexOf(postLoadScreen),
                                                                         )),
                                                           );
                                                         },
@@ -1598,18 +1621,39 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                           screenWidth * 0.02),
                                                       child: InkWell(
                                                         onTap: () {
+                                                          // Navigator.push(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder:
+                                                          //           (context) =>
+                                                          //               MapScreen(
+                                                          //                 loadingPoint:
+                                                          //                     widget.loadingPoint,
+                                                          //                 unloadingPoint:
+                                                          //                     widget.unloadingPoint,
+                                                          //                 truckNumber:
+                                                          //                     widget.truckNo,
+                                                          //               )),
+                                                          // );
                                                           Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        MapScreen(
-                                                                          loadingPoint:
-                                                                              widget.loadingPoint,
-                                                                          unloadingPoint:
-                                                                              widget.unloadingPoint,
-                                                                          truckNumber:
-                                                                              widget.truckNo,
+                                                                        HomeScreenWeb(
+                                                                          visibleWidget:
+                                                                              MapScreen(
+                                                                            loadingPoint:
+                                                                                widget.loadingPoint,
+                                                                            unloadingPoint:
+                                                                                widget.unloadingPoint,
+                                                                            truckNumber:
+                                                                                widget.truckNo,
+                                                                          ),
+                                                                          index:
+                                                                              1000,
+                                                                          selectedIndex:
+                                                                              screens.indexOf(postLoadScreen),
                                                                         )),
                                                           );
                                                         },
@@ -1959,14 +2003,30 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                       width: screenWidth * 0.15,
                                                       child: ElevatedButton(
                                                           onPressed: () {
+                                                            // Navigator.push(
+                                                            //   context,
+                                                            //   MaterialPageRoute(
+                                                            //       builder:
+                                                            //           (context) =>
+                                                            //               VehicleDetailsScreen(
+                                                            //                 truckNumber:
+                                                            //                     widget.truckNo,
+                                                            //               )),
+                                                            // );
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          VehicleDetailsScreen(
-                                                                            truckNumber:
-                                                                                widget.truckNo,
+                                                                          HomeScreenWeb(
+                                                                            visibleWidget:
+                                                                                VehicleDetailsScreen(
+                                                                              truckNumber: widget.truckNo,
+                                                                            ),
+                                                                            index:
+                                                                                1000,
+                                                                            selectedIndex:
+                                                                                screens.indexOf(postLoadScreen),
                                                                           )),
                                                             );
                                                           },
@@ -1985,7 +2045,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .fromLTRB(
+                                                                    .fromLTRB(
                                                                     100,
                                                                     10,
                                                                     10,

@@ -78,6 +78,19 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
     fetchBookingData();
   }
 
+  @override
+void dispose() {
+  // If the overlay entry is not null, remove it
+  if (_overlayEntry != null) {
+    _overlayEntry!.remove();
+    _overlayEntry = null;
+  }
+
+  // Call the super dispose method
+  super.dispose();
+}
+
+
   void setSelectedBooking(BookingModel booking) {
     setState(() {
       selectedBooking = booking;

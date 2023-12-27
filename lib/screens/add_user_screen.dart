@@ -21,7 +21,7 @@ class _AddUserState extends State<AddUser> {
   late String phoneOrMail;
   bool isError = false;
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
-  String selectedRole = "EDITOR";
+  String selectedRole = "VIEWER";
 
   List<String> dateRanges = ["ADMIN", "EDITOR", "VIEWER"];
 
@@ -119,7 +119,7 @@ class _AddUserState extends State<AddUser> {
                           Expanded(
                               flex: 250,
                               child: Container(
-                                height: 55,
+                                height: 48,
                                 margin: EdgeInsets.only(
                                     left: screenWidth * 0.008),
                                 decoration: BoxDecoration(
@@ -204,6 +204,7 @@ class _AddUserState extends State<AddUser> {
                                   Responsive.isMobile(context) ? 3.0 : screenHeight * 0.01),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              surfaceTintColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),

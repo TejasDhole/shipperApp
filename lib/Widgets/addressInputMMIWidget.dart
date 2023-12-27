@@ -159,6 +159,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                   fontWeight: FontWeight.w600),
                             ),
                             onPressed: () {
+                              Get.delete<FacilityController>();
                               facilityController.updateCreate(true);
                               Navigator.of(context).pop();
                               addLocationDrawerToggleController
