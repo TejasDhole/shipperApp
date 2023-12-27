@@ -59,7 +59,7 @@ Container EwayBillsTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 45,
+            flex: 30,
             child: Center(
                 child: Text(
               'Transporter Name',
@@ -86,7 +86,7 @@ Container EwayBillsTableHeader(context) {
             ))),
         const VerticalDivider(color: greyShade, thickness: 1),
         Expanded(
-            flex: 15,
+            flex: 30,
             child: Center(
                 child: Text(
               'ETA',

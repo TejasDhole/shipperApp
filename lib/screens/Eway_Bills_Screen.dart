@@ -143,7 +143,7 @@ class _EwayBillsState extends State<EwayBills> {
 
             // Get current time
             TimeOfDay nowTime = TimeOfDay.now();
-        
+
             // Calculate the difference in hours and minutes from the readerTime to nowTime
             int hourDifference = nowTime.hour - readerTime.hour;
             int minuteDifference = nowTime.minute - readerTime.minute;
@@ -324,38 +324,42 @@ class _EwayBillsState extends State<EwayBills> {
                     )),
                 Expanded(
                   flex: 25,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreenWeb(
-                                  visibleWidget:
-                                      TrackAllFastagScreen(EwayData: EwayBills),
-                                  index: 1000,
-                                  selectedIndex:
-                                      screens.indexOf(ewayBillScreen),
-                                )),
-                      );
-                    },
-                    child: Container(
-                      height: 55,
-                      margin: EdgeInsets.only(
-                          right: screenWidth * 0.02, left: screenWidth * 0.02),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(color: darkBlueTextColor),
-                          color: white),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset('assets/icons/Track.png'),
-                          Text('Track All Loads',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: screenWidth * 0.0125,
-                                  fontWeight: FontWeight.w600,
-                                  color: darkBlueTextColor)),
-                        ],
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreenWeb(
+                                    visibleWidget: TrackAllFastagScreen(
+                                        EwayData: EwayBills),
+                                    index: 1000,
+                                    selectedIndex:
+                                        screens.indexOf(ewayBillScreen),
+                                  )),
+                        );
+                      },
+                      child: Container(
+                        height: 55,
+                        margin: EdgeInsets.only(
+                            right: screenWidth * 0.02,
+                            left: screenWidth * 0.02),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            border: Border.all(color: darkBlueTextColor),
+                            color: white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset('assets/icons/Track.png'),
+                            Text('Track All Loads',
+                                style: GoogleFonts.montserrat(
+                                    fontSize: screenWidth * 0.0125,
+                                    fontWeight: FontWeight.w600,
+                                    color: darkBlueTextColor)),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -370,18 +374,17 @@ class _EwayBillsState extends State<EwayBills> {
                 future: futureEwayBills,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: shimmerGrey,
-                      child: SizedBox(
-                        height: screenHeight,
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
+                    int shimmerRowCount = EwayBills.isNotEmpty ? EwayBills.length : 10;
+                    return ListView.builder(
+                        itemCount:
+                            shimmerRowCount, // Decide how many shimmer rows you want to display
+                        itemBuilder: (context, index) {
+                          return Shimmer.fromColors(
+                            baseColor: shimmerGrey,
+                            highlightColor: Colors.white,
+                            child: ewayBillShimmerRow(screenWidth: screenWidth),
+                          );
+                        });
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
                       // An error occurred while fetching data
@@ -525,10 +528,11 @@ class _EwayBillsState extends State<EwayBills> {
                   ]))),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 45,
+              flex: 30,
               child: Center(
                   child: Text(
                 transporterName,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 selectionColor: sideBarTextColor,
                 style: GoogleFonts.montserrat(
@@ -552,7 +556,7 @@ class _EwayBillsState extends State<EwayBills> {
               ))),
           const VerticalDivider(color: greyShade, thickness: 1),
           Expanded(
-              flex: 15,
+              flex: 30,
               child: Center(
                   child: Text(
                 eta,
@@ -599,5 +603,27 @@ class _EwayBillsState extends State<EwayBills> {
                         ),
                       )))),
         ]));
+  }
+
+  Widget ewayBillShimmerRow({required double screenWidth}) {
+    return Container(
+      height: 70,
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: greyShade, width: 1)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+          5,
+          (index) => 
+              Expanded(
+            child: Container(
+             margin: const EdgeInsets.symmetric(vertical: 8),
+              color: shimmerGrey,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
