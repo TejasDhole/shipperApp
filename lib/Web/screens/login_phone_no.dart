@@ -118,7 +118,7 @@ class _LoginWebPhoneState extends State<LoginWebPhone> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const CompanyDetails(email: '',)));
+                                              const CompanyDetails(email: '', user_name: 'UnKnown',)));
                                 } else if (auth.currentUser!.emailVerified) {
                                   Navigator.pushReplacement(
                                       context,

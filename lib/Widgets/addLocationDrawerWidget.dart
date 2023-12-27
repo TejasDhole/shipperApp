@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -16,8 +17,8 @@ import '/constants/spaces.dart';
 
 class AddLocationDrawerWidget extends StatefulWidget {
   final context;
-  final Function refreshParent;
-  AddLocationDrawerWidget({required this.context, required this.refreshParent});
+
+  AddLocationDrawerWidget({required this.context});
 
   @override
   State<AddLocationDrawerWidget> createState() =>
@@ -32,6 +33,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
   TextEditingController cityNameController = TextEditingController();
   TextEditingController countryNameController = TextEditingController();
   TextEditingController partyNameController = TextEditingController();
+  TextEditingController radiusController = TextEditingController();
 
   final padding = EdgeInsets.only(left: space_1, right: space_7);
 
@@ -309,56 +311,140 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text(
-                      'Party Name',
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: size_9,
-                          color: black,
-                          fontWeight: FontWeight.w600),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Party Name',
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: size_9,
+                                  color: black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Obx(() {
+                                  if (facilityController.partyName.value !=
+                                      '') {
+                                    partyNameController.text =
+                                        facilityController.partyName.value;
+                                  } else {
+                                    partyNameController.clear();
+                                  }
+                                  partyNameController.moveCursorToEnd();
+                                  return TextField(
+                                    controller: partyNameController,
+                                    onChanged: (value) {
+                                      facilityController.updatePartyName(
+                                          partyNameController.text);
+                                    },
+                                    style: TextStyle(
+                                        color: kLiveasyColor,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: size_8),
+                                    textAlign: TextAlign.center,
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5)),
+                                            borderSide: BorderSide(
+                                                color: borderLightColor,
+                                                width: 0.5)),
+                                        hintText: 'Enter Party Name',
+                                        hintStyle: TextStyle(
+                                            color: borderLightColor,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: size_8),
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                            borderSide: BorderSide(
+                                                color: black, width: 0.5))),
+                                  );
+                                })),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Radius',
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: size_9,
+                                      color: black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '(meter)',
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: size_7,
+                                      color: black,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.13,
+                              child: Obx(() {
+                                radiusController.text = facilityController
+                                    .facilityRadius.value
+                                    .toString();
+                                radiusController.moveCursorToEnd();
+                                return TextField(
+                                  controller: radiusController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                  onChanged: (value) {
+                                    value = (value.isEmpty) ? '0' : value;
+                                    value = value.trim();
+                                    facilityController
+                                        .updateFacilityRadius(int.parse(value));
+                                  },
+                                  style: TextStyle(
+                                      color: kLiveasyColor,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: size_8),
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: borderLightColor,
+                                            width: 0.5)),
+                                    focusedBorder: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: black, width: 0.5)),
+                                  ),
+                                );
+                              }),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Obx(() {
-                          if (facilityController.partyName.value != '') {
-                            partyNameController.text =
-                                facilityController.partyName.value;
-                          } else {
-                            partyNameController.clear();
-                          }
-                          partyNameController.moveCursorToEnd();
-                          return TextField(
-                            controller: partyNameController,
-                            onChanged: (value) {
-                              facilityController
-                                  .updatePartyName(partyNameController.text);
-                            },
-                            style: TextStyle(
-                                color: kLiveasyColor,
-                                fontFamily: 'Montserrat',
-                                fontSize: size_8),
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5)),
-                                    borderSide: BorderSide(
-                                        color: borderLightColor, width: 0.5)),
-                                hintText: 'Enter Party Name',
-                                hintStyle: TextStyle(
-                                    color: borderLightColor,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: size_8),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
-                                    borderSide:
-                                        BorderSide(color: black, width: 0.5))),
-                          );
-                        })),
                     const SizedBox(
                       height: 60,
                     ),
@@ -374,6 +460,7 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                               facilityController.updateAddress('');
                               facilityController.updatePinCode('');
                               facilityController.updateFacilityLatLng('', '');
+                              facilityController.facilityRadius(2500);
                               Navigator.pop(widget.context);
                             },
                             child: Container(
@@ -440,6 +527,8 @@ class _AddLocationDrawerWidgetState extends State<AddLocationDrawerWidget> {
                                     facilityController.updatePinCode('');
                                     facilityController.updateFacilityLatLng(
                                         '', '');
+                                    facilityController
+                                        .updateFacilityRadius(2500);
 
                                     void rebuild(Element el) {
                                       el.markNeedsBuild();

@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shipper_app/constants/colors.dart';
 
 class WebLoginLeftPart extends StatelessWidget {
-  const WebLoginLeftPart({super.key});
+  bool login = true;
+  WebLoginLeftPart({super.key, required this.login});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +22,12 @@ class WebLoginLeftPart extends StatelessWidget {
           width: containerWidth,
           height: screenHeight,
 
-          decoration: const BoxDecoration(
-              color: white,
+          decoration:  BoxDecoration(
+              color: kLiveasyColor,
               image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                      "assets/images/WebLoginImage.png"))), // Replace with your desired color or widget
+                  fit: BoxFit.contain,
+                  image: AssetImage(login?
+                      "assets/images/WebLoginImage.png": "assets/images/WebSignUPImage.png"))), // Replace with your desired color or widget
           child: Stack(
             children: [
               Align(

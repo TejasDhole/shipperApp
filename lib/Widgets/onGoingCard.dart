@@ -145,99 +145,113 @@ class _OngoingCardState extends State<OngoingCard> {
                       flex: 5,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        widget.loadAllDataModel.loadingPointCity ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Tooltip(
+                          message: widget.loadAllDataModel.loadingPointCity ??
+                              'Null',
+                          preferBelow: false,
+                          child: Text(
+                            widget.loadAllDataModel.loadingPointCity ?? 'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 5,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        widget.loadAllDataModel.unloadingPointCity ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.w600,
-                              fontSize: textFontSize,
-                              fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Tooltip(
+                          message: widget.loadAllDataModel.unloadingPointCity ??
+                              'Null',
+                          preferBelow: false,
+                          child: Text(
+                            widget.loadAllDataModel.unloadingPointCity ??
+                                'Null',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: textFontSize,
+                                fontFamily: 'Montserrat'),
+                          ),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${widget.loadAllDataModel.truckNo}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${widget.loadAllDataModel.truckNo}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: kLiveasyColor,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 4,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${widget.loadAllDataModel.driverName}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${widget.loadAllDataModel.driverName}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: black,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                        '${widget.loadAllDataModel.truckType}' ?? 'Null',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '${widget.loadAllDataModel.truckType}' ?? 'Null',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                               color: kLiveasyColor,
                               fontWeight: FontWeight.w600,
                               fontSize: textFontSize,
                               fontFamily: 'Montserrat'),
-                      ),
-                          )),
+                        ),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
                       flex: 3,
                       child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Flex(
-                                mainAxisSize: MainAxisSize.min,
-                                direction: Axis.vertical,
-                                children: [
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Flex(
+                            mainAxisSize: MainAxisSize.min,
+                            direction: Axis.vertical,
+                            children: [
                               Flexible(
                                   child: Text(
-                                '${widget.loadAllDataModel.companyName}' ?? 'Null',
+                                '${widget.loadAllDataModel.companyName}' ??
+                                    'Null',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: black,
@@ -246,7 +260,7 @@ class _OngoingCardState extends State<OngoingCard> {
                                     fontFamily: 'Montserrat'),
                               ))
                             ]),
-                          )),
+                      )),
                     ),
                     const VerticalDivider(color: Colors.grey, thickness: 1),
                     Expanded(
@@ -274,7 +288,8 @@ class _OngoingCardState extends State<OngoingCard> {
                                         widget.loadAllDataModel.shipperPhoneNum,
                                     driverPhoneNum:
                                         widget.loadAllDataModel.driverPhoneNum,
-                                    driverName: widget.loadAllDataModel.driverName,
+                                    driverName:
+                                        widget.loadAllDataModel.driverName,
                                     transporterName:
                                         widget.loadAllDataModel.companyName,
                                   ),
@@ -288,8 +303,8 @@ class _OngoingCardState extends State<OngoingCard> {
                             height: 20,
                             child: IconButton(
                               onPressed: () {
-                                ongoingTruckGpsData =
-                                    OngoingTruckGpsData(widget.loadAllDataModel);
+                                ongoingTruckGpsData = OngoingTruckGpsData(
+                                    widget.loadAllDataModel);
                                 ongoingTruckGpsData
                                     .getTruckGpsDetails()
                                     .then((gpsData) {
@@ -303,26 +318,27 @@ class _OngoingCardState extends State<OngoingCard> {
                                               .toString(),
                                           truckNo:
                                               widget.loadAllDataModel.truckNo,
-                                          loadingPoint: widget
-                                              .loadAllDataModel.loadingPointCity,
-                                          unloadingPoint: widget.loadAllDataModel
+                                          loadingPoint: widget.loadAllDataModel
+                                              .loadingPointCity,
+                                          unloadingPoint: widget
+                                              .loadAllDataModel
                                               .unloadingPointCity,
-                                          transporterName:
-                                              widget.loadAllDataModel.shipperName,
+                                          transporterName: widget
+                                              .loadAllDataModel.shipperName,
                                           transporterPhoneNum: widget
                                               .loadAllDataModel.shipperPhoneNum,
                                           driverPhoneNum: widget
                                               .loadAllDataModel.driverPhoneNum,
-                                          driverName:
-                                              widget.loadAllDataModel.driverName,
-                                          bookingDate:
-                                              widget.loadAllDataModel.bookingDate,
+                                          driverName: widget
+                                              .loadAllDataModel.driverName,
+                                          bookingDate: widget
+                                              .loadAllDataModel.bookingDate,
                                           gpsDataList: gpsData[1][0],
                                           totalDistance: gpsData[3],
                                           truckType:
                                               widget.loadAllDataModel.truckType,
-                                          productType:
-                                              widget.loadAllDataModel.productType,
+                                          productType: widget
+                                              .loadAllDataModel.productType,
                                           unitValue:
                                               widget.loadAllDataModel.unitValue,
                                           loadAllDataModel:

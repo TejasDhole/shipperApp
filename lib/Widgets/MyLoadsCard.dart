@@ -80,13 +80,14 @@ class MyLoadsCard extends StatelessWidget {
                   flex: 3,
                   child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                           Text(
-                            '${loadDetailsScreenModel.scheduleLoadDate}' ?? 'Null',
+                            '${loadDetailsScreenModel.scheduleLoadDate}' ??
+                                'Null',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: black,
@@ -116,7 +117,7 @@ class MyLoadsCard extends StatelessWidget {
                                   height: 0,
                                 )
                         ]),
-                      ))),
+                  ))),
               VerticalDivider(color: Colors.grey, thickness: 1),
               Expanded(
                   flex: 5,
@@ -147,14 +148,22 @@ class MyLoadsCard extends StatelessWidget {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                loadDetailsScreenModel.loadingPointCity ?? 'Null',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: textFontSize,
-                                    fontFamily: 'Montserrat'),
+                              Tooltip(
+                                message:
+                                    loadDetailsScreenModel.loadingPointCity ??
+                                        'Null',
+                                preferBelow: false,
+                                child: Text(
+                                  loadDetailsScreenModel.loadingPointCity ??
+                                      'Null',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: textFontSize,
+                                      fontFamily: 'Montserrat'),
+                                ),
                               )
                             ],
                           ),
@@ -192,15 +201,23 @@ class MyLoadsCard extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      loadDetailsScreenModel.loadingPointCity2 ??
+                                    Tooltip(
+                                      message: loadDetailsScreenModel
+                                              .loadingPointCity2 ??
                                           'Null',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: textFontSize,
-                                          fontFamily: 'Montserrat'),
+                                      preferBelow: false,
+                                      child: Text(
+                                        loadDetailsScreenModel
+                                                .loadingPointCity2 ??
+                                            'Null',
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: textFontSize,
+                                            fontFamily: 'Montserrat'),
+                                      ),
                                     )
                                   ],
                                 )
@@ -241,15 +258,22 @@ class MyLoadsCard extends StatelessWidget {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                loadDetailsScreenModel.unloadingPointCity ??
-                                    'Null',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: textFontSize,
-                                    fontFamily: 'Montserrat'),
+                              Tooltip(
+                                message:
+                                    loadDetailsScreenModel.unloadingPointCity ??
+                                        'Null',
+                                preferBelow: false,
+                                child: Text(
+                                  loadDetailsScreenModel.unloadingPointCity ??
+                                      'Null',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: textFontSize,
+                                      fontFamily: 'Montserrat'),
+                                ),
                               )
                             ],
                           ),
@@ -287,16 +311,23 @@ class MyLoadsCard extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      loadDetailsScreenModel
+                                    Tooltip(
+                                      message: loadDetailsScreenModel
                                               .unloadingPointCity2 ??
                                           'Null',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: textFontSize,
-                                          fontFamily: 'Montserrat'),
+                                      preferBelow: false,
+                                      child: Text(
+                                        loadDetailsScreenModel
+                                                .unloadingPointCity2 ??
+                                            'Null',
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: textFontSize,
+                                            fontFamily: 'Montserrat'),
+                                      ),
                                     )
                                   ],
                                 )
@@ -312,10 +343,11 @@ class MyLoadsCard extends StatelessWidget {
                   flex: 4,
                   child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 8),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Text(
                             '${loadDetailsScreenModel.truckType}' ?? 'Null',
                             textAlign: TextAlign.center,
@@ -329,7 +361,8 @@ class MyLoadsCard extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            '${loadDetailsScreenModel.noOfTyres} tyres' ?? 'Null',
+                            '${loadDetailsScreenModel.noOfTyres} tyres' ??
+                                'Null',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -338,16 +371,16 @@ class MyLoadsCard extends StatelessWidget {
                                 fontFamily: 'Montserrat'),
                           )
                         ]),
-                      ))),
+                  ))),
               VerticalDivider(color: Colors.grey, thickness: 1),
               Expanded(
                   flex: 4,
                   child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Text(
                             '${loadDetailsScreenModel.productType}' ?? 'Null',
                             textAlign: TextAlign.center,
@@ -370,7 +403,7 @@ class MyLoadsCard extends StatelessWidget {
                                 fontFamily: 'Montserrat'),
                           )
                         ]),
-                      ))),
+                  ))),
               VerticalDivider(color: Colors.grey, thickness: 1),
               Expanded(
                 flex: 3,
@@ -393,8 +426,8 @@ class MyLoadsCard extends StatelessWidget {
                                 children: [
                                     ViewBidsButton(
                                       loadId: loadDetailsScreenModel.loadId,
-                                      loadingPointCity:
-                                          loadDetailsScreenModel.loadingPointCity,
+                                      loadingPointCity: loadDetailsScreenModel
+                                          .loadingPointCity,
                                       unloadingPointCity: loadDetailsScreenModel
                                           .unloadingPointCity,
                                       screenSmall: small,
@@ -416,9 +449,10 @@ class MyLoadsCard extends StatelessWidget {
                               : 'Load\nPending',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: (loadDetailsScreenModel.status == 'EXPIRED')
-                                  ? declineButtonRed
-                                  : truckGreen,
+                              color:
+                                  (loadDetailsScreenModel.status == 'EXPIRED')
+                                      ? declineButtonRed
+                                      : truckGreen,
                               fontSize: textFontSize,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat'),
