@@ -290,13 +290,26 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                 : Obx(() {
                     if (myLoadsFilterController.refreshBuilder.value) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        setState(() {
                           myLoadList.clear();
+                          searchedLoadList.clear();
                           loading = true;
                           i = 0;
-                          myLoadsFilterController.updateRefreshBuilder(false);
-                          getDataByPostLoadId(i, null, null);
-                        });
+                          if(myLoadsFilterController.startDate.value.isNotEmpty && myLoadsFilterController.endDate.value.isNotEmpty){
+                            getDataByPostLoadId(
+                                i,
+                                myLoadsFilterController.startDate.value,
+                                myLoadsFilterController.endDate.value).then((value){
+                              myLoadsFilterController
+                                  .updateRefreshBuilder(false);
+                              setState(() {});
+                            });
+                          }
+                          else{
+                            getDataByPostLoadId(i, null, null).then((value){
+                              myLoadsFilterController.updateRefreshBuilder(false);
+                              setState(() {});
+                            });
+                          }
                       });
                     }
                     return searchedLoadList.isEmpty
@@ -321,25 +334,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                             ),
                           )
                         : Expanded(
-                            child: Obx(() {
-                              if (myLoadsFilterController
-                                  .refreshBuilder.value) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  setState(() {
-                                    myLoadList.clear();
-                                    loading = true;
-                                    i = 0;
-                                    myLoadsFilterController
-                                        .updateRefreshBuilder(false);
-                                    getDataByPostLoadId(
-                                        i,
-                                        myLoadsFilterController.startDate.value,
-                                        myLoadsFilterController.endDate.value);
-                                  });
-                                });
-                              }
-                              return RefreshIndicator(
+                            child: RefreshIndicator(
                                   color: lightNavyBlue,
                                   onRefresh: () {
                                     setState(() {
@@ -404,7 +399,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                                                         ]),
                                                   separatorBuilder:
                                                       (context, index) =>
-                                                          Divider(
+                                                          const Divider(
                                                     thickness: 1,
                                                     height: 0,
                                                     color: Colors.grey,
@@ -433,8 +428,7 @@ class _MyLoadsScreenState extends State<MyLoadsScreen> {
                                                   loadDetailsScreenModel:
                                                       searchedLoadList[index],
                                                 ),
-                                        ));
-                            }),
+                                        ))
                           );
                   })
           ],
