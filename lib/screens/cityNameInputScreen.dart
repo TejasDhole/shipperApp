@@ -299,7 +299,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                         snapshot.data[index].addresscomponent1,
                                         snapshot.data[index].placeCityName,
                                         snapshot.data[index].placeStateName,
-                                        widget.valueType);
+                                        widget.valueType, null);
                                     Get.back();
                                   }),
                                   separatorBuilder:
@@ -391,7 +391,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                     snapshot
                                                         .data[selectedItemIndex]
                                                         .placeStateName,
-                                                    widget.valueType);
+                                                    widget.valueType, null);
                                                 Get.back();
                                               }
                                             } else if (value.logicalKey ==
@@ -453,7 +453,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                                       .placeCityName,
                                                   snapshot.data[index]
                                                       .placeStateName,
-                                                  widget.valueType);
+                                                  widget.valueType, null);
                                               Get.back();
                                             }),
                                             separatorBuilder:
@@ -641,7 +641,7 @@ class _CityNameInputScreenState extends State<CityNameInputScreen> {
                                     state != null) {
                                   Navigator.of(context).pop();
                                   selectedLocationPostLoad(context, address,
-                                      null, city, state, widget.valueType);
+                                      null, city, state, widget.valueType, null);
                                   Get.back();
                                 }
                               },

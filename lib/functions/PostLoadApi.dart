@@ -33,7 +33,9 @@ Future<String?> postLoadAPi(
     comment,
     loadTransporterList,
     biddingEndDate,
-    biddingEndTime) async {
+    biddingEndTime,
+    loadingGeoFences,
+    unloadingGeoFences) async {
   PostLoadErrorController postLoadErrorController =
       Get.put(PostLoadErrorController());
   try {
@@ -64,7 +66,9 @@ Future<String?> postLoadAPi(
       "comment": comment,
       "transporterList": loadTransporterList,
       "biddingEndDate": biddingEndDate,
-      "biddingEndTime": biddingEndTime
+      "biddingEndTime": biddingEndTime,
+      "loadingPointGeoId": loadingGeoFences,
+      "unloadingPointGeoId": unloadingGeoFences
     };
 
     String body = json.encode(data);
@@ -79,7 +83,7 @@ Future<String?> postLoadAPi(
         body: body);
     jsonData = json.decode(response.body);
 
-    print("jsonData $jsonData");
+
     if (response.statusCode == 201) {
       print("LOAD API Response-->$jsonData");
       if (jsonData["loadId"] != null) {

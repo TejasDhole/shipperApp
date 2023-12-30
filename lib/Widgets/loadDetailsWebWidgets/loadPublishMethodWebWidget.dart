@@ -23,7 +23,7 @@ class LoadPublishMethodWebWidget extends StatefulWidget {
 
 class _LoadPublishMethodWebWidgetState
     extends State<LoadPublishMethodWebWidget> {
-  List<String> publishMethods = ['Bid', 'Contract', 'Select'];
+  List<String> publishMethods = ['Bid', 'Contract', 'Select LSP'];
   List<String> imagePath = [
     'assets/images/load_publish_bid.png',
     'assets/images/load_publish_contract.png',

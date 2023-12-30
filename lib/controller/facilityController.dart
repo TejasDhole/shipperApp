@@ -13,6 +13,7 @@ class FacilityController extends GetxController {
   RxString long = ''.obs;
   RxString id = ''.obs;
   RxString facilityPopUpSearchText = ''.obs;
+  RxInt facilityRadius = 2500.obs;
 
   updateAddress(String selectedAddress) {
     address.value = selectedAddress;
@@ -57,5 +58,9 @@ class FacilityController extends GetxController {
   updateFacilityLatLng(String lat, long) {
     this.lat.value = lat;
     this.long.value = long;
+  }
+
+  updateFacilityRadius(int radius){
+    facilityRadius.value = radius;
   }
 }

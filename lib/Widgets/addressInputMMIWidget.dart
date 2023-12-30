@@ -132,7 +132,9 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                 transition: PopoverTransition.other,
                 barrierColor: transparent,
                 radius: 0,
-                direction: (widget.hintText.contains("Unloading"))?PopoverDirection.top:PopoverDirection.bottom,
+                direction: (widget.hintText.contains("Unloading"))
+                    ? PopoverDirection.top
+                    : PopoverDirection.bottom,
                 bodyBuilder: (context) {
                   return Container(
                     padding: const EdgeInsets.all(15),
@@ -157,6 +159,7 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                   fontWeight: FontWeight.w600),
                             ),
                             onPressed: () {
+                              Get.delete<FacilityController>();
                               facilityController.updateCreate(true);
                               Navigator.of(context).pop();
                               addLocationDrawerToggleController
@@ -236,21 +239,23 @@ class _AddressInputMMIWidgetState extends State<AddressInputMMIWidget> {
                                             return InkWell(
                                               onTap: () {
                                                 selectedLocationPostLoad(
-                                                    context,
-                                                    singleGeoFence['attributes']
-                                                            ['address']
-                                                        .toString()
-                                                        .trim(),
-                                                    null,
-                                                    singleGeoFence['attributes']
-                                                            ['city']
-                                                        .toString()
-                                                        .trim(),
-                                                    singleGeoFence['attributes']
-                                                            ['state']
-                                                        .toString()
-                                                        .trim(),
-                                                    widget.hintText);
+                                                  context,
+                                                  singleGeoFence['attributes']
+                                                          ['address']
+                                                      .toString()
+                                                      .trim(),
+                                                  null,
+                                                  singleGeoFence['attributes']
+                                                          ['city']
+                                                      .toString()
+                                                      .trim(),
+                                                  singleGeoFence['attributes']
+                                                          ['state']
+                                                      .toString()
+                                                      .trim(),
+                                                  widget.hintText,
+                                                  singleGeoFence['id'],
+                                                );
                                                 Navigator.pop(context);
                                               },
                                               child: Container(

@@ -78,6 +78,19 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
     fetchBookingData();
   }
 
+  @override
+void dispose() {
+  // If the overlay entry is not null, remove it
+  if (_overlayEntry != null) {
+    _overlayEntry!.remove();
+    _overlayEntry = null;
+  }
+
+  // Call the super dispose method
+  super.dispose();
+}
+
+
   void setSelectedBooking(BookingModel booking) {
     setState(() {
       selectedBooking = booking;
@@ -129,7 +142,6 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
       });
 
       for (var i = 0; i < widget.EwayData.length; i++) {
-        print("1");
         final Map<String, dynamic> currentEwayBill = widget.EwayData[i];
         final String fromPlace = currentEwayBill['fromPlace'];
         final String toPlace = currentEwayBill['toPlace'];
@@ -140,27 +152,21 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         LatLng? loadingPointCoordinates = await getCoordinatesForWeb(fromPlace);
 
         //Add the marker for the loadingPoint
-         print("2");
         if (loadingPointCoordinates != null) {
-           print("3");
           eachBookingCompleteCoordinates.add(loadingPointCoordinates);
-          print("add");
           final Uint8List loadingPointMarker =
               await getBytesFromAssets('assets/icons/EndingPoint.png', 35);
-              print("marker done");
           _markers.add(Marker(
             markerId: MarkerId('loading${k + 1}'),
             position: loadingPointCoordinates,
             icon: BitmapDescriptor.fromBytes(loadingPointMarker),
           ));
           k++;
-          print("loop done");
         }
 
         //Get the Fastag Data
-         print("4");
         locations = await checkFastTag().getVehicleLocation(vehicleNo).timeout(
-          Duration(seconds: 10),
+          const Duration(seconds: 10),
           onTimeout: () {
             return [];
           },
@@ -168,14 +174,12 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
         print("5");
         //Fastag marker is added here
         if (locations != null) {
-           print("6");
           for (int i = 0; i < locations!.length; i++) {
             final location = locations![i];
             String combinedDateTime = location['readerReadTime'];
             DateTime dateTime = DateTime.parse(combinedDateTime);
             String formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
             String formattedTime = DateFormat('hh:mm a').format(dateTime);
-            print("detailed address");
             geoCode = location['tollPlazaGeocode'];
             final List<String> geoCodeParts = geoCode.split(',');
 
@@ -185,7 +189,6 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
 
               final Uint8List marker = await getBytesFromAssets(paths[i], 25);
 
-              print("7");
               _markers.add(Marker(
                   markerId: MarkerId(i.toString()),
                   position: LatLng(latitude, longitude),
@@ -200,20 +203,15 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
                   }));
               eachBookingCompleteCoordinates.add(LatLng(latitude, longitude));
             }
-            print("8");
           }
         }
 
         //Unloading Point marker is added
-         print("9");
         LatLng? unloadingPointCoordinates = await getCoordinatesForWeb(toPlace);
-        print("10");
         if (unloadingPointCoordinates != null) {
-           print("11");
           eachBookingCompleteCoordinates.add(unloadingPointCoordinates);
           final Uint8List unloadingPointMarker =
               await getBytesFromAssets('assets/icons/StartingPoint.png', 35);
-              print("unloading");
           _markers.add(Marker(
             markerId: MarkerId('Unloading ${j + 1}'),
             position: unloadingPointCoordinates,
@@ -221,16 +219,13 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
           ));
           j++;
         }
-        
-         print("12");
+
         if (routes.isEmpty && _markers.isEmpty) {
-           print("13 if");
           isLoading = false;
           timeout = true;
         } else {
           setState(
             () {
-               print("13 else");
               routes.add(eachBookingCompleteCoordinates);
               for (List<LatLng> routeCoordinates in routes) {
                 int index = routes.indexOf(routeCoordinates);
@@ -245,9 +240,7 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
             },
           );
         }
-        print("14");
       }
-      print("15");
     } catch (e) {
       debugPrint('Error fetching data: $e');
     }
@@ -327,7 +320,6 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
   }
 
   Future<Uint8List> getBytesFromAssets(String path, int width) async {
-    try{
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
         targetHeight: width);
@@ -335,10 +327,6 @@ class _TrackAllFastagScreenState extends State<TrackAllFastagScreen> {
     return (await info.image.toByteData(format: ui.ImageByteFormat.png))!
         .buffer
         .asUint8List();
-    }catch(e){
-      print("Error in image : $e");
-      throw(e);
-    }
   }
 
 //To set the visibility of the side panel
