@@ -165,56 +165,51 @@ class _FacilitiesState extends State<Facilities> {
               return Shimmer.fromColors(
                 highlightColor: greyishWhiteColor,
                 baseColor: lightGrey,
-                child: SizedBox(
-                  height: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Center(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const VerticalDivider(color: Colors.grey, thickness: 1),
-                      Expanded(
-                        flex: 5,
-                        child: Center(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const VerticalDivider(color: Colors.grey, thickness: 1),
-                      Expanded(
-                        flex: 5,
-                        child: Center(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const VerticalDivider(color: Colors.grey, thickness: 1),
-                      Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 30,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
               );
             } else if (snapshot.connectionState == ConnectionState.done) {
@@ -284,10 +279,10 @@ class _FacilitiesState extends State<Facilities> {
                 });
               }
             } else {
-              return Text("Something went wrong");
+              return const Text("Something went wrong");
             }
           },
-        )
+        ),
       ],
     );
   }
