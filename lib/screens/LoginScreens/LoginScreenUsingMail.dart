@@ -373,8 +373,7 @@ class _LoginScreenUsingMailState extends State<LoginScreenUsingMail> {
                                           NavigationScreen()));
                             }
                           } on FirebaseAuthException catch (e) {
-                            alertDialog(
-                                "Error ", 'Select an Email Account', context);
+                            debugPrint("Error : $e");
                           }
                         },
                       ),

@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shipper_app/Widgets/Input_text_filed.dart';
@@ -11,6 +14,7 @@ import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:shipper_app/functions/shipperApis/updateUserDetails.dart';
 import 'package:shipper_app/responsive.dart';
 import 'package:shipper_app/screens/add_user_screen.dart';
+import 'package:http/http.dart' as http;
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -22,11 +26,10 @@ class AccountScreen extends StatefulWidget {
 class AccountScreenState extends State<AccountScreen> {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   GetStorage sidstorage = GetStorage('ShipperIDStorage');
-  late TextEditingController shipperuniqueIdController;
-  late TextEditingController nameController;
-  late TextEditingController roleController;
-  late TextEditingController emailController;
-  late TextEditingController phoneNumberController;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController roleController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController companyNameController = TextEditingController();
 
   //company email is uneditable
@@ -34,34 +37,44 @@ class AccountScreenState extends State<AccountScreen> {
   TextEditingController gstNoController = TextEditingController();
   TextEditingController cinController = TextEditingController();
 
+  //e-way is not visible and editable by the ADMIN only
+  TextEditingController ewayUserID = TextEditingController();
+  TextEditingController ewayPassword = TextEditingController();
+
   bool isUserDetailsEditing = false;
 
   //only admin should have the right to edit company details
   bool isCompanyDetailsEditing = false;
+  bool passwordObscure = true;
 
   @override
   void initState() {
     super.initState();
-
-    nameController =
-        TextEditingController(text: shipperIdController.name.value);
-    roleController =
-        TextEditingController(text: shipperIdController.role.value);
-    emailController = TextEditingController(
-        text: FirebaseAuth.instance.currentUser!.email.toString());
-
-    phoneNumberController =
-        TextEditingController(text: shipperIdController.mobileNum.value);
-    shipperuniqueIdController =
-        TextEditingController(text: shipperIdController.shipperId.value);
-
-    getCompanyDetails();
   }
 
-  getCompanyDetails() async {
-    final DocumentReference documentRef = FirebaseFirestore.instance
-        .collection('/Companies')
-        .doc(shipperIdController.companyId.value);
+  //Gets eway bill details using company Id
+  getEwayBillUser(String companyId) async {
+    if (shipperIdController.role.value == "ADMIN") {
+      try {
+        final String shipperApiUrl = dotenv.get('ewayBillUser');
+
+        final response = await http.get(
+            Uri.parse("$shipperApiUrl/${shipperIdController.companyId.value}"));
+
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          ewayUserID.text = data['username'];
+          ewayPassword.text = data['password'];
+        }
+      } catch (error) {
+        debugPrint(error.toString());
+      }
+    }
+  }
+  //get company details using company Id
+  getCompanyDetails(String companyId) async {
+    final DocumentReference documentRef =
+        FirebaseFirestore.instance.collection('/Companies').doc(companyId);
 
     await documentRef.get().then((doc) {
       if (doc.exists) {
@@ -193,18 +206,19 @@ class AccountScreenState extends State<AccountScreen> {
                             isUserDetailsEditing = !isUserDetailsEditing;
 
                             if (!isUserDetailsEditing) {
-                              shipperIdController.name.value =
-                                  nameController.text;
+                              nameController.text =
+                                  shipperIdController.name.value;
 
-                              shipperIdController.companyName.value =
-                                  companyNameController.text;
+                              companyNameController.text =
+                                  shipperIdController.companyName.value;
                             }
 
                             if (shipperIdController.role.value == "ADMIN") {
                               //company details should only be editable by admin
                               isCompanyDetailsEditing =
                                   !isCompanyDetailsEditing;
-                              getCompanyDetails();
+                              getCompanyDetails(
+                                  shipperIdController.companyId.value);
                             }
                           });
                         },
@@ -345,45 +359,57 @@ class AccountScreenState extends State<AccountScreen> {
                               fontWeight: FontWeight.w700),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: InputTextField(
-                              controller: nameController,
-                              isEditing: isUserDetailsEditing,
-                              labelText: 'Name',
+
+                      Obx(() {
+                        nameController.text = shipperIdController.name.value;
+                        roleController.text = shipperIdController.role.value;
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: InputTextField(
+                                controller: nameController,
+                                isEditing: isUserDetailsEditing,
+                                labelText: 'Name',
+                              ),
                             ),
-                          ),
-                          SizedBox(width: space_5),
-                          Flexible(
-                            child: InputTextField(
-                              controller: roleController,
-                              isEditing: false,
-                              labelText: 'Role',
+                            SizedBox(width: space_5),
+                            Flexible(
+                              child: InputTextField(
+                                controller: roleController,
+                                isEditing: false,
+                                labelText: 'Role',
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        );
+                      }),
                       SizedBox(height: space_3),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: InputTextField(
-                              controller: emailController,
-                              isEditing: false,
-                              labelText: 'Email',
+                      Obx(() {
+                        emailController.text =
+                            FirebaseAuth.instance.currentUser!.email.toString();
+                        phoneNumberController.text =
+                            shipperIdController.mobileNum.value;
+
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: InputTextField(
+                                controller: emailController,
+                                isEditing: false,
+                                labelText: 'Email',
+                              ),
                             ),
-                          ),
-                          SizedBox(width: space_5),
-                          Flexible(
-                            child: InputTextField(
-                              controller: phoneNumberController,
-                              isEditing: false,
-                              labelText: 'Phone Number',
+                            SizedBox(width: space_5),
+                            Flexible(
+                              child: InputTextField(
+                                controller: phoneNumberController,
+                                isEditing: false,
+                                labelText: 'Phone Number',
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        );
+                      }),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 5),
@@ -396,45 +422,171 @@ class AccountScreenState extends State<AccountScreen> {
                               fontWeight: FontWeight.w700),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: InputTextField(
-                              controller: companyNameController,
-                              isEditing: isCompanyDetailsEditing,
-                              labelText: 'Company Name',
-                            ),
-                          ),
-                          SizedBox(width: space_5),
-                          Flexible(
-                            child: InputTextField(
-                              controller: companyEmailController,
-                              isEditing: false,
-                              labelText: 'Company Email',
-                            ),
-                          ),
-                        ],
-                      ),
+                      Obx(() {
+                        return FutureBuilder(
+                          future: getCompanyDetails(
+                              shipperIdController.companyId.value),
+                          builder: (context, snapshot) {
+                            return Row(
+                              children: [
+                                Flexible(
+                                  child: InputTextField(
+                                    controller: companyNameController,
+                                    isEditing: isCompanyDetailsEditing,
+                                    labelText: 'Company Name',
+                                  ),
+                                ),
+                                SizedBox(width: space_5),
+                                Flexible(
+                                  child: InputTextField(
+                                    controller: companyEmailController,
+                                    isEditing: false,
+                                    labelText: 'Company Email',
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
                       SizedBox(height: space_3),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: InputTextField(
-                              controller: gstNoController,
-                              isEditing: isCompanyDetailsEditing,
-                              labelText: 'GST no',
+                      Obx(() {
+                        return FutureBuilder(
+                          future: getCompanyDetails(
+                              shipperIdController.companyId.value),
+                          builder: (context, snapshot) {
+                            return Row(
+                              children: [
+                                Flexible(
+                                  child: InputTextField(
+                                    controller: gstNoController,
+                                    isEditing: isCompanyDetailsEditing,
+                                    labelText: 'GST no',
+                                  ),
+                                ),
+                                SizedBox(width: space_5),
+                                Flexible(
+                                  child: InputTextField(
+                                    controller: cinController,
+                                    isEditing: isCompanyDetailsEditing,
+                                    labelText: 'CIN',
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
+                      Obx(() => Visibility(
+                            visible: shipperIdController.role.value == "ADMIN"
+                                ? true
+                                : false,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 5),
+                              child: Text(
+                                "E-way Bill credentials",
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: size_9,
+                                    color: kLiveasyColor,
+                                    fontWeight: FontWeight.w700),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: space_5),
-                          Flexible(
-                            child: InputTextField(
-                              controller: cinController,
-                              isEditing: isCompanyDetailsEditing,
-                              labelText: 'CIN',
+                          )),
+                      Obx(() => Visibility(
+                            visible: shipperIdController.role.value == "ADMIN"
+                                ? true
+                                : false,
+                            child: FutureBuilder(
+                              future: getEwayBillUser(
+                                  shipperIdController.companyId.value),
+                              builder: (context, snapshot) {
+                                return Row(
+                                  children: [
+                                    Flexible(
+                                      child: InputTextField(
+                                        controller: ewayUserID,
+                                        isEditing: isCompanyDetailsEditing,
+                                        labelText: 'User Id',
+                                      ),
+                                    ),
+                                    SizedBox(width: space_5),
+                                    Flexible(
+                                        child: Container(
+                                      margin: EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Password',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: size_7,
+                                                color: black,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          TextFormField(
+                                              controller: ewayPassword,
+                                              readOnly:
+                                                  !isCompanyDetailsEditing,
+                                              obscureText: passwordObscure,
+                                              obscuringCharacter: '*',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: size_7,
+                                                  color: black,
+                                                  fontWeight: FontWeight.w600),
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      width: 2,
+                                                      color: lightGrey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    width: 2,
+                                                    color: black,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.0),
+                                                ),
+                                                suffixIcon: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      passwordObscure =
+                                                          !passwordObscure;
+                                                    });
+                                                  },
+                                                  icon: Icon(passwordObscure
+                                                      ? FontAwesomeIcons.eye
+                                                      : FontAwesomeIcons
+                                                          .eyeSlash, size: 15, color: Colors.black),
+                                                ),
+                                                alignLabelWithHint: true,
+                                              ),
+                                              cursorColor: darkBlueColor),
+                                        ],
+                                      ),
+                                    )),
+                                  ],
+                                );
+                              },
                             ),
-                          ),
-                        ],
-                      ),
+                          )),
                     ],
                   ),
             SizedBox(height: Responsive.isMobile(context) ? 10 : 30),
@@ -451,7 +603,7 @@ class AccountScreenState extends State<AccountScreen> {
                         if (nameController.text.isNotEmpty &&
                             companyNameController.text.isNotEmpty) {
                           await updateUserDetails(
-                            uniqueID: shipperuniqueIdController.text,
+                            uniqueID: shipperIdController.shipperId.value,
                             name: nameController.text,
                             companyName: companyNameController.text,
                           );
@@ -499,7 +651,12 @@ class AccountScreenState extends State<AccountScreen> {
                         isUserDetailsEditing = false;
                         isCompanyDetailsEditing = false;
                         nameController.text = shipperIdController.name.value;
-                        getCompanyDetails();
+                        emailController.text =
+                            FirebaseAuth.instance.currentUser!.email.toString();
+                        phoneNumberController.text =
+                            shipperIdController.mobileNum.value;
+                        roleController.text = shipperIdController.role.value;
+                        getCompanyDetails(shipperIdController.companyId.value);
                       });
                     },
                     style: ElevatedButton.styleFrom(
