@@ -31,6 +31,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
     uploadedCheck();
   }
 
+  // This function  creates PDF and download it
   Future<void> createPdfAndDownload(List<String> imageUrls) async {
     final pdf = pw.Document();
 
@@ -48,12 +49,14 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
     html.Url.revokeObjectUrl(url);
   }
 
+  // This function  converts network image to byte
   Future<Uint8List> networkImageToByte(String imageUrl) async {
     final response = await http.get(Uri.parse('$proxy$imageUrl'));
     final bytes = response.bodyBytes;
     return bytes;
   }
 
+  // This function fetch list of invoice image link  from document api
   uploadedCheck() async {
     try {
       docLinks = await getInvoiceDocApiCall(widget.invoiceId.toString(), "I");
@@ -100,7 +103,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                 Image.network(
                                   '$proxy$link',
                                   errorBuilder: (context, error, stackTrace) =>
-                                      const Text('Image not found',
+                                      // when there is error in fetching image
+                                      const Text('Error in fetching Invoice',
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   158, 158, 158, 1))),
@@ -112,12 +116,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             );
                           }).toList(),
                         )
+                      // when there is no invoice uploaded
                       : SizedBox(
                           height: 100,
                           child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "Image not found",
+                                "Invoice not found",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: normalWeight),
                               )),

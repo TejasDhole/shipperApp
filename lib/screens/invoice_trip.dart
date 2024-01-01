@@ -40,6 +40,7 @@ class _InvoiceTripState extends State<InvoiceTrip> {
   bool showAddMoreDoc = true;
   PreviewUploadedImage previewUploadedImage = Get.put(PreviewUploadedImage());
 
+  // Function to fetch data from the Booking API based on bookingId
   Future<List<dynamic>> fetchDataFromBookingApi(String bookingId) async {
     currentBook = bookingId;
     final String bookingApiUrl = dotenv.get('bookingApiUrl');
@@ -53,12 +54,15 @@ class _InvoiceTripState extends State<InvoiceTrip> {
         dynamic responseBody = jsonDecode(response.body);
 
         List<dynamic> body = [responseBody];
+
+        // Return  booking data
         return body;
       } else {
         debugPrint("empty");
         return [];
       }
     } catch (error) {
+      // Handle any errors that occur during the API call
       debugPrint("Error: $error");
       return [];
     }
@@ -66,6 +70,7 @@ class _InvoiceTripState extends State<InvoiceTrip> {
 
   @override
   Widget build(BuildContext context) {
+    // Logic to determine font size and visibility based on screen width
     bool small = true;
     double textFontSize;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -236,7 +241,7 @@ class _InvoiceTripState extends State<InvoiceTrip> {
                     currentBook = widget.bookingIds[index];
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return SizedBox(
-                        height: 20,
+                        height: 30,
                         child: Shimmer.fromColors(
                           highlightColor: greyishWhiteColor,
                           baseColor: lightGrey,
@@ -250,9 +255,11 @@ class _InvoiceTripState extends State<InvoiceTrip> {
                         ),
                       );
                     } else if (snapshot.hasError) {
+                      // An error occurred while fetching data
                       return Text('Error: ${snapshot.error}');
                     } else if (!snapshot.hasData ||
                         (snapshot.data as List).isEmpty) {
+                      // Data is not available
                       return const Text('No data available');
                     } else {
                       var bookingData = (snapshot.data)?.first;
@@ -445,12 +452,15 @@ Widget buildTripCard(
               ),
               onPressed: () async {
                 var docLinks = [];
+                // Fetching document links for the given booking ID and document type "P"
                 docLinks = await getDocumentApiCall(bookId.toString(), "P");
                 if (docLinks.isNotEmpty) {
                   previewUploadedImage
                       .updatePreviewImage(docLinks[0].toString());
 
                   previewUploadedImage.updateIndex(0);
+
+                  // Show POD in dialogue box
                   imageDownload(context, docLinks);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

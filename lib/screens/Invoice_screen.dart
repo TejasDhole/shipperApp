@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/invoice_details_dailog.dart';
 import 'package:shipper_app/Widgets/invoice_header.dart';
@@ -30,26 +31,32 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   bool visiable = true;
   DateTime from = DateTime(2000);
   DateTime to = DateTime.now();
+  late Future<List<dynamic>> _invoicesFuture;
 
   bool enableFinishButton = false;
   @override
   void initState() {
     super.initState();
-    _fetchInvoiceData();
+    _invoicesFuture = fetchInvoiceData();
   }
 
-  Future<void> _fetchInvoiceData() async {
+  // This function is used to fetch invoice data
+  Future<List<dynamic>> fetchInvoiceData() async {
     ShipperIdController shipperIdController = Get.put(ShipperIdController());
     String companyId = shipperIdController.companyId.value;
+
     if (selectedDays == 100) {
+      // Set 'from' date to 2000 if user select 'All Month' from dropdown
       from = DateTime(2000);
     } else {
+      // Set 'from' date to the current date minus the selected number of days selected from dropdown
       from = DateTime.now().subtract(
         Duration(days: selectedDays, hours: 5, minutes: 30),
       );
     }
 
     try {
+      // Call the ApiService to get invoice data within the specified date range
       List<dynamic> data = await ApiService.getInvoiceData(
         companyId,
         DateFormat('yyyy-MM-dd HH:mm:ss').format(from),
@@ -59,13 +66,19 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
         invoiceList = data;
         displayedInvoiceList = invoiceList;
       });
+
+      // Return invoice data
+      return data;
     } catch (e) {
-      debugPrint('Error fetching invoice data: $e');
+      // Handle any errors that occur during the data fetching process
+      debugPrint(e.toString());
+      return [];
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Logic to determine font size and visibility based on screen width
     bool small = true;
     double textFontSize;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -137,6 +150,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       prefixIcon: const Icon(Icons.search),
                     ),
                     onChanged: (value) {
+                      // It filters the displayed invoice list based on the entered search text
                       setState(() {
                         displayedInvoiceList = invoiceList.where((invoice) {
                           final invoiceNo =
@@ -156,6 +170,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                   ),
                 ),
               ),
+              // This dropdown is used to set 'from' date from the user
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
@@ -272,7 +287,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             onChanged: (value) {
                               setState(() {
                                 selectedDays = value!;
-                                _fetchInvoiceData();
+                                fetchInvoiceData();
                               });
                             },
                           ),
@@ -292,8 +307,28 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
             height: 4,
           ),
           Expanded(
-            child: displayedInvoiceList.isEmpty
-                ? const Center(
+            child: FutureBuilder<List<dynamic>>(
+              future: _invoicesFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // when data is loading
+                  return ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.white,
+                        child: invoiceShimmerRow(
+                            MediaQuery.of(context).size.width),
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  // when there is error in fetching data
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                  // Data is not available
+                  return const Center(
                     child: Text(
                       'No invoices found',
                       style: TextStyle(
@@ -302,8 +337,10 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                : ListView.separated(
+                  );
+                } else {
+                  displayedInvoiceList = snapshot.data ?? [];
+                  return ListView.separated(
                     padding: const EdgeInsets.only(left: 5, right: 5),
                     separatorBuilder: (context, index) => const Divider(
                       color: greyShade,
@@ -314,6 +351,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     itemBuilder: (context, index) {
                       var invoice = displayedInvoiceList[index];
                       return GestureDetector(
+                        // When user taps, it will redirect to Trip Details
                         onTap: () {
                           Navigator.push(
                             context,
@@ -595,9 +633,34 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         ),
                       );
                     },
-                  ),
+                  );
+                }
+              },
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget invoiceShimmerRow(double screenWidth) {
+    // Adjust this method according to your shimmer design
+    return Container(
+      height: 70,
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: greyShade, width: 1)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+          5, // Number of columns in your shimmer
+          (index) => Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              color: Colors.grey[300],
+            ),
+          ),
+        ),
       ),
     );
   }
