@@ -353,7 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 )));
                                   }
                                 } on FirebaseAuthException catch (e) {
-                                  alertDialog("Error", '$e', context);
+                                  debugPrint("Error : $e");
                                 }
                               },
                             ),

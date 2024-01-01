@@ -61,7 +61,7 @@ class WebLoginLeftPart extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.1),
+                    bottom: MediaQuery.of(context).size.height * ((login)? 0.1: 0.05),),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Column(

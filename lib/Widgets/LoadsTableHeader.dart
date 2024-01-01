@@ -22,7 +22,7 @@ Container LoadsTableHeader(
   return Container(
     height: 80,
     decoration: BoxDecoration(
-      color: lightBlueTable,
+      color: Color(0xfff2f5ff),
       boxShadow: const [
         BoxShadow(
           color: lightGrey,
