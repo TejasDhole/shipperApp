@@ -352,7 +352,7 @@ class _LoginWebState extends State<LoginWeb> {
                                                     const HomeScreenWeb()));
                                       }
                                     } on FirebaseAuthException catch (e) {
-                                      alertDialog("Error", '$e', context);
+                                      debugPrint("Error : $e");
                                     }
                                   },
                                 ),
