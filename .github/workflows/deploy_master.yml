@@ -46,7 +46,7 @@ jobs:
           echo "sendInviteEmailUrl=${{ vars.SEND_INVITE_EMAIL_URL_PROD }}" >> .env
           echo "razorpayorder=${{ vars.RAZOR_PAY_ORDER_PROD }}" >> .env
           echo "paymentkeysecret=${{ vars.PAYMENT_KEY_SECRET_PROD }}" >> .env
-          echo "paymentkey=${{ vars.PAYMENT_KEY_PROD }}" >> .env
+          echo "paymentkey=${{ vars.PAYMENT_KEY_PROD }}" > .env
 
       - name: Merge to branch
         run: |
