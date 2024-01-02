@@ -17,7 +17,7 @@ createCompany(String u_name,String c_name, String c_email, String? c_phnNo, Stri
     final adminShipperId = await runShipperApiPost(emailId: FirebaseAuth.instance.currentUser!.email!, shipperName: u_name, companyId: c_uuid, companyName: c_name, role: 'ADMIN');
 
     //creating company json
-    var companyDoc = CompanyModel(c_name, c_email, address, null, city, state, gstn, cin, pinCode, c_phnNo, c_uuid, [adminShipperId]).toJson();
+    var companyDoc = CompanyModel(c_name, c_email, address, null, city, state, gstn, cin, pinCode, c_phnNo, c_uuid, [adminShipperId], []).toJson();
 
     //creating json in firebase
     final CollectionReference postsRef = FirebaseFirestore.instance.collection('/Companies');
