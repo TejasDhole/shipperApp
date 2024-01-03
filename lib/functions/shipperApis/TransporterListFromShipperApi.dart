@@ -10,6 +10,7 @@ class TransporterListFromCompany {
   final String transporterApiUrl = dotenv.get('transporterApiUrl');
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
 
+  //This function fetches transporter list using company id.
   Future getTransporterListUsingCompanyId(String txt) async {
     String companyId = shipperIdController.companyId.value;
 
@@ -28,6 +29,7 @@ class TransporterListFromCompany {
         var transporterDataList = [];
         var filteredTransporterList = [];
 
+        //fetch transporter details using transporter id
         for (int i = 0; i < transporterIdList.length; i++) {
           final response = await http.get(
             Uri.parse('$transporterApiUrl/${transporterIdList[i]}'),
@@ -44,6 +46,7 @@ class TransporterListFromCompany {
               body['phoneNo'] ?? 'NA',
               body['transporterId'] ?? 'NA'
             ];
+            //[[email, name, phone, transporterId], [email, name, phone, transporterId]]
             transporterDataList.add(transporterData);
           }
         }

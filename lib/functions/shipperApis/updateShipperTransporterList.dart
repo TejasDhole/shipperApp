@@ -10,6 +10,7 @@ import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:http/http.dart' as http;
 
+// This function add new transporter in companies transporter list
 void updateCompanyTransporterList(transporterId, dialogContext) async {
   try {
     AddLocationDrawerToggleController addLocationDrawerToggleController = Get.put(AddLocationDrawerToggleController());
@@ -22,9 +23,11 @@ void updateCompanyTransporterList(transporterId, dialogContext) async {
 
     // Get the document snapshot
    await documentReference.update({
+     //add transporter id at last index in transporter list array
       "transporters": FieldValue.arrayUnion([transporterId]),
     });
 
+  //show successful message using snack-bar
   showSnackBar("Transporter added Successfully!!", truckGreen,
       Icon(Icons.check_circle_outline_outlined), dialogContext);
   addLocationDrawerToggleController.toggleAddTransporter(false);

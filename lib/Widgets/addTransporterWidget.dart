@@ -147,6 +147,7 @@ Widget addTransporter(diaLogContext, transporterList) {
                       phone,
                       transporterId
                     ];
+                    //add new added transporter in List
                     transporterList.add(newAddedTransporter);
                     updateCompanyTransporterList(
                         transporterId, diaLogContext);

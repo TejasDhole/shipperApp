@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+//This function get transporter details using phone if no transporter is present with this phone number then it will create a new transporter and will return it's details
 Future<String> getTransporterIdByPhone(
     String phoneNo, String emailId, String transporterName) async {
   try {
