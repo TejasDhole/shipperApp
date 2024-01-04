@@ -44,8 +44,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
       }));
     }
     final bytes = await pdf.save();
+
+    // Trigger the file download
     final blob = html.Blob([bytes], 'application/pdf');
     final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', 'invoice.pdf')
+      ..click();
     html.Url.revokeObjectUrl(url);
   }
 
@@ -72,43 +77,56 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: const Align(
-          alignment: Alignment.center,
-          child: Text(
-            'Invoice.png',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 16,
+        title: Row(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.35,
             ),
-          ),
+            const Text(
+              'Invoice.png',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.35,
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
         ),
         content: loading
             ? const Center(child: CircularProgressIndicator())
-            : SizedBox(
+            : Container(
+                color: white,
                 width: docLinks.isNotEmpty
-                    ? MediaQuery.of(context).size.width * 0.5
-                    : MediaQuery.of(context).size.width * 0.3,
+                    ? MediaQuery.of(context).size.width * 0.85
+                    : MediaQuery.of(context).size.width * 0.2,
                 height: docLinks.isEmpty
                     ? MediaQuery.of(context).size.height * 0.15
                     : docLinks.length == 1
                         ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.5,
+                        : MediaQuery.of(context).size.height * 0.6,
                 child: SingleChildScrollView(
                   child: docLinks.isNotEmpty
                       ? Column(
                           children: docLinks.map<Widget>((link) {
                             return Column(
                               children: [
-                                Image.network(
-                                  '$proxy$link',
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      // when there is error in fetching image
-                                      const Text('Error in fetching Invoice',
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  158, 158, 158, 1))),
-                                ),
+                                Image.network('$proxy$link',
+                                    errorBuilder: (context, error, stackTrace) {
+                                  // when there is error in fetching image
+                                  return const Text('Error in fetching Invoice',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(
+                                              158, 158, 158, 1)));
+                                }),
                                 const Divider(
                                   height: 10,
                                 ),
@@ -146,11 +164,19 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           minimumSize: const Size(250, 50),
                           alignment: Alignment.center,
                         ),
-                        child: const Text(
-                          'Verify',
-                          style: TextStyle(
-                              color: darkBlueColor,
-                              fontWeight: FontWeight.bold),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.check, color: darkBlueColor),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 7),
+                              child: Text(
+                                'Verify',
+                                style: TextStyle(
+                                    color: darkBlueColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     )
@@ -188,7 +214,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
               docLinks.isEmpty
                   ? Container()
                   : SizedBox(
-                      width: 100,
+                      width: 200,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
@@ -200,19 +226,28 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   ? const CircularProgressIndicator(
                                       color: white,
                                     )
-                                  : Text(
-                                      "Download".tr,
-                                      style: TextStyle(
-                                        color: white,
-                                        fontSize: size_8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.download,
+                                            color: white),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            "Download".tr,
+                                            style: TextStyle(
+                                              color: white,
+                                              fontSize: size_8,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                             ),
                           ),
-                          onTapUp: (value) {
-                            downloading = true;
-                          },
                           onTap: () async {
                             if (docLinks.isNotEmpty) {
                               setState(() {
