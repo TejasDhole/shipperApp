@@ -397,7 +397,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               builder: (context) => NavigationScreen()));
                     }
                   } on FirebaseAuthException catch (e) {
-                    alertDialog("Error", '$e', context);
+                    debugPrint("Error : $e");
                   }
                 },
               ),

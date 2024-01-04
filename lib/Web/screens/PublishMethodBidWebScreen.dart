@@ -58,8 +58,8 @@ class _PublishMethodBidWebScreenState extends State<PublishMethodBidWebScreen> {
   }
 
   getTransporterListFromShipperApi(String txt) async {
-    await TransporterListFromShipperApi()
-        .getTransporterListFromShipperApi(txt)
+    await TransporterListFromCompany()
+        .getTransporterListUsingCompanyId(txt)
         .then((value) {
       if (mounted) {
         setState(() {

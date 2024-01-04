@@ -140,16 +140,17 @@ Widget addTransporter(diaLogContext, transporterList) {
                     phone != null &&
                     email.isNotEmpty &&
                     email != null) {
-                  getTransporterIdByPhone(phone).then((value) {
+                  getTransporterIdByPhone(phone, email, name).then((transporterId) {
                     List newAddedTransporter = [
                       email,
                       name,
                       phone,
-                      value.toString()
+                      transporterId
                     ];
+                    //add new added transporter in List
                     transporterList.add(newAddedTransporter);
-                    updateShipperTransporterList(
-                        transporterList, diaLogContext);
+                    updateCompanyTransporterList(
+                        transporterId, diaLogContext);
                   });
                 }
               },
