@@ -27,13 +27,11 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   var displayedInvoiceList = [];
   int selectedDays = 100;
   TextEditingController searchController = TextEditingController();
-  bool setSelectedTransporterList = true;
+
   bool visiable = true;
   DateTime from = DateTime(2000);
   DateTime to = DateTime.now();
   late Future<List<dynamic>> _invoicesFuture;
-
-  bool enableFinishButton = false;
   @override
   void initState() {
     super.initState();
@@ -139,6 +137,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                   ),
                   child: TextField(
                     cursorWidth: 1,
+                    // controller: searchController,
                     mouseCursor: SystemMouseCursors.click,
                     decoration: InputDecoration(
                       hintText: 'Search by name, invoice no',
@@ -287,7 +286,16 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             onChanged: (value) {
                               setState(() {
                                 selectedDays = value!;
-                                fetchInvoiceData();
+                                from = selectedDays == 100
+                                    ? DateTime(2000)
+                                    : DateTime.now().subtract(
+                                        Duration(
+                                            days: selectedDays,
+                                            hours: 5,
+                                            minutes: 30),
+                                      );
+                                // Re-fetch the invoice data
+                                _invoicesFuture = fetchInvoiceData();
                               });
                             },
                           ),
@@ -395,7 +403,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                           Text(
                                             invoice['invoiceDate'] != null
                                                 ? "${invoice['invoiceDate'].substring(0, 2)}/${invoice['invoiceDate'].substring(3, 5)}/${invoice['invoiceDate'].substring(6)}"
-                                                : 'NA',
+                                                : ' ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: black,
@@ -427,7 +435,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            invoice['invoiceNo'] ?? 'NA',
+                                            invoice['invoiceNo'] ?? ' ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: black,
@@ -459,7 +467,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            invoice['invoiceAmount'] ?? 'NA',
+                                            invoice['invoiceAmount'] ?? ' ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: black,
@@ -491,7 +499,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            invoice['transporterName'] ?? 'NA',
+                                            invoice['transporterName'] ?? ' ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: black,
@@ -527,7 +535,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                             Text(
                                               invoice['dueDate'] != null
                                                   ? "${invoice['dueDate'].substring(0, 2)}/${invoice['dueDate'].substring(3, 5)}/${invoice['dueDate'].substring(6)}"
-                                                  : 'NA',
+                                                  : ' ',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: black,
@@ -560,7 +568,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            invoice['invoiceStatus'] ?? 'NA',
+                                            invoice['invoiceStatus'] ?? ' ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: black,

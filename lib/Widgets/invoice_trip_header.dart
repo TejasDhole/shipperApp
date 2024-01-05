@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/constants/colors.dart';
+import 'package:shipper_app/constants/fontWeights.dart';
 
 Container InvoiceTripHeader(context, textFontSize) {
   return Container(
-    height: 40,
-    margin: const EdgeInsets.only(left: 5, right: 5),
+    height: 50,
     decoration: const BoxDecoration(
       color: Color(0xFFEAEEFF),
     ),
@@ -20,9 +20,9 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
-                fontSize: textFontSize,
+                fontSize: 16,
                 fontFamily: 'Montserrat',
               ),
             ),
@@ -42,7 +42,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',
@@ -64,7 +64,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',
@@ -85,7 +85,7 @@ Container InvoiceTripHeader(context, textFontSize) {
             overflow: TextOverflow.ellipsis,
             softWrap: false,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: mediumBoldWeight,
               color: black,
               fontSize: textFontSize,
               fontFamily: 'Montserrat',
@@ -106,7 +106,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',
@@ -126,7 +126,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               'Damage ',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: mediumBoldWeight,
                   fontSize: textFontSize,
                   color: black,
                   fontFamily: 'Montserrat'),
@@ -147,7 +147,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',
@@ -169,7 +169,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',
@@ -191,7 +191,7 @@ Container InvoiceTripHeader(context, textFontSize) {
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: mediumBoldWeight,
                 color: black,
                 fontSize: textFontSize,
                 fontFamily: 'Montserrat',

@@ -273,7 +273,7 @@ class _InvoiceTripState extends State<InvoiceTrip> {
                               visiable,
                               context,
                               widget.bookingIds[index]),
-                          const Divider(),
+                          const Divider(color: Color(0xffd2d2d2), height: 1),
                         ],
                       );
                     }
@@ -295,7 +295,7 @@ Widget buildTripCard(
   final unloadingPoint = bookingData['unloadingPointCity'];
 
   return SizedBox(
-    height: 40,
+    height: 50,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
