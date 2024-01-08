@@ -228,7 +228,7 @@ class _OngoingCardState extends State<OngoingCard> {
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
-                          '${widget.loadAllDataModel.truckType}' ?? 'Null',
+                          '${widget.loadAllDataModel.rate}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: kLiveasyColor,

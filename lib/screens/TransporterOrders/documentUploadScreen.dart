@@ -1260,7 +1260,7 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                         ? Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .spaceEvenly,
+                                                                    .spaceEvenly,                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                             children: [
                                                                 Padding(
                                                                   padding:
@@ -1294,25 +1294,26 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                               CrossAxisAlignment.start,
                                                                           children: [
                                                                             Text(
-                                                                              "   ${widget.loadingPoint}",
+                                                                              "${widget.loadingPoint}",
                                                                               style: TextStyle(
                                                                                 fontWeight: mediumBoldWeight,
                                                                                 color: liveasyBlackColor,
                                                                                 fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
                                                                               ),
                                                                             ),
-                                                                            Text(
-                                                                              wrapWords(
-                                                                                ' ${formatText(loadData?['loadingPoint'])}, ${loadData?['loadingPointCity']} , ${loadData?['loadingPointState']}',
-                                                                                50,
+                                                                            SizedBox(
+                                                                              width: MediaQuery.of(context).size.width*0.3,
+                                                                              child: Text(
+                                                                                "${loadData?['loadingPoint']}, ${loadData?['loadingPointCity']}, ${loadData?['loadingPointState']}",
+                                                                                textAlign: TextAlign.start,
+                                                                                style: TextStyle(
+                                                                                  fontSize: Responsive.isMobile(context) ? 10 : 16,
+                                                                                  color: darkBlueColor,
+                                                                                ),
+                                                                                maxLines: 5,
+                                                                                softWrap: true,
+                                                                                overflow: TextOverflow.ellipsis,
                                                                               ),
-                                                                              style: TextStyle(
-                                                                                fontSize: Responsive.isMobile(context) ? 10 : 16,
-                                                                                color: darkBlueColor,
-                                                                              ),
-                                                                              maxLines: 5,
-                                                                              softWrap: true,
-                                                                              overflow: TextOverflow.visible,
                                                                             )
                                                                           ],
                                                                         ),
@@ -1320,10 +1321,8 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                const Image(
-                                                                  image: AssetImage(
-                                                                      'assets/icons/arrow2.png'),
-                                                                ),
+                                                                const Expanded(child: Divider(color: kLiveasyColor, thickness: 2,)),
+                                                                Icon(Icons.keyboard_arrow_right_sharp, color: kLiveasyColor,),
                                                                 Padding(
                                                                   padding: EdgeInsets.fromLTRB(
                                                                       screenWidth *
@@ -1363,18 +1362,18 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                                                                 fontSize: isMobile ? screenWidth * 0.032 : screenHeight * 0.03,
                                                                               ),
                                                                             ),
-                                                                            Text(
-                                                                              wrapWords(
-                                                                                ' ${formatText(loadData?['unloadingPoint'])}, ${loadData?['unloadingPointCity']} , ${loadData?['unloadingPointState']}',
-                                                                                50,
+                                                                            SizedBox(
+                                                                              width: MediaQuery.of(context).size.width*0.3,
+                                                                              child: Text(
+                                                                                '${(loadData?['unloadingPoint'])}, ${loadData?['unloadingPointCity']} , ${loadData?['unloadingPointState']}',
+                                                                                style: TextStyle(
+                                                                                  fontSize: Responsive.isMobile(context) ? 10 : 16,
+                                                                                  color: darkBlueColor,
+                                                                                ),
+                                                                                maxLines: 5,
+                                                                                softWrap: true,
+                                                                                overflow: TextOverflow.ellipsis,
                                                                               ),
-                                                                              style: TextStyle(
-                                                                                fontSize: Responsive.isMobile(context) ? 10 : 16,
-                                                                                color: darkBlueColor,
-                                                                              ),
-                                                                              maxLines: 5,
-                                                                              softWrap: true,
-                                                                              overflow: TextOverflow.visible,
                                                                             )
                                                                           ],
                                                                         ),
