@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/controller/lockUnlockController.dart';
 import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
@@ -15,7 +16,7 @@ final lockStorage = GetStorage();
 String? traccarUser = dotenv.get('traccarUser');
 
 // String traccarPass = FlutterConfig.get("traccarPass");
-String traccarPass = dotenv.get('traccarPass');
+String traccarPass = decrypt(dotenv.get('traccarPass'));
 
 // String traccarApi = FlutterConfig.get("traccarApi");
 String traccarApi = dotenv.get('traccarApi');
