@@ -26,8 +26,6 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   var selectedTransporterList = [];
   var displayedInvoiceList = [];
   int selectedDays = 100;
-  TextEditingController searchController = TextEditingController();
-
   bool visiable = true;
   DateTime from = DateTime(2000);
   DateTime to = DateTime.now();
@@ -72,6 +70,31 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
       debugPrint(e.toString());
       return [];
     }
+  }
+
+  // This functions filters the displayed invoice list based on the entered search text
+  void filterInvoices(String searchText) {
+    setState(() {
+      displayedInvoiceList = invoiceList
+          .where((invoice) =>
+              (invoice['invoiceNo']
+                      ?.toLowerCase()
+                      .contains(searchText.toLowerCase()) ??
+                  false) ||
+              (invoice['invoiceDate']
+                      ?.toLowerCase()
+                      .contains(searchText.toLowerCase()) ??
+                  false) ||
+              (invoice['transporterName']
+                      ?.toLowerCase()
+                      .contains(searchText.toLowerCase()) ??
+                  false) ||
+              (invoice['invoiceId']
+                      ?.toLowerCase()
+                      .contains(searchText.toLowerCase()) ??
+                  false))
+          .toList();
+    });
   }
 
   @override
@@ -137,7 +160,6 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                   ),
                   child: TextField(
                     cursorWidth: 1,
-                    // controller: searchController,
                     mouseCursor: SystemMouseCursors.click,
                     decoration: InputDecoration(
                       hintText: 'Search by name, invoice no',
@@ -150,21 +172,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     ),
                     onChanged: (value) {
                       // It filters the displayed invoice list based on the entered search text
-                      setState(() {
-                        displayedInvoiceList = invoiceList.where((invoice) {
-                          final invoiceNo =
-                              (invoice['invoiceNo'] ?? '').toLowerCase();
-                          final transporterName =
-                              (invoice['transporterName'] ?? '').toLowerCase();
-                          final invoiceDate =
-                              (invoice['invoiceDate'] ?? '').toLowerCase();
-                          final searchText = value.toLowerCase();
-
-                          return invoiceNo.contains(searchText) ||
-                              transporterName.contains(searchText) ||
-                              invoiceDate.contains(searchText);
-                        }).toList();
-                      });
+                      filterInvoices(value);
                     },
                   ),
                 ),
@@ -347,7 +355,6 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     ),
                   );
                 } else {
-                  displayedInvoiceList = snapshot.data ?? [];
                   return ListView.separated(
                     padding: const EdgeInsets.only(left: 5, right: 5),
                     separatorBuilder: (context, index) => const Divider(

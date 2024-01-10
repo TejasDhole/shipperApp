@@ -77,144 +77,113 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Row(
+      title: Row(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.35,
+          ),
+          const Text(
+            'Invoice.png',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+      content: loading
+          ? const Center(child: CircularProgressIndicator())
+          : Container(
+              color: white,
+              width: docLinks.isNotEmpty
+                  ? MediaQuery.of(context).size.width * 0.85
+                  : MediaQuery.of(context).size.width * 0.2,
+              height: docLinks.isEmpty
+                  ? MediaQuery.of(context).size.height * 0.15
+                  : MediaQuery.of(context).size.height * 0.6,
+              child: SingleChildScrollView(
+                child: docLinks.isNotEmpty
+                    ? Column(
+                        children: docLinks.map<Widget>((link) {
+                          return Column(
+                            children: [
+                              Image.network('$proxy$link',
+                                  errorBuilder: (context, error, stackTrace) {
+                                // when there is error in fetching image
+                                return const Text('Error in fetching Invoice',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromRGBO(158, 158, 158, 1)));
+                              }),
+                              const Divider(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      )
+                    // when there is no invoice uploaded
+                    : SizedBox(
+                        height: 100,
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Invoice not found",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: normalWeight),
+                            )),
+                      ),
+              ),
+            ),
+      actions: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.35,
-            ),
-            const Text(
-              'Invoice.png',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-                fontSize: 18,
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.35,
-            ),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        ),
-        content: loading
-            ? const Center(child: CircularProgressIndicator())
-            : Container(
-                color: white,
-                width: docLinks.isNotEmpty
-                    ? MediaQuery.of(context).size.width * 0.85
-                    : MediaQuery.of(context).size.width * 0.2,
-                height: docLinks.isEmpty
-                    ? MediaQuery.of(context).size.height * 0.15
-                    : docLinks.length == 1
-                        ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.6,
-                child: SingleChildScrollView(
-                  child: docLinks.isNotEmpty
-                      ? Column(
-                          children: docLinks.map<Widget>((link) {
-                            return Column(
-                              children: [
-                                Image.network('$proxy$link',
-                                    errorBuilder: (context, error, stackTrace) {
-                                  // when there is error in fetching image
-                                  return const Text('Error in fetching Invoice',
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              158, 158, 158, 1)));
-                                }),
-                                const Divider(
-                                  height: 10,
-                                ),
-                              ],
-                            );
-                          }).toList(),
-                        )
-                      // when there is no invoice uploaded
-                      : SizedBox(
-                          height: 100,
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Invoice not found",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: normalWeight),
-                              )),
-                        ),
-                ),
-              ),
-        actions: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              docLinks.isNotEmpty
-                  ? Align(
-                      alignment: Alignment.bottomLeft,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.white,
-                          minimumSize: const Size(250, 50),
-                          alignment: Alignment.center,
-                        ),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.check, color: darkBlueColor),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 7),
-                              child: Text(
-                                'Verify',
-                                style: TextStyle(
-                                    color: darkBlueColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
+            docLinks.isNotEmpty
+                ? Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.white,
+                        minimumSize: const Size(250, 50),
+                        alignment: Alignment.center,
                       ),
-                    )
-                  : Container(),
-              docLinks.isEmpty
-                  ? Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: InkWell(
-                            child: Container(
-                              color: kLiveasyColor,
-                              height: space_10,
-                              child: Center(
-                                child: Text(
-                                  "close".tr,
-                                  style: TextStyle(
-                                    color: white,
-                                    fontSize: size_8,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.check, color: darkBlueColor),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 7),
+                            child: Text(
+                              'Verify',
+                              style: TextStyle(
+                                  color: darkBlueColor,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
                           ),
-                        ),
+                        ],
                       ),
-                    )
-                  : Container(),
-              docLinks.isEmpty
-                  ? Container()
-                  : SizedBox(
-                      width: 200,
+                    ),
+                  )
+                : Container(),
+            docLinks.isEmpty
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      width: 100,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
@@ -222,49 +191,77 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             color: kLiveasyColor,
                             height: space_10,
                             child: Center(
-                              child: downloading
-                                  ? const CircularProgressIndicator(
-                                      color: white,
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(Icons.download,
-                                            color: white),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Text(
-                                            "Download".tr,
-                                            style: TextStyle(
-                                              color: white,
-                                              fontSize: size_8,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              child: Text(
+                                "close".tr,
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: size_8,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
-                          onTap: () async {
-                            if (docLinks.isNotEmpty) {
-                              setState(() {
-                                downloading = true;
-                              });
-                              await createPdfAndDownload(
-                                  docLinks.cast<String>());
-                              setState(() {
-                                downloading = false;
-                              });
-                            }
+                          onTap: () {
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),
                     ),
-            ],
-          )
-        ]);
+                  )
+                : Container(),
+            docLinks.isEmpty
+                ? Container()
+                : SizedBox(
+                    width: 200,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        child: Container(
+                          color: kLiveasyColor,
+                          height: space_10,
+                          child: Center(
+                            child: downloading
+                                ? const CircularProgressIndicator(
+                                    color: white,
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.download, color: white),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Text(
+                                          "Download".tr,
+                                          style: TextStyle(
+                                            color: white,
+                                            fontSize: size_8,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        onTap: () async {
+                          if (docLinks.isNotEmpty) {
+                            setState(() {
+                              downloading = true;
+                            });
+                            await createPdfAndDownload(docLinks.cast<String>());
+                            setState(() {
+                              downloading = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+          ],
+        )
+      ],
+      surfaceTintColor: Colors.transparent,
+    );
   }
 }

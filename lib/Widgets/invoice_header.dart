@@ -7,6 +7,8 @@ Container InvoiceHeader(context, textFontSize) {
     height: 60,
     margin: const EdgeInsets.only(left: 5, right: 5),
     decoration: const BoxDecoration(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10), topRight: Radius.circular(10)),
       color: headerColor,
     ),
     child: Row(
