@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/controller/shipperIdController.dart';
 import '/functions/BackgroundAndLocation.dart';
 import '/language/localization_service.dart';
@@ -16,7 +17,7 @@ Future<List<DeviceModel>> getDeviceByDeviceId(String deviceId) async {
   String traccarUser = dotenv.get('traccarUser');
 
   // String traccarPass = FlutterConfig.get("traccarPass");
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
 
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));

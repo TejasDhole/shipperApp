@@ -3,12 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 
 Future<bool> deleteGeofences(String id) async {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   String traccarApi = dotenv.get('traccarApi');
   String traccarUser = shipperIdController.ownerEmailId.value;
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));
 

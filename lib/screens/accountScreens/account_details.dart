@@ -56,10 +56,10 @@ class AccountScreenState extends State<AccountScreen> {
   getEwayBillUser(String companyId) async {
     if (shipperIdController.role.value == "ADMIN") {
       try {
-        final String shipperApiUrl = dotenv.get('ewayBillUser');
+        final String ewayURL = dotenv.get('ewayBillUser');
 
-        final response = await http.get(
-            Uri.parse("$shipperApiUrl/${shipperIdController.companyId.value}"));
+        final response = await http.get(Uri.parse(
+            "$ewayURL/ewayBillUser/${shipperIdController.companyId.value}"));
 
         if (response.statusCode == 200) {
           var data = jsonDecode(response.body);
@@ -71,6 +71,38 @@ class AccountScreenState extends State<AccountScreen> {
       }
     }
   }
+
+  updateEwayBillUser() async {
+    if (shipperIdController.role.value == "ADMIN") {
+      try {
+        final String ewayURL = dotenv.get('ewayBillUser');
+
+        Map data = {
+          "username": ewayUserID.text.toString(),
+          "password": ewayPassword.text.toString()
+        };
+
+        var body = json.encode(data);
+
+        final response = await http.put(
+            Uri.parse(
+                "$ewayURL/updateEwayBill?userId=${shipperIdController.companyId.value}"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: body);
+
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          ewayUserID.text = data['username'];
+          ewayPassword.text = data['password'];
+        }
+      } catch (error) {
+        debugPrint(error.toString());
+      }
+    }
+  }
+
   //get company details using company Id
   getCompanyDetails(String companyId) async {
     final DocumentReference documentRef =
@@ -571,10 +603,13 @@ class AccountScreenState extends State<AccountScreen> {
                                                           !passwordObscure;
                                                     });
                                                   },
-                                                  icon: Icon(passwordObscure
-                                                      ? FontAwesomeIcons.eye
-                                                      : FontAwesomeIcons
-                                                          .eyeSlash, size: 15, color: Colors.black),
+                                                  icon: Icon(
+                                                      passwordObscure
+                                                          ? FontAwesomeIcons.eye
+                                                          : FontAwesomeIcons
+                                                              .eyeSlash,
+                                                      size: 15,
+                                                      color: Colors.black),
                                                 ),
                                                 alignLabelWithHint: true,
                                               ),
@@ -623,6 +658,11 @@ class AccountScreenState extends State<AccountScreen> {
                               companyNameController.text.isNotEmpty &&
                               cinController.text.isNotEmpty) {
                             updateCompanyDetails();
+                          }
+
+                          if (ewayUserID.text.isNotEmpty &&
+                              ewayPassword.text.isNotEmpty) {
+                            updateEwayBillUser();
                           }
                         }
                       } catch (e) {
