@@ -3,11 +3,13 @@ class CompanyModel{
   //c_name -- > company_name , c_cin --> company_corporate identifier number
   String? c_uuid, c_name, c_email, c_website, c_address, c_city, c_state, c_gst, c_cin, c_pinCode, c_phnNo;
   List? members;
+  //initially transporter List will be empty but not null
+  List? transporters = [];
+
+  CompanyModel(this.c_name, this.c_email, this.c_address, this.c_website, this.c_city, this.c_state, this.c_gst, this.c_cin, this.c_pinCode, this.c_phnNo, this.c_uuid, this.members, this.transporters);
 
 
-  CompanyModel(this.c_name, this.c_email, this.c_address, this.c_website, this.c_city, this.c_state, this.c_gst, this.c_cin, this.c_pinCode, this.c_phnNo, this.c_uuid, this.members);
-
-
+  //this will return a json for creating a company entry in firebase even if some fields are null
   Map<String, dynamic> toJson(){
     Map<String, dynamic> company_details = {};
 
@@ -68,6 +70,10 @@ class CompanyModel{
 
     if(members!=null){
       companyDoc['members'] = members;
+    }
+
+    if(transporters!=null){
+      companyDoc['members'] = transporters;
     }
 
     return companyDoc;

@@ -101,6 +101,7 @@ dependencies:
   flutter_map_marker_popup: ^5.2.0
   pagination_flutter: ^0.0.8
   timeline_tile: ^2.0.0
+  encrypt: ^5.0.3
 
   ## End of packages supported by both "Android" & "Web" ##
 
@@ -135,6 +136,9 @@ dependencies:
   dropdown_search: ^5.0.6
   table_calendar: ^3.0.9
   image_downloader_web: ^2.0.4
+  path_provider: ^2.1.1
+  pdf: ^3.10.7
+  universal_html: ^2.2.4
 #  carp_background_location: ^3.0.1
 
 ## End of packages supported by only "Android"##

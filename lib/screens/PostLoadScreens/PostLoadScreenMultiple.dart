@@ -103,6 +103,7 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
                         ),
                         controller: controller1,
                         onTap: () {
+                          providerData.loadingGeoFenceIds[0]=null;
                           providerData.updateLoadingPointPostLoad(
                               place: "", city: "", state: "");
                         }),
@@ -122,6 +123,7 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
                               ),
                               controller: controller3,
                               onTap: () {
+                                providerData.loadingGeoFenceIds[1]=null;
                                 providerData.updateLoadingPointPostLoad2(
                                     place: "", city: "", state: "");
                                 setState(() {
@@ -168,6 +170,7 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
                       ),
                       controller: controller2,
                       onTap: () {
+                        providerData.unloadingGeoFenceIds[0]=null;
                         providerData.updateUnloadingPointPostLoad(
                             place: "", city: "", state: "");
                       },
@@ -187,6 +190,7 @@ class _PostLoadScreenMultipleState extends State<PostLoadScreenMultiple> {
                             ),
                             controller: controller4,
                             onTap: () {
+                              providerData.unloadingGeoFenceIds[1]=null;
                               providerData.updateUnloadingPointPostLoad2(
                                   place: "", city: "", state: "");
                               setState(() {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/controller/shipperIdController.dart';
 import '/functions/BackgroundAndLocation.dart';
 import '/language/localization_service.dart';
@@ -16,7 +17,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/foundation.dart';
 
 // String traccarPass = FlutterConfig.get("traccarPass");
-String traccarPass = dotenv.get('traccarPass');
+String traccarPass = decrypt(dotenv.get('traccarPass'));
 
 String? current_lang;
 ShipperIdController shipperIdController = Get.put(ShipperIdController());

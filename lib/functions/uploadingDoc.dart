@@ -25,17 +25,18 @@ Future<void> imageDownload(BuildContext context, var docLinks) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: space_25,
+                width: MediaQuery.of(context).size.width * 0.25,
               ),
-              Center(
-                child: Text(
-                  " View Image",
-                  style: TextStyle(
-                    fontSize: size_10 - 1,
-                    fontWeight: boldWeight,
-                    color: darkBlueColor,
-                  ),
+              Text(
+                " View Image",
+                style: TextStyle(
+                  fontSize: size_10 - 1,
+                  fontWeight: boldWeight,
+                  color: darkBlueColor,
                 ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.25,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
@@ -54,140 +55,143 @@ Future<void> imageDownload(BuildContext context, var docLinks) {
               ),
             ],
           ),
-          content: Column(
-            children: [
-              Flexible(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          int i = previewUploadedImage.index.value;
-                          i = (i - 1) % docLinks.length as int;
-                          previewUploadedImage
-                              .updatePreviewImage(docLinks[i].toString());
-                          previewUploadedImage.updateIndex(i);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: darkBlueColor,
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Column(
+              children: [
+                Flexible(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            int i = previewUploadedImage.index.value;
+                            i = (i - 1) % docLinks.length as int;
+                            previewUploadedImage
+                                .updatePreviewImage(docLinks[i].toString());
+                            previewUploadedImage.updateIndex(i);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            color: darkBlueColor,
+                          ),
                         ),
-                      ),
-                      docLinks.isNotEmpty
-                          ? docLinks.length > 0
-                              ? Center(
-                                  child: Container(
-                                    color: whiteBackgroundColor,
-                                    margin:
-                                        const EdgeInsets.only(right: 3, top: 4),
-                                    height: 100,
-                                    width: 150,
-                                    child: Image(
-                                      image: NetworkImage(
-                                        "$proxyServer${docLinks[0].toString()}",
+                        docLinks.isNotEmpty
+                            ? docLinks.length > 0
+                                ? Center(
+                                    child: Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 100,
+                                      width: 150,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[0].toString()}",
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              : Container()
-                          : Container(),
-                      docLinks.isNotEmpty
-                          ? docLinks.length > 1
-                              ? Center(
-                                  child: Container(
-                                    color: whiteBackgroundColor,
-                                    margin:
-                                        const EdgeInsets.only(right: 3, top: 4),
-                                    height: 100,
-                                    width: 150,
-                                    child: Image(
-                                      image: NetworkImage(
-                                        "$proxyServer${docLinks[1].toString()}",
+                                  )
+                                : Container()
+                            : Container(),
+                        docLinks.isNotEmpty
+                            ? docLinks.length > 1
+                                ? Center(
+                                    child: Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 100,
+                                      width: 150,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[1].toString()}",
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              : Container()
-                          : Container(),
-                      docLinks.isNotEmpty
-                          ? docLinks.length > 2
-                              ? Center(
-                                  child: Container(
-                                    color: whiteBackgroundColor,
-                                    margin:
-                                        const EdgeInsets.only(right: 3, top: 4),
-                                    height: 100,
-                                    width: 150,
-                                    child: Image(
-                                      image: NetworkImage(
-                                        "$proxyServer${docLinks[2].toString()}",
+                                  )
+                                : Container()
+                            : Container(),
+                        docLinks.isNotEmpty
+                            ? docLinks.length > 2
+                                ? Center(
+                                    child: Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 100,
+                                      width: 150,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[2].toString()}",
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              : Container()
-                          : Container(),
-                      docLinks.isNotEmpty
-                          ? docLinks.length > 3
-                              ? Center(
-                                  child: Container(
-                                    color: whiteBackgroundColor,
-                                    margin:
-                                        const EdgeInsets.only(right: 3, top: 4),
-                                    height: 100,
-                                    width: 150,
-                                    child: Image(
-                                      image: NetworkImage(
-                                        "$proxyServer${docLinks[3].toString()}",
+                                  )
+                                : Container()
+                            : Container(),
+                        docLinks.isNotEmpty
+                            ? docLinks.length > 3
+                                ? Center(
+                                    child: Container(
+                                      color: whiteBackgroundColor,
+                                      margin: const EdgeInsets.only(
+                                          right: 3, top: 4),
+                                      height: 100,
+                                      width: 150,
+                                      child: Image(
+                                        image: NetworkImage(
+                                          "$proxyServer${docLinks[3].toString()}",
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              : Container()
-                          : Container(),
-                      IconButton(
-                        onPressed: () {
-                          int i = previewUploadedImage.index.value;
-                          i = (i + 1) % docLinks.length as int;
-                          previewUploadedImage
-                              .updatePreviewImage(docLinks[i].toString());
-                          previewUploadedImage.updateIndex(i);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: darkBlueColor,
+                                  )
+                                : Container()
+                            : Container(),
+                        IconButton(
+                          onPressed: () {
+                            int i = previewUploadedImage.index.value;
+                            i = (i + 1) % docLinks.length as int;
+                            previewUploadedImage
+                                .updatePreviewImage(docLinks[i].toString());
+                            previewUploadedImage.updateIndex(i);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: darkBlueColor,
+                          ),
+                        )
+                      ],
+                    )),
+                Flexible(
+                  flex: 8,
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(30),
+                          height: 10,
+                          width: 10,
+                          child: const CircularProgressIndicator(
+                            color: darkBlueColor,
+                          ),
                         ),
-                      )
-                    ],
-                  )),
-              Flexible(
-                flex: 8,
-                child: Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(30),
-                        height: 10,
-                        width: 10,
-                        child: const CircularProgressIndicator(
-                          color: darkBlueColor,
+                        Container(
+                          constraints: const BoxConstraints(minHeight: 100),
+                          color: whiteBackgroundColor,
+                          child: Obx(() {
+                            return Image.network(Uri.encodeFull(
+                              "$proxyServer${previewUploadedImage.previewImage.toString()}",
+                            ));
+                          }),
                         ),
-                      ),
-                      Container(
-                        constraints: const BoxConstraints(minHeight: 100),
-                        color: whiteBackgroundColor,
-                        child: Obx(() {
-                          return Image.network(Uri.encodeFull(
-                            "$proxyServer${previewUploadedImage.previewImage.toString()}",
-                          ));
-                        }),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             Padding(

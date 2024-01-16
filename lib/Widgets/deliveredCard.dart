@@ -190,7 +190,7 @@ class DeliveredCard extends StatelessWidget {
                           child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
-                          '${model.truckType}' ?? 'Null',
+                          '${model.rate}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: black,

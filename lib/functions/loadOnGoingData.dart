@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shipper_app/functions/shipperApis/shipperApiCalls.dart';
+import 'package:shipper_app/functions/transporterApis/transporterApiCalls.dart';
+import 'package:shipper_app/models/transporterModel.dart';
 import '/functions/truckApis/truckApiCalls.dart';
 import '/models/BookingModel.dart';
 import '/models/driverModel.dart';
@@ -18,9 +20,13 @@ TruckApiCalls truckApiCalls = TruckApiCalls();
 DriverApiCalls driverApiCalls = DriverApiCalls();
 
 Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
-  // Map loadData = await loadApiCalls.getDataByLoadId(bookingModel.loadId!);
-  ShipperModel shipperModel =
-      await shipperApiCalls.getDataByShipperId(bookingModel.transporterId);
+
+  final TransporterApiCalls transporterApiCalls = TransporterApiCalls();
+
+  //fetch details of transporter using transporter id.
+  TransporterModel transporterModel = await transporterApiCalls
+      .getDataByTransporterId(bookingModel.transporterId);
+
 
   OngoingCardModel loadALLDataModel = OngoingCardModel();
   loadALLDataModel.loadId = bookingModel.loadId;
@@ -30,11 +36,11 @@ Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
   loadALLDataModel.deviceId = bookingModel.deviceId;
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
   loadALLDataModel.unloadingPointCity = bookingModel.unloadingPointCity;
-  loadALLDataModel.companyName = shipperModel.companyName;
-  loadALLDataModel.shipperPhoneNum = shipperModel.shipperPhoneNum;
-  loadALLDataModel.shipperLocation = shipperModel.shipperLocation;
-  loadALLDataModel.shipperName = shipperModel.shipperName;
-  loadALLDataModel.companyApproved = shipperModel.companyApproved;
+  loadALLDataModel.companyName = transporterModel.companyName;
+  loadALLDataModel.shipperPhoneNum = transporterModel.transporterPhoneNum;
+  loadALLDataModel.shipperLocation = transporterModel.transporterLocation;
+  loadALLDataModel.shipperName = transporterModel.transporterName;
+  loadALLDataModel.companyApproved = transporterModel.companyApproved;
   loadALLDataModel.truckNo = bookingModel.truckNo;
   loadALLDataModel.truckType = 'NA';
   loadALLDataModel.imei = 'NA';

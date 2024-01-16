@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/controller/shipperIdController.dart';
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +12,7 @@ final String driverApiUrl = dotenv.get('driverApiUrl');
 
 String? traccarUser = shipperIdController.mobileNum.value;
 // String traccarPass = FlutterConfig.get("traccarPass");
-String traccarPass = dotenv.get('traccarPass');
+String traccarPass = decrypt(dotenv.get('traccarPass'));
 
 String basicAuth =
     'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));

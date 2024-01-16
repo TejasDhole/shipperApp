@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shipper_app/constants/colors.dart';
 import 'package:shipper_app/constants/fontWeights.dart';
 
-Container InvoiceHeader(context, textFontSize) {
+Container InvoiceTripHeader(context, textFontSize) {
   return Container(
-    height: 60,
-    margin: const EdgeInsets.only(left: 5, right: 5),
+    height: 50,
     decoration: const BoxDecoration(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-      color: headerColor,
+      color: Color(0xFFEAEEFF),
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -25,7 +22,7 @@ Container InvoiceHeader(context, textFontSize) {
               style: TextStyle(
                 fontWeight: mediumBoldWeight,
                 color: black,
-                fontSize: textFontSize,
+                fontSize: 16,
                 fontFamily: 'Montserrat',
               ),
             ),
@@ -37,10 +34,10 @@ Container InvoiceHeader(context, textFontSize) {
           width: 0,
         ),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Center(
             child: Text(
-              'Invoice No',
+              'LR No.',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
@@ -62,7 +59,7 @@ Container InvoiceHeader(context, textFontSize) {
           flex: 3,
           child: Center(
             child: Text(
-              'Invoice Amount',
+              'Truck No.',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
@@ -81,9 +78,9 @@ Container InvoiceHeader(context, textFontSize) {
           width: 0,
         ),
         Expanded(
-          flex: 4,
+          flex: 5,
           child: Text(
-            'Transporter Name',
+            'Route',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             softWrap: false,
@@ -104,7 +101,7 @@ Container InvoiceHeader(context, textFontSize) {
           flex: 3,
           child: Center(
             child: Text(
-              'Due Date',
+              'Freight',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
@@ -123,10 +120,10 @@ Container InvoiceHeader(context, textFontSize) {
           width: 0,
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Center(
             child: Text(
-              'Status ',
+              'Damage ',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: mediumBoldWeight,
@@ -145,7 +142,51 @@ Container InvoiceHeader(context, textFontSize) {
           flex: 3,
           child: Center(
             child: Text(
-              'Invoice Details',
+              'Total ',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: TextStyle(
+                fontWeight: mediumBoldWeight,
+                color: black,
+                fontSize: textFontSize,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
+        ),
+        const VerticalDivider(
+          color: greyShade,
+          thickness: 1,
+          width: 0,
+        ),
+        Expanded(
+          flex: 3,
+          child: Center(
+            child: Text(
+              'POD ',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: TextStyle(
+                fontWeight: mediumBoldWeight,
+                color: black,
+                fontSize: textFontSize,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
+        ),
+        const VerticalDivider(
+          color: greyShade,
+          thickness: 1,
+          width: 0,
+        ),
+        Expanded(
+          flex: 3,
+          child: Center(
+            child: Text(
+              'Remarks',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
