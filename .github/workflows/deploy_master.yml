@@ -47,6 +47,7 @@ jobs:
           echo "consentStatusUrl=${{ vars.CONSENT_STATUS_URL_PROD }}" >> .env
           echo "sendInviteEmailUrl=${{ vars.SEND_INVITE_EMAIL_URL_PROD }}" >> .env
           echo "razorpayorder=${{ vars.RAZOR_PAY_ORDER_PROD }}" >> .env
+          echo "encryptKey=${{ vars.ENCRYPT_KEY }}" >> .env
           
 
       - name: Merge to branch
@@ -54,9 +55,6 @@ jobs:
           git checkout main
       - name: Print .env file
         run: cat .env
-
-      - name: Run Flutter Build (Release)
-        run: flutter build web --release
 
       - run: flutter pub get
       - run: flutter build web
