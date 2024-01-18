@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shipper_app/controller/facilityController.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 
 createFacility() async {
   FacilityController facilityController = Get.put(FacilityController());
@@ -71,7 +72,7 @@ createGeoFence(lat, long) async {
 
   String traccarApi = dotenv.get('traccarApi');
   String traccarUser = shipperIdController.ownerEmailId.value;
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));
 
@@ -108,7 +109,7 @@ updateGeoFence(lat, long) async {
   String id = facilityController.id.value;
   String traccarApi = dotenv.get('traccarApi');
   String traccarUser = shipperIdController.ownerEmailId.value;
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));
 

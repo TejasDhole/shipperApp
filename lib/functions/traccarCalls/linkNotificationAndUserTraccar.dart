@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 
 void linkNotificationAndUserTraccar(String? userId, List<String?>? id) async {
   // String traccarUser = FlutterConfig.get("traccarUser");
   String traccarUser = dotenv.get('traccarUser');
 
   // String traccarPass = FlutterConfig.get("traccarPass");
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
 
   // String traccarApi = FlutterConfig.get("traccarApi");
   String traccarApi = dotenv.get('traccarApi');

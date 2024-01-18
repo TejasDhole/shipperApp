@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/language/localization_service.dart';
 import '/models/gpsDataModel.dart';
 // import 'package:flutter_config/flutter_config.dart';
@@ -13,7 +14,7 @@ Future<List<GpsDataModel>> getPositionByDeviceId(String deviceId) async {
   String traccarUser = dotenv.get('traccarUser');
 
   // String traccarPass = FlutterConfig.get("traccarPass");
-  String traccarPass = dotenv.get('traccarPass');
+  String traccarPass = decrypt(dotenv.get('traccarPass'));
 
   String basicAuth =
       'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 import '/controller/SelectedDriverController.dart';
 import '/controller/shipperIdController.dart';
 import '/models/responseModel.dart';
@@ -60,7 +61,7 @@ class DriverApiCalls {
     driverList = [];
     String? traccarUser = shipperIdController.mobileNum.value;
     // String traccarPass = FlutterConfig.get("traccarPass");
-    String traccarPass = dotenv.get('traccarPass');
+    String traccarPass = decrypt(dotenv.get('traccarPass'));
 
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$traccarUser:$traccarPass'));

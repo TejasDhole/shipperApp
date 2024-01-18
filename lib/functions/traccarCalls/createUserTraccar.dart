@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shipper_app/controller/shipperIdController.dart';
+import 'package:shipper_app/functions/encryptDecrypt.dart';
 
 // import 'package:flutter_config/flutter_config.dart';
 import '/functions/shipperApis/runShipperApiPost.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<String?> createUserTraccar(String? mobileNum) async {
   ShipperIdController shipperIdController = Get.put(ShipperIdController());
   final String traccarUser = dotenv.get('traccarUser');
-  final String traccarPass = dotenv.get('traccarPass');
+  final String traccarPass = decrypt(dotenv.get('traccarPass'));
   final String traccarApi = dotenv.get('traccarApi');
   String companyEmailId = '';
 
