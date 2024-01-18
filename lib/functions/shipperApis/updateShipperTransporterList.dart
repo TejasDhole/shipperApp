@@ -13,25 +13,26 @@ import 'package:http/http.dart' as http;
 // This function add new transporter in companies transporter list
 void updateCompanyTransporterList(transporterId, dialogContext) async {
   try {
-    AddLocationDrawerToggleController addLocationDrawerToggleController = Get.put(AddLocationDrawerToggleController());
+    AddLocationDrawerToggleController addLocationDrawerToggleController =
+        Get.put(AddLocationDrawerToggleController());
     ShipperIdController shipperIdController = Get.put(ShipperIdController());
     String companyId = shipperIdController.companyId.value;
 
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('/Companies').doc(companyId);
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('/Companies').doc(companyId);
 
     debugPrint(transporterId);
 
     // Get the document snapshot
-   await documentReference.update({
-     //add transporter id at last index in transporter list array
+    await documentReference.update({
+      //add transporter id at last index in transporter list array
       "transporters": FieldValue.arrayUnion([transporterId]),
     });
 
-  //show successful message using snack-bar
-  showSnackBar("Transporter added Successfully!!", truckGreen,
-      Icon(Icons.check_circle_outline_outlined), dialogContext);
-  addLocationDrawerToggleController.toggleAddTransporter(false);
-
+    //show successful message using snack-bar
+    showSnackBar("Transporter added Successfully!!", truckGreen,
+        Icon(Icons.check_circle_outline_outlined), dialogContext);
+    addLocationDrawerToggleController.toggleAddTransporter(false);
   } catch (e) {
     debugPrint(e.toString());
     showSnackBar("Something went wrong!!", deleteButtonColor,
