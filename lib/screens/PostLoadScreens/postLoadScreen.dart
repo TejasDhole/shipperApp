@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
-import 'package:shipper_app/Widgets/PublishMethodBidSearchTextFieldWidget.dart';
 import 'package:shipper_app/constants/fontSize.dart';
 import 'package:shipper_app/constants/screens.dart';
 import 'package:shipper_app/responsive.dart';
@@ -16,7 +13,6 @@ import '/providerClass/providerData.dart';
 import '/screens/myLoadPages/deliveredScreen.dart';
 import '/screens/myLoadPages/myLoadsScreen.dart';
 import '/screens/myLoadPages/onGoingScreen.dart';
-import '/widgets/Header.dart';
 import '/widgets/OrderScreenNavigationBarButton.dart';
 import '/widgets/buttons/postLoadButton.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +24,19 @@ class PostLoadScreen extends StatefulWidget {
   _PostLoadScreenState createState() => _PostLoadScreenState();
 }
 
-class _PostLoadScreenState extends State<PostLoadScreen> {
+class _PostLoadScreenState extends State<PostLoadScreen> with TickerProviderStateMixin {
   //Page Controller
   late PageController pageController;
   PostLoadVariablesController postLoadVariables =
       Get.put(PostLoadVariablesController());
+  late TabController tabController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //initialize tab controller
+    tabController  = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,7 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
               children: [
                 Container(
                   padding: EdgeInsets.only(bottom: space_2),
-                  color: Color.fromRGBO(245, 246, 250, 1),
+                  color: const Color.fromRGBO(245, 246, 250, 1),
                   child: Row(
                     children: [
                       Text(
@@ -99,34 +103,81 @@ class _PostLoadScreenState extends State<PostLoadScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      OrderScreenNavigationBarButton(
-                          text: 'my_loads'.tr,
-                          // AppLocalizations.of(context)!.my_loads,
-                          value: 0,
-                          pageController: pageController),
-                      OrderScreenNavigationBarButton(
-                          text: 'on_going'.tr,
-                          // AppLocalizations.of(context)!.on_going,
-                          value: 1,
-                          pageController: pageController),
-                      OrderScreenNavigationBarButton(
-                          text: 'completed'.tr,
-                          // AppLocalizations.of(context)!.completed,
-                          value: 2,
-                          pageController: pageController)
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      height: 5,
+                      color: locationLineColor,
+                    ),
+                    TabBar(
+                    controller: tabController,
+                    indicator: const UnderlineTabIndicator(
+                      borderSide: BorderSide(width: 5, color: kLiveasyColor)
+                    ),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Montserrat'
+                    ),
+                    labelColor: kLiveasyColor,
+                    unselectedLabelStyle: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                        fontFamily: 'Montserrat'
+                    ),
+                      unselectedLabelColor: locationLineColor,
+                    onTap: (value) {
+                      //handel tap events
+                      if (pageController.page == value) {
+                        providerData.updateClickSameUpperIndex(true);
+                        if (pageController.page == 0) {
+                          pageController
+                              .nextPage(
+                              duration: const Duration(milliseconds: 40),
+                              curve: Curves.easeIn)
+                              .whenComplete(() {
+                            pageController.previousPage(
+                                duration: const Duration(milliseconds: 1),
+                                curve: Curves.easeIn);
+                            providerData.updateClickSameUpperIndex(false);
+                          });
+                        } else {
+                          pageController
+                              .previousPage(
+                              duration: const Duration(milliseconds: 40),
+                              curve: Curves.easeIn)
+                              .whenComplete(() {
+                            pageController.nextPage(
+                                duration: const Duration(milliseconds: 1),
+                                curve: Curves.easeIn);
+                            providerData.updateClickSameUpperIndex(false);
+                          });
+                        }
+                        providerData.updateClickSameUpperIndex(false);
+                      } else {
+                        pageController.jumpToPage(value);
+                        providerData.updateUpperNavigatorIndex(value);
+                      }
+                    },
+                    tabs: [
+                      Tab(text: 'my_loads'.tr),
+                      Tab(text: 'on_going'.tr),
+                      Tab(text: 'completed'.tr),
                     ],
-                  ),
+                  )],
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.75,
                   child: PageView(
                     controller: pageController,
+                    onPageChanged: (value) {
+                      if (value != providerData.upperNavigatorIndex && !providerData.clickSameUpperIndex) {
+                        providerData.updateUpperNavigatorIndex(value);
+                        tabController.animateTo(value);
+                      }},
                     children: [
-                      MyLoadsScreen(),
-                      OngoingScreen(),
+                      const MyLoadsScreen(),
+                      const OngoingScreen(),
                       DeliveredScreen(),
                     ],
                   ),
