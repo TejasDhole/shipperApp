@@ -37,9 +37,9 @@ Future<OngoingCardModel?> loadAllOngoingData(BookingModel bookingModel) async {
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
   loadALLDataModel.unloadingPointCity = bookingModel.unloadingPointCity;
   loadALLDataModel.companyName = transporterModel.companyName;
-  loadALLDataModel.shipperPhoneNum = transporterModel.transporterPhoneNum;
-  loadALLDataModel.shipperLocation = transporterModel.transporterLocation;
-  loadALLDataModel.shipperName = transporterModel.transporterName;
+  loadALLDataModel.transporterPhoneNum = transporterModel.transporterPhoneNum;
+  loadALLDataModel.transporterLocation = transporterModel.transporterLocation;
+  loadALLDataModel.transporterName = transporterModel.transporterName;
   loadALLDataModel.companyApproved = transporterModel.companyApproved;
   loadALLDataModel.truckNo = bookingModel.truckNo;
   loadALLDataModel.truckType = 'NA';

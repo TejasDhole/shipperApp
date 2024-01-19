@@ -1,4 +1,5 @@
 class DeliveredCardModel {
+  String? loadId;
   String? bookingId;
   String? loadingPointCity;
   String? unloadingPointCity;
@@ -22,7 +23,8 @@ class DeliveredCardModel {
   int? deviceId;
 
   DeliveredCardModel(
-      {this.bookingId,
+      {this.loadId,
+        this.bookingId,
       this.imei,
       this.unitValue,
       this.bookingDate,
