@@ -292,7 +292,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.control_tower,
                                       position: 0),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "My Loads",
@@ -300,7 +300,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.loads,
                                       position: 1),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "Eway Bills",
@@ -308,7 +308,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.eway_bill,
                                       position: 2),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "Invoice",
@@ -316,7 +316,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.invoice,
                                       position: 3),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "Team",
@@ -324,7 +324,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.team,
                                       position: 4),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "Transporter",
@@ -332,7 +332,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       icon: ShipperNav.transporter,
                                       position: 5),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
                                   SideExpandedItem(
                                       title: "Facility",
@@ -341,7 +341,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                       position: 6),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.04,
+                                        0.01,
                                   ),
                                   SideExpandedItem(
                                       title: "Signout",

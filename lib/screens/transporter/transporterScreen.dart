@@ -54,7 +54,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 10, top: 50),
+          padding: const EdgeInsets.only(left: 20, bottom: 10, top: 30),
           child: Align(
             alignment: Alignment.topLeft,
             child: Text(
@@ -70,16 +70,14 @@ class _TransporterScreenState extends State<TransporterScreen> {
         Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                padding: const EdgeInsets.fromLTRB(10, 10, 50, 10),
                 child: Container(
                   width: screenWidth * 0.4,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.3),
@@ -116,7 +114,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
               ElevatedButton(
                   onPressed: () {
                     // Update the transporterController with new information
-                    transporterController.updateName('Liveasy');
+                    transporterController.updateName('');
                     transporterController.updateEmailId('');
                     transporterController.updatePhoneNo('');
                     transporterController.updateGstNo('');
@@ -134,13 +132,24 @@ class _TransporterScreenState extends State<TransporterScreen> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white),
                     side: MaterialStateProperty.all(
-                        const BorderSide(color: kLiveasyColor, width: 2.0)),
+                        const BorderSide(color: kLiveasyColor, width: 1.0)),
                     minimumSize: MaterialStateProperty.all(
                         Size(screenWidth * 0.175, 50)),
                   ),
-                  child: const Text(
-                    "+  Add Transporter",
-                    style: TextStyle(color: kLiveasyColor, fontSize: 18),
+                  child: Row(
+                    children: [
+                      Text(
+                        "+",
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: kLiveasyColor,
+                            fontWeight: normalWeight),
+                      ),
+                      const Text(
+                        "  Add Transporter",
+                        style: TextStyle(color: kLiveasyColor, fontSize: 18),
+                      ),
+                    ],
                   ))
             ],
           ),
@@ -317,9 +326,10 @@ class _TransporterScreenState extends State<TransporterScreen> {
           Expanded(
             flex: 5,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Center(
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
                   child: Text(
                     vendorCode,
                     textAlign: TextAlign.center,
@@ -331,7 +341,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Center(
                     child: PopupMenuButton<PopUpMenuForTransporter>(
                       offset: Offset(0, space_2),

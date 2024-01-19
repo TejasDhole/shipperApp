@@ -113,7 +113,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                           .updateName(nameController.text);
                                     },
                                     decoration: InputDecoration(
-                                      hintText: 'Enter  Name',
+                                      hintText: 'Enter Transporter Name',
                                       border: OutlineInputBorder(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(5)),
