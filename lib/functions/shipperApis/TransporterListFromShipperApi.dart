@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shipper_app/controller/shipperIdController.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipper_app/controller/transporterController.dart';
 
 class TransporterListFromCompany {
   final String transporterApiUrl = dotenv.get('transporterApiUrl');
@@ -29,6 +30,9 @@ class TransporterListFromCompany {
         var transporterDataList = [];
         var filteredTransporterList = [];
 
+        if (transporterIdList.isEmpty) {
+          return [];
+        }
         //fetch transporter details using transporter id
         for (int i = 0; i < transporterIdList.length; i++) {
           final response = await http.get(
@@ -41,12 +45,15 @@ class TransporterListFromCompany {
           if (response.statusCode == 200 || response.statusCode == 201) {
             var body = jsonDecode(response.body);
             List transporterData = [
-              body['emailId'] ?? 'NA',
-              body['transporterName'] ?? 'NA',
-              body['phoneNo'] ?? 'NA',
-              body['transporterId'] ?? 'NA'
+              body['emailId'] ?? '',
+              body['transporterName'] ?? '',
+              body['phoneNo'] ?? '',
+              body['transporterId'] ?? '',
+              body['panNumber'] ?? '',
+              body['gstNumber'] ?? '',
+              body['vendorCode'] ?? ' '
             ];
-            //[[email, name, phone, transporterId], [email, name, phone, transporterId]]
+            //[[email, name, phone, transporterId, panNumber, GSTno, vendorCode], [email, name, phone, transporterId, panNumber, GSTno, vendorCode]]
             transporterDataList.add(transporterData);
           }
         }
@@ -63,14 +70,55 @@ class TransporterListFromCompany {
           }
           return filteredTransporterList;
         }
-      }
-      else{
+      } else {
         debugPrint('document doesn\'t exits for transporter list');
         return [];
       }
     } catch (e) {
       debugPrint('Error fetching document: $e');
       return [];
+    }
+  }
+
+  // This functions  is used to delete transporter details using transporter id
+  Future<bool> deleteTransporter(String id) async {
+    var response = await http.delete(
+      Uri.parse('$transporterApiUrl/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // This function is used to update the transporter details using transporter id
+  updateTransporterList(
+    String id,
+  ) async {
+    TransporterController transporterController =
+        Get.put(TransporterController());
+    Map data = {
+      "transporterName": transporterController.name.toString(),
+      "vendorCode": transporterController.vendorCode.toString(),
+      "panNumber": transporterController.panNo.toString(),
+      "gstNumber": transporterController.gstNo.toString(),
+    };
+    String body = json.encode(data);
+
+    var response = await http.put(Uri.parse("$transporterApiUrl/$id"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
