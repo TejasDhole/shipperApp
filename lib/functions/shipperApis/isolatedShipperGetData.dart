@@ -61,7 +61,16 @@ Future<String?> runShipperApiPostIsolated(
         shipperIdController
             .updateCompanyId(decodedResponse["companyId"].toString());
 
+        sidstorage
+            .write("companyId", shipperIdController.companyId)
+            .then((value) => print("Written company Id"));
+
         shipperIdController.updateRole(decodedResponse["roles"].toString());
+
+        sidstorage
+            .write("role", shipperIdController.role)
+            .then((value) => print("Written role"));
+
         bool companyApproved =
             decodedResponse["companyApproved"].toString() == "true";
         bool accountVerificationInProgress =
@@ -125,6 +134,20 @@ Future<String?> runShipperApiPostIsolated(
         return null;
       }
     } else {
+      shipperIdController.shipperId.value = sidstorage
+                  .read("shipperId") ?? '';
+
+      shipperIdController.companyId.value = sidstorage
+          .read("companyId") ?? '';
+
+      shipperIdController.role.value = sidstorage
+          .read("role") ?? 'VIEWER';
+
+      shipperIdController.updateName(sidstorage.read("name") ?? '');
+      shipperIdController.updateCompanyName(sidstorage.read("companyName")??'');
+      shipperIdController.updateEmailId(sidstorage.read("emailId") ?? "");
+      shipperIdController.updateOwnerEmailId(sidstorage.read("companyEmailId") ?? '');
+
       return null;
     }
   } catch (e) {
