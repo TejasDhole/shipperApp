@@ -183,6 +183,8 @@ class ProviderData extends ChangeNotifier {
   int upperNavigatorIndex = 0;
   int upperNavigatorIndex2 = 0;
 
+  bool clickSameUpperIndex = false;
+
   List loadingGeoFenceIds = List<int?>.filled(2, null);
   List unloadingGeoFenceIds = List<int?>.filled(2, null);
 
@@ -205,6 +207,10 @@ class ProviderData extends ChangeNotifier {
 
   String bidLoadingPoint = '';
   String bidUnloadingPoint = '';
+
+  updateClickSameUpperIndex(bool state){
+    clickSameUpperIndex = state;
+  }
 
   updateBidEndpoints(loadingPoint, unLoadingPoint) {
     bidLoadingPoint = loadingPoint;
