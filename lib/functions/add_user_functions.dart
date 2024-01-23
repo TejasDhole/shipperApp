@@ -62,7 +62,7 @@ class AddUserFunctions {
     final String sendInviteMail = dotenv.get("sendInviteEmailUrl");
     final Map<String, dynamic> params = {
       "receiverMailId": mail,
-      "senderName": companyName,
+      "companyName": companyName,
       "companyId": companyId,
       "roles": role
     };
@@ -80,9 +80,9 @@ class AddUserFunctions {
         context: context,
         builder: (BuildContext context) {
           return completedDialog(
-            upperDialogText: 'Congratulations'.tr,
+            upperDialogText: 'Completed',
             lowerDialogText:
-                'You have successfully sent the mail to the employee',
+                'You have successfully sent the invitation mail to the employee',
           );
         },
       );

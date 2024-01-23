@@ -140,7 +140,9 @@ Widget addTransporter(diaLogContext, transporterList) {
                     phone != null &&
                     email.isNotEmpty &&
                     email != null) {
-                  getTransporterIdByPhone(phone, email, name).then((transporterId) {
+                  // here other parameters are hardcoded NA as these values are not initialized
+                  getTransporterIdByPhone(phone, email, name, 'NA', 'NA', 'NA')
+                      .then((transporterId) {
                     List newAddedTransporter = [
                       email,
                       name,
@@ -149,8 +151,7 @@ Widget addTransporter(diaLogContext, transporterList) {
                     ];
                     //add new added transporter in List
                     transporterList.add(newAddedTransporter);
-                    updateCompanyTransporterList(
-                        transporterId, diaLogContext);
+                    updateCompanyTransporterList(transporterId, diaLogContext);
                   });
                 }
               },

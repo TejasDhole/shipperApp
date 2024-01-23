@@ -24,6 +24,7 @@ Future<DeliveredCardModel> loadAllDeliveredData(bookingModel) async {
 
   //place all the data into DeliveredCardModel and displaying the completed loads.
   DeliveredCardModel loadALLDataModel = DeliveredCardModel();
+  loadALLDataModel.loadId = bookingModel.loadId;
   loadALLDataModel.bookingDate = bookingModel.bookingDate;
   loadALLDataModel.bookingId = bookingModel.bookingId;
   loadALLDataModel.completedDate = bookingModel.completedDate;

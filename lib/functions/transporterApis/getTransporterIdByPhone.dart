@@ -4,13 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //This function get transporter details using phone if no transporter is present with this phone number then it will create a new transporter and will return it's details
-Future<String> getTransporterIdByPhone(
-    String phoneNo, String emailId, String transporterName) async {
+Future<String> getTransporterIdByPhone(String phoneNo, String emailId,
+    String transporterName, String gst, String pan, String vendor) async {
   try {
     Map<String, dynamic> data = {
       "phoneNo": phoneNo,
       "transporterName": transporterName,
       "emailId": emailId,
+      "panNumber": pan,
+      "gstNumber": gst,
+      "vendorCode": vendor,
     };
     String body = json.encode(data);
 
