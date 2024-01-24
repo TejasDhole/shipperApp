@@ -62,13 +62,13 @@ Future<String?> runShipperApiPostIsolated(
             .updateCompanyId(decodedResponse["companyId"].toString());
 
         sidstorage
-            .write("companyId", shipperIdController.companyId)
+            .write("companyId", shipperIdController.companyId.value)
             .then((value) => print("Written company Id"));
 
         shipperIdController.updateRole(decodedResponse["roles"].toString());
 
         sidstorage
-            .write("role", shipperIdController.role)
+            .write("role", shipperIdController.role.value)
             .then((value) => print("Written role"));
 
         bool companyApproved =
