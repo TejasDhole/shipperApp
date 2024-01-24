@@ -101,6 +101,7 @@ dependencies:
   flutter_map_marker_popup: ^5.2.0
   pagination_flutter: ^0.0.8
   timeline_tile: ^2.0.0
+  syncfusion_flutter_pdf: ^22.1.5
   encrypt: ^5.0.3
 
   ## End of packages supported by both "Android" & "Web" ##
