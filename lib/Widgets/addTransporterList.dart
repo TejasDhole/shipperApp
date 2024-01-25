@@ -34,6 +34,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      surfaceTintColor: Colors.transparent,
       content: Container(
         color: white,
         width: MediaQuery.of(context).size.width * 0.7,
@@ -44,6 +45,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
           children: [
             Container(
               padding: const EdgeInsets.all(20),
+              color: white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -572,21 +574,21 @@ class _AddTransporterListState extends State<AddTransporterList> {
                           child: ElevatedButton(
                               onPressed: () {
                                 // Validation checks for transporter information.
-                                if (transporterController.name == ' ') {
+                                if (transporterController.name.isEmpty) {
                                   showSnackBar(
                                       'Enter Name !!!',
                                       deleteButtonColor,
                                       const Icon(Icons.warning),
                                       context);
-                                } else if (transporterController.phoneNo ==
-                                    ' ') {
+                                } else if (transporterController
+                                    .phoneNo.isEmpty) {
                                   showSnackBar(
                                       'Enter Contact !!!',
                                       deleteButtonColor,
                                       const Icon(Icons.warning),
                                       context);
-                                } else if (transporterController.emailId ==
-                                    ' ') {
+                                } else if (transporterController
+                                    .emailId.isEmpty) {
                                   showSnackBar(
                                       'Enter Email id !!!',
                                       deleteButtonColor,
@@ -622,40 +624,42 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                     String pan = panNoController.text;
                                     String vendor = vendorCodeController.text;
                                     // Check if essential fields are not empty.
-                                    if (name.isNotEmpty &&
-                                        name != null &&
-                                        phone.isNotEmpty &&
-                                        phone != null) {
-                                      if (transporterController.create.value ==
-                                          true) {
-                                        // Creates a transporter add transporter id in transporter list
-                                        getTransporterIdByPhone(phone, emailId,
-                                                name, gst, pan, vendor)
-                                            .then((transporterId) {
-                                          updateCompanyTransporterList(
-                                              transporterId, context);
-                                        });
-                                      } else {
-                                        // Update transporter list when editing.
-                                        transporterListFromCompany
-                                            .updateTransporterList(
-                                          transporterController.id.value,
-                                        );
-                                        showSnackBar(
-                                            "Transporter edited Successfully!!",
-                                            truckGreen,
-                                            const Icon(Icons
-                                                .check_circle_outline_outlined),
-                                            context);
-                                      }
+                                    // if (name.isNotEmpty &&
+                                    //     name != null &&
+                                    //     phone.isNotEmpty &&
+                                    //     phone != null) {
+
+                                    if (transporterController.create.value ==
+                                        true) {
+                                      // Creates a transporter add transporter id in transporter list
+                                      getTransporterIdByPhone(phone, emailId,
+                                              name, gst, pan, vendor)
+                                          .then((transporterId) {
+                                        updateCompanyTransporterList(
+                                            transporterId, context);
+                                      });
                                     } else {
-                                      // Show an error if essential fields are empty.
+                                      // Update transporter list when editing.
+                                      transporterListFromCompany
+                                          .updateTransporterList(
+                                        transporterController.id.value,
+                                      );
                                       showSnackBar(
-                                          'Something went Wrong, Try again Later!!!',
-                                          deleteButtonColor,
-                                          const Icon(Icons.warning),
+                                          "Transporter edited Successfully!!",
+                                          truckGreen,
+                                          const Icon(Icons
+                                              .check_circle_outline_outlined),
                                           context);
                                     }
+                                    // } else {
+                                    //   // Show an error if essential fields are empty.
+
+                                    //   showSnackBar(
+                                    //       'Something went Wrong, Try again Later!!!',
+                                    //       deleteButtonColor,
+                                    //       const Icon(Icons.warning),
+                                    //       context);
+                                    // }
                                     // Reset controller values and perform other cleanup actions.
                                     transporterController.updateName('');
                                     transporterController.updateEmailId('');
@@ -685,6 +689,12 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
                                         liveasyGreen),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
                               ),
                               child: Text(
                                 // Display appropriate text based on whether add or edit screen.

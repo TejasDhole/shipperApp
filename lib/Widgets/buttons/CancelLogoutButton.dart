@@ -27,12 +27,7 @@ class CancelLogoutButton extends StatelessWidget {
               MaterialStateProperty.all(Colors.white.withOpacity(0)),
         ),
         onPressed: () {
-          kIsWeb
-              ? Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomeScreenWeb()))
-              : Navigator.of(context).pop();
+          Navigator.of(context).pop();
         },
         child: Container(
           decoration: const BoxDecoration(
