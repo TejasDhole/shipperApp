@@ -57,6 +57,8 @@ jobs:
           echo "ewayBillUser=${{ vars.EWAY_BILL_USER }}" >> .env
           echo "sendInviteEmailUrl=${{ vars.SEND_INVITE_EMAIL_URL }}" >> .env
           echo "encryptKey=${{ vars.ENCRYPT_KEY }}" >> .env
+          echo "inviteEmails=${{ vars.INVITE_EMAILS }}" >> .env
+          echo "deleteInvite=${{ vars.DELETE_INVITE }}" >> .env
 
       - name: Merge to branch
         run: |
