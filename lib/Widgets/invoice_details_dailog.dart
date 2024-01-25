@@ -9,7 +9,7 @@ import 'package:shipper_app/functions/uploadingDoc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:typed_data';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart'  as html;
 import 'package:http/http.dart' as http;
 
 class InvoiceDetails extends StatefulWidget {

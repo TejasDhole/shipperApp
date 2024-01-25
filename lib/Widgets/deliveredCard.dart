@@ -28,9 +28,9 @@ class DeliveredCard extends StatelessWidget {
     onGoingCardModel.loadingPointCity = model.loadingPointCity;
     onGoingCardModel.unloadingPointCity = model.unloadingPointCity;
     onGoingCardModel.companyName = model.companyName;
-    onGoingCardModel.shipperPhoneNum = model.transporterPhoneNum;
-    onGoingCardModel.shipperLocation = model.transporterLocation;
-    onGoingCardModel.shipperName = model.transporterName;
+    onGoingCardModel.transporterPhoneNum = model.transporterPhoneNum;
+    onGoingCardModel.transporterLocation = model.transporterLocation;
+    onGoingCardModel.transporterName = model.transporterName;
     onGoingCardModel.transporterApproved = model.transporterApproved;
     onGoingCardModel.companyApproved = model.companyApproved;
     onGoingCardModel.truckNo = model.truckNo;
@@ -49,6 +49,7 @@ class DeliveredCard extends StatelessWidget {
     ongoingTruckGpsData = OngoingTruckGpsData(onGoingCardModel);
     ongoingTruckGpsData.getTruckGpsDetails().then((gpsData) {
       Get.to(documentUploadScreen(
+        loadAllDataModel: onGoingCardModel,
         bookingId: model.bookingId.toString(),
         truckNo: model.truckNo,
         loadingPoint: model.loadingPointCity,

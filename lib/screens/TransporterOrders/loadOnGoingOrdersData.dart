@@ -35,9 +35,9 @@ Future<OngoingCardModel?> loadAllOnGoingOrdersData(
   loadALLDataModel.loadingPointCity = bookingModel.loadingPointCity;
   loadALLDataModel.unloadingPointCity = bookingModel.unloadingPointCity;
   loadALLDataModel.companyName = transporterModel.companyName;
-  loadALLDataModel.shipperPhoneNum = transporterModel.shipperPhoneNum;
-  loadALLDataModel.shipperLocation = transporterModel.shipperLocation;
-  loadALLDataModel.shipperName = transporterModel.shipperName;
+  loadALLDataModel.transporterPhoneNum = transporterModel.shipperPhoneNum;
+  loadALLDataModel.transporterLocation = transporterModel.shipperLocation;
+  loadALLDataModel.transporterName = transporterModel.shipperName;
   loadALLDataModel.companyApproved = transporterModel.companyApproved;
   loadALLDataModel.truckNo = bookingModel.truckNo;
   loadALLDataModel.truckType = 'NA';

@@ -27,23 +27,31 @@ class OrderScreenNavigationBarButton extends StatelessWidget {
         hoverColor: transparent,
         onTap: () {
           if (pageController.page == value) {
+            providerData.updateClickSameUpperIndex(true);
             if (pageController.page == 0) {
               pageController
                   .nextPage(
                       duration: const Duration(milliseconds: 40),
                       curve: Curves.easeIn)
-                  .whenComplete(() => pageController.previousPage(
-                      duration: const Duration(milliseconds: 1),
-                      curve: Curves.easeIn));
+                  .whenComplete(() {
+                        pageController.previousPage(
+                            duration: const Duration(milliseconds: 1),
+                            curve: Curves.easeIn);
+                        providerData.updateClickSameUpperIndex(false);
+                      });
             } else {
               pageController
                   .previousPage(
                       duration: const Duration(milliseconds: 40),
                       curve: Curves.easeIn)
-                  .whenComplete(() => pageController.nextPage(
-                      duration: const Duration(milliseconds: 1),
-                      curve: Curves.easeIn));
+                  .whenComplete(() {
+                        pageController.nextPage(
+                            duration: const Duration(milliseconds: 1),
+                            curve: Curves.easeIn);
+                        providerData.updateClickSameUpperIndex(false);
+                      });
             }
+            providerData.updateClickSameUpperIndex(false);
           } else {
             pageController.jumpToPage(value);
             providerData.updateUpperNavigatorIndex(value);

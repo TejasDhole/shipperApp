@@ -30,8 +30,8 @@ class OnGoingLoadDetails extends StatelessWidget {
               child: Stack(
                 children: [
                   LoadPosterDetails(
-                    loadPosterLocation: loadALlDataModel.shipperLocation,
-                    loadPosterName: loadALlDataModel.shipperName,
+                    loadPosterLocation: loadALlDataModel.transporterLocation,
+                    loadPosterName: loadALlDataModel.transporterName,
                     loadPosterCompanyName: loadALlDataModel.companyName,
                     loadPosterCompanyApproved:
                         loadALlDataModel.transporterApproved,
@@ -56,8 +56,8 @@ class OnGoingLoadDetails extends StatelessWidget {
                               driverPhoneNum: loadALlDataModel.driverPhoneNum,
                               driverName: loadALlDataModel.driverName,
                               transporterPhoneNum:
-                                  loadALlDataModel.shipperPhoneNum,
-                              transporterName: loadALlDataModel.shipperName,
+                                  loadALlDataModel.transporterPhoneNum,
+                              transporterName: loadALlDataModel.transporterName,
                             )
                           ],
                         ),

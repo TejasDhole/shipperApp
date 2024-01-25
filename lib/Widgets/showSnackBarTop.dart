@@ -6,7 +6,7 @@ showSnackBar(String message, Color backgroundColor,Icon icon,context){
   return Toastification().show(
     context: context,
     autoCloseDuration: const Duration(seconds: 5),
-    title: message,
+    title: Text(message),
     animationDuration: const Duration(milliseconds: 300),
     icon: icon,
     backgroundColor: backgroundColor,

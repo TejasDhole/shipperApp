@@ -109,7 +109,8 @@ class LoadConfirmationScreenButton extends StatelessWidget {
               providerData.biddingEndDate,
               providerData.biddingEndTime,
               (providerData.loadingPointPostLoad2 != "")?(providerData.loadingGeoFenceIds[0]!=null)?providerData.loadingGeoFenceIds:[] : (providerData.loadingGeoFenceIds[0]!=null)?[providerData.loadingGeoFenceIds[0]] : [],
-              (providerData.unloadingPointPostLoad2 != "")?(providerData.unloadingGeoFenceIds[0]!=null)?providerData.unloadingGeoFenceIds: [] : (providerData.unloadingGeoFenceIds[0]!=null)?[providerData.unloadingGeoFenceIds[0]]:[]);
+              (providerData.unloadingPointPostLoad2 != "")?(providerData.unloadingGeoFenceIds[0]!=null)?providerData.unloadingGeoFenceIds: [] : (providerData.unloadingGeoFenceIds[0]!=null)?[providerData.unloadingGeoFenceIds[0]]:[],
+              shipperIdController.companyName.value);
 
           if (loadId != null) {
             showDialog(

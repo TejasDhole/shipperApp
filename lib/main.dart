@@ -9,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Web/screens/login.dart';
 import 'package:shipper_app/functions/shipperId_fromCompaniesDatabase.dart';
+import 'package:shipper_app/screens/InviteJoiningScreen.dart';
 import 'package:shipper_app/screens/splashScreens/SplashScreenToHomePage.dart';
 import 'package:shipper_app/screens/splashScreens/SplashScreenToLogin.dart';
 import 'package:sizer/sizer.dart';
@@ -143,13 +144,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //     statusBarColor: Colors.transparent,
-    //     statusBarIconBrightness: Brightness.dark));
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     return OverlaySupport(
       child: ChangeNotifierProvider<ProviderData>(
           create: (context) => ProviderData(),
@@ -165,9 +164,14 @@ class _MyAppState extends State<MyApp> {
                       fallbackLocale: const Locale('en', 'US'),
                       //TODO: for home screen in web app we are looking whether used is checked for "Keep me logged in" while logging in.
                       //TODO: so according if user enabled that we are navigating directly to HomeScreen of web, else user is asked for login
-                      home: prefs.containsKey('uid')
-                          ? const HomeScreenWeb()
-                          : const LoginWeb(),
+                      home: ((Uri.base.query.toString().contains('inviteId')))
+                          ? InviteJoiningScreen(
+                              inviteID:
+                                  Uri.base.queryParameters['inviteId'] ?? '',
+                            )
+                          : prefs.containsKey('uid')
+                              ? const HomeScreenWeb()
+                              : const LoginWeb(),
                     )
                   : FutureBuilder(
                       future: firebase,
