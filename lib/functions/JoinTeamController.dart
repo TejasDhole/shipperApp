@@ -8,7 +8,8 @@ import 'package:shipper_app/constants/colors.dart';
 
 //Fetch invite details like check whether inivte id is valid or not... and get some other data like company id, role etc
 getInviteDetails(String id) async{
-  String inviteEmail = dotenv.get('inviteEmails');
+  String inviteEmail = dotenv.get('inviteBaseUrl');
+  inviteEmail += dotenv.get('inviteEmails');
 
   Uri url = Uri.parse("$inviteEmail$id");
   http.Response response = await http.get(url);
@@ -121,7 +122,8 @@ Future<String?> createUpdateEmployee({
 
 //delete the invite id so that same like can't be used multiple times
 deleteInviteLink(String id) async{
-  String deleteInvite = dotenv.get('deleteInvite');
+  String deleteInvite = dotenv.get('inviteBaseUrl');
+  deleteInvite += dotenv.get('deleteInvite');
 
   Uri url = Uri.parse("$deleteInvite$id");
   http.Response response = await http.delete(url);
