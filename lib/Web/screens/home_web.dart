@@ -206,11 +206,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               width: 48,
               height: 40,
               child: TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _index = 5;
-                  });
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.notifications_none_outlined,
                   color: white,
@@ -222,11 +218,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               width: 48,
               height: 40,
               child: TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _index = 7;
-                  });
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.search_outlined,
                   color: white,

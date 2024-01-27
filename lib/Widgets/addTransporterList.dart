@@ -402,7 +402,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                   const EdgeInsets.symmetric(horizontal: 4),
                               color: white,
                               child: Text(
-                                'Pan Number',
+                                'Pan Number (optional)',
                                 style: TextStyle(
                                     backgroundColor: white,
                                     color: darkBlueColor,
@@ -478,7 +478,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                   const EdgeInsets.symmetric(horizontal: 4),
                               color: white,
                               child: Text(
-                                'GST Number',
+                                'GST Number (optional)',
                                 style: TextStyle(
                                     backgroundColor: white,
                                     color: darkBlueColor,
@@ -551,7 +551,7 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                   const EdgeInsets.symmetric(horizontal: 4),
                               color: white,
                               child: Text(
-                                'Vendor Number',
+                                'Vendor Number (optional)',
                                 style: TextStyle(
                                     backgroundColor: white,
                                     color: darkBlueColor,
@@ -623,11 +623,6 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                     String gst = gstNoController.text;
                                     String pan = panNoController.text;
                                     String vendor = vendorCodeController.text;
-                                    // Check if essential fields are not empty.
-                                    // if (name.isNotEmpty &&
-                                    //     name != null &&
-                                    //     phone.isNotEmpty &&
-                                    //     phone != null) {
 
                                     if (transporterController.create.value ==
                                         true) {
@@ -651,15 +646,6 @@ class _AddTransporterListState extends State<AddTransporterList> {
                                               .check_circle_outline_outlined),
                                           context);
                                     }
-                                    // } else {
-                                    //   // Show an error if essential fields are empty.
-
-                                    //   showSnackBar(
-                                    //       'Something went Wrong, Try again Later!!!',
-                                    //       deleteButtonColor,
-                                    //       const Icon(Icons.warning),
-                                    //       context);
-                                    // }
                                     // Reset controller values and perform other cleanup actions.
                                     transporterController.updateName('');
                                     transporterController.updateEmailId('');
