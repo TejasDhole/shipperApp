@@ -178,16 +178,14 @@ class _TransporterScreenState extends State<TransporterScreen> {
                     );
                   },
                 );
-              } else if (snapshot.hasError) {
-                // when there is error in fetching data
-                debugPrint(snapshot.error as String?);
-                return const Center(
-                    child: Text(
-                  'Error accessing data',
-                ));
-              } else if (snapshot.hasData) {
+              } else if (snapshot.connectionState == ConnectionState.done) {
                 // It displays list of transporters
                 List data = snapshot.data!;
+
+                if(data.isEmpty){
+                  return const Center(child: Text('No transporter added', style: TextStyle(fontFamily: "Montserrat", fontSize: 20, color: kLiveasyColor)),);
+                }
+
                 return ListView.separated(
                   separatorBuilder: (context, index) {
                     return const Divider(
