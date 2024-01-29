@@ -88,7 +88,7 @@ dependencies:
   flutter_animarker: ^3.2.0
   async: ^2.11.0
   #  flutter_mapbox_autocomplete: ^2.0.0 problem with http (safely can be removed)
-  speech_to_text: ^6.2.0
+  speech_to_text: ^6.6.0-dev
   webview_flutter_web: ^0.2.2+1
   font_awesome_flutter: ^10.4.0
   popover: ^0.2.8+2
