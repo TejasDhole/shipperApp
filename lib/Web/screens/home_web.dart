@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shipper_app/Widgets/accountPopup.dart';
 import 'package:shipper_app/Widgets/addLocationDrawerWidget.dart';
-import 'package:shipper_app/Widgets/alertDialog/LogOutDialogue.dart';
 import 'package:shipper_app/constants/shipper_nav_icons.dart';
 import 'package:shipper_app/controller/addLocationDrawerToggleController.dart';
 import 'package:shipper_app/responsive.dart';
@@ -36,8 +36,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       transporterSelectedTabGradientColor,
       accountSelectedTabGradientColor,
       liveasySelectedTabGradientColor,
-      facilitySelectedTabGradientColor,
-      signoutSelectedTabGradientColor;
+      facilitySelectedTabGradientColor;
 
   late bool expandMode;
   late double widthOfSideBar;
@@ -99,11 +98,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
       facilitySelectedTabGradientColor = kLiveasyColor;
     } else {
       facilitySelectedTabGradientColor = white;
-    }
-    if (_selectedIndex == 7) {
-      signoutSelectedTabGradientColor = kLiveasyColor;
-    } else {
-      signoutSelectedTabGradientColor = white;
     }
 
     liveasySelectedTabGradientColor = white;
@@ -212,11 +206,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               width: 48,
               height: 40,
               child: TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _index = 5;
-                  });
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.notifications_none_outlined,
                   color: white,
@@ -228,11 +218,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               width: 48,
               height: 40,
               child: TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _index = 7;
-                  });
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.search_outlined,
                   color: white,
@@ -245,18 +231,16 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               child: SizedBox(
                 width: 48,
                 height: 40,
-                child: TextButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        _index =
-                            screens.indexOf(accountVerificationStatusScreen);
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.account_circle_rounded,
-                      color: white,
-                    ),
-                    label: const Text('')),
+                child: AccountMenuButton(
+                  screens: screens,
+                  accountVerificationStatusScreen:
+                      accountVerificationStatusScreen,
+                  updateIndex: (int newIndex) {
+                    setState(() {
+                      _index = newIndex;
+                    });
+                  },
+                ),
               ),
             ),
           ],
@@ -343,11 +327,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                     height: MediaQuery.of(context).size.height *
                                         0.01,
                                   ),
-                                  SideExpandedItem(
-                                      title: "Signout",
-                                      iconSize: 23,
-                                      icon: Icons.logout_outlined,
-                                      position: 7),
                                   Expanded(
                                       child: Align(
                                           alignment: Alignment.bottomLeft,
@@ -376,7 +355,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                           height: 30,
                           width: 30,
                           child: Container(
-                            //padding: EdgeInsets.all(0),
                             decoration: BoxDecoration(
                                 border:
                                     Border.all(color: Colors.black, width: 1),
@@ -476,11 +454,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
     } else {
       facilitySelectedTabGradientColor = white;
     }
-    if (_selectedIndex == 7) {
-      signoutSelectedTabGradientColor = kLiveasyColor;
-    } else {
-      signoutSelectedTabGradientColor = white;
-    }
 
     liveasySelectedTabGradientColor = white;
 
@@ -495,7 +468,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 0;
               _index = 0;
             } else if (title == "My Loads") {
@@ -506,7 +478,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 1;
               _index = 1;
             } else if (title == "Eway Bills") {
@@ -517,7 +488,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 2;
               _index = 2;
             } else if (title == "Invoice") {
@@ -528,7 +498,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 3;
               _index = 3;
             } else if (title == "Team") {
@@ -539,7 +508,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = kLiveasyColor;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 4;
               _index = 4;
             } else if (title == "Transporter") {
@@ -550,7 +518,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = kLiveasyColor;
               facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 5;
               _index = 5;
             } else if (title == "Facility") {
@@ -561,24 +528,8 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
               accountSelectedTabGradientColor = white;
               transporterSelectedTabGradientColor = white;
               facilitySelectedTabGradientColor = kLiveasyColor;
-              signoutSelectedTabGradientColor = white;
               _selectedIndex = 6;
               _index = 6;
-            } else if (title == "Signout") {
-              dashboardSelectedTabGradientColor = white;
-              myLoadsSelectedTabGradientColor = white;
-              ewayBillsSelectedTabGradientColor = white;
-              invoiceSelectedTabGradientColor = white;
-              accountSelectedTabGradientColor = white;
-              transporterSelectedTabGradientColor = white;
-              facilitySelectedTabGradientColor = white;
-              signoutSelectedTabGradientColor = kLiveasyColor;
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const LogoutDialogue();
-                },
-              );
             }
           });
         },
@@ -601,9 +552,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                                         ? accountSelectedTabGradientColor
                                         : (title == "Transporter")
                                             ? transporterSelectedTabGradientColor
-                                            : (title == "Facility")
-                                                ? facilitySelectedTabGradientColor
-                                                : signoutSelectedTabGradientColor),
+                                            : facilitySelectedTabGradientColor),
             child: Row(
               children: [
                 Icon(icon,
