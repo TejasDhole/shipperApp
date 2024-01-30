@@ -264,80 +264,86 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             shadowColor: Colors.grey,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 70),
-                              height: MediaQuery.of(context).size.height,
+                                  left: 15, right: 15, top: 50),
                               width: widthOfSideBar,
                               color: white,
                               child: Column(
                                 children: [
-                                  SideExpandedItem(
-                                      title: "Control Tower",
-                                      iconSize: 18,
-                                      icon: ShipperNav.control_tower,
-                                      position: 0),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "My Loads",
-                                      iconSize: 18,
-                                      icon: ShipperNav.loads,
-                                      position: 1),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "Eway Bills",
-                                      iconSize: 18,
-                                      icon: ShipperNav.eway_bill,
-                                      position: 2),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "Invoice",
-                                      iconSize: 18,
-                                      icon: ShipperNav.invoice,
-                                      position: 3),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "Team",
-                                      iconSize: 18,
-                                      icon: ShipperNav.team,
-                                      position: 4),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "Transporter",
-                                      iconSize: 18,
-                                      icon: ShipperNav.transporter,
-                                      position: 5),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SideExpandedItem(
-                                      title: "Facility",
-                                      iconSize: 18,
-                                      icon: ShipperNav.facility,
-                                      position: 6),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.01,
+                                        0.65,
+                                    child : SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SideExpandedItem(
+                                              title: "Control Tower",
+                                              iconSize: 18,
+                                              icon: ShipperNav.control_tower,
+                                              position: 0),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "My Loads",
+                                              iconSize: 18,
+                                              icon: ShipperNav.loads,
+                                              position: 1),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "Eway Bills",
+                                              iconSize: 18,
+                                              icon: ShipperNav.eway_bill,
+                                              position: 2),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "Invoice",
+                                              iconSize: 18,
+                                              icon: ShipperNav.invoice,
+                                              position: 3),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "Team",
+                                              iconSize: 18,
+                                              icon: ShipperNav.team,
+                                              position: 4),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "Transporter",
+                                              iconSize: 18,
+                                              icon: ShipperNav.transporter,
+                                              position: 5),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          SideExpandedItem(
+                                              title: "Facility",
+                                              iconSize: 18,
+                                              icon: ShipperNav.facility,
+                                              position: 6),
+                                        ],
+                                      ),
+                                    )
                                   ),
                                   Expanded(
                                       child: Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Padding(
-                                              padding:
-                                                  EdgeInsets.only(bottom: 30),
-                                              child: SideExpandedItem(
-                                                  title: "Liveasy",
-                                                  iconSize: 23,
-                                                  icon: ShipperNav.liveasy_logo,
-                                                  position: 999)))),
+                                      alignment: Alignment.bottomLeft,
+                                      child: Padding(
+                                          padding:
+                                          EdgeInsets.only(bottom: 30),
+                                          child: SideExpandedItem(
+                                              title: "Liveasy",
+                                              iconSize: 23,
+                                              icon: ShipperNav.liveasy_logo,
+                                              position: 999))))
                                 ],
                               ),
                             ),
