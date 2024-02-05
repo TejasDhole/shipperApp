@@ -6,7 +6,9 @@ import 'package:shipper_app/Web/screens/home_web.dart';
 import 'package:shipper_app/Widgets/buttons/editDriverDetail.dart';
 import 'package:shipper_app/Widgets/buttons/sendConsentButton.dart';
 import 'package:shipper_app/Widgets/buttons/trackButton.dart';
+import 'package:shipper_app/Widgets/showSnackBarTop.dart';
 import 'package:shipper_app/constants/screens.dart';
+import 'package:shipper_app/controller/LrPdfGenerator.dart';
 import 'package:shipper_app/functions/loadOnGoingData.dart';
 import 'package:shipper_app/functions/operatorInfo.dart';
 import 'package:shipper_app/functions/truckApis/consentStatusApi.dart';
@@ -2241,6 +2243,96 @@ class _documentUploadScreenState extends State<documentUploadScreen>
                                       ),
                                     ),
                                   ),
+
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                                    child: ElevatedButton(onPressed: () async{
+                                      TextEditingController lrController = TextEditingController();
+
+                                      await showDialog(context: context, builder: (context) {
+                                        return AlertDialog(
+                                          contentPadding: const EdgeInsets.all(15),
+                                          content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const SizedBox(height: 20, width: 300,),
+                                            TextFormField(
+                                              controller: lrController,
+                                              style: TextStyle(
+                                                  color: kLiveasyColor, fontFamily: 'Montserrat', fontSize: size_8),
+                                              textAlign: TextAlign.center,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.zero,
+                                                      borderSide: BorderSide(color: borderLightColor, width: 1.5)),
+                                                  hintText: 'Enter Eway Bill No',
+                                                  hintStyle: TextStyle(
+                                                      color: borderLightColor,
+                                                      fontFamily: 'Montserrat',
+                                                      fontSize: size_8),
+                                                  label: Text('Eway bill no',
+                                                      style: TextStyle(
+                                                          color: kLiveasyColor,
+                                                          fontFamily: 'Montserrat',
+                                                          fontSize: size_10,
+                                                          fontWeight: FontWeight.w600),
+                                                      selectionColor: kLiveasyColor),
+                                                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                                                  focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.zero,
+                                                      borderSide: BorderSide(color: truckGreen, width: 1.5))),
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                if(lrController.text.isNotEmpty){
+                                                  Navigator.pop(context);
+                                                }
+                                                else{
+                                                  showSnackBar(
+                                                      'Enter Eway Bill no',
+                                                      deleteButtonColor,
+                                                      const Icon(Icons.warning),
+                                                      context);
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                                backgroundColor: truckGreen
+                                              ),
+                                              child: Text('Submit', style: TextStyle(color: white, fontFamily: 'Montserrat', fontSize: size_9)),
+                                            )
+                                          ],
+                                        ),);
+                                      },);
+                                      var response = await getLrDetails(lrController.text);
+                                      if(response!=null){
+                                        try{
+                                          createPdf(response['transporterName'].toString() ?? '', response['fromAddr1'].toString() ?? '', response['ewbNo'].toString() ?? '',response['fromAddr1'].toString() ?? '', response['toAddr1'].toString() ?? '', response['vehicleListDetails'][0]['vehicleNo'].toString() ?? '', response['docDate'].toString() ?? '', response['fromTrdName'].toString() ?? '', response['fromGstin'].toString() ?? '', response['toTrdName'].toString() ?? '', response['toGstin'].toString() ?? '', response['itemListDetails'][0]['quantity'].toString() ?? '', response['itemListDetails'][0]['qtyUnit'].toString() ?? '', response['itemListDetails'][0]['productName'].toString() ?? '', response['itemListDetails'][0]['hsnCode'].toString() ?? '');
+                                        }
+                                        catch(error){
+                                          showSnackBar(
+                                              'User or Eway bill not found',
+                                              deleteButtonColor,
+                                              Icon(Icons.warning),
+                                              context);
+                                        }
+                                      }
+                                      else{
+                                        showSnackBar(
+                                            'Could not generate any LR for given no',
+                                            deleteButtonColor,
+                                            Icon(Icons.warning),
+                                            context);
+                                      }
+                                    },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: kLiveasyColor,
+                                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15)
+                                        ),
+                                        child: Text('Generate LR', style: TextStyle(color: white, fontFamily: 'Montserrat', fontSize: size_9),)),
+                                  ),
+
                                   Padding(
                                     padding: const EdgeInsets.all(30),
                                     child: Material(

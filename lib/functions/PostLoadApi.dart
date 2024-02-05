@@ -35,7 +35,8 @@ Future<String?> postLoadAPi(
     biddingEndDate,
     biddingEndTime,
     loadingGeoFences,
-    unloadingGeoFences) async {
+    unloadingGeoFences,
+    companyName) async {
   PostLoadErrorController postLoadErrorController =
       Get.put(PostLoadErrorController());
   try {
@@ -68,7 +69,8 @@ Future<String?> postLoadAPi(
       "biddingEndDate": biddingEndDate,
       "biddingEndTime": biddingEndTime,
       "loadingPointGeoId": loadingGeoFences,
-      "unloadingPointGeoId": unloadingGeoFences
+      "unloadingPointGeoId": unloadingGeoFences,
+      "companyName" : companyName
     };
 
     String body = json.encode(data);

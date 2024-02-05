@@ -135,6 +135,11 @@ class _TransporterScreenState extends State<TransporterScreen> {
                         const BorderSide(color: kLiveasyColor, width: 1.0)),
                     minimumSize: MaterialStateProperty.all(
                         Size(screenWidth * 0.175, 50)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -173,15 +178,14 @@ class _TransporterScreenState extends State<TransporterScreen> {
                     );
                   },
                 );
-              } else if (snapshot.hasError) {
-                // when there is error in fetching data
-                return Center(
-                    child: Text(
-                  'Error: ${snapshot.error}',
-                ));
-              } else if (snapshot.hasData) {
+              } else if (snapshot.connectionState == ConnectionState.done) {
                 // It displays list of transporters
                 List data = snapshot.data!;
+
+                if(data.isEmpty){
+                  return const Center(child: Text('No transporter added', style: TextStyle(fontFamily: "Montserrat", fontSize: 20, color: kLiveasyColor)),);
+                }
+
                 return ListView.separated(
                   separatorBuilder: (context, index) {
                     return const Divider(
@@ -289,7 +293,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
             flex: 3,
             child: Center(
               child: Text(
-                gstNumber,
+                panNumber,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: black,
@@ -308,7 +312,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
             flex: 4,
             child: Center(
               child: Text(
-                panNumber,
+                gstNumber,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: black,
@@ -391,7 +395,7 @@ class _TransporterScreenState extends State<TransporterScreen> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AddTransporterList();
+            return const AddTransporterList();
           },
         );
         break;
@@ -432,28 +436,31 @@ class _TransporterScreenState extends State<TransporterScreen> {
           PopUpMenuForTransporter item) =>
       PopupMenuItem<PopUpMenuForTransporter>(
         value: item,
-        child: Column(
-          children: [
-            // Display each item with an icon and text
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(
-                    item.icon,
-                    color: item.color,
+        child: Container(
+          color: white,
+          child: Column(
+            children: [
+              // Display each item with an icon and text
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Icon(
+                      item.icon,
+                      color: item.color,
+                    ),
                   ),
-                ),
-                Text(
-                  item.text,
-                  style: TextStyle(
-                    fontWeight: mediumBoldWeight,
-                    color: item.color,
+                  Text(
+                    item.text,
+                    style: TextStyle(
+                      fontWeight: mediumBoldWeight,
+                      color: item.color,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       );
 }

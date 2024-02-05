@@ -402,11 +402,17 @@ class _FacilitiesState extends State<Facilities> {
         facilityController.updateAddress(address);
         facilityController.updatePinCode(pincode);
         facilityController.updateId(id);
-        String scr = latlog.substring(8, latlog.length - 1); // latlog --> "CIRCLE (30.7076048 76.7744792, 2500)" ---> latlog.substring(8, latlog.length - 1) --> 30.7076048 76.7744792, 2500 -->src
-        List<String> latLongRadius = scr.split(","); // scr.split(",") --> [30.7076048 76.7744792, 2500] --> latLongRadius
-        List lot = latLongRadius[0].split(" "); // latLongRadius[0].split(" ") --> [30.7076048, 76.7744792] -->lot
+        String scr = latlog.substring(
+            8,
+            latlog.length -
+                1); // latlog --> "CIRCLE (30.7076048 76.7744792, 2500)" ---> latlog.substring(8, latlog.length - 1) --> 30.7076048 76.7744792, 2500 -->src
+        List<String> latLongRadius = scr.split(
+            ","); // scr.split(",") --> [30.7076048 76.7744792, 2500] --> latLongRadius
+        List lot = latLongRadius[0].split(
+            " "); // latLongRadius[0].split(" ") --> [30.7076048, 76.7744792] -->lot
         facilityController.updateFacilityLatLng(lot[0], lot[1]);
-        int radius = int.parse(latLongRadius[1].trim()); // latLongRadius[1].trim() --> 2500 --> radius
+        int radius = int.parse(latLongRadius[1]
+            .trim()); // latLongRadius[1].trim() --> 2500 --> radius
         facilityController.updateFacilityRadius(radius);
         addLocationDrawerToggleController.toggleDrawer(true);
         break;
@@ -423,17 +429,7 @@ class _FacilitiesState extends State<Facilities> {
       PopupMenuItem<PopUpMenuForFacility>(
         value: item,
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 2,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
+          color: white,
           child: Column(
             children: [
               Text(

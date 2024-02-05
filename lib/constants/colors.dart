@@ -109,3 +109,4 @@ const Color shimmerGrey = Color.fromARGB(255, 231, 227, 227);
 
 //box shadow
 const Color darkShadow = Color(0x26000000);
+const Color subtitleGrey = Color(0xffb5b5b5);

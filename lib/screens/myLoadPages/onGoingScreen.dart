@@ -232,7 +232,7 @@ class _OngoingScreenState extends State<OngoingScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset('assets/icons/Track.png'),
+                                Image.asset('assets/icons/track.png'),
                                 const SizedBox(width: 20,),
                                 Text('Track All Loads',
                                     style: GoogleFonts.montserrat(

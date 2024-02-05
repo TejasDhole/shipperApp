@@ -23,10 +23,31 @@ void updateCompanyTransporterList(transporterId, dialogContext) async {
 
     debugPrint(transporterId);
 
-    // Get the document snapshot
-    await documentReference.update({
-      //add transporter id at last index in transporter list array
-      "transporters": FieldValue.arrayUnion([transporterId]),
+    List? transporters = [];
+    await documentReference.get().then<dynamic>(( DocumentSnapshot snapshot) async{
+      Map data = snapshot.data() as Map;
+      if(data!=null){
+        transporters = data['transporters'];
+
+        if(transporters==null){
+          transporters = [];
+        }
+
+        if(transporters!.isNotEmpty &&  !transporters!.contains(transporterId)){
+          transporters!.add(transporterId);
+        }
+        else if (transporters!.isEmpty){
+          transporters = [transporterId];
+        }
+
+
+        // update the document snapshot
+        await documentReference.update({
+          //add transporter id in transporter list array
+          "transporters": transporters,
+        });
+
+      }
     });
 
     //show successful message using snack-bar

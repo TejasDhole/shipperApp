@@ -41,6 +41,8 @@ class _LoadPublishMethodWebWidgetState
                 context: context,
                 builder: (context) {
                   return AlertDialog(
+                    surfaceTintColor: Colors.white,
+                      backgroundColor: Colors.white,
                       content: Container(
                           width: MediaQuery.of(context).size.width * 0.7,
                           height: MediaQuery.of(context).size.width * 0.8,

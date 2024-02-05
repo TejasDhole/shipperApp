@@ -17,12 +17,12 @@ class MenuItemTransporter {
   static const editText = PopUpMenuForTransporter(
     text: "Edit ",
     color: darkBlueColor,
-    icon: Icons.edit,
+    icon: Icons.edit_outlined,
   );
   static const deleteText = PopUpMenuForTransporter(
     text: "Delete ",
     color: darkBlueColor,
-    icon: Icons.delete,
+    icon: Icons.delete_outline,
   );
   static List<PopUpMenuForTransporter> listItem = [editText, deleteText];
 }

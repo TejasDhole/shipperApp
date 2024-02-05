@@ -27,7 +27,14 @@ Future<String?> createUserTraccar(String? mobileNum) async {
       Map data = doc.data() as Map;
       companyEmailId =
           data!["company_details"]["contact_info"]["company_email"].toString();
+
+      //update cache and getx variable
+      sidstorage
+          .write("companyEmailId", companyEmailId)
+          .then((value) => print("Written company email Id"));
+
       shipperIdController.updateOwnerEmailId(companyEmailId);
+
     } else {
       debugPrint('No such document!');
     }
